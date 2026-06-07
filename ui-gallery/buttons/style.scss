@@ -1,0 +1,520 @@
+@use "../../src/styles/global";
+
+$ink: #141515;
+$muted: #777872;
+$line: #dcdcd5;
+$paper: #f5f4ef;
+$card: #fffefa;
+$accent: #d9ff64;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: $paper;
+}
+
+body {
+  background: $paper;
+  color: $ink;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.gallery-header {
+  align-items: center;
+  border-bottom: 1px solid $line;
+  display: flex;
+  height: 72px;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 64px);
+}
+
+.gallery-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.gallery-nav {
+  align-items: center;
+  display: flex;
+  gap: 28px;
+
+  a,
+  span {
+    color: $muted;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .is-current {
+    color: $ink;
+  }
+}
+
+main {
+  padding: 0 clamp(24px, 5vw, 64px) clamp(80px, 10vw, 140px);
+}
+
+.eyebrow,
+.section-index,
+.button-card__label {
+  color: $muted;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.gallery-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  padding: clamp(70px, 12vh, 150px) 0 clamp(64px, 9vw, 110px);
+
+  .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  h1 {
+    align-self: end;
+    font-size: clamp(96px, 17vw, 250px);
+    font-weight: 400;
+    letter-spacing: -0.09em;
+    line-height: 0.78;
+    margin: 56px 0 0;
+  }
+}
+
+.gallery-hero__copy {
+  align-self: end;
+  color: $muted;
+  font-size: 14px;
+  line-height: 2;
+  margin: 0 0 6px 32px;
+}
+
+.gallery-section {
+  border-top: 1px solid $line;
+  padding: 24px 0 72px;
+}
+
+.section-heading {
+  align-items: start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: clamp(27px, 3vw, 40px);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    margin: 14px 0 0;
+  }
+
+  > p {
+    color: $muted;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    margin: 2px 0 0;
+    text-transform: uppercase;
+  }
+}
+
+.button-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.button-card {
+  align-items: center;
+  background: $card;
+  border: 1px solid $line;
+  display: flex;
+  justify-content: center;
+  min-height: 240px;
+  padding: 54px 24px 24px;
+  position: relative;
+}
+
+.button-card--dark {
+  background: $ink;
+  border-color: $ink;
+
+  .button-card__label {
+    color: rgba(255, 255, 255, 0.48);
+  }
+}
+
+.button-card__label {
+  left: 20px;
+  position: absolute;
+  top: 18px;
+}
+
+.button {
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 12px;
+  gap: 12px;
+  justify-content: center;
+  letter-spacing: 0.13em;
+  min-height: 48px;
+  padding: 0 23px;
+  text-transform: uppercase;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 4px;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
+
+.button--primary {
+  background: $ink;
+  color: $card;
+
+  &:hover:not(:disabled) {
+    background: #303131;
+  }
+}
+
+.button--secondary {
+  background: transparent;
+  border: 1px solid $ink;
+  color: $ink;
+
+  &:hover {
+    background: $ink;
+    color: $card;
+  }
+}
+
+.button--quiet {
+  background: transparent;
+  color: $muted;
+  padding-inline: 8px;
+  position: relative;
+
+  &::after {
+    background: $ink;
+    bottom: 8px;
+    content: "";
+    height: 1px;
+    left: 8px;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 220ms ease;
+    width: calc(100% - 16px);
+  }
+
+  &:hover {
+    color: $ink;
+
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
+
+.button--slide {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: $card;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    background: $accent;
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: translateX(-102%);
+    transition: transform 260ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    border-color: $accent;
+    color: $ink;
+
+    &::before {
+      transform: none;
+    }
+  }
+}
+
+.button--arrow {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  color: $card;
+  padding: 0 2px;
+
+  &:hover .button__arrow {
+    transform: translateX(7px);
+  }
+}
+
+.button__arrow {
+  font-size: 17px;
+  transition: transform 220ms ease;
+}
+
+.button--pulse {
+  background: $card;
+  color: $ink;
+  position: relative;
+
+  &::after {
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    content: "";
+    inset: -1px;
+    opacity: 0;
+    position: absolute;
+  }
+
+  &:hover::after {
+    animation: pulse 1.1s ease-out infinite;
+  }
+}
+
+.button--toggle {
+  background: #ecece6;
+  color: $muted;
+  min-width: 158px;
+
+  &[aria-pressed="true"] {
+    background: $ink;
+    color: $card;
+
+    .button__dot {
+      background: $accent;
+      box-shadow: 0 0 0 4px rgba($accent, 0.18);
+    }
+  }
+}
+
+.button__dot {
+  background: #aaa9a2;
+  border-radius: 50%;
+  height: 7px;
+  transition: background 180ms ease, box-shadow 180ms ease;
+  width: 7px;
+}
+
+.button--loading {
+  background: $ink;
+  color: $card;
+  min-width: 190px;
+
+  &[data-loading] {
+    cursor: wait;
+    opacity: 0.78;
+
+    .button__spinner {
+      display: block;
+    }
+  }
+}
+
+.button__spinner {
+  animation: spin 700ms linear infinite;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  border-top-color: $card;
+  display: none;
+  height: 13px;
+  width: 13px;
+}
+
+.icon-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid $ink;
+  color: $ink;
+  cursor: pointer;
+  display: inline-flex;
+  height: 52px;
+  justify-content: center;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  width: 52px;
+
+  &:hover {
+    background: $ink;
+    color: $card;
+    transform: rotate(4deg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 4px;
+  }
+}
+
+.icon-button--round {
+  border-radius: 50%;
+  font-size: 12px;
+  padding-left: 3px;
+}
+
+.icon-button--square {
+  font-size: 20px;
+}
+
+.icon-button--menu {
+  flex-direction: column;
+  gap: 6px;
+
+  span {
+    background: currentColor;
+    height: 1px;
+    transition: transform 180ms ease;
+    width: 18px;
+  }
+
+  &:hover {
+    span:first-child {
+      transform: translateX(3px);
+    }
+
+    span:last-child {
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.gallery-footer {
+  border-top: 1px solid $line;
+  color: $muted;
+  display: flex;
+  font-size: 10px;
+  justify-content: space-between;
+  letter-spacing: 0.18em;
+  margin: 0 clamp(24px, 5vw, 64px);
+  padding: 24px 0 32px;
+  text-transform: uppercase;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18, 1.45);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .gallery-hero {
+    display: block;
+
+    h1 {
+      margin-top: 48px;
+    }
+  }
+
+  .gallery-hero__copy {
+    margin: 48px 0 0;
+    max-width: 320px;
+  }
+
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-card {
+    min-height: 210px;
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery-header {
+    height: auto;
+    padding-block: 20px;
+  }
+
+  .gallery-nav {
+    gap: 14px;
+
+    span {
+      display: none;
+    }
+  }
+
+  .gallery-hero {
+    padding-top: 64px;
+
+    h1 {
+      font-size: 27vw;
+    }
+  }
+
+  .section-heading {
+    display: block;
+
+    > p {
+      margin-top: 14px;
+    }
+  }
+
+  .gallery-footer {
+    display: block;
+
+    a {
+      display: block;
+      margin-top: 14px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

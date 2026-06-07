@@ -1,0 +1,174 @@
+@use "./global";
+
+$ink: #121313;
+$muted: #777772;
+$line: #deddd7;
+$paper: #f6f5f0;
+$white: #fffefa;
+$accent: #d9ff64;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: $paper;
+  color: $ink;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.index-header {
+  align-items: center;
+  border-bottom: 1px solid $line;
+  display: flex;
+  height: 72px;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 64px);
+}
+
+.index-brand,
+.index-header span {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.index-brand {
+  font-weight: 700;
+}
+
+.index-header span {
+  color: $muted;
+}
+
+main {
+  padding: 0 clamp(24px, 5vw, 64px) clamp(70px, 9vw, 120px);
+}
+
+.index-hero {
+  padding: clamp(72px, 12vh, 150px) 0 clamp(64px, 9vw, 110px);
+
+  p {
+    color: $muted;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: clamp(90px, 16vw, 230px);
+    font-weight: 400;
+    letter-spacing: -0.09em;
+    line-height: 0.8;
+    margin: 56px 0 0;
+  }
+}
+
+.collection-grid {
+  border-top: 1px solid $line;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 24px;
+}
+
+.collection-card {
+  background: $white;
+  border: 1px solid $line;
+  display: grid;
+  gap: 30px;
+  grid-template-rows: auto 1fr auto;
+  min-height: 330px;
+  padding: 24px;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+
+  &:hover {
+    background: $accent;
+    border-color: $ink;
+    transform: translateY(-3px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ink;
+    outline-offset: 4px;
+  }
+}
+
+.collection-card__index,
+.collection-card__link {
+  color: $muted;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.collection-card__body {
+  align-self: end;
+
+  h2 {
+    font-size: clamp(58px, 8vw, 118px);
+    font-weight: 400;
+    letter-spacing: -0.09em;
+    line-height: 0.82;
+    margin: 0;
+  }
+
+  p {
+    color: $muted;
+    font-size: 13px;
+    line-height: 1.8;
+    margin: 24px 0 0;
+    max-width: 310px;
+  }
+}
+
+.collection-card__link {
+  justify-self: end;
+}
+
+.index-footer {
+  border-top: 1px solid $line;
+  color: $muted;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  margin: 0 clamp(24px, 5vw, 64px);
+  padding: 24px 0 32px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-card {
+    min-height: 270px;
+  }
+}
+
+@media (max-width: 560px) {
+  .index-hero h1 {
+    font-size: 25vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

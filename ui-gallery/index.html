@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="ボタンやスライダーなどの UI パーツギャラリー。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>UI Gallery / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="gallery-header">
+      <a class="gallery-brand" href="../">Motion &amp; UI</a>
+      <nav class="gallery-nav" aria-label="UI gallery navigation">
+        <a class="is-current" href="./">UI Gallery</a>
+        <a href="./buttons/">Buttons</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="gallery-hero">
+        <p class="eyebrow">Interface studies / 2026-</p>
+        <h1>UI<br />Gallery</h1>
+        <p class="gallery-hero__copy">
+          ボタン、スライダー、入力欄など、小さな操作部品を種類ごとに集めて比較するためのギャラリー。
+        </p>
+      </section>
+
+      <section class="gallery-index" aria-labelledby="gallery-index-title">
+        <header class="section-heading">
+          <h2 id="gallery-index-title">Components</h2>
+          <span>01 available</span>
+        </header>
+        <div class="component-grid">
+          <a class="component-card component-card--available" href="./buttons/">
+            <span class="component-card__index">001</span>
+            <div>
+              <h3>Buttons</h3>
+              <p>Actions, motion, states, and icon controls.</p>
+            </div>
+            <span class="component-card__status">Open</span>
+          </a>
+          <article class="component-card">
+            <span class="component-card__index">002</span>
+            <div>
+              <h3>Sliders</h3>
+              <p>Range controls and value feedback.</p>
+            </div>
+            <span class="component-card__status">Coming soon</span>
+          </article>
+          <article class="component-card">
+            <span class="component-card__index">003</span>
+            <div>
+              <h3>Inputs</h3>
+              <p>Text fields, search, and validation states.</p>
+            </div>
+            <span class="component-card__status">Coming soon</span>
+          </article>
+          <article class="component-card">
+            <span class="component-card__index">004</span>
+            <div>
+              <h3>Toggles</h3>
+              <p>Switches, checks, and selection controls.</p>
+            </div>
+            <span class="component-card__status">Coming soon</span>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="gallery-footer">
+      <span>Motion &amp; UI / UI Gallery</span>
+      <a href="../works/">Back to works</a>
+    </footer>
+  </body>
+</html>

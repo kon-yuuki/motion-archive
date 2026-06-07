@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Latte Marble / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../">All Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 4h7l3 3v13H7z" stroke="currentColor" stroke-linejoin="round" />
+            <path d="M14 4v4h4M10 12h5M10 16h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+    <main class="experiment-stage marble-stage" data-stage>
+      <div class="marble-canvas" data-marble-frame role="img" aria-label="Animated latte marble pattern">
+        <canvas class="marble-source" data-marble-canvas aria-hidden="true"></canvas>
+        <div class="marble-slices" data-marble-slices aria-hidden="true"></div>
+      </div>
+      <section class="marble-controls" data-controls-panel aria-label="Marble controls">
+        <button class="marble-controls__toggle" data-controls-toggle type="button" aria-expanded="true">Controls</button>
+        <form class="marble-controls__body">
+          <label>
+            <span>Flow</span>
+            <input data-control="flow" type="range" min="0.2" max="2.4" step="0.1" value="1" />
+            <output data-output="flow">1.0</output>
+          </label>
+          <label>
+            <span>Warp</span>
+            <input data-control="warp" type="range" min="0" max="2.5" step="0.1" value="1" />
+            <output data-output="warp">1.0</output>
+          </label>
+          <label>
+            <span>Veins</span>
+            <input data-control="veins" type="range" min="0.2" max="2.8" step="0.1" value="1" />
+            <output data-output="veins">1.0</output>
+          </label>
+          <label>
+            <span>Spacing</span>
+            <input data-control="spacing" type="range" min="0.45" max="2.4" step="0.05" value="1" />
+            <output data-output="spacing">1.00</output>
+          </label>
+          <label>
+            <span>Random</span>
+            <input data-control="randomness" type="range" min="0" max="2.5" step="0.1" value="1" />
+            <output data-output="randomness">1.0</output>
+          </label>
+          <label>
+            <span>Density</span>
+            <input data-control="density" type="range" min="0.5" max="2.3" step="0.1" value="1" />
+            <output data-output="density">1.0</output>
+          </label>
+          <label>
+            <span>Contrast</span>
+            <input data-control="contrast" type="range" min="0.55" max="1.8" step="0.05" value="1" />
+            <output data-output="contrast">1.00</output>
+          </label>
+          <label>
+            <span>Light</span>
+            <input data-control="light" type="range" min="0.7" max="1.35" step="0.05" value="1" />
+            <output data-output="light">1.00</output>
+          </label>
+          <label>
+            <span>Dark</span>
+            <input data-control="darkRatio" type="range" min="0.25" max="1.8" step="0.05" value="1" />
+            <output data-output="darkRatio">1.00</output>
+          </label>
+          <label>
+            <span>Green</span>
+            <input data-control="greenRatio" type="range" min="0.25" max="1.8" step="0.05" value="1" />
+            <output data-output="greenRatio">1.00</output>
+          </label>
+          <label>
+            <span>White</span>
+            <input data-control="whiteRatio" type="range" min="0.25" max="2.4" step="0.05" value="1" />
+            <output data-output="whiteRatio">1.00</output>
+          </label>
+          <label>
+            <span>Speed</span>
+            <input data-control="speed" type="range" min="0" max="2.5" step="0.1" value="1" />
+            <output data-output="speed">1.0</output>
+          </label>
+          <label>
+            <span>Ease</span>
+            <input data-control="sliceEase" type="range" min="0.85" max="1.55" step="0.05" value="1.15" />
+            <output data-output="sliceEase">1.15</output>
+          </label>
+          <label>
+            <span>Ripple</span>
+            <input data-control="rippleGap" type="range" min="20" max="180" step="5" value="82" />
+            <output data-output="rippleGap">82</output>
+          </label>
+          <label>
+            <span>Duration</span>
+            <input data-control="sliceDuration" type="range" min="1000" max="6000" step="100" value="2800" />
+            <output data-output="sliceDuration">2800</output>
+          </label>
+        </form>
+      </section>
+      <p class="marble-caption">Latte flow field</p>
+    </main>
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">01 / 01 &middot; 2026.05.29</p>
+      <h1>Latte Marble</h1>
+      <p class="experiment-meta__description">画面中央に固定した 2D canvas で、ミルクとコーヒーが混ざるようなマーブル模様がゆっくり流動する背景実験。</p>
+      <div class="experiment-tags"><span>Canvas</span><span>JavaScript</span><span>Background</span><span>Loop</span></div>
+      <div class="experiment-actions">
+        <button class="replay" data-replay>Remix</button>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noreferrer">Reference URL</a>
+      </div>
+    </aside>
+    <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
+      <div class="tech-note__panel">
+        <p class="tech-note__eyebrow">Technical memo</p>
+        <h2 id="tech-note-title">Latte Marble</h2>
+        <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="tech-note__body">
+          <section class="tech-note__section">
+            <h3>Render model</h3>
+            <p>固定サイズの canvas にノイズベースの流動パターンを描き、各フレームで色比率やコントラストを反映してマーブルの表情を作る。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>Slice animation</h3>
+            <p>描画結果を縦方向のスライスへ分割し、中央から外側へ時間差を付けて動かすことで、液体が揺れるようなリズムを足している。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>Controls</h3>
+            <ul>
+              <li>Flow、Warp、Veins で模様の流れと筋を調整する。</li>
+              <li>Dark、Green、White の比率で色の重心を変える。</li>
+              <li>Ripple と Duration でスライスの反応間隔を調整する。</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

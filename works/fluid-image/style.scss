@@ -1,0 +1,62 @@
+:root {
+  --shell-text: #f8faf8;
+  --shell-muted: rgba(248, 250, 248, 0.68);
+  --shell-chip: rgba(7, 9, 10, 0.52);
+  --shell-line: rgba(248, 250, 248, 0.18);
+  --shell-panel: rgba(8, 10, 11, 0.78);
+  --fluid-ring: rgba(248, 250, 248, 0.24);
+}
+
+body {
+  background: #08090a;
+}
+
+.fluid-stage {
+  background: #08090a;
+  min-height: 100svh;
+}
+
+.experiment-nav__brand,
+.experiment-nav__link,
+.detail-toggle,
+.memo-toggle,
+.replay {
+  border-radius: 8px;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.experiment-nav__brand:hover,
+.experiment-nav__link:hover,
+.detail-toggle:hover,
+.memo-toggle:hover,
+.replay:hover {
+  background: rgba(18, 21, 22, 0.72);
+  border-color: rgba(248, 250, 248, 0.3);
+}
+
+.experiment-nav__brand:focus-visible,
+.experiment-nav__link:focus-visible,
+.detail-toggle:focus-visible,
+.memo-toggle:focus-visible,
+.replay:focus-visible {
+  box-shadow: 0 0 0 3px var(--fluid-ring);
+  outline: 0;
+}
+
+.experiment-meta {
+  border-radius: 8px;
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.24);
+}
+
+.experiment-tags span {
+  background: rgba(248, 250, 248, 0.08);
+  border-radius: 6px;
+}
+
+.replay {
+  background: rgba(248, 250, 248, 0.1);
+  color: #f8faf8;
+}

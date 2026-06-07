@@ -1,37 +1,39 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Web animation experiments made with vanilla JavaScript and SCSS." />
-    <title>Motion Archive</title>
+    <meta name="description" content="Motion Archive と UI Gallery のサイトインデックス。" />
+    <link rel="stylesheet" href="/src/styles/site-index.scss" />
+    <title>Motion &amp; UI</title>
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="./">Motion Archive</a>
-      <nav class="site-nav" aria-label="Main">
-        <a href="./works/">All Works</a>
-        <a href="./categories/">Categories</a>
-      </nav>
+    <header class="index-header">
+      <a class="index-brand" href="./">Motion &amp; UI</a>
+      <span>Collections / 02</span>
     </header>
     <main>
-      <section class="hero">
-        <p class="eyebrow">Web animation studies / 2026-</p>
-        <h1>Motion<br />Archive</h1>
-        <p class="hero__copy">
-          Vanilla JavaScript と SCSS で試す、ミニマルな Web モーションの記録。
-          小さな実験を一つずつ公開していきます。
-        </p>
+      <section class="index-hero">
+        <p>Studies and references / 2026-</p>
+        <h1>Motion<br />&amp; UI</h1>
       </section>
-      <section class="latest">
-        <div class="section-heading">
-          <h2>Latest works</h2>
-          <a href="./works/">View all</a>
-        </div>
-        <div class="work-list" data-latest-works></div>
+      <section class="collection-grid" aria-label="Collections">
+        <a class="collection-card" href="./motion-archive/">
+          <span class="collection-card__index">01</span>
+          <div class="collection-card__body">
+            <h2>Motion<br />Archive</h2>
+            <p>Vanilla JavaScript と SCSS で試す、ミニマルな Web モーションの記録。</p>
+          </div>
+          <span class="collection-card__link">Open collection</span>
+        </a>
+        <a class="collection-card" href="./ui-gallery/">
+          <span class="collection-card__index">02</span>
+          <div class="collection-card__body">
+            <h2>UI<br />Gallery</h2>
+            <p>ボタンやスライダーなど、小さな操作部品を種類ごとに集めたギャラリー。</p>
+          </div>
+          <span class="collection-card__link">Open collection</span>
+        </a>
       </section>
     </main>
-    <footer class="site-footer">Motion Archive / Built with Vanilla JS + SCSS</footer>
-    <script type="module" src="/src/scripts/home.js"></script>
+    <footer class="index-footer">Motion &amp; UI / Motion and interface studies</footer>
   </body>
 </html>

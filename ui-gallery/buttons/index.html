@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="ボタンの状態とモーションを集めた UI ギャラリー。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Buttons / UI Gallery / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="gallery-header">
+      <a class="gallery-brand" href="../../">Motion &amp; UI</a>
+      <nav class="gallery-nav" aria-label="UI gallery navigation">
+        <a href="../">UI Gallery</a>
+        <a class="is-current" href="./">Buttons</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="gallery-hero">
+        <p class="eyebrow">UI Gallery / 001</p>
+        <h1>Buttons</h1>
+        <p class="gallery-hero__copy">
+          押す、選ぶ、待つ。小さな操作のためのボタン表現を、状態ごとに並べて試すページ。
+        </p>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="basic-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">01</p>
+            <h2 id="basic-title">Basic actions</h2>
+          </div>
+          <p>Primary / Secondary / Quiet</p>
+        </header>
+        <div class="button-grid">
+          <article class="button-card">
+            <span class="button-card__label">Primary</span>
+            <button class="button button--primary" type="button">Explore works</button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Secondary</span>
+            <button class="button button--secondary" type="button">View details</button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Quiet</span>
+            <button class="button button--quiet" type="button">Maybe later</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="motion-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">02</p>
+            <h2 id="motion-title">Motion studies</h2>
+          </div>
+          <p>Hover to preview</p>
+        </header>
+        <div class="button-grid">
+          <article class="button-card button-card--dark">
+            <span class="button-card__label">Slide fill</span>
+            <button class="button button--slide" type="button"><span>Open archive</span></button>
+          </article>
+          <article class="button-card button-card--dark">
+            <span class="button-card__label">Arrow travel</span>
+            <button class="button button--arrow" type="button">
+              <span>Next study</span>
+              <span class="button__arrow" aria-hidden="true">→</span>
+            </button>
+          </article>
+          <article class="button-card button-card--dark">
+            <span class="button-card__label">Soft pulse</span>
+            <button class="button button--pulse" type="button"><span>Start motion</span></button>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="state-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">03</p>
+            <h2 id="state-title">Interactive states</h2>
+          </div>
+          <p>Click to change state</p>
+        </header>
+        <div class="button-grid">
+          <article class="button-card">
+            <span class="button-card__label">Toggle</span>
+            <button class="button button--toggle" type="button" aria-pressed="false" data-toggle-button>
+              <span class="button__dot" aria-hidden="true"></span>
+              <span data-toggle-label>Motion off</span>
+            </button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Loading</span>
+            <button class="button button--loading" type="button" data-loading-button>
+              <span class="button__spinner" aria-hidden="true"></span>
+              <span data-loading-label>Generate preview</span>
+            </button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Disabled</span>
+            <button class="button button--primary" type="button" disabled>Unavailable</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="icon-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">04</p>
+            <h2 id="icon-title">Icon buttons</h2>
+          </div>
+          <p>Compact controls</p>
+        </header>
+        <div class="button-grid button-grid--icons">
+          <article class="button-card">
+            <span class="button-card__label">Round</span>
+            <button class="icon-button icon-button--round" type="button" aria-label="Play">
+              <span aria-hidden="true">▶</span>
+            </button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Square</span>
+            <button class="icon-button icon-button--square" type="button" aria-label="Add">
+              <span aria-hidden="true">＋</span>
+            </button>
+          </article>
+          <article class="button-card">
+            <span class="button-card__label">Menu</span>
+            <button class="icon-button icon-button--menu" type="button" aria-label="Open menu">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </button>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="gallery-footer">
+      <span>Motion &amp; UI / UI Gallery</span>
+      <a href="../../works/">Back to works</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

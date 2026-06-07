@@ -1,16 +1,32 @@
-export function tags(work) {
-  return [...work.techniques, ...work.expressions]
-    .map((tag) => `<span class="tag">${tag}</span>`)
+function categorySlug(value) {
+  return value.toLowerCase().replaceAll(" ", "-");
+}
+
+function categoryTag(tag, type, categoryPrefix) {
+  const href = `${categoryPrefix}#${type}-${categorySlug(tag)}`;
+
+  return `<a class="tag" href="${href}">${tag}</a>`;
+}
+
+export function tags(work, categoryPrefix = "./categories/") {
+  return [
+    ...work.techniques.map((tag) => categoryTag(tag, "technique", categoryPrefix)),
+    ...work.expressions.map((tag) => categoryTag(tag, "expression", categoryPrefix))
+  ]
     .join("");
 }
 
-export function workRow(work, prefix) {
+export function statusBadge(work) {
+  return work.status ? `<span class="status-badge">${work.status}</span>` : "";
+}
+
+export function workRow(work, prefix, index = 0, categoryPrefix = "./categories/") {
   return `
-    <a class="work-row" href="${prefix}${work.slug}/">
-      <span class="work-row__number">${work.date.replaceAll(".", " / ")}</span>
-      <span class="work-row__title">${work.title}</span>
-      <span class="tag-group">${tags(work)}</span>
-      <span class="work-row__arrow" aria-hidden="true">Open</span>
-    </a>
+    <article class="work-row">
+      <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
+      <a class="work-row__title" href="${prefix}${work.slug}/">${work.title}${statusBadge(work)}</a>
+      <span class="tag-group">${tags(work, categoryPrefix)}</span>
+      <a class="work-row__arrow" href="${prefix}${work.slug}/">Open</a>
+    </article>
   `;
 }
