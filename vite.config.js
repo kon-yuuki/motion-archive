@@ -26,7 +26,8 @@ export default defineConfig({
         "green-marble": resolve(__dirname, "works/green-marble/index.html"),
         "fluid-image": resolve(__dirname, "works/fluid-image/index.html"),
         "pixel-glitch": resolve(__dirname, "works/pixel-glitch/index.html"),
-        "css-pie-chart": resolve(__dirname, "works/css-pie-chart/index.html")
+        "css-pie-chart": resolve(__dirname, "works/css-pie-chart/index.html"),
+        "scroll-type-reveal": resolve(__dirname, "works/scroll-type-reveal/index.html")
       }
     }
   }

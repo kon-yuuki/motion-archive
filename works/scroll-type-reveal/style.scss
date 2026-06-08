@@ -1,0 +1,240 @@
+:root {
+  --shell-text: #f2eee6;
+  --shell-muted: rgba(242, 238, 230, 0.66);
+  --shell-chip: rgba(23, 24, 22, 0.56);
+  --shell-line: rgba(242, 238, 230, 0.2);
+  --shell-panel: rgba(18, 19, 17, 0.91);
+  --story-progress: 0;
+}
+
+html {
+  background: #d8ff45;
+  scroll-behavior: auto;
+}
+
+body {
+  background: #10110f;
+}
+
+.type-stage {
+  background: #10110f;
+  height: auto;
+  min-height: 100svh;
+  overflow: clip;
+}
+
+.glass-scene {
+  height: 100svh;
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 0;
+}
+
+.type-stage__progress {
+  background: rgba(242, 238, 230, 0.16);
+  bottom: 0;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 18;
+
+  span {
+    --progress: 0;
+    background: #d8ff45;
+    display: block;
+    height: 100%;
+    transform: scaleX(var(--progress));
+    transform-origin: left;
+    width: 100%;
+  }
+}
+
+.type-story {
+  height: 520svh;
+  position: relative;
+}
+
+.type-story__sticky {
+  display: grid;
+  height: 100svh;
+  min-height: 620px;
+  padding: 112px clamp(24px, 5vw, 76px) 34px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.type-story__header,
+.type-story__footer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+
+  p {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.type-story__header {
+  align-self: start;
+}
+
+.type-story__footer {
+  align-self: end;
+  color: rgba(242, 238, 230, 0.52);
+}
+
+.type-story__copy {
+  align-self: center;
+  display: grid;
+  max-width: 1400px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.type-line {
+  align-self: center;
+  color: #f2eee6;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: clamp(46px, 7.7vw, 138px);
+  font-weight: 430;
+  grid-area: 1 / 1;
+  justify-self: center;
+  letter-spacing: 0;
+  line-height: 0.91;
+  margin: 0;
+  pointer-events: none;
+  text-align: center;
+  width: max-content;
+}
+
+.type-line--lead {
+  color: rgba(242, 238, 230, 0.62);
+}
+
+.type-line--accent {
+  color: #d8ff45;
+  font-style: italic;
+}
+
+.type-char {
+  --char-opacity: 0;
+  --char-scale: 1.55;
+  display: inline-block;
+  filter: blur(calc((1 - var(--char-opacity)) * 8px));
+  opacity: var(--char-opacity);
+  transform: scale(var(--char-scale));
+  transform-origin: center;
+  will-change: filter, opacity, transform;
+}
+
+.type-char--space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+.type-outro {
+  background: #d8ff45;
+  color: #10110f;
+  display: grid;
+  min-height: 100svh;
+  padding: clamp(120px, 18vh, 220px) clamp(24px, 7vw, 110px) 60px;
+  position: relative;
+  z-index: 2;
+
+  p {
+    align-self: start;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    align-self: center;
+    font-size: clamp(62px, 12vw, 210px);
+    font-weight: 460;
+    letter-spacing: -0.07em;
+    line-height: 0.82;
+    margin: 0;
+  }
+
+  button {
+    align-self: end;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    color: inherit;
+    cursor: pointer;
+    font-size: 11px;
+    justify-self: start;
+    letter-spacing: 0.16em;
+    padding: 0 0 8px;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 760px) {
+  .type-story {
+    height: 430svh;
+  }
+
+  .type-story__sticky {
+    min-height: 540px;
+    padding: 96px 20px 24px;
+  }
+
+  .type-story__copy {
+    width: 100%;
+  }
+
+  .type-line {
+    font-size: clamp(38px, 12vw, 68px);
+    justify-content: center;
+    line-height: 0.98;
+    max-width: 100%;
+    width: auto;
+  }
+
+  .type-story__header p:first-child,
+  .type-story__footer p:first-child {
+    display: none;
+  }
+
+  .type-story__header,
+  .type-story__footer {
+    justify-content: flex-end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .type-story {
+    height: 120svh;
+  }
+
+  .type-line {
+    visibility: hidden;
+
+    &:last-child {
+      visibility: visible;
+    }
+  }
+
+  .type-char {
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}

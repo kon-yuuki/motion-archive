@@ -3,6 +3,18 @@ import dummy2 from "../assets/images/dummy_2.png";
 
 export const works = [
   {
+    slug: "scroll-type-reveal",
+    title: "Scroll Type Reveal",
+    date: "2026.06.08",
+    description: "スクロール量を文章全体の進捗へ変換し、文字ごとにずらした不透明度・移動・ぼかしで一文字ずつ言葉を立ち上げるタイポグラフィ実験。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Text"],
+    reference: {
+      label: "Noomo: The power of digital Storytelling",
+      url: "https://storytelling.noomoagency.com/"
+    }
+  },
+  {
     slug: "css-pie-chart",
     title: "CSS Pie Chart",
     date: "2026.06.07",
