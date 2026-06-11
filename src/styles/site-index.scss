@@ -86,33 +86,41 @@ main {
 }
 
 .collection-card {
+  display: block;
+  min-height: 330px;
+  position: relative;
+}
+
+.collection-card__surface {
   background: $white;
   border: 1px solid $line;
   display: grid;
   gap: 30px;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
+  height: 100%;
   min-height: 330px;
   padding: 24px;
   transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
 
-  &:hover {
+.collection-card:hover .collection-card__surface {
     background: $accent;
     border-color: $ink;
     transform: translateY(-3px);
-  }
+}
 
-  &:active {
+.collection-card:active .collection-card__surface {
     transform: scale(0.98);
-  }
+}
 
-  &:focus-visible {
+.collection-card:focus-visible {
     outline: 2px solid $ink;
     outline-offset: 4px;
-  }
 }
 
 .collection-card__index,
-.collection-card__link {
+.collection-card__link,
+.collection-card__meta dt {
   color: $muted;
   font-size: 10px;
   letter-spacing: 0.2em;
@@ -139,6 +147,25 @@ main {
   }
 }
 
+.collection-card__meta {
+  border-top: 1px solid $line;
+  display: flex;
+  gap: 36px;
+  margin: 0;
+  padding-top: 16px;
+
+  div {
+    display: grid;
+    gap: 6px;
+  }
+
+  dd {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+}
+
 .collection-card__link {
   justify-self: end;
 }
@@ -159,6 +186,10 @@ main {
   }
 
   .collection-card {
+    min-height: 270px;
+  }
+
+  .collection-card__surface {
     min-height: 270px;
   }
 }

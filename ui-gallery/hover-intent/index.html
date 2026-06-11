@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="ホバーで開くツールチップの遅延設計。遅延なし・一律遅延・ホバーインテントの3つを比較するデモ。" />
+    <meta name="description" content="ツールチップの遅延設計と画面端での衝突回避を比較するUIデモ。" />
     <link rel="stylesheet" href="./style.scss" />
-    <title>Hover Intent / UI Gallery / Motion &amp; UI</title>
+    <title>Tooltip Behavior / UI Gallery / Motion &amp; UI</title>
   </head>
   <body>
     <header class="gallery-header">
@@ -11,31 +11,45 @@
       <nav class="gallery-nav" aria-label="UI gallery navigation">
         <a href="../">UI Gallery</a>
         <a href="../buttons/">Buttons</a>
-        <a class="is-current" href="./">Hover Intent</a>
+        <a class="is-current" href="./">Tooltips</a>
+        <a href="../typography/">Typography</a>
       </nav>
     </header>
 
     <main>
       <section class="gallery-hero">
         <p class="eyebrow">UI Gallery / 002</p>
-        <h1>Hover Intent</h1>
+        <h1>Tooltip Behavior</h1>
       </section>
+
+      <header class="topic-heading">
+        <p class="section-index">01 / Delay</p>
+        <div class="topic-heading__title">
+          <h2>Hover Intent</h2>
+          <button class="info-button" type="button" data-info-open="hover-intent">
+            <span>Info</span>
+          </button>
+        </div>
+        <p>意図したホバーだけに反応し、連続操作は妨げない。</p>
+      </header>
 
       <section class="gallery-section" aria-labelledby="bad-instant-title">
         <header class="section-heading">
           <div>
             <p class="section-index">01</p>
-            <h2 id="bad-instant-title">遅延なし</h2>
+            <h3 id="bad-instant-title">遅延なし</h3>
           </div>
-          <span class="verdict verdict--bad">Bad</span>
         </header>
         <div class="intent-stage intent-stage--bad" data-intent-demo data-open-delay="0" data-group="false">
-          <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（遅延なし）">
-            <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
-            <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
-            <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
-            <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
-            <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+          <div class="intent-demo-row">
+            <span class="verdict verdict--bad">Bad</span>
+            <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（遅延なし）">
+              <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
+              <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
+              <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
+              <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
+              <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+            </div>
           </div>
         </div>
       </section>
@@ -44,17 +58,19 @@
         <header class="section-heading">
           <div>
             <p class="section-index">02</p>
-            <h2 id="bad-always-title">一律で遅延</h2>
+            <h3 id="bad-always-title">一律で遅延</h3>
           </div>
-          <span class="verdict verdict--bad">Bad</span>
         </header>
         <div class="intent-stage intent-stage--bad" data-intent-demo data-open-delay="500" data-group="false">
-          <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（一律遅延）">
-            <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
-            <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
-            <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
-            <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
-            <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+          <div class="intent-demo-row">
+            <span class="verdict verdict--bad">Bad</span>
+            <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（一律遅延）">
+              <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
+              <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
+              <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
+              <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
+              <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+            </div>
           </div>
         </div>
       </section>
@@ -63,9 +79,8 @@
         <header class="section-heading">
           <div>
             <p class="section-index">03</p>
-            <h2 id="good-title">初回のみ遅延</h2>
+            <h3 id="good-title">初回のみ遅延</h3>
           </div>
-          <span class="verdict verdict--good">Good</span>
         </header>
         <div
           class="intent-stage intent-stage--good"
@@ -74,16 +89,105 @@
           data-group="true"
           data-cooldown="600"
         >
-          <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（ホバーインテント）">
-            <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
-            <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
-            <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
-            <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
-            <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+          <div class="intent-demo-row">
+            <span class="verdict verdict--good">Good</span>
+            <div class="intent-toolbar" role="toolbar" aria-label="操作ツールバー（ホバーインテント）">
+              <button class="intent-target" type="button" data-tip="変更を保存します（⌘S）">保存</button>
+              <button class="intent-target" type="button" data-tip="選択中の項目を複製します">複製</button>
+              <button class="intent-target" type="button" data-tip="リンクを発行して共有します">共有</button>
+              <button class="intent-target" type="button" data-tip="項目名を変更します（F2）">名前変更</button>
+              <button class="intent-target" type="button" data-tip="項目をゴミ箱へ移動します">削除</button>
+            </div>
           </div>
         </div>
       </section>
+
+      <header class="topic-heading topic-heading--collision">
+        <p class="section-index">02 / Position</p>
+        <div class="topic-heading__title">
+          <h2>Edge Collision</h2>
+          <button class="info-button" type="button" data-info-open="edge-collision">
+            <span>Info</span>
+          </button>
+        </div>
+        <p>表示領域の端を検知し、ツールチップの向きを切り替える。</p>
+      </header>
+
+      <section class="gallery-section collision-comparison" aria-labelledby="collision-title">
+        <h3 class="sr-only" id="collision-title">画面端でのツールチップ配置比較</h3>
+
+        <article class="collision-example">
+          <header class="collision-example__heading">
+            <div>
+              <p class="section-index">01</p>
+              <h3>常に右側へ表示</h3>
+            </div>
+            <span class="verdict verdict--bad">Bad</span>
+          </header>
+          <div class="collision-stage" data-collision-demo data-flip="false">
+            <div class="collision-canvas" data-collision-area tabindex="0">
+              <span class="collision-canvas__label">Move the cursor</span>
+              <span class="collision-canvas__edge">Viewport edge</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="collision-example">
+          <header class="collision-example__heading">
+            <div>
+              <p class="section-index">02</p>
+              <h3>端で反対側へ切り替え</h3>
+            </div>
+            <span class="verdict verdict--good">Good</span>
+          </header>
+          <div class="collision-stage" data-collision-demo data-flip="true">
+            <div class="collision-canvas" data-collision-area tabindex="0">
+              <span class="collision-canvas__label">Move the cursor</span>
+              <span class="collision-canvas__edge">Viewport edge</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
     </main>
+
+    <dialog class="info-dialog" data-info-dialog aria-labelledby="info-dialog-title">
+      <div class="info-dialog__panel">
+        <header class="info-dialog__header">
+          <div>
+            <p class="section-index">Technical memo</p>
+            <h2 id="info-dialog-title" data-info-title></h2>
+          </div>
+          <button class="info-dialog__close" type="button" data-info-close aria-label="閉じる">Close</button>
+        </header>
+
+        <section class="info-dialog__content" data-info-content="hover-intent">
+          <p>
+            Hover Intentは、ポインターが一瞬通過しただけの状態と、ユーザーが意図して対象に留まった状態を区別する考え方です。
+            初回だけ表示を遅らせ、一度操作が始まったグループ内では即時に切り替えます。
+          </p>
+          <pre><code>const delay = groupActive ? 0 : openDelay;
+
+if (delay === 0) {
+  open(target);
+} else {
+  openTimer = setTimeout(() =&gt; open(target), delay);
+}</code></pre>
+        </section>
+
+        <section class="info-dialog__content" data-info-content="edge-collision">
+          <p>
+            カーソルの右側にツールチップを置く前に、表示領域の端までの空きを測ります。
+            必要な幅を確保できない場合だけ左側へ反転し、内容が見切れない位置へ配置します。
+          </p>
+          <pre><code>const spaceRight = boundary.right - pointerX;
+const requiredWidth = tooltip.offsetWidth + gap;
+
+tooltip.dataset.side =
+  spaceRight &gt;= requiredWidth ? "right" : "left";</code></pre>
+        </section>
+      </div>
+    </dialog>
 
     <footer class="gallery-footer">
       <span>Motion &amp; UI / UI Gallery</span>

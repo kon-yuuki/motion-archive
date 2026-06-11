@@ -19,6 +19,11 @@ html {
   background: $paper;
 }
 
+html[data-dialog-open] {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0);
+}
+
 body {
   background: $paper;
   color: $ink;
@@ -77,6 +82,16 @@ main {
   text-transform: uppercase;
 }
 
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .gallery-hero {
   padding: clamp(56px, 9vh, 96px) 0 clamp(40px, 6vw, 64px);
 
@@ -89,6 +104,64 @@ main {
   }
 }
 
+.topic-heading {
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 0 0 42px;
+  text-align: center;
+
+  h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    margin: 0;
+  }
+
+  > p:last-child {
+    color: $muted;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+  }
+}
+
+.topic-heading__title {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin: 10px 0 12px;
+}
+
+.info-button,
+.info-dialog__close {
+  background: transparent;
+  border: 1px solid rgba($ink, 0.24);
+  border-radius: 999px;
+  color: $ink;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 7px 11px;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus-visible {
+    background: $ink;
+    color: $paper;
+    outline: none;
+  }
+}
+
+.topic-heading--collision {
+  border-top: 1px solid $line;
+  margin-top: 72px;
+  max-width: none;
+  padding-top: 80px;
+}
+
 .gallery-section {
   border-top: 1px solid $line;
   padding: 20px 0 48px;
@@ -97,14 +170,187 @@ main {
 .section-heading {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 16px;
+  text-align: center;
 
-  h2 {
+  h3 {
     font-size: 20px;
     font-weight: 500;
     letter-spacing: -0.02em;
     margin: 6px 0 0;
+  }
+}
+
+/* --- edge collision ----------------------------------------------------- */
+.collision-comparison {
+  display: grid;
+  gap: 48px;
+  margin: 0 auto;
+  max-width: 920px;
+  padding-top: 48px;
+}
+
+.collision-example__heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 6px 0 0;
+  }
+}
+
+.collision-stage {
+  background: $card;
+  border: 1px solid $line;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.collision-canvas {
+  background:
+    linear-gradient(rgba($ink, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($ink, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, transparent calc(100% - 56px), rgba($bad, 0.09) calc(100% - 56px));
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+  cursor: crosshair;
+  height: 190px;
+  overflow: hidden;
+  position: relative;
+
+  &:focus-visible {
+    outline: 2px solid $ink;
+    outline-offset: -4px;
+  }
+}
+
+.collision-canvas__label,
+.collision-canvas__edge {
+  color: $muted;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.collision-canvas__label {
+  left: 18px;
+  top: 16px;
+}
+
+.collision-canvas__edge {
+  right: 12px;
+  top: 50%;
+  transform: rotate(90deg) translate(50%, -50%);
+  transform-origin: right top;
+}
+
+.collision-tip {
+  background: $ink;
+  border-radius: 8px;
+  color: $paper;
+  font-size: 12px;
+  opacity: 0;
+  padding: 9px 12px;
+  pointer-events: none;
+  position: absolute;
+  top: var(--pointer-y, 50%);
+  transition: opacity 140ms ease, transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  z-index: 5;
+
+  &[data-side="right"] {
+    left: var(--pointer-x, 50%);
+    transform: translate(14px, -50%) translateX(-4px);
+  }
+
+  &[data-side="left"] {
+    left: var(--pointer-x, 50%);
+    transform: translate(calc(-100% - 14px), -50%) translateX(4px);
+  }
+
+  &[data-open] {
+    opacity: 1;
+  }
+
+  &[data-open][data-side="right"] {
+    transform: translate(14px, -50%) translateX(0);
+  }
+
+  &[data-open][data-side="left"] {
+    transform: translate(calc(-100% - 14px), -50%) translateX(0);
+  }
+}
+
+/* --- info dialog -------------------------------------------------------- */
+.info-dialog {
+  background: transparent;
+  border: 0;
+  color: $ink;
+  max-height: 100%;
+  max-width: 100%;
+  padding: 24px;
+  width: 100%;
+
+  &::backdrop {
+    background: rgba($ink, 0.48);
+    backdrop-filter: blur(5px);
+  }
+}
+
+.info-dialog__panel {
+  background: $paper;
+  border: 1px solid rgba($ink, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 28px 80px rgba($ink, 0.24);
+  margin: auto;
+  max-width: 720px;
+  padding: 30px;
+}
+
+.info-dialog__header {
+  align-items: flex-start;
+  border-bottom: 1px solid $line;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 22px;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    margin: 8px 0 0;
+  }
+}
+
+.info-dialog__content {
+  padding-top: 24px;
+
+  &[hidden] {
+    display: none;
+  }
+
+  > p {
+    color: $muted;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0 0 22px;
+  }
+
+  pre {
+    background: $ink;
+    border-radius: 10px;
+    color: $accent;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0;
+    overflow-x: auto;
+    padding: 20px;
   }
 }
 
@@ -149,6 +395,13 @@ main {
   overflow: visible;
   padding: 0 0 64px;
   position: relative;
+}
+
+.intent-demo-row {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
 }
 
 .intent-toolbar {
@@ -225,6 +478,10 @@ main {
     opacity: 1;
     transform: translate(-50%, calc(-100% - 10px)) translateY(0);
   }
+
+  &[data-position-reset] {
+    transition-property: opacity, transform;
+  }
 }
 
 @media (max-width: 860px) {
@@ -256,8 +513,30 @@ main {
     font-size: 26vw;
   }
 
+  .intent-demo-row {
+    align-items: center;
+    flex-direction: column;
+  }
+
   .intent-tip {
     white-space: normal;
+  }
+
+  .collision-example__heading {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .info-dialog {
+    padding: 12px;
+  }
+
+  .info-dialog__panel {
+    padding: 22px;
+  }
+
+  .info-dialog__header h2 {
+    font-size: 26px;
   }
 
   .gallery-footer {

@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "video:edge-collision": "node scripts/record-edge-collision.mjs",
+    "video:hover-intent": "node scripts/record-hover-intent.mjs",
     "video:pie-chart": "node scripts/record-css-pie-chart-full.mjs"
   },
   "devDependencies": {

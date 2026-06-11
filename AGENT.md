@@ -131,6 +131,12 @@ node --check src/scripts/ui.js
 
 ---
 
+## X 発信用動画
+
+Playwright を使った動画撮影、字幕、カーソル位置へのズーム、MP4 変換の手順は `docs/x-video-recording.md` を参照する。
+
+---
+
 ## デプロイ
 
 Vercel プロジェクト `yuuki-kons-projects/motion-archive` にデプロイする。`.vercel/` がリポジトリにリンク済み。

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="文字単位の表示演出を集めたタイポグラフィギャラリー。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Typography / UI Gallery / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="gallery-header">
+      <a class="gallery-brand" href="../../">Motion &amp; UI</a>
+      <nav class="gallery-nav" aria-label="UI gallery navigation">
+        <a href="../">UI Gallery</a>
+        <a href="../buttons/">Buttons</a>
+        <a href="../hover-intent/">Tooltips</a>
+        <a class="is-current" href="./">Typography</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="gallery-hero">
+        <p class="eyebrow">UI Gallery / 003</p>
+        <h1>Typography</h1>
+        <p class="gallery-hero__copy">
+          見出しや文章に適用する、文字単位の表示と遷移を比較するギャラリー。
+        </p>
+      </section>
+
+      <section class="intro-spacer" aria-hidden="true">
+        <p>Scroll to reveal</p>
+        <span></span>
+      </section>
+
+      <section class="type-study" aria-labelledby="character-fade-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">01</p>
+            <h2 id="character-fade-title">Character Fade</h2>
+          </div>
+          <div class="study-actions">
+            <button class="control-button" type="button" data-replay>Replay</button>
+            <button class="control-button control-button--filled" type="button" data-controls-open>
+              Tune
+            </button>
+          </div>
+        </header>
+
+        <div class="reveal-stage">
+          <p class="reveal-stage__label">Enter viewport / Once</p>
+          <h3
+            class="character-title"
+            data-character-reveal
+            data-text="Small moments make&#10;the interface feel alive."
+          ></h3>
+        </div>
+
+        <dl class="motion-spec">
+          <div>
+            <dt>Property</dt>
+            <dd>Opacity + color</dd>
+          </div>
+          <div>
+            <dt>Duration</dt>
+            <dd><span data-spec-duration>300</span>ms / character</dd>
+          </div>
+          <div>
+            <dt>Stagger</dt>
+            <dd><span data-spec-stagger>30</span>ms</dd>
+          </div>
+          <div>
+            <dt>Trigger</dt>
+            <dd>Viewport enter / once</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+
+    <dialog class="controls-dialog" data-controls-dialog aria-labelledby="controls-title">
+      <form class="controls-panel" method="dialog">
+        <header class="controls-panel__header">
+          <div>
+            <p class="section-index">Animation settings</p>
+            <h2 id="controls-title">Character Fade</h2>
+          </div>
+          <button class="controls-close" type="submit" value="close" aria-label="Close settings">
+            Close
+          </button>
+        </header>
+
+        <div class="controls-grid">
+          <label class="color-control">
+            <span>Initial color</span>
+            <span class="color-control__input">
+              <input type="color" value="#61e5c0" data-control="initialColor" />
+              <output data-output="initialColor">#61E5C0</output>
+            </span>
+          </label>
+
+          <label class="color-control">
+            <span>Final color</span>
+            <span class="color-control__input">
+              <input type="color" value="#083031" data-control="finalColor" />
+              <output data-output="finalColor">#083031</output>
+            </span>
+          </label>
+
+          <label class="range-control">
+            <span class="range-control__heading">
+              <span>Duration</span>
+              <output data-output="duration">300ms</output>
+            </span>
+            <input type="range" min="100" max="1000" step="10" value="300" data-control="duration" />
+          </label>
+
+          <label class="range-control">
+            <span class="range-control__heading">
+              <span>Stagger</span>
+              <output data-output="stagger">30ms</output>
+            </span>
+            <input type="range" min="0" max="150" step="5" value="30" data-control="stagger" />
+          </label>
+        </div>
+
+        <footer class="controls-panel__footer">
+          <button class="control-button" type="button" data-controls-reset>Reset</button>
+          <button class="control-button control-button--filled" type="button" data-controls-preview>
+            Preview
+          </button>
+        </footer>
+      </form>
+    </dialog>
+
+    <footer class="gallery-footer">
+      <span>Motion &amp; UI / UI Gallery</span>
+      <a href="https://www.serverobotics.com/delivery/" target="_blank" rel="noreferrer">Reference</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

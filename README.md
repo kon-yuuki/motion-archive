@@ -94,6 +94,10 @@ node --check src/scripts/categories-page.js
 node --check src/scripts/ui.js
 ```
 
+## X Video Recording
+
+X 発信用のデモ動画は Playwright で自動撮影できます。字幕、録画用カーソル、注目位置へのズーム、MP4 変換を含む手順は [`docs/x-video-recording.md`](docs/x-video-recording.md) を参照してください。
+
 ## Deployment
 
 このサイトは Vercel で公開しています。

@@ -301,9 +301,16 @@ export async function createDemo({
   };
 }
 
-export async function transcodeToMp4(input, output, { width = 1980, height = 1114 } = {}) {
+export async function transcodeToMp4(
+  input,
+  output,
+  { width = 1980, height = 1114, start = 0 } = {}
+) {
+  const inputArgs = start > 0 ? ["-ss", String(start)] : [];
+
   await execFileAsync(ffmpegPath, [
     "-y",
+    ...inputArgs,
     "-i", resolve(input),
     "-vf", `scale=${width}:${height}:flags=lanczos`,
     "-c:v", "libx264",

@@ -16,24 +16,49 @@
         <h1>Motion<br />&amp; UI</h1>
       </section>
       <section class="collection-grid" aria-label="Collections">
-        <a class="collection-card" href="./motion-archive/">
-          <span class="collection-card__index">01</span>
-          <div class="collection-card__body">
-            <h2>Motion<br />Archive</h2>
-            <p>Vanilla JavaScript と SCSS で試す、ミニマルな Web モーションの記録。</p>
+        <a class="collection-card" href="./motion-archive/" data-collection="motion">
+          <div class="collection-card__surface">
+            <span class="collection-card__index">01</span>
+            <div class="collection-card__body">
+              <h2>Motion<br />Archive</h2>
+              <p>Vanilla JavaScript と SCSS で試す、ミニマルな Web モーションの記録。</p>
+            </div>
+            <dl class="collection-card__meta">
+              <div>
+                <dt>Updated</dt>
+                <dd data-collection-date></dd>
+              </div>
+              <div>
+                <dt>Items</dt>
+                <dd data-collection-count></dd>
+              </div>
+            </dl>
+            <span class="collection-card__link">Open collection</span>
           </div>
-          <span class="collection-card__link">Open collection</span>
         </a>
-        <a class="collection-card" href="./ui-gallery/">
-          <span class="collection-card__index">02</span>
-          <div class="collection-card__body">
-            <h2>UI<br />Gallery</h2>
-            <p>ボタンやスライダーなど、小さな操作部品を種類ごとに集めたギャラリー。</p>
+        <a class="collection-card" href="./ui-gallery/" data-collection="ui">
+          <div class="collection-card__surface">
+            <span class="collection-card__index">02</span>
+            <div class="collection-card__body">
+              <h2>UI<br />Gallery</h2>
+              <p>ボタンやスライダーなど、小さな操作部品を種類ごとに集めたギャラリー。</p>
+            </div>
+            <dl class="collection-card__meta">
+              <div>
+                <dt>Updated</dt>
+                <dd data-collection-date></dd>
+              </div>
+              <div>
+                <dt>Items</dt>
+                <dd data-collection-count></dd>
+              </div>
+            </dl>
+            <span class="collection-card__link">Open collection</span>
           </div>
-          <span class="collection-card__link">Open collection</span>
         </a>
       </section>
     </main>
     <footer class="index-footer">Motion &amp; UI / Motion and interface studies</footer>
+    <script type="module" src="/src/scripts/site-index.js"></script>
   </body>
 </html>
