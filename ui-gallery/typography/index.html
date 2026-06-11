@@ -11,7 +11,7 @@
       <nav class="gallery-nav" aria-label="UI gallery navigation">
         <a href="../">UI Gallery</a>
         <a href="../buttons/">Buttons</a>
-        <a href="../hover-intent/">Tooltips</a>
+        <a href="../tooltip-behavior/">Tooltips</a>
         <a class="is-current" href="./">Typography</a>
       </nav>
     </header>
@@ -38,9 +38,6 @@
           </div>
           <div class="study-actions">
             <button class="control-button" type="button" data-replay>Replay</button>
-            <button class="control-button control-button--filled" type="button" data-controls-open>
-              Tune
-            </button>
           </div>
         </header>
 
@@ -51,6 +48,41 @@
             data-character-reveal
             data-text="Small moments make&#10;the interface feel alive."
           ></h3>
+
+          <div class="gui-panel" aria-label="Animation settings">
+            <div class="gui-title">Character Fade</div>
+
+            <label class="gui-row">
+              <span class="gui-row__label">Initial color</span>
+              <input class="gui-row__color" type="color" value="#61e5c0" data-control="initialColor" />
+            </label>
+
+            <label class="gui-row">
+              <span class="gui-row__label">Final color</span>
+              <input class="gui-row__color" type="color" value="#083031" data-control="finalColor" />
+            </label>
+
+            <label class="gui-row">
+              <span class="gui-row__label">Duration</span>
+              <span class="gui-row__range">
+                <input type="range" min="100" max="1000" step="10" value="300" data-control="duration" />
+                <output data-output="duration">300ms</output>
+              </span>
+            </label>
+
+            <label class="gui-row">
+              <span class="gui-row__label">Stagger</span>
+              <span class="gui-row__range">
+                <input type="range" min="0" max="150" step="5" value="30" data-control="stagger" />
+                <output data-output="stagger">30ms</output>
+              </span>
+            </label>
+
+            <div class="gui-actions">
+              <button type="button" data-controls-reset>Reset</button>
+              <button type="button" data-controls-preview>Preview</button>
+            </div>
+          </div>
         </div>
 
         <dl class="motion-spec">
@@ -73,61 +105,6 @@
         </dl>
       </section>
     </main>
-
-    <dialog class="controls-dialog" data-controls-dialog aria-labelledby="controls-title">
-      <form class="controls-panel" method="dialog">
-        <header class="controls-panel__header">
-          <div>
-            <p class="section-index">Animation settings</p>
-            <h2 id="controls-title">Character Fade</h2>
-          </div>
-          <button class="controls-close" type="submit" value="close" aria-label="Close settings">
-            Close
-          </button>
-        </header>
-
-        <div class="controls-grid">
-          <label class="color-control">
-            <span>Initial color</span>
-            <span class="color-control__input">
-              <input type="color" value="#61e5c0" data-control="initialColor" />
-              <output data-output="initialColor">#61E5C0</output>
-            </span>
-          </label>
-
-          <label class="color-control">
-            <span>Final color</span>
-            <span class="color-control__input">
-              <input type="color" value="#083031" data-control="finalColor" />
-              <output data-output="finalColor">#083031</output>
-            </span>
-          </label>
-
-          <label class="range-control">
-            <span class="range-control__heading">
-              <span>Duration</span>
-              <output data-output="duration">300ms</output>
-            </span>
-            <input type="range" min="100" max="1000" step="10" value="300" data-control="duration" />
-          </label>
-
-          <label class="range-control">
-            <span class="range-control__heading">
-              <span>Stagger</span>
-              <output data-output="stagger">30ms</output>
-            </span>
-            <input type="range" min="0" max="150" step="5" value="30" data-control="stagger" />
-          </label>
-        </div>
-
-        <footer class="controls-panel__footer">
-          <button class="control-button" type="button" data-controls-reset>Reset</button>
-          <button class="control-button control-button--filled" type="button" data-controls-preview>
-            Preview
-          </button>
-        </footer>
-      </form>
-    </dialog>
 
     <footer class="gallery-footer">
       <span>Motion &amp; UI / UI Gallery</span>

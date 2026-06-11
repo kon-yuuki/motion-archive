@@ -142,7 +142,7 @@ main {
     color: $muted;
     font-size: 13px;
     line-height: 1.8;
-    margin: 24px 0 0;
+    margin: global.$card-title-gap 0 0;
     max-width: 310px;
   }
 }

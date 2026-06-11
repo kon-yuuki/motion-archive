@@ -150,7 +150,7 @@ const infoTitle = infoDialog.querySelector("[data-info-title]");
 const infoContents = [...infoDialog.querySelectorAll("[data-info-content]")];
 const infoClose = infoDialog.querySelector("[data-info-close]");
 const infoTitles = {
-  "hover-intent": "Hover Intent",
+  "tooltip-behavior": "Hover Intent",
   "edge-collision": "Edge Collision"
 };
 let infoTrigger = null;

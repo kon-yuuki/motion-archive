@@ -22,6 +22,8 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+$card-title-gap: 24px;
+
 :root {
   // Latin は Libre Franklin（自己ホスト・latin のみ）。
   // 日本語は Helvetica Neue に合わせた和文ゴシックへフォールバックさせる。

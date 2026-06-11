@@ -1,7 +1,5 @@
 const title = document.querySelector("[data-character-reveal]");
 const replay = document.querySelector("[data-replay]");
-const controlsDialog = document.querySelector("[data-controls-dialog]");
-const controlsOpen = document.querySelector("[data-controls-open]");
 const controlsReset = document.querySelector("[data-controls-reset]");
 const controlsPreview = document.querySelector("[data-controls-preview]");
 const controls = [...document.querySelectorAll("[data-control]")];
@@ -32,7 +30,7 @@ function splitText(element) {
       if (/^\s+$/.test(token)) {
         const space = document.createElement("span");
         space.className = "character-space";
-        space.textContent = "\u00a0";
+        space.textContent = " ";
         lineElement.append(space);
         return;
       }
@@ -54,7 +52,7 @@ function splitText(element) {
       if (tokenIndex < tokens.length - 1 && !/^\s+$/.test(tokens[tokenIndex + 1][0])) {
         const space = document.createElement("span");
         space.className = "character-space";
-        space.textContent = "\u00a0";
+        space.textContent = " ";
         lineElement.append(space);
       }
     });
@@ -85,8 +83,6 @@ function updateSettings() {
   title.style.setProperty("--character-duration", `${values.duration}ms`);
   title.style.setProperty("--character-stagger", `${values.stagger}ms`);
 
-  document.querySelector('[data-output="initialColor"]').value = values.initialColor.toUpperCase();
-  document.querySelector('[data-output="finalColor"]').value = values.finalColor.toUpperCase();
   document.querySelector('[data-output="duration"]').value = `${values.duration}ms`;
   document.querySelector('[data-output="stagger"]').value = `${values.stagger}ms`;
   specDuration.textContent = values.duration;
@@ -121,6 +117,5 @@ if (reducedMotion.matches) {
 
 replay.addEventListener("click", replayReveal);
 controls.forEach((control) => control.addEventListener("input", updateSettings));
-controlsOpen.addEventListener("click", () => controlsDialog.showModal());
 controlsReset.addEventListener("click", resetSettings);
 controlsPreview.addEventListener("click", replayReveal);

@@ -18,5 +18,6 @@ document.querySelectorAll("[data-collection]").forEach((card) => {
   const count = card.querySelector("[data-collection-count]");
 
   date.textContent = latestDate(items);
-  count.textContent = String(items.length).padStart(2, "0");
+  const total = items.reduce((sum, item) => sum + (item.count ?? 1), 0);
+  count.textContent = String(total).padStart(2, "0");
 });

@@ -329,9 +329,11 @@ a {
 
 // 内側：カード本体。テキストは行マスクで出すので、箱はフェードだけ。
 .work-tooltip__inner {
-  background: $black;
-  border-radius: 8px;
-  color: $paper;
+  background: $white;
+  border-radius: 10px;
+  border: 1px solid rgba($black, 0.06);
+  box-shadow: 0 8px 40px rgba($black, 0.02);
+  color: $black;
   font-size: 12px;
   line-height: 1.7;
   max-width: 300px;
