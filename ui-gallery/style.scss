@@ -171,6 +171,10 @@ main {
     transform: translateY(-3px);
   }
 
+  &:active {
+    transform: scale(0.98);
+  }
+
   &:focus-visible {
     outline: 2px solid $ink;
     outline-offset: 4px;

@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="ja">
   <head>
+    <meta name="description" content="カーソルの動きに合わせて墨が和紙の上で滲み広がる、WebGL の流体シミュレーション実験。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
-    <title>Fluid Animation / Motion Archive</title>
+    <title>Ink Bleed / Motion Archive</title>
   </head>
   <body>
     <nav class="experiment-nav" aria-label="Experiment navigation">
@@ -19,23 +20,25 @@
         <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
       </div>
     </nav>
-    <main class="experiment-stage fluid-stage" data-stage></main>
+    <main class="experiment-stage fluid-stage" data-stage>
+      <canvas class="fluid-canvas" data-fluid-canvas aria-hidden="true"></canvas>
+      <p class="fluid-hint" data-fluid-hint>Move your cursor to spread the ink</p>
+      <p class="fluid-fallback">この実験には WebGL2 対応のブラウザが必要です。</p>
+    </main>
     <aside class="experiment-meta" data-details>
-      <p class="experiment-meta__index">03 / 03 &middot; 2026.06.02</p>
-      <div class="experiment-meta__title">
-        <h1>Fluid Animation</h1>
-        <span class="experiment-status">WIP</span>
-      </div>
-      <p class="experiment-meta__description">画像の流体シミュレーションを外し、次の実験のために全画面を空の状態へ戻したページ。</p>
-      <div class="experiment-tags"><span>Blank</span><span>Reset</span></div>
+      <p class="experiment-meta__index">03 / 05 &middot; 2026.06.10</p>
+      <h1>Ink Bleed</h1>
+      <p class="experiment-meta__description">カーソルの動きを流れの力に変換し、墨が和紙の上で滲み広がる様子を再現した WebGL の流体シミュレーション実験。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>GLSL</span><span>Fluid</span><span>Pointer</span></div>
       <div class="experiment-actions">
         <button class="replay" data-replay>Reset</button>
+        <a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation" target="_blank" rel="noreferrer">Reference URL</a>
       </div>
     </aside>
     <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
       <div class="tech-note__panel">
         <p class="tech-note__eyebrow">Technical memo</p>
-        <h2 id="tech-note-title">Fluid Animation</h2>
+        <h2 id="tech-note-title">Ink Bleed</h2>
         <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" />
@@ -43,15 +46,20 @@
         </button>
         <div class="tech-note__body">
           <section class="tech-note__section">
-            <h3>State</h3>
-            <p>画像、canvas、WebGL shader、流体シミュレーションの処理をすべて取り外した。</p>
+            <h3>水の流れを計算する</h3>
+            <p>流体の動きを記述するナビエ・ストークス方程式を、画面を細かい格子に区切って近似的に解く。各格子に「どの向きへどれだけ流れているか（速度）」を持たせ、毎フレーム更新することで水のような動きを作る。</p>
           </section>
           <section class="tech-note__section">
-            <h3>Remaining shell</h3>
-            <ul>
-              <li>詳細パネルと技術メモの開閉だけを残している。</li>
-              <li>表示面は背景色のみの空のステージ。</li>
-            </ul>
+            <h3>カーソルを力に変える</h3>
+            <p>カーソルの移動量をその場の流れに加える力として注入し、同時に同じ位置へ墨の濃さを足す。動かすほど強い流れが生まれ、墨が水に押し流されるように広がる。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>墨を流れに乗せて運ぶ</h3>
+            <p>各格子の墨を、そこにある流れの向きへ少しずつ移動させる（移流）。これを繰り返すことで、墨が滲んで尾を引きながら混ざっていく。墨の濃さは時間とともに少しずつ薄れる。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>渦を足して滲みを豊かにする</h3>
+            <p>流れの回転成分（渦度）を検出し、その渦を強める力を加える。これにより墨の縁が枝分かれし、紙に染み込むような有機的な滲みになる。表示は和紙の地色に墨の濃さを重ねて描く。</p>
           </section>
         </div>
       </div>

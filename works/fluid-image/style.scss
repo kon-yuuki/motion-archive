@@ -1,19 +1,68 @@
 :root {
-  --shell-text: #f8faf8;
-  --shell-muted: rgba(248, 250, 248, 0.68);
-  --shell-chip: rgba(7, 9, 10, 0.52);
-  --shell-line: rgba(248, 250, 248, 0.18);
-  --shell-panel: rgba(8, 10, 11, 0.78);
-  --fluid-ring: rgba(248, 250, 248, 0.24);
+  // 和紙に墨：シェルは濃色テキストの明るいテーマ
+  --shell-text: #1a1712;
+  --shell-muted: rgba(26, 23, 18, 0.6);
+  --shell-chip: rgba(244, 237, 225, 0.62);
+  --shell-line: rgba(26, 23, 18, 0.16);
+  --shell-panel: rgba(245, 239, 228, 0.86);
+  --ink-ring: rgba(26, 23, 18, 0.28);
 }
 
 body {
-  background: #08090a;
+  background: #f3eddf;
 }
 
 .fluid-stage {
-  background: #08090a;
+  background: #f3eddf;
+  cursor: crosshair;
   min-height: 100svh;
+}
+
+.fluid-canvas {
+  display: block;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.fluid-hint {
+  bottom: clamp(28px, 5vh, 56px);
+  color: var(--shell-muted);
+  font-size: 11px;
+  left: 50%;
+  letter-spacing: 0.22em;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  transition: opacity 600ms ease;
+}
+
+.fluid-fallback {
+  color: var(--shell-muted);
+  display: none;
+  font-size: 13px;
+  inset: 0;
+  margin: auto;
+  max-width: 280px;
+  place-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.fluid-stage[data-unsupported] {
+  .fluid-canvas,
+  .fluid-hint {
+    display: none;
+  }
+
+  .fluid-fallback {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .experiment-nav__brand,
@@ -21,11 +70,11 @@ body {
 .detail-toggle,
 .memo-toggle,
 .replay {
-  border-radius: 8px;
   transition:
     background 160ms ease,
     border-color 160ms ease,
-    box-shadow 160ms ease;
+    box-shadow 160ms ease,
+    transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .experiment-nav__brand:hover,
@@ -33,8 +82,8 @@ body {
 .detail-toggle:hover,
 .memo-toggle:hover,
 .replay:hover {
-  background: rgba(18, 21, 22, 0.72);
-  border-color: rgba(248, 250, 248, 0.3);
+  background: rgba(255, 252, 245, 0.82);
+  border-color: rgba(26, 23, 18, 0.32);
 }
 
 .experiment-nav__brand:focus-visible,
@@ -42,21 +91,15 @@ body {
 .detail-toggle:focus-visible,
 .memo-toggle:focus-visible,
 .replay:focus-visible {
-  box-shadow: 0 0 0 3px var(--fluid-ring);
+  box-shadow: 0 0 0 3px var(--ink-ring);
   outline: 0;
 }
 
 .experiment-meta {
-  border-radius: 8px;
-  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.24);
-}
-
-.experiment-tags span {
-  background: rgba(248, 250, 248, 0.08);
-  border-radius: 6px;
+  box-shadow: 0 18px 54px rgba(40, 30, 16, 0.16);
 }
 
 .replay {
-  background: rgba(248, 250, 248, 0.1);
-  color: #f8faf8;
+  background: rgba(26, 23, 18, 0.08);
+  color: var(--shell-text);
 }

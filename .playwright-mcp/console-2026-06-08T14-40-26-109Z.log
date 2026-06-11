@@ -1,0 +1,17 @@
+[ 3271675ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:5174/@vite/client:963
+[ 3563173ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:5174/@vite/client:963
+[ 4062973ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js:23
+[ 4147039ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933772931:26
+[ 4147311ms] InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D': The image argument is a canvas element with a width or height of 0.
+    at drawPixelatedImage (http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933772931:79:11)
+    at render (http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933772931:355:5)
+[ 4179206ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933772931:26
+[ 4233374ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933859369:25
+[ 4245378ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933871374:25
+[ 4272962ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933871374:25
+[ 4367697ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933993687:25
+[ 4397243ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780933993687:25
+[ 4453252ms] [LOG] [pixel-glitch] {id: dummy_1, index: 1, triggered: true} @ http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780934079117:19
+[ 4453257ms] InvalidStateError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D': The image argument is a canvas element with a width or height of 0.
+    at drawPixelatedImage (http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780934079117:72:11)
+    at render (http://127.0.0.1:5174/works/pixel-glitch/script.js?t=1780934079117:144:5)

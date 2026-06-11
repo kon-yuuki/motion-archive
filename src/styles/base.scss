@@ -51,7 +51,7 @@ a {
     color: $muted;
     font-size: 13px;
     letter-spacing: 0.08em;
-    transition: color 180ms ease;
+    transition: color 180ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
 
     &:hover,
     &.is-current {
@@ -134,8 +134,9 @@ a {
   border-bottom: 1px solid $line;
   display: grid;
   gap: 20px;
-  grid-template-columns: 92px minmax(250px, 1fr) minmax(360px, 420px) 80px;
+  grid-template-columns: 92px minmax(250px, 1fr) minmax(360px, 420px);
   min-height: 92px;
+  position: relative;
   transition: background 220ms ease, padding 220ms ease;
 
   &:hover {
@@ -157,6 +158,19 @@ a {
   font-size: clamp(25px, 3vw, 32px);
   font-weight: 400;
   letter-spacing: -0.06em;
+
+  // 行全体をクリック可能にする（タグは前面に出して個別クリックを維持）
+  &::after {
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: 0;
+  }
+}
+
+.tag-group {
+  position: relative;
+  z-index: 1;
 }
 
 .status-badge {
@@ -188,14 +202,14 @@ a {
   letter-spacing: 0.1em;
   padding: 8px 13px;
   text-transform: uppercase;
-}
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease,
+    transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
 
-.work-row__arrow {
-  color: $muted;
-  font-size: 11px;
-  justify-self: end;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  &:hover {
+    background: $black;
+    border-color: $black;
+    color: $white;
+  }
 }
 
 .page {
@@ -300,6 +314,51 @@ a {
   .status-badge {
     border-color: $black;
     color: $black;
+  }
+}
+
+// 外側：位置決め専用（JS が transform で追従させる）
+.work-tooltip {
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  will-change: transform;
+  z-index: 80;
+}
+
+// 内側：カード本体。テキストは行マスクで出すので、箱はフェードだけ。
+.work-tooltip__inner {
+  background: $black;
+  border-radius: 8px;
+  color: $paper;
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 300px;
+  opacity: 0;
+  padding: 12px 15px;
+  transition: opacity 160ms ease;
+
+  .work-tooltip[data-visible] & {
+    opacity: 1;
+  }
+}
+
+// 行マスク：各行を切り取り、中身を下から立ち上げて出現させる。
+.work-tooltip__line {
+  display: block;
+  overflow: hidden;
+}
+
+.work-tooltip__line-inner {
+  display: block;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-tooltip__inner {
+    transition: opacity 120ms ease;
   }
 }
 

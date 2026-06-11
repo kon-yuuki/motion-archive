@@ -2,6 +2,14 @@ function categorySlug(value) {
   return value.toLowerCase().replaceAll(" ", "-");
 }
 
+function escapeAttr(value = "") {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 function categoryTag(tag, type, categoryPrefix) {
   const href = `${categoryPrefix}#${type}-${categorySlug(tag)}`;
 
@@ -22,11 +30,10 @@ export function statusBadge(work) {
 
 export function workRow(work, prefix, index = 0, categoryPrefix = "./categories/") {
   return `
-    <article class="work-row">
+    <article class="work-row" data-description="${escapeAttr(work.description)}">
       <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
       <a class="work-row__title" href="${prefix}${work.slug}/">${work.title}${statusBadge(work)}</a>
       <span class="tag-group">${tags(work, categoryPrefix)}</span>
-      <a class="work-row__arrow" href="${prefix}${work.slug}/">Open</a>
     </article>
   `;
 }

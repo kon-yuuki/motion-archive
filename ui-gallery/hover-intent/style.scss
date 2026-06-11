@@ -1,0 +1,284 @@
+@use "../../src/styles/global";
+
+$ink: #141515;
+$muted: #777872;
+$line: #dcdcd5;
+$paper: #f5f4ef;
+$card: #fffefa;
+$accent: #d9ff64;
+$bad: #d64541;
+$good: #2f7d4f;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: $paper;
+}
+
+body {
+  background: $paper;
+  color: $ink;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- gallery chrome ----------------------------------------------------- */
+.gallery-header {
+  align-items: center;
+  border-bottom: 1px solid $line;
+  display: flex;
+  height: 72px;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 5vw, 64px);
+}
+
+.gallery-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.gallery-nav {
+  align-items: center;
+  display: flex;
+  gap: 28px;
+
+  a {
+    color: $muted;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .is-current {
+    color: $ink;
+  }
+}
+
+main {
+  padding: 0 clamp(24px, 5vw, 64px) clamp(80px, 10vw, 140px);
+}
+
+.eyebrow,
+.section-index {
+  color: $muted;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.gallery-hero {
+  padding: clamp(56px, 9vh, 96px) 0 clamp(40px, 6vw, 64px);
+
+  h1 {
+    font-size: clamp(48px, 7vw, 84px);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin: 18px 0 0;
+  }
+}
+
+.gallery-section {
+  border-top: 1px solid $line;
+  padding: 20px 0 48px;
+}
+
+.section-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 6px 0 0;
+  }
+}
+
+.gallery-footer {
+  border-top: 1px solid $line;
+  color: $muted;
+  display: flex;
+  font-size: 10px;
+  justify-content: space-between;
+  letter-spacing: 0.18em;
+  margin: 0 clamp(24px, 5vw, 64px);
+  padding: 24px 0 32px;
+  text-transform: uppercase;
+}
+
+/* --- verdict badge ------------------------------------------------------ */
+.verdict {
+  border-radius: 999px;
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 7px 13px;
+  text-transform: uppercase;
+}
+
+.verdict--bad {
+  background: rgba($bad, 0.1);
+  border: 1px solid rgba($bad, 0.5);
+  color: $bad;
+}
+
+.verdict--good {
+  background: $accent;
+  border: 1px solid $ink;
+  color: $ink;
+}
+
+/* --- demo stage --------------------------------------------------------- */
+// 余分な余白を作らず、ツールチップはボタンの下に出す（タイトル/判定とデモを近づける）
+.intent-stage {
+  overflow: visible;
+  padding: 0 0 64px;
+  position: relative;
+}
+
+.intent-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.intent-target {
+  background: #fff;
+  border: 1px solid rgba($ink, 0.16);
+  border-radius: 8px;
+  color: $ink;
+  cursor: default;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  min-height: 46px;
+  padding: 0 20px;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease,
+    transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    background: $accent;
+    border-color: $ink;
+    box-shadow: 0 2px 8px rgba(20, 21, 21, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ink;
+    outline-offset: 3px;
+  }
+}
+
+/* --- tooltip ------------------------------------------------------------ */
+.intent-tip {
+  background: $ink;
+  border-radius: 8px;
+  color: $paper;
+  font-size: 12px;
+  left: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  max-width: 240px;
+  opacity: 0;
+  padding: 9px 12px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, calc(-100% - 14px)) translateY(4px);
+  transition:
+    opacity 140ms ease,
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    left 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    top 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  z-index: 5;
+
+  // 吹き出しの三角
+  &::after {
+    border: 6px solid transparent;
+    border-top-color: $ink;
+    bottom: -11px;
+    content: "";
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+  }
+
+  &[data-open] {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 10px)) translateY(0);
+  }
+}
+
+@media (max-width: 860px) {
+  .gallery-hero {
+    display: block;
+
+    h1 {
+      margin-top: 48px;
+    }
+  }
+
+  .gallery-hero__copy {
+    margin: 48px 0 0;
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery-header {
+    height: auto;
+    padding-block: 20px;
+  }
+
+  .gallery-nav {
+    gap: 14px;
+  }
+
+  .gallery-hero h1 {
+    font-size: 26vw;
+  }
+
+  .intent-tip {
+    white-space: normal;
+  }
+
+  .gallery-footer {
+    display: block;
+
+    a {
+      display: block;
+      margin-top: 14px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intent-tip {
+    transition: opacity 120ms ease;
+    transform: translate(-50%, calc(-100% - 10px));
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

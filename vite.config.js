@@ -23,6 +23,7 @@ export default defineConfig({
         categories: resolve(__dirname, "categories/index.html"),
         "ui-gallery": resolve(__dirname, "ui-gallery/index.html"),
         "ui-gallery-buttons": resolve(__dirname, "ui-gallery/buttons/index.html"),
+        "ui-gallery-hover-intent": resolve(__dirname, "ui-gallery/hover-intent/index.html"),
         "green-marble": resolve(__dirname, "works/green-marble/index.html"),
         "fluid-image": resolve(__dirname, "works/fluid-image/index.html"),
         "pixel-glitch": resolve(__dirname, "works/pixel-glitch/index.html"),

@@ -28,15 +28,14 @@ export const works = [
   },
   {
     slug: "fluid-image",
-    title: "Fluid Animation",
-    status: "WIP",
-    date: "2026.06.02",
-    description: "画像の流体シミュレーションを外し、次の実験のために全画面を空の状態へ戻したページ。",
-    techniques: ["CSS"],
-    expressions: ["Background"],
+    title: "Ink Bleed",
+    date: "2026.06.10",
+    description: "カーソルの動きを流れの力に変換し、墨が和紙の上で滲み広がる様子を再現した WebGL の流体シミュレーション実験。",
+    techniques: ["WebGL", "JavaScript"],
+    expressions: ["Background", "Hover"],
     reference: {
-      label: "Motion Archive",
-      url: "./works/fluid-image/"
+      label: "PavelDoGreat: WebGL Fluid Simulation",
+      url: "https://github.com/PavelDoGreat/WebGL-Fluid-Simulation"
     }
   },
   {
@@ -68,6 +67,6 @@ export const works = [
 ];
 
 export const categories = {
-  techniques: ["CSS", "JavaScript", "SVG", "Canvas"],
+  techniques: ["CSS", "JavaScript", "SVG", "Canvas", "WebGL"],
   expressions: ["Text", "Hover", "Loading", "Background", "Scroll", "Transition", "Image"]
 };

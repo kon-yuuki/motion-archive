@@ -1,5 +1,33 @@
+// フォントは自己ホストし、レンダーブロッキングな外部CSSの往復をなくす。
+// font-display: swap でフォールバック表示→差し替えとし、FOIT を防ぐ。
+@font-face {
+  font-family: "Libre Franklin";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/src/assets/fonts/libre-franklin-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Libre Franklin";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/src/assets/fonts/libre-franklin-latin-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  --font-sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  // Latin は Libre Franklin（自己ホスト・latin のみ）。
+  // 日本語は Helvetica Neue に合わせた和文ゴシックへフォールバックさせる。
+  --font-sans: "Libre Franklin", "Helvetica Neue", Helvetica, Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic",
+    Meiryo, sans-serif;
 }
 
 body {
@@ -13,4 +41,23 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+// クリック時の押し込みフィードバック：押下中はクリック領域をわずかに縮める。
+// 独自の transition を持つ要素には、各所で transform を追記して滑らかにしている。
+a,
+button {
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a:active,
+button:active {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:active,
+  button:active {
+    transform: none;
+  }
 }
