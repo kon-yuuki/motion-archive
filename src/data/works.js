@@ -1,7 +1,21 @@
 import dummy1 from "../assets/images/dummy_1.png";
 import dummy2 from "../assets/images/dummy_2.png";
+import dummy4 from "../assets/images/dummy_4.png";
 
 export const works = [
+  {
+    slug: "image-wipe-grid",
+    title: "Image Wipe Grid",
+    thumbnail: dummy4,
+    date: "2026.06.13",
+    description: "カバーを横へ退かせながら、下の画像を逆方向の移動とズームから定位置へ収束させる商品一覧向けのスクロールリビール。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Image", "Hover"],
+    reference: {
+      label: "OUTFIT by ++hellohello",
+      url: "https://outfit.hellohello.is/"
+    }
+  },
   {
     slug: "scroll-type-reveal",
     title: "Scroll Type Reveal",

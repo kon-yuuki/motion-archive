@@ -1,4 +1,6 @@
 import { bindReplay } from "../_shared/detail-shell.js";
+import { easingFunctions } from "../../src/scripts/easing-functions.js";
+import { initSmoothScroll } from "../../src/scripts/smooth-scroll.js";
 import { initGlassScene } from "./glass-scene.js";
 
 const story = document.querySelector("[data-story]");
@@ -8,6 +10,10 @@ const progressLabel = document.querySelector("[data-progress-label]");
 const sceneNumber = document.querySelector("[data-scene-number]");
 const jumpStart = document.querySelector("[data-jump-start]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const smoothScroll = initSmoothScroll({
+  lerp: 0.07,
+  wheelMultiplier: 0.85
+});
 const lines = [];
 const glassScene = initGlassScene({
   canvas: document.querySelector("[data-glass-scene]"),
@@ -41,10 +47,6 @@ function clamp(value, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
-function easeOutCubic(value) {
-  return 1 - (1 - value) ** 3;
-}
-
 function update() {
   frame = 0;
 
@@ -69,10 +71,10 @@ function update() {
 
     characters.forEach((character, index) => {
       const offset = (index / Math.max(1, characters.length - 1)) * stagger;
-      const enter = easeOutCubic(
+      const enter = easingFunctions.easeOutCubic(
         clamp((local - enterStart - offset) / (enterEnd - enterStart - stagger))
       );
-      const exit = easeOutCubic(
+      const exit = easingFunctions.easeOutCubic(
         clamp((local - exitStart - offset) / (exitEnd - exitStart - stagger))
       );
       const opacity = enter * (1 - exit);
@@ -105,16 +107,16 @@ function requestUpdate() {
 }
 
 function scrollToStory() {
-  window.scrollTo({
-    top: story?.offsetTop ?? 0,
-    behavior: reducedMotion.matches ? "auto" : "smooth"
+  smoothScroll.scrollTo(story ?? 0, {
+    duration: 1.5,
+    lock: true
   });
 }
 
 splitText();
 update();
 
-window.addEventListener("scroll", requestUpdate, { passive: true });
+smoothScroll.onScroll(requestUpdate);
 window.addEventListener("resize", requestUpdate);
 reducedMotion.addEventListener("change", requestUpdate);
 jumpStart?.addEventListener("click", scrollToStory);

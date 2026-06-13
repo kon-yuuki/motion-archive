@@ -370,7 +370,7 @@ body {
 }
 
 .pie-chart[data-replaying] {
-  animation: reveal-chart 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: reveal-chart 900ms var(--ease-out-quint);
 }
 
 @keyframes reveal-chart {

@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "video:edge-collision": "node scripts/record-edge-collision.mjs",
     "video:hover-intent": "node scripts/record-hover-intent.mjs",
-    "video:pie-chart": "node scripts/record-css-pie-chart-full.mjs"
+    "video:pie-chart": "node scripts/record-css-pie-chart-full.mjs",
+    "video:typography-gui": "node scripts/record-typography-gui.mjs"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -18,6 +19,7 @@
     "vite": "^6.1.0"
   },
   "dependencies": {
+    "lenis": "^1.3.23",
     "three": "^0.184.0"
   }
 }

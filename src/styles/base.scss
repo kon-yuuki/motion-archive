@@ -51,7 +51,7 @@ a {
     color: $muted;
     font-size: 13px;
     letter-spacing: 0.08em;
-    transition: color 180ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 180ms ease, transform 150ms var(--ease-out-expo);
 
     &:hover,
     &.is-current {
@@ -203,7 +203,7 @@ a {
   padding: 8px 13px;
   text-transform: uppercase;
   transition: border-color 180ms ease, color 180ms ease, background 180ms ease,
-    transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform 150ms var(--ease-out-expo);
 
   &:hover {
     background: $black;

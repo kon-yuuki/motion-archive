@@ -49,8 +49,13 @@
             data-text="Small moments make&#10;the interface feel alive."
           ></h3>
 
-          <div class="gui-panel" aria-label="Animation settings">
-            <div class="gui-title">Character Fade</div>
+          <div class="gui-panel" data-draggable-panel aria-label="Animation settings">
+            <div
+              class="gui-title"
+              data-drag-handle
+              tabindex="0"
+              aria-label="Drag to move Character Fade settings"
+            >Character Fade</div>
 
             <label class="gui-row">
               <span class="gui-row__label">Initial color</span>

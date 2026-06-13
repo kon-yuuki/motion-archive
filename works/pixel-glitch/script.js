@@ -1,4 +1,11 @@
 import { bindReplay } from "../_shared/detail-shell.js";
+import { easingFunctions } from "../../src/scripts/easing-functions.js";
+import { initSmoothScroll } from "../../src/scripts/smooth-scroll.js";
+
+initSmoothScroll({
+  lerp: 0.075,
+  wheelMultiplier: 0.88
+});
 
 const panels = [...document.querySelectorAll("[data-glitch-panel]")];
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -129,8 +136,8 @@ function animateGlitch(panel, entryState) {
   canvas.style.opacity = "1";
 
   const render = (time) => {
-    const progress = Math.min((time - startTime) / duration, 1);
-    const eased = 1 - (1 - progress) ** 3;
+    const progress = Math.max(0, Math.min((time - startTime) / duration, 1));
+    const eased = easingFunctions.easeOutCubic(progress);
     const blockIndex = Math.min(blockSizes.length - 1, Math.floor(eased * blockSizes.length));
     const flickerStep = Math.floor(progress * 18);
     const { height, width } = resizeCanvas(canvas);
@@ -155,14 +162,21 @@ function animateGlitch(panel, entryState) {
     context.clearRect(0, 0, width, height);
   };
 
-  if (image.complete) {
+  if (image.complete && image.naturalWidth > 0 && image.naturalHeight > 0) {
     entryState.animationFrame = requestAnimationFrame(render);
     return;
   }
 
-  image.addEventListener("load", () => {
-    entryState.animationFrame = requestAnimationFrame(render);
-  }, { once: true });
+  image.decode()
+    .then(() => {
+      entryState.animationFrame = requestAnimationFrame(render);
+    })
+    .catch(() => {
+      panel.dataset.glitching = "false";
+      panel.dataset.revealed = "true";
+      image.style.opacity = "1";
+      canvas.style.opacity = "0";
+    });
 }
 
 function triggerPanel(panel, entryState) {

@@ -1,3 +1,11 @@
+import { initSmoothScroll } from "../../src/scripts/smooth-scroll.js";
+import { initDraggablePanels } from "../../src/scripts/draggable-panel.js";
+
+initSmoothScroll({
+  lerp: 0.08,
+  wheelMultiplier: 0.9
+});
+
 const title = document.querySelector("[data-character-reveal]");
 const replay = document.querySelector("[data-replay]");
 const controlsReset = document.querySelector("[data-controls-reset]");
@@ -99,6 +107,7 @@ function resetSettings() {
 }
 
 splitText(title);
+initDraggablePanels();
 
 if (reducedMotion.matches) {
   reveal();

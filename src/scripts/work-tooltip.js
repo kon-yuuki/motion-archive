@@ -1,3 +1,5 @@
+import { easingCss } from "./easing-functions.js";
+
 // 一覧の各行にホバーで説明文ツールチップを出す。
 // - 最初の行は約0.2秒の遅延で表示
 // - 表示中に行から行へ移動したときは遅延なしで即切り替え
@@ -115,7 +117,7 @@ function reveal(text) {
       {
         duration: 520,
         delay: index * 55,
-        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        easing: easingCss.easeOutExpo,
         fill: "backwards"
       }
     );
