@@ -1,14 +1,13 @@
 import "../_shared/detail-shell.js";
+import image1 from "../../src/assets/images/optimized/dummy_1-480.webp";
+import image2 from "../../src/assets/images/optimized/dummy_2-480.webp";
+import image3 from "../../src/assets/images/optimized/dummy_3-480.webp";
+import image4 from "../../src/assets/images/optimized/dummy_4-480.webp";
 
 const stage = document.querySelector("[data-burst-stage]");
 const layer = document.querySelector("[data-burst-layer]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const images = [
-  "../../src/assets/images/optimized/dummy_1-480.webp",
-  "../../src/assets/images/optimized/dummy_2-480.webp",
-  "../../src/assets/images/optimized/dummy_3-480.webp",
-  "../../src/assets/images/optimized/dummy_4-480.webp"
-];
+const images = [image1, image2, image3, image4];
 let last = null;
 let imageIndex = 0;
 
