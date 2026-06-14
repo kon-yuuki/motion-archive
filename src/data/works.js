@@ -60,7 +60,6 @@ export const works = [
     title: "Cursor Image Burst",
     thumbnail: "/thumbnails/cursor-image-burst.jpg",
     date: "2026.06.14",
-    status: "WIP",
     description: "カーソルの軌跡に沿って画像カードを短く生成し、回転とフェードでポップに消していくポインタ演出。",
     techniques: ["JavaScript", "CSS"],
     expressions: ["Hover", "Image", "Transition"],
