@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
+    <meta name="description" content="スクロール進入をきっかけに画像へピクセルグリッチを加えるモーション実験。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
     <title>Pixel Glitch / Motion Archive</title>
@@ -9,7 +10,7 @@
     <nav class="experiment-nav" aria-label="Experiment navigation">
       <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
       <div class="experiment-nav__links">
-        <a class="experiment-nav__link" href="../">All Works</a>
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
         <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M7 4h7l3 3v13H7z" stroke="currentColor" stroke-linejoin="round" />
@@ -20,20 +21,44 @@
       </div>
     </nav>
     <main class="experiment-stage pixel-stage" data-stage>
+      <header class="pixel-hero">
+        <p class="pixel-hero__eyebrow">Scroll experiment / 02</p>
+        <h1><span>Pixel</span><span>Glitch</span></h1>
+        <div class="pixel-hero__footer">
+          <p>Images resolve<br />from noise to clarity.</p>
+          <p>Scroll to<br />activate</p>
+        </div>
+      </header>
       <section class="pixel-stack" aria-label="Pixel glitch image sequence">
         <figure class="pixel-panel" data-glitch-panel data-glitch-id="dummy_1">
-          <img src="/src/assets/images/dummy_1.png" alt="" />
+          <div class="pixel-panel__media">
+            <img src="/src/assets/images/optimized/dummy_1-1024.webp" width="1024" height="1024" alt="" />
+          </div>
+          <figcaption><span>01</span><span>Living / Daylight</span></figcaption>
         </figure>
         <figure class="pixel-panel" data-glitch-panel data-glitch-id="dummy_2">
-          <img src="/src/assets/images/dummy_2.png" alt="" />
+          <div class="pixel-panel__media">
+            <img src="/src/assets/images/optimized/dummy_2-1024.webp" width="1024" height="1024" alt="" />
+          </div>
+          <figcaption><span>02</span><span>Interior / Garden</span></figcaption>
         </figure>
         <figure class="pixel-panel" data-glitch-panel data-glitch-id="dummy_3">
-          <img src="/src/assets/images/dummy_3.png" alt="" />
+          <div class="pixel-panel__media">
+            <img src="/src/assets/images/optimized/dummy_3-800.webp" width="1024" height="1024" alt="" />
+          </div>
+          <figcaption><span>03</span><span>Lobby / Neutral</span></figcaption>
         </figure>
         <figure class="pixel-panel" data-glitch-panel data-glitch-id="dummy_4">
-          <img src="/src/assets/images/dummy_4.png" alt="" />
+          <div class="pixel-panel__media">
+            <img src="/src/assets/images/optimized/dummy_4-1024.webp" width="1024" height="1024" alt="" />
+          </div>
+          <figcaption><span>04</span><span>Suite / Evening</span></figcaption>
         </figure>
       </section>
+      <footer class="pixel-outro" aria-hidden="true">
+        <p>Signal complete</p>
+        <span>04 / 04</span>
+      </footer>
     </main>
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">02 / 02 &middot; 2026.06.02</p>
@@ -41,13 +66,12 @@
       <p class="experiment-meta__description">画像が画面内に入ったタイミングを検知して、ピクセルグリッチ演出の発火フラグを立てるスクロール実験。</p>
       <div class="experiment-tags"><span>JavaScript</span><span>Scroll</span><span>Image</span><span>Glitch</span></div>
       <div class="experiment-actions">
-        <button class="replay" data-replay>Replay Logs</button>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noreferrer">Reference URL</a>
+        <a class="experiment-reference-link" href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noreferrer" aria-label="参照サイトを見る（新しいタブで開きます）">参照サイトを見る <span aria-hidden="true">↗</span></a>
       </div>
     </aside>
     <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
       <div class="tech-note__panel">
-        <p class="tech-note__eyebrow">Technical memo</p>
+        <p class="tech-note__eyebrow">技術メモ</p>
         <h2 id="tech-note-title">Pixel Glitch</h2>
         <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -56,15 +80,15 @@
         </button>
         <div class="tech-note__body">
           <section class="tech-note__section">
-            <h3>Trigger</h3>
+            <h3>表示領域への進入を検知する</h3>
             <p>各画像を IntersectionObserver で監視し、viewport の上下 10% を除いた領域へ入ったタイミングで一度だけ発火させる。</p>
           </section>
           <section class="tech-note__section">
-            <h3>Canvas pass</h3>
+            <h3>キャンバスで画像を段階的に描画する</h3>
             <p>画像の上に canvas を重ね、低解像度の scratch canvas に描いた画像を拡大して、大きいピクセルから細かいピクセルへ段階的に変化させる。</p>
           </section>
           <section class="tech-note__section">
-            <h3>Glitch texture</h3>
+            <h3>グリッチの質感を作る</h3>
             <ul>
               <li>前半だけ横方向のスライスずれを入れる。</li>
               <li>終盤のフラッシュは止めて、静かに通常画像へ戻す。</li>

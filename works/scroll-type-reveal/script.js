@@ -1,7 +1,6 @@
 import { bindReplay } from "../_shared/detail-shell.js";
 import { easingFunctions } from "../../src/scripts/easing-functions.js";
 import { initSmoothScroll } from "../../src/scripts/smooth-scroll.js";
-import { initGlassScene } from "./glass-scene.js";
 
 const story = document.querySelector("[data-story]");
 const textNodes = [...document.querySelectorAll("[data-reveal-text]")];
@@ -15,17 +14,31 @@ const smoothScroll = initSmoothScroll({
   wheelMultiplier: 0.85
 });
 const lines = [];
-const glassScene = initGlassScene({
-  canvas: document.querySelector("[data-glass-scene]"),
-  reducedMotion
-});
+let glassScene = null;
 let frame = 0;
+
+const loadGlassScene = async () => {
+  const { initGlassScene } = await import("./glass-scene.js");
+  glassScene = initGlassScene({
+    canvas: document.querySelector("[data-glass-scene]"),
+    reducedMotion
+  });
+};
+
+if ("requestIdleCallback" in window) {
+  window.requestIdleCallback(loadGlassScene, { timeout: 1200 });
+} else {
+  window.setTimeout(loadGlassScene, 300);
+}
 
 function splitText() {
   textNodes.forEach((line) => {
     const text = line.dataset.revealText ?? "";
     const characters = [];
-    line.setAttribute("aria-label", text);
+    const accessibleText = document.createElement("span");
+    accessibleText.className = "type-line__sr-only";
+    accessibleText.textContent = text;
+    line.append(accessibleText);
 
     [...text].forEach((character) => {
       const span = document.createElement("span");

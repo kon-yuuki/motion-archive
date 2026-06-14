@@ -1,7 +1,7 @@
 @use "./global";
 
 $black: #121313;
-$muted: #777772;
+$muted: #696964;
 $line: #deddd7;
 $paper: #f6f5f0;
 $white: #fffefa;
@@ -27,6 +27,67 @@ a {
   text-decoration: none;
 }
 
+.line-link {
+  color: inherit;
+  display: inline-flex;
+  line-height: 1.4;
+  min-height: 0;
+  position: relative;
+  width: fit-content;
+
+  .line-link__underline {
+    bottom: -2px;
+    content: "";
+    height: 1px;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  .line-link__line {
+    background: currentColor;
+    display: block;
+    height: 100%;
+    transform: translateX(0) scaleX(0);
+    transform-origin: left center;
+    width: 100%;
+  }
+
+  &.is-line-entering .line-link__line {
+    animation: line-link-enter var(--line-link-enter-duration, 360ms) ease-in-out forwards;
+  }
+
+  &.is-line-leaving .line-link__line {
+    animation: line-link-leave 360ms ease-in-out forwards;
+  }
+
+  &:focus-visible {
+    outline: 0;
+  }
+}
+
+@keyframes line-link-enter {
+  from {
+    transform: translateX(0) scaleX(var(--line-link-from-scale, 0));
+  }
+
+  to {
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes line-link-leave {
+  from {
+    transform: translateX(0) scaleX(var(--line-link-from-scale, 1));
+  }
+
+  to {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
 .site-header {
   align-items: center;
   border-bottom: 1px solid $line;
@@ -36,10 +97,13 @@ a {
   padding: 0 clamp(32px, 5vw, 64px);
 }
 
-.brand {
-  font-size: 14px;
+.site-brand {
+  align-items: center;
+  display: inline-flex;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
+  min-height: 44px;
   text-transform: uppercase;
 }
 
@@ -48,9 +112,12 @@ a {
   gap: 32px;
 
   a {
+    align-items: center;
     color: $muted;
+    display: inline-flex;
     font-size: 13px;
     letter-spacing: 0.08em;
+    min-height: 44px;
     transition: color 180ms ease, transform 150ms var(--ease-out-expo);
 
     &:hover,
@@ -70,9 +137,9 @@ a {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(520px, 1fr) 340px;
-  min-height: min(70vh, 730px);
-  padding: clamp(60px, 9vh, 110px) clamp(32px, 5vw, 64px) 60px;
+  grid-template-columns: minmax(460px, 1fr) 340px;
+  min-height: min(68vh, 680px);
+  padding: clamp(72px, 11vh, 120px) clamp(32px, 5vw, 64px) 68px;
 
   .eyebrow {
     grid-column: 1 / -1;
@@ -80,12 +147,21 @@ a {
 
   h1 {
     align-self: end;
-    font-size: clamp(112px, 16vw, 240px);
-    font-weight: 400;
+    font-size: clamp(72px, 10vw, 150px);
+    font-weight: 460;
     grid-column: 1;
-    letter-spacing: -0.085em;
-    line-height: 0.84;
-    margin: 42px 0 0;
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+    margin: clamp(58px, 8vh, 88px) 0 0;
+    width: fit-content;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  h1 span:last-child {
+    margin-left: 0.78em;
   }
 }
 
@@ -115,12 +191,23 @@ a {
     font-weight: 400;
     letter-spacing: -0.04em;
     margin: 0;
+
+    sup {
+      color: $muted;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-left: 8px;
+      vertical-align: top;
+    }
   }
 
   a {
+    align-items: center;
     color: $muted;
+    display: inline-flex;
     font-size: 12px;
     letter-spacing: 0.1em;
+    min-height: 44px;
     text-transform: uppercase;
   }
 }
@@ -130,47 +217,194 @@ a {
 }
 
 .work-row {
-  align-items: center;
+  align-items: stretch;
   border-bottom: 1px solid $line;
+  color: inherit;
   display: grid;
-  gap: 20px;
-  grid-template-columns: 92px minmax(250px, 1fr) minmax(360px, 420px);
-  min-height: 92px;
+  gap: clamp(22px, 3vw, 44px);
+  grid-template-areas: "meta content media";
+  grid-template-columns: 56px minmax(0, 1fr) clamp(132px, 16vw, 210px);
+  min-height: 168px;
+  padding: clamp(22px, 2.8vw, 34px) 0;
   position: relative;
-  transition: background 220ms ease, padding 220ms ease;
+  transition:
+    border-color 180ms ease;
 
-  &:hover {
-    background: $white;
-    padding: 0 18px;
+  &::before {
+    background: rgba($white, 0.56);
+    content: "";
+    inset: 8px clamp(10px, 1.4vw, 20px);
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 240ms ease;
+    z-index: -1;
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $black;
+    outline-offset: -2px;
+  }
+
+  &:active {
+    transform: none;
+  }
+
+  &:hover .work-row__media img,
+  &:focus-visible .work-row__media img {
+    filter: saturate(0.92);
+    transform: scale(1.035);
+  }
+
+  &:hover .work-row__title::after,
+  &:focus-visible .work-row__title::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
-.work-row__number {
+.work-row__meta {
+  align-items: flex-start;
   color: $muted;
+  grid-area: meta;
+  padding: 2px 0;
+}
+
+.work-row__number {
+  color: rgba($black, 0.42);
+  display: block;
   font-size: 11px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+.work-row__media {
+  align-self: center;
+  aspect-ratio: 16 / 10;
+  background: $line;
+  border: 1px solid rgba($black, 0.055);
+  grid-area: media;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+
+  img {
+    display: block;
+    filter: saturate(0.58);
+    height: 100%;
+    object-fit: cover;
+    transition:
+      filter 350ms ease,
+      transform 500ms var(--ease-out-expo);
+    width: 100%;
+  }
+
+}
+
+.work-row__content {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  grid-area: content;
+  justify-content: flex-start;
+  padding: 2px 0;
+}
+
+.work-row__date {
+  color: $muted;
+  display: block;
+  font-size: 10px;
   letter-spacing: 0.16em;
+  line-height: 1;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .work-row__title {
   align-items: center;
   display: flex;
   gap: 12px;
-  font-size: clamp(25px, 3vw, 32px);
+  font-size: clamp(24px, 2.35vw, 34px);
   font-weight: 400;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  max-width: 420px;
+  position: relative;
+  width: fit-content;
 
-  // 行全体をクリック可能にする（タグは前面に出して個別クリックを維持）
   &::after {
+    background: currentColor;
+    bottom: -0.09em;
     content: "";
-    inset: 0;
+    height: 1px;
+    left: 0.02em;
+    opacity: 0.36;
     position: absolute;
-    z-index: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 420ms var(--ease-out-expo);
+    width: calc(100% - 0.04em);
   }
 }
 
 .tag-group {
+  gap: 6px;
+  justify-content: flex-start;
+  margin-top: 16px;
   position: relative;
   z-index: 1;
+}
+
+// 外側：位置決め専用（JS が transform で追従させる）
+.work-tooltip {
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  will-change: transform;
+  z-index: 80;
+}
+
+// 内側：カード本体。テキストは行マスクで出すので、箱はフェードだけ。
+.work-tooltip__inner {
+  background: $white;
+  border-radius: 10px;
+  border: 1px solid rgba($black, 0.06);
+  box-shadow: 0 8px 40px rgba($black, 0.02);
+  color: $black;
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 300px;
+  opacity: 0;
+  padding: 12px 15px;
+  transition: opacity 160ms ease;
+
+  .work-tooltip[data-visible] & {
+    opacity: 1;
+  }
+}
+
+// 行マスク：各行を切り取り、中身を下から立ち上げて出現させる。
+.work-tooltip__line {
+  display: block;
+  overflow: hidden;
+}
+
+.work-tooltip__line-inner {
+  display: block;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-tooltip__inner {
+    transition: opacity 120ms ease;
+  }
 }
 
 .status-badge {
@@ -179,7 +413,7 @@ a {
   color: $black;
   display: inline-block;
   flex: none;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.14em;
   line-height: 1;
@@ -190,25 +424,29 @@ a {
 .tag-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
 }
 
 .tag {
-  border: 1px solid $line;
+  align-items: center;
+  border: 1px solid rgba($black, 0.085);
   border-radius: 999px;
   color: $muted;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  padding: 8px 13px;
+  display: inline-flex;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  min-height: 27px;
+  padding: 4px 9px;
   text-transform: uppercase;
-  transition: border-color 180ms ease, color 180ms ease, background 180ms ease,
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
     transform 150ms var(--ease-out-expo);
 
   &:hover {
-    background: $black;
-    border-color: $black;
-    color: $white;
+    background: $white;
+    border-color: rgba($black, 0.24);
+    color: $black;
   }
 }
 
@@ -217,14 +455,14 @@ a {
 }
 
 .page-title {
-  padding: clamp(70px, 11vh, 130px) 0 clamp(52px, 8vh, 86px);
+  padding: clamp(82px, 12vh, 140px) 0 clamp(64px, 9vh, 96px);
 
   h1 {
-    font-size: clamp(76px, 12vw, 174px);
-    font-weight: 400;
-    letter-spacing: -0.085em;
-    line-height: 0.9;
-    margin: 24px 0 0;
+    font-size: clamp(64px, 8.5vw, 126px);
+    font-weight: 450;
+    letter-spacing: -0.055em;
+    line-height: 0.94;
+    margin: 34px 0 0 clamp(0px, 6vw, 86px);
 
     sup {
       color: $muted;
@@ -297,8 +535,11 @@ a {
 
 .category-work,
 .category-empty {
+  align-items: center;
   color: $muted;
+  display: inline-flex;
   font-size: 13px;
+  min-height: 44px;
 }
 
 .category-work .status-badge {
@@ -314,53 +555,6 @@ a {
   .status-badge {
     border-color: $black;
     color: $black;
-  }
-}
-
-// 外側：位置決め専用（JS が transform で追従させる）
-.work-tooltip {
-  left: 0;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  will-change: transform;
-  z-index: 80;
-}
-
-// 内側：カード本体。テキストは行マスクで出すので、箱はフェードだけ。
-.work-tooltip__inner {
-  background: $white;
-  border-radius: 10px;
-  border: 1px solid rgba($black, 0.06);
-  box-shadow: 0 8px 40px rgba($black, 0.02);
-  color: $black;
-  font-size: 12px;
-  line-height: 1.7;
-  max-width: 300px;
-  opacity: 0;
-  padding: 12px 15px;
-  transition: opacity 160ms ease;
-
-  .work-tooltip[data-visible] & {
-    opacity: 1;
-  }
-}
-
-// 行マスク：各行を切り取り、中身を下から立ち上げて出現させる。
-.work-tooltip__line {
-  display: block;
-  overflow: hidden;
-}
-
-.work-tooltip__line-inner {
-  display: block;
-  white-space: nowrap;
-  will-change: transform, opacity;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .work-tooltip__inner {
-    transition: opacity 120ms ease;
   }
 }
 
@@ -380,7 +574,7 @@ a {
     min-height: auto;
 
     h1 {
-      margin-top: 50px;
+      margin-top: 64px;
     }
   }
 
@@ -389,20 +583,107 @@ a {
   }
 
   .work-row {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 25px 0;
-
-    &:hover {
-      padding: 25px 15px;
-    }
-  }
-
-  .tag-group {
-    justify-content: flex-start;
+    gap: 18px;
+    grid-template-columns: 40px minmax(0, 1fr) clamp(112px, 20vw, 150px);
   }
 
   .category-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    align-items: stretch;
+    display: grid;
+    gap: 8px;
+    height: auto;
+    padding: 12px 24px;
+  }
+
+  .site-nav {
+    display: grid;
+    gap: 0 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    a {
+      justify-content: flex-start;
+    }
+  }
+
+  .hero {
+    padding-inline: 24px;
+
+    h1 {
+      font-size: clamp(56px, 17vw, 66px);
+      line-height: 0.86;
+      overflow-wrap: normal;
+      word-break: keep-all;
+    }
+
+    h1 span:last-child {
+      margin-left: 0.4em;
+    }
+  }
+
+  .latest,
+  .page {
+    padding-inline: 24px;
+  }
+
+  .page-title h1 {
+    font-size: clamp(52px, 16vw, 72px);
+    margin-left: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-row {
+    display: grid;
+    gap: 12px;
+    grid-template-areas:
+      "meta"
+      "content"
+      "media";
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 22px 0 28px;
+  }
+
+  .work-row__meta {
+    padding: 0;
+  }
+
+  .work-row__media {
+    aspect-ratio: 16 / 9;
+    justify-self: start;
+    min-height: 0;
+    width: min(62vw, 220px);
+  }
+
+  .work-row__title {
+    font-size: clamp(30px, 9.6vw, 38px);
+  }
+
+  .work-row__content {
+    display: flex;
+    gap: 0;
+  }
+
+  .work-row__date {
+    margin-bottom: 12px;
+  }
+
+  .tag-group {
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .tag {
+    min-height: 26px;
+  }
+
 }

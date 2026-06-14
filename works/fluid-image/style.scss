@@ -1,7 +1,7 @@
 :root {
   // 和紙に墨：シェルは濃色テキストの明るいテーマ
   --shell-text: #1a1712;
-  --shell-muted: rgba(26, 23, 18, 0.6);
+  --shell-muted: rgba(26, 23, 18, 0.72);
   --shell-chip: rgba(244, 237, 225, 0.62);
   --shell-line: rgba(26, 23, 18, 0.16);
   --shell-panel: rgba(245, 239, 228, 0.86);
@@ -16,6 +16,7 @@ body {
   background: #f3eddf;
   cursor: crosshair;
   min-height: 100svh;
+  touch-action: none;
 }
 
 .fluid-canvas {
@@ -38,6 +39,17 @@ body {
   text-transform: uppercase;
   transform: translateX(-50%);
   transition: opacity 600ms ease;
+}
+
+@media (pointer: coarse) {
+  .fluid-stage {
+    cursor: default;
+  }
+
+  .fluid-hint {
+    letter-spacing: 0.14em;
+    text-transform: none;
+  }
 }
 
 .fluid-fallback {

@@ -7,11 +7,11 @@
   </head>
   <body>
     <header class="gallery-header">
-      <a class="gallery-brand" href="../../">Motion &amp; UI</a>
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
       <nav class="gallery-nav" aria-label="UI gallery navigation">
         <a href="../">UI Gallery</a>
         <a href="../buttons/">Buttons</a>
-        <a class="is-current" href="./">Tooltips</a>
+        <a class="is-current" href="./" aria-current="page">Tooltips</a>
         <a href="../typography/">Typography</a>
       </nav>
     </header>
@@ -125,7 +125,7 @@
             <span class="verdict verdict--bad">Bad</span>
           </header>
           <div class="collision-stage" data-collision-demo data-flip="false">
-            <div class="collision-canvas" data-collision-area tabindex="0">
+            <div class="collision-canvas" data-collision-area tabindex="0" role="button" aria-label="画面端でツールチップがはみ出す例を表示">
               <span class="collision-canvas__label">Move the cursor</span>
               <span class="collision-canvas__edge">Viewport edge</span>
             </div>
@@ -141,7 +141,7 @@
             <span class="verdict verdict--good">Good</span>
           </header>
           <div class="collision-stage" data-collision-demo data-flip="true">
-            <div class="collision-canvas" data-collision-area tabindex="0">
+            <div class="collision-canvas" data-collision-area tabindex="0" role="button" aria-label="画面端でツールチップを反転する例を表示">
               <span class="collision-canvas__label">Move the cursor</span>
               <span class="collision-canvas__edge">Viewport edge</span>
             </div>
@@ -191,7 +191,7 @@ tooltip.dataset.side =
 
     <footer class="gallery-footer">
       <span>Motion &amp; UI / UI Gallery</span>
-      <a href="../../works/">Back to works</a>
+      <a href="../../motion-archive/">Motion Archive</a>
     </footer>
     <script type="module" src="./script.js"></script>
   </body>

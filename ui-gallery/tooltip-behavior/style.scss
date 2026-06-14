@@ -1,12 +1,12 @@
 @use "../../src/styles/global";
 
 $ink: #141515;
-$muted: #777872;
+$muted: #65665f;
 $line: #dcdcd5;
 $paper: #f5f4ef;
 $card: #fffefa;
 $accent: #d9ff64;
-$bad: #d64541;
+$bad: #b52c29;
 $good: #2f7d4f;
 
 *,
@@ -45,8 +45,8 @@ a {
   padding: 0 clamp(24px, 5vw, 64px);
 }
 
-.gallery-brand {
-  font-size: 14px;
+.site-brand {
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -59,13 +59,27 @@ a {
 
   a {
     color: $muted;
+    display: inline-flex;
     font-size: 12px;
+    min-height: 44px;
+    align-items: center;
     letter-spacing: 0.1em;
+    position: relative;
     text-transform: uppercase;
   }
 
   .is-current {
     color: $ink;
+
+    &::after {
+      background: currentColor;
+      bottom: 7px;
+      content: "";
+      height: 1px;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
   }
 }
 
@@ -76,7 +90,7 @@ main {
 .eyebrow,
 .section-index {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.28em;
   margin: 0;
   text-transform: uppercase;
@@ -96,11 +110,11 @@ main {
   padding: clamp(56px, 9vh, 96px) 0 clamp(40px, 6vw, 64px);
 
   h1 {
-    font-size: clamp(48px, 7vw, 84px);
-    font-weight: 400;
-    letter-spacing: -0.05em;
-    line-height: 1;
-    margin: 18px 0 0;
+    font-size: clamp(46px, 6vw, 76px);
+    font-weight: 450;
+    letter-spacing: -0.04em;
+    line-height: 1.04;
+    margin: 24px 0 0 clamp(0px, 5vw, 72px);
   }
 }
 
@@ -141,7 +155,7 @@ main {
   color: $ink;
   cursor: pointer;
   font-family: inherit;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.12em;
   padding: 7px 11px;
@@ -232,7 +246,7 @@ main {
 .collision-canvas__label,
 .collision-canvas__edge {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   position: absolute;
   text-transform: uppercase;
@@ -358,12 +372,18 @@ main {
   border-top: 1px solid $line;
   color: $muted;
   display: flex;
-  font-size: 10px;
+  font-size: 11px;
   justify-content: space-between;
   letter-spacing: 0.18em;
   margin: 0 clamp(24px, 5vw, 64px);
   padding: 24px 0 32px;
   text-transform: uppercase;
+
+  a {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
+  }
 }
 
 /* --- verdict badge ------------------------------------------------------ */
@@ -501,16 +521,32 @@ main {
 
 @media (max-width: 560px) {
   .gallery-header {
+    align-items: stretch;
+    display: grid;
+    gap: 8px;
     height: auto;
-    padding-block: 20px;
+    padding-block: 12px;
   }
 
   .gallery-nav {
-    gap: 14px;
+    display: grid;
+    gap: 0 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    a {
+      justify-content: flex-start;
+    }
+  }
+
+  .site-brand {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
   }
 
   .gallery-hero h1 {
-    font-size: 26vw;
+    font-size: clamp(46px, 14vw, 62px);
+    margin-left: 0;
   }
 
   .intent-demo-row {

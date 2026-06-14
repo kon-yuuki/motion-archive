@@ -7,11 +7,11 @@
   </head>
   <body>
     <header class="gallery-header">
-      <a class="gallery-brand" href="../../">Motion &amp; UI</a>
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
       <nav class="gallery-nav" aria-label="UI gallery navigation">
         <a href="../">UI Gallery</a>
-        <a class="is-current" href="./">Buttons</a>
-        <a href="../tooltip-behavior/">Hover Intent</a>
+        <a class="is-current" href="./" aria-current="page">Buttons</a>
+        <a href="../tooltip-behavior/">Tooltips</a>
         <a href="../typography/">Typography</a>
       </nav>
     </header>
@@ -21,126 +21,247 @@
         <p class="eyebrow">UI Gallery / 001</p>
         <h1>Buttons</h1>
         <p class="gallery-hero__copy">
-          押す、選ぶ、待つ。小さな操作のためのボタン表現を、状態ごとに並べて試すページ。
+          押す、選ぶ、進む。小さな操作にまつわるボタン表現を集めるページ。
         </p>
       </section>
 
-      <section class="gallery-section" aria-labelledby="basic-title">
+      <section class="gallery-section" aria-labelledby="collection-title">
         <header class="section-heading">
           <div>
-            <p class="section-index">01</p>
-            <h2 id="basic-title">Basic actions</h2>
+            <p class="section-index">Collection</p>
+            <h2 id="collection-title">Button studies</h2>
           </div>
-          <p>Primary / Secondary / Quiet</p>
         </header>
+
         <div class="button-grid">
           <article class="button-card">
-            <span class="button-card__label">Primary</span>
-            <button class="button button--primary" type="button">Explore works</button>
-          </article>
-          <article class="button-card">
-            <span class="button-card__label">Secondary</span>
-            <button class="button button--secondary" type="button">View details</button>
-          </article>
-          <article class="button-card">
-            <span class="button-card__label">Quiet</span>
-            <button class="button button--quiet" type="button">Maybe later</button>
-          </article>
-        </div>
-      </section>
+            <header class="button-card__header">
+              <div>
+                <p class="section-index">01 / Hover</p>
+                <h3>Split Label CTA</h3>
+              </div>
+              <a class="reference-link line-link" href="https://hubtown.co.in/" target="_blank" rel="noreferrer">https://hubtown.co.in/</a>
+            </header>
 
-      <section class="gallery-section" aria-labelledby="motion-title">
-        <header class="section-heading">
-          <div>
-            <p class="section-index">02</p>
-            <h2 id="motion-title">Motion studies</h2>
-          </div>
-          <p>Hover to preview</p>
-        </header>
-        <div class="button-grid">
-          <article class="button-card button-card--dark">
-            <span class="button-card__label">Slide fill</span>
-            <button class="button button--slide" type="button"><span>Open archive</span></button>
-          </article>
-          <article class="button-card button-card--dark">
-            <span class="button-card__label">Arrow travel</span>
-            <button class="button button--arrow" type="button">
-              <span>Next study</span>
-              <span class="button__arrow" aria-hidden="true">→</span>
-            </button>
-          </article>
-          <article class="button-card button-card--dark">
-            <span class="button-card__label">Soft pulse</span>
-            <button class="button button--pulse" type="button"><span>Start motion</span></button>
-          </article>
-        </div>
-      </section>
+            <div class="button-stage">
+              <button class="info-button" type="button" data-info-open="split-label-cta" aria-label="Split Label CTA の実装ポイントを表示">
+                <span aria-hidden="true">i</span>
+              </button>
 
-      <section class="gallery-section" aria-labelledby="state-title">
-        <header class="section-heading">
-          <div>
-            <p class="section-index">03</p>
-            <h2 id="state-title">Interactive states</h2>
-          </div>
-          <p>Click to change state</p>
-        </header>
-        <div class="button-grid">
-          <article class="button-card">
-            <span class="button-card__label">Toggle</span>
-            <button class="button button--toggle" type="button" aria-pressed="false" data-toggle-button>
-              <span class="button__dot" aria-hidden="true"></span>
-              <span data-toggle-label>Motion off</span>
-            </button>
-          </article>
-          <article class="button-card">
-            <span class="button-card__label">Loading</span>
-            <button class="button button--loading" type="button" data-loading-button>
-              <span class="button__spinner" aria-hidden="true"></span>
-              <span data-loading-label>Generate preview</span>
-            </button>
-          </article>
-          <article class="button-card">
-            <span class="button-card__label">Disabled</span>
-            <button class="button button--primary" type="button" disabled>Unavailable</button>
-          </article>
-        </div>
-      </section>
+              <button class="split-cta" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
 
-      <section class="gallery-section" aria-labelledby="icon-title">
-        <header class="section-heading">
-          <div>
-            <p class="section-index">04</p>
-            <h2 id="icon-title">Icon buttons</h2>
-          </div>
-          <p>Compact controls</p>
-        </header>
-        <div class="button-grid button-grid--icons">
-          <article class="button-card">
-            <span class="button-card__label">Round</span>
-            <button class="icon-button icon-button--round" type="button" aria-label="Play">
-              <span aria-hidden="true">▶</span>
-            </button>
+              <button class="split-cta split-cta--light" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
+            </div>
           </article>
+
           <article class="button-card">
-            <span class="button-card__label">Square</span>
-            <button class="icon-button icon-button--square" type="button" aria-label="Add">
-              <span aria-hidden="true">＋</span>
-            </button>
+            <header class="button-card__header">
+              <div>
+                <p class="section-index">02 / Hover</p>
+                <h3>Split Label CTA</h3>
+              </div>
+              <a class="reference-link line-link" href="https://hubtown.co.in/" target="_blank" rel="noreferrer">https://hubtown.co.in/</a>
+            </header>
+
+            <div class="button-stage">
+              <button class="info-button" type="button" data-info-open="split-label-cta" aria-label="Split Label CTA の実装ポイントを表示">
+                <span aria-hidden="true">i</span>
+              </button>
+
+              <button class="split-cta" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
+
+              <button class="split-cta split-cta--light" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
+            </div>
           </article>
+
           <article class="button-card">
-            <span class="button-card__label">Menu</span>
-            <button class="icon-button icon-button--menu" type="button" aria-label="Open menu">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </button>
+            <header class="button-card__header">
+              <div>
+                <p class="section-index">03 / Hover</p>
+                <h3>Split Label CTA</h3>
+              </div>
+              <a class="reference-link line-link" href="https://hubtown.co.in/" target="_blank" rel="noreferrer">https://hubtown.co.in/</a>
+            </header>
+
+            <div class="button-stage">
+              <button class="info-button" type="button" data-info-open="split-label-cta" aria-label="Split Label CTA の実装ポイントを表示">
+                <span aria-hidden="true">i</span>
+              </button>
+
+              <button class="split-cta" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
+
+              <button class="split-cta split-cta--light" type="button">
+                <svg class="split-cta__edge" viewBox="0 0 360 86" aria-hidden="true">
+                  <path class="split-cta__edge-base" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--top" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                  <path class="split-cta__edge-run split-cta__edge-run--bottom" d="M0.5 0.5 H332 L359.5 28 V85.5 H28 L0.5 58 V0.5" />
+                </svg>
+                <span class="split-cta__mark" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+                <span class="split-cta__label">
+                  <span class="split-cta__label-base" aria-hidden="true">Explore Projects</span>
+                  <span class="split-cta__label-scramble" data-scramble-label>Explore Projects</span>
+                </span>
+              </button>
+            </div>
           </article>
         </div>
       </section>
     </main>
 
+    <dialog class="info-dialog" data-info-dialog aria-labelledby="info-dialog-title">
+      <div class="info-dialog__panel">
+        <header class="info-dialog__header">
+          <div>
+            <p class="section-index">Implementation memo</p>
+            <h2 id="info-dialog-title" data-info-title></h2>
+          </div>
+          <button class="info-dialog__close" type="button" data-info-close aria-label="閉じる">Close</button>
+        </header>
+
+        <section class="info-dialog__content" data-info-content="split-label-cta">
+          <div class="info-dialog__memo">
+            <section>
+              <h3>Shape</h3>
+              <div>
+                <p>
+                  ボタン幅はラベルとアイコンの実寸に合わせる。右上と左下だけを欠いたアウトラインにし、背景が透過のバリエーションではホバー後も塗りつぶさない。
+                </p>
+              </div>
+            </section>
+            <section>
+              <h3>Hover sequence</h3>
+              <div>
+                <p>
+                  ホバーすると、まず短い線分が上中央と下中央から同時に走る。どちらも時計回りに進み、最大30px程度まで伸びたあと、互いの開始位置付近へ移動しながら縮んで消える。
+                </p>
+                <p>
+                  同時にラベルは1文字目だけを固定し、2文字目以降を一度消してから左から順にシャッフル表示する。ホバー解除が途中で入っても、開始済みのアニメーションは最後まで再生する。
+                </p>
+              </div>
+            </section>
+            <section>
+              <h3>Border easing</h3>
+              <div>
+                <p>
+                  走る線は、位置移動と線の長さを別々のアニメーションに分ける。位置移動はfrom/toだけにして中間停止を避け、線の長さだけを0%/50%/100%で伸縮させる。
+                </p>
+                <p>
+                  イージングはexpo系のease-in-outに寄せる。ジワッと動き出して中央付近で一気に進み、終わり際はゆっくり縮んで消えるが、最大長のまま移動する区間は作らない。
+                </p>
+                <p>
+                  SVGの線端を常にroundにすると、線の長さが0になった瞬間にも丸い端点だけが小さく残って見える。線が出ている間だけroundにし、開始前と終了後はbuttに切り替えて、不要な点が描画されないようにする。
+                </p>
+              </div>
+            </section>
+            <section>
+              <h3>Mark motion</h3>
+              <div>
+                <p>
+                  左の4ブロックは2段階だけ動かす。1回目で元とは違う縦長の中間形状になり、2回目で同じ方向へ進んで結果的に元の形状へ戻る。
+                </p>
+              </div>
+            </section>
+            <section>
+              <h3>Layout stability</h3>
+              <div>
+                <p>
+                  シャッフル中に文字幅が変わるとボタン全体が揺れるため、不可視の固定ラベルで幅を確保し、実際に動くラベルはその上にabsoluteで重ねる。
+                </p>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </dialog>
+
     <footer class="gallery-footer">
       <span>Motion &amp; UI / UI Gallery</span>
-      <a href="../../works/">Back to works</a>
+      <a href="../../motion-archive/">Motion Archive</a>
     </footer>
     <script type="module" src="./script.js"></script>
   </body>

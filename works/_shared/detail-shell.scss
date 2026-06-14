@@ -11,6 +11,13 @@ body {
   height: 100%;
 }
 
+// Reserve the scrollbar gutter so opening the detail dialog (which locks scroll
+// via `body[data-dialog-open] { overflow: hidden }`) doesn't remove the
+// scrollbar and shift fixed/edge-anchored elements (nav links, hero copy).
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   color: var(--shell-text, #151616);
   margin: 0;
@@ -49,8 +56,11 @@ a {
   border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
   border-radius: 999px;
   color: var(--shell-muted, #666762);
+  display: inline-flex;
   font-size: 11px;
+  align-items: center;
   letter-spacing: 0.16em;
+  min-height: 44px;
   padding: 12px 16px;
   text-transform: uppercase;
 }
@@ -68,7 +78,6 @@ a {
 
 .detail-toggle {
   cursor: pointer;
-  margin-left: 8px;
 }
 
 .memo-toggle {
@@ -88,28 +97,101 @@ a {
   }
 }
 
-.experiment-meta {
-  backdrop-filter: blur(20px);
-  background: var(--shell-panel, rgba(250, 249, 245, 0.87));
+.detail-dialog-toggle {
+  align-items: center;
+  backdrop-filter: blur(14px);
+  background: var(--shell-chip, rgba(255, 255, 255, 0.58));
   border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
+  border-radius: 50%;
   bottom: clamp(22px, 3vw, 36px);
+  color: var(--shell-text, #151616);
+  cursor: pointer;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
   left: clamp(22px, 3vw, 36px);
-  max-width: 414px;
+  padding: 0;
+  position: fixed;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 150ms var(--ease-out-expo);
+  width: 48px;
+  z-index: 55;
+
+  svg {
+    display: block;
+    height: 21px;
+    stroke-width: 1.7;
+    width: 21px;
+  }
+
+  &:hover,
+  &[aria-expanded="true"] {
+    background: var(--shell-text, #151616);
+    border-color: var(--shell-text, #151616);
+    color: var(--shell-panel, #fff);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+.detail-dialog {
+  align-items: center;
+  background: rgba(7, 8, 8, 0.5);
+  display: block;
+  inset: 0;
   opacity: 0;
-  padding: 25px;
+  padding: clamp(18px, 4vw, 44px);
   pointer-events: none;
   position: fixed;
-  transform: translateY(12px);
-  transition: opacity 240ms ease, transform 240ms ease;
-  z-index: 30;
+  transition: opacity 220ms ease;
+  z-index: 60;
 
   &[data-open] {
     opacity: 1;
     pointer-events: auto;
-    transform: none;
+  }
+}
+
+.detail-dialog .experiment-meta {
+  backdrop-filter: blur(22px);
+  background: var(--shell-panel, rgba(250, 249, 245, 0.92));
+  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
+  border-radius: 22px;
+  box-shadow: 0 24px 74px rgba(10, 12, 12, 0.22);
+  display: block;
+  left: 50%;
+  max-height: min(720px, calc(100svh - 44px));
+  max-width: 620px;
+  opacity: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 30px;
+  // Closed panel is invisible but centred; keep it inert so it doesn't swallow
+  // wheel/click over the page (it carries data-lenis-prevent). Only the open
+  // panel is interactive.
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + 14px)) scale(0.975);
+  transition:
+    opacity 180ms ease,
+    transform 280ms var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  width: min(100% - 44px, 620px);
+
+  &[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
   }
 
-  h1 {
+  h1,
+  h2 {
     font-size: 37px;
     font-weight: 400;
     letter-spacing: -0.07em;
@@ -126,7 +208,7 @@ a {
   color: var(--shell-muted, #666762);
   cursor: pointer;
   display: inline-flex;
-  height: 34px;
+  height: 44px;
   justify-content: center;
   padding: 0;
   position: absolute;
@@ -137,7 +219,7 @@ a {
     border-color 160ms ease,
     color 160ms ease,
     transform 150ms var(--ease-out-expo);
-  width: 34px;
+  width: 44px;
 
   svg {
     display: block;
@@ -160,7 +242,7 @@ a {
 
 .experiment-meta__index {
   color: var(--shell-muted, #666762);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.28em;
   margin: 0;
   padding-right: 36px;
@@ -172,7 +254,8 @@ a {
   display: flex;
   gap: 12px;
 
-  h1 {
+  h1,
+  h2 {
     margin-right: 0;
   }
 }
@@ -182,7 +265,7 @@ a {
   border-radius: 999px;
   color: var(--shell-muted, #666762);
   flex: none;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.14em;
   line-height: 1;
@@ -203,132 +286,130 @@ a {
   gap: 7px;
   margin-bottom: 24px;
 
-  span {
+  span,
+  .experiment-tag-link {
     border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
     border-radius: 999px;
     color: var(--shell-muted, #666762);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.13em;
     padding: 7px 11px;
     text-transform: uppercase;
+  }
+
+  .experiment-tag-link {
+    cursor: pointer;
+    transition:
+      background 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--shell-text, #151616);
+      border-color: var(--shell-text, #151616);
+      color: var(--shell-panel, #fff);
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
   }
 }
 
 .experiment-actions {
   align-items: center;
-  border-top: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
   display: flex;
-  gap: 15px;
-  padding-top: 18px;
-
-  a {
-    color: var(--shell-muted, #666762);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+  margin-top: 40px;
 }
 
-.replay {
-  cursor: pointer;
-  padding: 10px 14px;
-}
-
-body[data-modal-open] {
-  overflow: hidden;
-}
-
-.tech-note {
+.experiment-reference-link {
   align-items: center;
-  background: rgba(7, 8, 8, 0.56);
-  display: flex;
-  inset: 0;
-  justify-content: center;
-  opacity: 0;
-  padding: clamp(18px, 4vw, 44px);
-  pointer-events: none;
-  position: fixed;
-  transition: opacity 220ms ease;
-  z-index: 60;
+  color: var(--shell-text, #151616);
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 6px;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+  padding: 9px 0 3px;
+  position: relative;
 
-  &[data-open] {
-    opacity: 1;
-    pointer-events: auto;
+  &::before,
+  &::after {
+    bottom: 0;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::before {
+    background: var(--shell-line, rgba(20, 20, 20, 0.25));
+  }
+
+  &::after {
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 280ms var(--ease-out-expo);
+  }
+
+  span {
+    transition: transform 220ms var(--ease-out-expo);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  &:hover span,
+  &:focus-visible span {
+    transform: translate(2px, -2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
   }
 }
 
-.tech-note__panel {
-  backdrop-filter: blur(22px);
-  background: var(--shell-panel, rgba(250, 249, 245, 0.92));
-  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
-  color: var(--shell-text, #151616);
-  max-height: min(680px, calc(100svh - 44px));
-  max-width: 620px;
-  overflow: auto;
-  padding: clamp(24px, 4vw, 36px);
-  position: relative;
-  transform: translateY(10px) scale(0.985);
-  transition: transform 220ms ease;
-  width: min(100%, 620px);
-
-  .tech-note[data-open] & {
-    transform: none;
-  }
-
-  h2 {
-    font-size: clamp(32px, 5vw, 54px);
-    font-weight: 400;
-    letter-spacing: -0.07em;
-    line-height: 0.95;
-    margin: 12px 52px 24px 0;
-  }
+body[data-dialog-open] {
+  overflow: hidden;
 }
 
 .tech-note__eyebrow {
   color: var(--shell-muted, #666762);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.28em;
-  margin: 0;
+  margin: 0 0 22px;
   text-transform: uppercase;
-}
-
-.tech-note__close {
-  align-items: center;
-  background: transparent;
-  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
-  color: inherit;
-  cursor: pointer;
-  display: inline-flex;
-  height: 38px;
-  justify-content: center;
-  padding: 0;
-  position: absolute;
-  right: 22px;
-  top: 22px;
-  width: 38px;
-
-  svg {
-    height: 16px;
-    width: 16px;
-  }
 }
 
 .tech-note__body {
   display: grid;
-  gap: 22px;
+  gap: 30px;
+  margin-top: 14px;
+}
+
+// Scoped above the dialog title rule (`.detail-dialog .experiment-meta h2`)
+// so the memo subheadings stay small instead of inheriting the 37px title size.
+.detail-dialog .experiment-meta .tech-note__section {
+  h2,
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    margin: 0 0 7px;
+  }
 }
 
 .tech-note__section {
-  border-top: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
-  padding-top: 18px;
-
-  h3 {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    margin: 0 0 10px;
-  }
-
   p,
   li {
     color: var(--shell-muted, #666762);
@@ -355,7 +436,16 @@ body[data-modal-open] {
     padding-inline: 12px;
   }
 
-  .experiment-meta {
-    max-width: calc(100vw - 44px);
+  .detail-dialog .experiment-meta {
+    border-radius: 18px;
+    padding: 24px 20px;
+    width: calc(100% - 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-dialog,
+  .detail-dialog .experiment-meta {
+    transition-duration: 1ms;
   }
 }

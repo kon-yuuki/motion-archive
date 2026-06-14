@@ -26,10 +26,10 @@ $card-title-gap: 24px;
 
 :root {
   // Latin は Libre Franklin（自己ホスト・latin のみ）。
-  // 日本語は Helvetica Neue に合わせた和文ゴシックへフォールバックさせる。
-  --font-sans: "Libre Franklin", "Helvetica Neue", Helvetica, Arial,
-    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic",
-    Meiryo, sans-serif;
+  // LatinはLibre Franklin、日本語はOS標準の和文ゴシックを優先する。
+  --font-sans: "Libre Franklin", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "YuGothic", Meiryo, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
   --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
@@ -38,8 +38,26 @@ $card-title-gap: 24px;
 
 body {
   font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.7;
   font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
+}
+
+.skip-link {
+  background: #121313;
+  color: #fffefa;
+  left: 16px;
+  padding: 12px 16px;
+  position: fixed;
+  top: 16px;
+  transform: translateY(-160%);
+  transition: transform 160ms var(--ease-out-expo);
+  z-index: 1000;
+
+  &:focus {
+    transform: translateY(0);
+  }
 }
 
 button,

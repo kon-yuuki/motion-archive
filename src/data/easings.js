@@ -15,6 +15,7 @@ const orderedNames = [
 
 const usage = {
   easeOutCubic: [
+    { label: "Cylindrical Image Flow", href: "../works/cylindrical-image-flow/" },
     { label: "Scroll Type Reveal", href: "../works/scroll-type-reveal/" },
     { label: "Pixel Glitch", href: "../works/pixel-glitch/" }
   ],
@@ -25,14 +26,23 @@ const usage = {
     { label: "CSS Pie Chart / Reveal", href: "../works/css-pie-chart/" }
   ],
   easeOutExpo: [
+    { label: "Cursor Pixel Field", href: "../works/cursor-pixel-field/" },
+    { label: "Hero Mask Shift", href: "../works/hero-mask-shift/" },
     { label: "Image Wipe Grid", href: "../works/image-wipe-grid/" },
     { label: "Tooltips", href: "../ui-gallery/tooltip-behavior/" },
-    { label: "Work List", href: "../works/" },
+    { label: "Work List", href: "../motion-archive/" },
     { label: "Smooth Scroll", href: "../works/scroll-type-reveal/" }
   ],
-  easeInOutExpo: [
-    { label: "Image Wipe Grid / Hover", href: "../works/image-wipe-grid/" }
-  ]
+  easeInOutSine: [
+    { label: "Green Noise Gradient", href: "../works/green-noise-gradient/" }
+  ],
+  easeOutQuart: [
+    { label: "Scroll Tilt Gallery", href: "../works/scroll-tilt-gallery/" }
+  ],
+  easeOutBack: [
+    { label: "Cursor Image Burst", href: "../works/cursor-image-burst/" }
+  ],
+  easeInOutExpo: []
 };
 
 const familyDescriptions = {

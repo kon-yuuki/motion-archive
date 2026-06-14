@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
+    <meta name="description" content="画像カバーと画像本体を逆方向へ動かして見せるスクロールリビール実験。" />
     <meta
       name="description"
       content="カバーの横移動と画像の逆方向移動・縮小を同期させた、商品一覧向けのスクロールリビール実験。"
@@ -13,7 +14,7 @@
     <nav class="experiment-nav" aria-label="Experiment navigation">
       <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
       <div class="experiment-nav__links">
-        <a class="experiment-nav__link" href="../">All Works</a>
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
         <button
           class="memo-toggle"
           data-tech-note-toggle
@@ -33,139 +34,129 @@
     <main class="experiment-stage wipe-stage" data-stage>
       <header class="wipe-hero">
         <p class="wipe-hero__eyebrow">Collection / 2026</p>
-        <h1>Objects<br />in motion.</h1>
+        <h1><span>Objects</span><span>in motion.</span></h1>
         <p class="wipe-hero__copy">
-          Scroll to reveal the collection.<br />
-          Hover to see another view.
+          Scroll to reveal the collection.
         </p>
         <span class="wipe-hero__index">001—009</span>
       </header>
 
       <section class="product-grid" aria-label="Object collection">
         <article class="product product--wide" data-reveal>
-          <a href="#object-01" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_1.png" alt="明るいリビングに置かれたソファ" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_2.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_1-800.webp" srcset="../../src/assets/images/optimized/dummy_1-480.webp 480w, ../../src/assets/images/optimized/dummy_1-800.webp 800w, ../../src/assets/images/optimized/dummy_1-1024.webp 1024w" sizes="(max-width: 720px) 100vw, 65vw" width="1024" height="1024" fetchpriority="high" alt="明るいリビングに置かれたソファ" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-01">Quiet Assembly</h2>
               <p>01 / Interior</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--portrait product--push" data-reveal>
-          <a href="#object-02" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_4.png" alt="植物とソファのある寝室" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_3.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_4-800.webp" srcset="../../src/assets/images/optimized/dummy_4-480.webp 480w, ../../src/assets/images/optimized/dummy_4-800.webp 800w, ../../src/assets/images/optimized/dummy_4-1024.webp 1024w" sizes="(max-width: 720px) 82vw, 40vw" width="1024" height="1024" loading="lazy" alt="植物とソファのある寝室" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-02">After Hours</h2>
               <p>02 / Living</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--small" data-reveal>
-          <a href="#object-03" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_2.png" alt="植物に囲まれた二人掛けソファ" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_1.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_2-480.webp" srcset="../../src/assets/images/optimized/dummy_2-480.webp 480w, ../../src/assets/images/optimized/dummy_2-800.webp 800w" sizes="(max-width: 720px) 66vw, 25vw" width="1024" height="1024" loading="lazy" alt="植物に囲まれた二人掛けソファ" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-03">Soft Geometry</h2>
               <p>03 / Object</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--square product--right" data-reveal>
-          <a href="#object-04" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_3.png" alt="正面から見たソファ" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_4.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_3-480.webp" srcset="../../src/assets/images/optimized/dummy_3-480.webp 480w, ../../src/assets/images/optimized/dummy_3-800.webp 800w" sizes="(max-width: 720px) 66vw, 25vw" width="1024" height="1024" loading="lazy" alt="正面から見たソファ" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-04">Common Ground</h2>
               <p>04 / Seating</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--tall" data-reveal>
-          <a href="#object-05" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_4.png" alt="夜の照明に照らされたリビング" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_2.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_4-800.webp" srcset="../../src/assets/images/optimized/dummy_4-480.webp 480w, ../../src/assets/images/optimized/dummy_4-800.webp 800w, ../../src/assets/images/optimized/dummy_4-1024.webp 1024w" sizes="(max-width: 720px) 82vw, 40vw" width="1024" height="1024" loading="lazy" alt="夜の照明に照らされたリビング" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-05">Night Study</h2>
               <p>05 / Light</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--landscape product--low" data-reveal>
-          <a href="#object-06" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_1.png" alt="木製家具のある明るいリビング" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_3.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_1-800.webp" srcset="../../src/assets/images/optimized/dummy_1-480.webp 480w, ../../src/assets/images/optimized/dummy_1-800.webp 800w, ../../src/assets/images/optimized/dummy_1-1024.webp 1024w" sizes="(max-width: 720px) 100vw, 55vw" width="1024" height="1024" loading="lazy" alt="木製家具のある明るいリビング" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-06">Open Plan</h2>
               <p>06 / Space</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--small product--center" data-reveal>
-          <a href="#object-07" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_3.png" alt="石床とソファのある室内" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_1.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_3-480.webp" srcset="../../src/assets/images/optimized/dummy_3-480.webp 480w, ../../src/assets/images/optimized/dummy_3-800.webp 800w" sizes="(max-width: 720px) 66vw, 25vw" width="1024" height="1024" loading="lazy" alt="石床とソファのある室内" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-07">Still Life</h2>
               <p>07 / Material</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--portrait product--right" data-reveal>
-          <a href="#object-08" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_2.png" alt="暖色の光と植物のある室内" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_4.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_2-800.webp" srcset="../../src/assets/images/optimized/dummy_2-480.webp 480w, ../../src/assets/images/optimized/dummy_2-800.webp 800w, ../../src/assets/images/optimized/dummy_2-1024.webp 1024w" sizes="(max-width: 720px) 82vw, 40vw" width="1024" height="1024" loading="lazy" alt="暖色の光と植物のある室内" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-08">Warm Interval</h2>
               <p>08 / Atmosphere</p>
             </div>
-          </a>
+          </div>
         </article>
 
         <article class="product product--final" data-reveal>
-          <a href="#object-09" class="product__link">
+          <div class="product__content">
             <div class="product__media">
-              <img class="product__image product__image--front" src="../../src/assets/images/dummy_4.png" alt="植物の影が落ちる静かなリビング" />
-              <img class="product__image product__image--back" src="../../src/assets/images/dummy_1.png" alt="" aria-hidden="true" />
+              <img class="product__image product__image--front" src="../../src/assets/images/optimized/dummy_4-1024.webp" srcset="../../src/assets/images/optimized/dummy_4-480.webp 480w, ../../src/assets/images/optimized/dummy_4-800.webp 800w, ../../src/assets/images/optimized/dummy_4-1024.webp 1024w" sizes="(max-width: 720px) 100vw, 65vw" width="1024" height="1024" loading="lazy" alt="植物の影が落ちる静かなリビング" />
               <span class="product__cover" aria-hidden="true"></span>
             </div>
             <div class="product__meta">
               <h2 id="object-09">Last Light</h2>
               <p>09 / Edition</p>
             </div>
-          </a>
+          </div>
         </article>
       </section>
 
@@ -181,16 +172,15 @@
       <p class="experiment-meta__description">
         カバーを横へ退かせながら、下の画像を逆方向の移動とズームから定位置へ収束させる商品一覧向けのスクロールリビール。
       </p>
-      <div class="experiment-tags"><span>JavaScript</span><span>Scroll</span><span>Image</span><span>Hover</span></div>
+      <div class="experiment-tags"><span>JavaScript</span><span>Scroll</span><span>Image</span><span>Reveal</span></div>
       <div class="experiment-actions">
-        <button class="replay" data-replay>Replay</button>
-        <a href="https://outfit.hellohello.is/" target="_blank" rel="noreferrer">Reference URL</a>
+        <a class="experiment-reference-link" href="https://outfit.hellohello.is/" target="_blank" rel="noreferrer" aria-label="参照サイトを見る（新しいタブで開きます）">参照サイトを見る <span aria-hidden="true">↗</span></a>
       </div>
     </aside>
 
     <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
       <div class="tech-note__panel">
-        <p class="tech-note__eyebrow">Technical memo</p>
+        <p class="tech-note__eyebrow">技術メモ</p>
         <h2 id="tech-note-title">Image Wipe Grid</h2>
         <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -199,20 +189,16 @@
         </button>
         <div class="tech-note__body">
           <section class="tech-note__section">
-            <h3>Two opposing transforms</h3>
+            <h3>逆方向の動きを組み合わせる</h3>
             <p>前面のカバーは右へ100%移動し、画像は左50%・1.4倍から中央・等倍へ戻す。二つを同時に動かすことで、静的なマスク解除より強い奥行きを作る。</p>
           </section>
           <section class="tech-note__section">
-            <h3>Viewport trigger</h3>
+            <h3>画面内への進入を検知する</h3>
             <p><code>IntersectionObserver</code> でカードが画面下から入る瞬間を検知し、一度だけ <code>data-visible</code> を付与する。レイアウトに依存するスクロール量の計算は行わない。</p>
           </section>
           <section class="tech-note__section">
-            <h3>Hover replacement</h3>
-            <p>2枚目の画像を絶対配置し、<code>clip-path</code> を左端の線から全面へ展開する。開始時の拡大・高輝度・高コントラストを同時に通常値へ戻す。</p>
-          </section>
-          <section class="tech-note__section">
-            <h3>Reduced motion</h3>
-            <p>動きを減らす設定では全画像を即時表示し、ホバー時の移動も無効化する。コンテンツの閲覧性はアニメーションに依存させない。</p>
+            <h3>動きを減らす設定への対応</h3>
+            <p>動きを減らす設定では全画像を即時表示する。コンテンツの閲覧性はアニメーションに依存させない。</p>
           </section>
         </div>
       </div>

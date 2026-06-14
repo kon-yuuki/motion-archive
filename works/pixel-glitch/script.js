@@ -39,7 +39,7 @@ function ensureCanvas(panel, entryState) {
   const canvas = document.createElement("canvas");
   canvas.className = "pixel-glitch-canvas";
   canvas.setAttribute("aria-hidden", "true");
-  panel.append(canvas);
+  (panel.querySelector(".pixel-panel__media") || panel).append(canvas);
   entryState.canvas = canvas;
 
   return canvas;

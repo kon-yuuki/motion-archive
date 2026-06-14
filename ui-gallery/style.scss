@@ -1,7 +1,7 @@
 @use "../src/styles/global";
 
 $ink: #141515;
-$muted: #777872;
+$muted: #65665f;
 $line: #dcdcd5;
 $paper: #f5f4ef;
 $card: #fffefa;
@@ -37,8 +37,8 @@ a {
   padding: 0 clamp(24px, 5vw, 64px);
 }
 
-.gallery-brand {
-  font-size: 14px;
+.site-brand {
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -50,13 +50,27 @@ a {
 
   a {
     color: $muted;
+    display: inline-flex;
     font-size: 12px;
+    min-height: 44px;
+    align-items: center;
     letter-spacing: 0.1em;
+    position: relative;
     text-transform: uppercase;
   }
 
   .is-current {
     color: $ink;
+
+    &::after {
+      background: currentColor;
+      bottom: 7px;
+      content: "";
+      height: 1px;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
   }
 }
 
@@ -66,7 +80,7 @@ main {
 
 .eyebrow {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.28em;
   margin: 0;
   text-transform: uppercase;
@@ -75,7 +89,7 @@ main {
 .gallery-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
-  padding: clamp(70px, 12vh, 150px) 0 clamp(64px, 9vw, 110px);
+  padding: clamp(82px, 13vh, 150px) 0 clamp(72px, 10vw, 120px);
 
   .eyebrow {
     grid-column: 1 / -1;
@@ -83,11 +97,20 @@ main {
 
   h1 {
     align-self: end;
-    font-size: clamp(104px, 17vw, 250px);
-    font-weight: 400;
-    letter-spacing: -0.09em;
-    line-height: 0.78;
-    margin: 56px 0 0;
+    font-size: clamp(70px, 10vw, 150px);
+    font-weight: 460;
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+    margin: clamp(58px, 8vh, 86px) 0 0;
+    width: fit-content;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  h1 span:last-child {
+    margin-left: 0.62em;
   }
 }
 
@@ -119,7 +142,7 @@ main {
 
   span {
     color: $muted;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
   }
@@ -184,7 +207,7 @@ main {
 .component-card__index,
 .component-card__status {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -197,12 +220,18 @@ main {
   border-top: 1px solid $line;
   color: $muted;
   display: flex;
-  font-size: 10px;
+  font-size: 11px;
   justify-content: space-between;
   letter-spacing: 0.18em;
   margin: 0 clamp(24px, 5vw, 64px);
   padding: 24px 0 32px;
   text-transform: uppercase;
+
+  a {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -232,19 +261,39 @@ main {
 
 @media (max-width: 560px) {
   .gallery-header {
+    align-items: stretch;
+    display: grid;
+    gap: 8px;
     height: auto;
-    padding-block: 20px;
+    padding-block: 12px;
   }
 
   .gallery-nav {
-    gap: 14px;
+    display: grid;
+    gap: 0 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    a {
+      justify-content: flex-start;
+    }
+  }
+
+  .site-brand {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
   }
 
   .gallery-hero {
     padding-top: 64px;
 
     h1 {
-      font-size: 27vw;
+      font-size: clamp(60px, 19vw, 82px);
+      line-height: 0.84;
+    }
+
+    h1 span:last-child {
+      margin-left: 0.34em;
     }
   }
 

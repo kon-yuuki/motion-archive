@@ -4,10 +4,10 @@ import { initWorkTooltip } from "./work-tooltip.js";
 
 const list = document.querySelector("[data-latest-works]");
 const workPrefix = list.dataset.workPrefix || "./works/";
-const categoryPrefix = list.dataset.categoryPrefix || "./categories/";
 
 list.innerHTML = works
-  .map((work, index) => workRow(work, workPrefix, works.length - index - 1, categoryPrefix))
+  .map((work, index) => workRow(work, workPrefix, works.length - index - 1))
   .join("");
 
+document.querySelector("[data-work-count]").textContent = String(works.length).padStart(2, "0");
 initWorkTooltip(list);

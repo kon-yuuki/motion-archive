@@ -1,4 +1,6 @@
 node_modules
 dist
+dist-share
+.share-build
 .DS_Store
 .vercel

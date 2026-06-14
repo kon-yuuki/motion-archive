@@ -1,11 +1,11 @@
 :root {
-  --shell-text: #ff1d12;
-  --shell-muted: rgba(255, 29, 18, 0.7);
+  --shell-text: #c91b12;
+  --shell-muted: #b5160e;
   --shell-chip: rgba(238, 231, 224, 0.78);
   --shell-line: rgba(255, 29, 18, 0.25);
   --shell-panel: rgba(238, 231, 224, 0.94);
   --wipe-paper: #eee7e0;
-  --wipe-red: #ff1d12;
+  --wipe-red: #c91b12;
   --wipe-cover: #d7d0ca;
 }
 
@@ -53,12 +53,21 @@ body {
 
   h1 {
     color: var(--wipe-red);
-    font-size: clamp(76px, 14vw, 224px);
-    font-weight: 600;
-    letter-spacing: -0.05em;
-    line-height: 0.83;
-    margin-top: clamp(70px, 11vh, 130px);
+    font-size: clamp(68px, 10vw, 152px);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.82;
+    margin-top: clamp(86px, 13vh, 150px);
     text-transform: uppercase;
+    width: fit-content;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  h1 span:last-child {
+    margin-left: 0.66em;
   }
 }
 
@@ -142,7 +151,7 @@ body {
   margin-top: 10vh;
 }
 
-.product__link {
+.product__content {
   color: var(--wipe-red);
   display: block;
 }
@@ -183,17 +192,6 @@ body {
   transition: transform 1350ms var(--ease-out-expo);
 }
 
-.product__image--back {
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  filter: brightness(3.5) contrast(1.45) saturate(0.7);
-  transform: scale(1.2);
-  transition:
-    clip-path 500ms var(--ease-in-out-expo),
-    filter 500ms var(--ease-in-out-expo),
-    transform 500ms var(--ease-in-out-expo);
-  z-index: 2;
-}
-
 .product__cover {
   background: var(--wipe-cover);
   inset: 0;
@@ -211,20 +209,6 @@ body {
   .product__cover {
     transform: translateX(101%);
   }
-}
-
-.product__link:hover,
-.product__link:focus-visible {
-  .product__image--back {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    filter: brightness(1) contrast(1) saturate(1);
-    transform: scale(1);
-  }
-}
-
-.product__link:focus-visible {
-  outline: 2px solid var(--wipe-red);
-  outline-offset: 6px;
 }
 
 .product__meta {
@@ -246,7 +230,7 @@ body {
 
   p {
     flex: none;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.08em;
   }
 }
@@ -276,7 +260,7 @@ body {
     color: inherit;
     cursor: pointer;
     font: inherit;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.12em;
     padding: 12px 0;
     text-transform: uppercase;
@@ -286,9 +270,13 @@ body {
 @media (max-width: 760px) {
   .wipe-hero {
     h1 {
-      font-size: clamp(70px, 24vw, 150px);
-      line-height: 0.76;
+      font-size: clamp(56px, 16vw, 72px);
+      line-height: 0.84;
       margin-top: 18vh;
+    }
+
+    h1 span:last-child {
+      margin-left: 0.28em;
     }
   }
 
@@ -349,7 +337,4 @@ body {
     transition: none;
   }
 
-  .product__image--back {
-    transition: none;
-  }
 }

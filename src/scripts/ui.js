@@ -1,7 +1,3 @@
-function categorySlug(value) {
-  return value.toLowerCase().replaceAll(" ", "-");
-}
-
 function escapeAttr(value = "") {
   return value
     .replaceAll("&", "&amp;")
@@ -10,17 +6,10 @@ function escapeAttr(value = "") {
     .replaceAll(">", "&gt;");
 }
 
-function categoryTag(tag, type, categoryPrefix) {
-  const href = `${categoryPrefix}#${type}-${categorySlug(tag)}`;
-
-  return `<a class="tag" href="${href}">${tag}</a>`;
-}
-
-export function tags(work, categoryPrefix = "./categories/") {
-  return [
-    ...work.techniques.map((tag) => categoryTag(tag, "technique", categoryPrefix)),
-    ...work.expressions.map((tag) => categoryTag(tag, "expression", categoryPrefix))
-  ]
+function displayTags(work) {
+  return [...work.techniques, ...work.expressions]
+    .slice(0, 3)
+    .map((tag) => `<span class="tag">${tag}</span>`)
     .join("");
 }
 
@@ -28,12 +17,24 @@ export function statusBadge(work) {
   return work.status ? `<span class="status-badge">${work.status}</span>` : "";
 }
 
-export function workRow(work, prefix, index = 0, categoryPrefix = "./categories/") {
+export function workRow(work, prefix, index = 0) {
+  const displayDate = work.date.replaceAll(".", " / ");
+
   return `
-    <article class="work-row" data-description="${escapeAttr(work.description)}">
-      <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
-      <a class="work-row__title" href="${prefix}${work.slug}/">${work.title}${statusBadge(work)}</a>
-      <span class="tag-group">${tags(work, categoryPrefix)}</span>
-    </article>
+    <a class="work-row" href="${prefix}${work.slug}/" data-description="${escapeAttr(work.description)}" aria-label="${escapeAttr(`${work.title}を開く`)}">
+      <div class="work-row__meta">
+        <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
+      </div>
+      <span class="work-row__media">
+        <img src="${work.thumbnail}" width="960" height="600" loading="lazy" alt="" />
+      </span>
+      <div class="work-row__content">
+        <div>
+          <time class="work-row__date" datetime="${work.date.replaceAll(".", "-")}">${displayDate}</time>
+          <span class="work-row__title">${work.title}${statusBadge(work)}</span>
+        </div>
+        <span class="tag-group">${displayTags(work)}</span>
+      </div>
+    </a>
   `;
 }

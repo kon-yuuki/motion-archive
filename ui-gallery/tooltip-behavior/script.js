@@ -16,6 +16,7 @@ function initDemo(demo, index) {
   tip.className = "intent-tip";
   tip.id = `intent-tip-${index}`;
   tip.setAttribute("role", "tooltip");
+  tip.setAttribute("aria-hidden", "true");
   tip.setAttribute("data-position-reset", "");
   demo.appendChild(tip);
 
@@ -41,6 +42,7 @@ function initDemo(demo, index) {
       tip.removeAttribute("data-position-reset");
     }
     tip.setAttribute("data-open", "");
+    tip.removeAttribute("aria-hidden");
     target.setAttribute("aria-describedby", tip.id);
     groupActive = true;
     clearTimeout(coolTimer);
@@ -48,6 +50,7 @@ function initDemo(demo, index) {
 
   function hideNow() {
     tip.removeAttribute("data-open");
+    tip.setAttribute("aria-hidden", "true");
     tip.setAttribute("data-position-reset", "");
     current?.removeAttribute("aria-describedby");
     current = null;
@@ -88,6 +91,11 @@ function initDemo(demo, index) {
   targets.forEach((target) => {
     target.addEventListener("pointerenter", () => enter(target));
     target.addEventListener("pointerleave", leave);
+    target.addEventListener("pointerdown", () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      open(target);
+    });
     // キーボード操作では意図が明確なので即時に開く
     target.addEventListener("focus", () => {
       clearTimeout(openTimer);
@@ -137,7 +145,31 @@ function initCollisionDemo(demo, index) {
 
   area.addEventListener("pointerenter", open);
   area.addEventListener("pointermove", (event) => place(event.clientX, event.clientY));
+  area.addEventListener("pointerdown", open);
   area.addEventListener("pointerleave", close);
+  area.addEventListener("focus", () => {
+    const rect = area.getBoundingClientRect();
+    open({
+      clientX: shouldFlip ? rect.right - 12 : rect.left + rect.width / 2,
+      clientY: rect.top + rect.height / 2
+    });
+  });
+  area.addEventListener("blur", close);
+  area.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+    event.preventDefault();
+    if (tip.hasAttribute("data-open")) {
+      close();
+    } else {
+      const rect = area.getBoundingClientRect();
+      open({
+        clientX: shouldFlip ? rect.right - 12 : rect.left + rect.width / 2,
+        clientY: rect.top + rect.height / 2
+      });
+    }
+  });
   window.addEventListener("resize", () => {
     close();
   });

@@ -12,8 +12,7 @@ Deploy: `npx vercel --prod --yes`（Vercel が `npm run build` を実行、`dist
 | パス | ファイル | 説明 |
 |---|---|---|
 | `/` | `index.html` | サイトトップ（Motion Archive / UI Gallery の選択） |
-| `/motion-archive/` | `motion-archive/index.html` | Motion Archive トップ・最新作品 |
-| `/works/` | `works/index.html` | 全作品一覧 |
+| `/motion-archive/` | `motion-archive/index.html` | Motion Archive トップ・全作品一覧 |
 | `/categories/` | `categories/index.html` | 技術別・表現別カテゴリ |
 | `/works/<slug>/` | `works/<slug>/index.html` | 個別実験ページ（フルスクリーン） |
 | `/ui-gallery/` | `ui-gallery/index.html` | UI パーツギャラリー目次 |
@@ -55,7 +54,6 @@ src/
   scripts/
     ui.js                # workRow(), tags(), statusBadge() — 共通HTML生成
     home.js              # motion-archive/ のリスト描画
-    works-page.js        # works/ の全一覧描画
     categories-page.js   # categories/ の描画
   styles/
     global.scss          # フォント・ベースリセット
@@ -124,7 +122,6 @@ node --check works/<slug>/script.js
 
 # 共通スクリプトを変更した場合も確認
 node --check src/scripts/home.js
-node --check src/scripts/works-page.js
 node --check src/scripts/categories-page.js
 node --check src/scripts/ui.js
 ```
@@ -147,4 +144,12 @@ npx vercel --prod --yes
 curl -I https://motion-archive-mu.vercel.app  # HTTP/2 200 を確認
 ```
 
-GitHub Actions (`deploy.yml`) は GitHub Pages へのデプロイ設定（現在は Vercel が本番）。
+デプロイ先はVercelのみ。GitHub Pages用のGitHub Actionsワークフローは置かない。
+
+共有用デモはVercel側の別プロジェクト`yuuki-kons-projects/motion-demos`へデプロイする。
+このリポジトリ内の`.vercel/`は通常サイト`motion-archive`にリンクされているため、
+共有用デモをCLIでデプロイする場合は`--project motion-demos`を明示する。
+`motion-demos`のBuild Commandは`npm run build:share`、Output Directoryは`dist-share`。
+slug指定なしの`npm run build:share`で全作品が`https://motion-demos-psi.vercel.app/<slug>/`、
+UIギャラリーの個別ページが`https://motion-demos-psi.vercel.app/ui-gallery/<page>/`として公開される。
+`/ui-gallery/`の一覧ページは共有用デモには含めない。

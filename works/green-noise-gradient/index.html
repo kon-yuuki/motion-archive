@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="緑のグラデーションと粒状ノイズをCanvasでゆっくり流動させる背景モーション実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Green Noise Gradient / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false"></button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+    <main class="experiment-stage noise-stage">
+      <canvas data-noise-canvas aria-hidden="true"></canvas>
+      <section class="noise-copy" aria-label="Zeroz mood">
+        <p class="noise-copy__title">/ Concept</p>
+        <p class="noise-copy__lead">からだ本来の力を呼び覚ます。<br />"Active Inner Resource"という思想。</p>
+        <p class="noise-copy__jp">私たちの中にすでにある力を、酸素とエネルギーで静かに引き出すためのコンセプト。</p>
+      </section>
+    </main>
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">08 / 12 &middot; 2026.06.14</p>
+      <div class="experiment-meta__title"><h1>Green Noise Gradient</h1><span class="experiment-status">WIP</span></div>
+      <p class="experiment-meta__description">背景全体に広がる緑のグラデーションをCanvasで合成し、軽い粒状ノイズと流動する色面で空気感を作る。</p>
+      <div class="experiment-tags"><span>Canvas</span><span>JavaScript</span><span>Background</span><span>Loop</span></div>
+      <div class="experiment-actions">
+        <a class="experiment-reference-link" href="https://otsuka-air.jp/about/" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+    <section class="tech-note" data-tech-note aria-hidden="true">
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>低解像度Canvas</h3>
+          <p>小さめのバッファにグラデーションとノイズを描き、CSSで全面に拡大する。粒感を残しつつ描画コストを抑える。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>時間差の色面</h3>
+          <p>複数のラジアルグラデーションの中心を違う周期で動かし、静止画のグラデーションでは出ない揺らぎを作っている。</p>
+        </section>
+      </div>
+    </section>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

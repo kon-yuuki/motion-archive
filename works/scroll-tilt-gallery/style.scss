@@ -1,0 +1,104 @@
+:root {
+  --shell-chip: rgba(255, 255, 255, 0.78);
+  --shell-panel: rgba(255, 255, 255, 0.95);
+  --shell-line: rgba(0, 0, 0, 0.15);
+  --shell-muted: #6f6f6f;
+  --shell-text: #0b0b0b;
+}
+
+body {
+  background: #f3f3f3;
+}
+
+.tilt-page {
+  min-height: 440svh;
+  overflow: clip;
+}
+
+.tilt-intro,
+.tilt-outro {
+  align-content: center;
+  background: #f3f3f3;
+  display: grid;
+  min-height: 94svh;
+  padding: clamp(52px, 10vw, 120px) clamp(22px, 8vw, 120px);
+}
+
+.tilt-intro h1,
+.tilt-outro h2 {
+  color: #0b0b0b;
+  font-size: clamp(48px, 9vw, 124px);
+  font-weight: 520;
+  letter-spacing: 0;
+  line-height: 0.93;
+  margin: 0;
+  max-width: 880px;
+}
+
+.tilt-intro p,
+.tilt-outro p {
+  color: #777;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.tilt-stage-section {
+  height: 270svh;
+  position: relative;
+}
+
+.tilt-stage {
+  align-items: center;
+  background: #050505;
+  display: grid;
+  height: 100svh;
+  overflow: hidden;
+  perspective: 1000px;
+  position: sticky;
+  top: 0;
+}
+
+.tilt-frame {
+  height: min(64vw, 660px);
+  justify-self: center;
+  position: relative;
+  transform:
+    translateY(var(--stage-y, 0px))
+    rotateX(var(--stage-tilt, 0deg));
+  transform-style: preserve-3d;
+  width: min(82vw, 1060px);
+}
+
+.tilt-chip {
+  border-radius: 2px;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.28);
+  display: block;
+  height: var(--h);
+  left: var(--x);
+  overflow: hidden;
+  position: absolute;
+  top: var(--y);
+  transform:
+    translate(-50%, -50%)
+    translateZ(var(--z))
+    rotateX(var(--tilt, 0deg))
+    rotateZ(var(--r));
+  width: var(--w);
+  will-change: transform;
+}
+
+.tilt-chip img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .tilt-frame {
+    height: 100svh;
+    width: 100vw;
+  }
+}

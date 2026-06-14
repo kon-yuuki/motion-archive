@@ -27,8 +27,8 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 .easing-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(250px, 360px);
-  min-height: min(72vh, 760px);
-  padding: clamp(70px, 11vh, 130px) 0 72px;
+  min-height: min(68vh, 680px);
+  padding: clamp(82px, 12vh, 140px) 0 76px;
 
   .eyebrow {
     grid-column: 1 / -1;
@@ -36,11 +36,20 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   h1 {
     align-self: end;
-    font-size: clamp(84px, 14vw, 210px);
-    font-weight: 400;
-    letter-spacing: -0.085em;
-    line-height: 0.78;
-    margin: 48px 0 0;
+    font-size: clamp(68px, 9.5vw, 144px);
+    font-weight: 460;
+    letter-spacing: -0.06em;
+    line-height: 0.82;
+    margin: clamp(58px, 8vh, 84px) 0 0;
+    width: fit-content;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  h1 span:last-child {
+    margin-left: 0.92em;
   }
 }
 
@@ -64,7 +73,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     border-radius: 999px;
     color: $white;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 11px;
     justify-self: start;
     letter-spacing: 0.14em;
     padding: 12px 17px;
@@ -108,7 +117,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
     span {
       color: $muted;
-      font-size: 10px;
+      font-size: 11px;
     }
   }
 }
@@ -131,7 +140,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   p {
     color: $muted;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.16em;
     padding-top: 9px;
     text-transform: uppercase;
@@ -178,7 +187,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   p {
     color: $muted;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
@@ -231,7 +240,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     color: $white;
     content: "Current";
     display: inline-block;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.12em;
     margin-left: 12px;
     padding: 6px 8px 5px;
@@ -247,7 +256,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
 .easing-row__index {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   padding-top: 6px;
 }
@@ -300,7 +309,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
 .easing-row__code-label {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   line-height: 1.6;
   text-transform: uppercase;
@@ -309,7 +318,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 .easing-row__no-css {
   background: rgba(18, 19, 19, 0.035);
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   margin: 0;
   padding: 12px;
 }
@@ -319,7 +328,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
   bottom: calc(100% + 10px);
   color: $white;
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 11px;
   left: 50%;
   letter-spacing: 0.09em;
   opacity: 0;
@@ -411,7 +420,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     border: 1px solid $line;
     border-radius: 999px;
     color: $muted;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.08em;
     padding: 8px 11px;
     text-transform: uppercase;
@@ -505,6 +514,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 }
 
 .easing-card:hover .easing-curve__dot,
+.easing-card:focus-within .easing-curve__dot,
 .easing-card[data-open] .easing-curve__dot {
   opacity: 1;
 }
@@ -558,7 +568,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
 .easing-card__index {
   color: $muted;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.14em;
 }
 
@@ -574,7 +584,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
   border: 1px solid $line;
   border-radius: 999px;
   color: $muted;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   padding: 3px 7px;
   text-transform: uppercase;
@@ -690,7 +700,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
   color: $black;
   cursor: pointer;
   display: flex;
-  font-size: 10px;
+  font-size: 11px;
   gap: 28px;
   justify-content: center;
   letter-spacing: 0.14em;
@@ -840,7 +850,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   > span {
     color: rgba(255, 254, 250, 0.58);
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.13em;
     line-height: 1;
     text-transform: uppercase;
@@ -905,7 +915,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   span {
     color: rgba(255, 254, 250, 0.42);
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.08em;
   }
 
@@ -915,7 +925,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     border-radius: 999px;
     color: $white;
     cursor: pointer;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.14em;
     padding: 6px 14px;
     text-transform: uppercase;
@@ -943,7 +953,13 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     min-height: auto;
 
     h1 {
-      margin: 80px 0 60px;
+      font-size: clamp(60px, 18vw, 82px);
+      line-height: 0.84;
+      margin: 72px 0 60px;
+    }
+
+    h1 span:last-child {
+      margin-left: 0.46em;
     }
   }
 

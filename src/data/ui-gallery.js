@@ -2,8 +2,8 @@ export const uiGalleryItems = [
   {
     slug: "buttons",
     title: "Buttons",
-    date: "2026.06.07",
-    count: 4
+    date: "2026.06.14",
+    count: 1
   },
   {
     slug: "tooltip-behavior",

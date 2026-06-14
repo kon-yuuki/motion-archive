@@ -554,8 +554,10 @@ document.querySelectorAll("[data-easing]").forEach((card) => {
     playDemo(card);
   });
 
-  card.addEventListener("mouseenter", () => playTracer(card));
-  card.addEventListener("mouseleave", () => stopTracer(card));
+  card.addEventListener("pointerenter", () => playTracer(card));
+  card.addEventListener("pointerleave", () => stopTracer(card));
+  card.querySelector("[data-toggle]")?.addEventListener("focus", () => playTracer(card));
+  card.querySelector("[data-toggle]")?.addEventListener("blur", () => stopTracer(card));
 });
 
 document.addEventListener("keydown", (event) => {
@@ -596,10 +598,94 @@ document.addEventListener("pointerdown", (event) => {
   globalDurationToggle?.setAttribute("aria-expanded", "false");
 });
 
+// Edge collision: show the tip below the button when there is no room above.
+function flipTip(button) {
+  const tip = button.querySelector("[data-copy-tip]");
+  if (!tip) {
+    return;
+  }
+  const rect = button.getBoundingClientRect();
+  button.setAttribute("data-tip-side", rect.top < tip.offsetHeight + 16 ? "bottom" : "top");
+}
+
+// Hover-intent: the "Click to copy" hint waits for an intentional hover, stays
+// warm across the group so adjacent buttons reveal instantly, and opens at once
+// on keyboard focus. (Mirrors the UI Gallery "good" tooltip behaviour.)
+function initCopyIntent(demo) {
+  const buttons = [...demo.querySelectorAll(".easing-row__code")];
+  if (!buttons.length) {
+    return;
+  }
+
+  const OPEN_DELAY = 500;
+  const COOLDOWN = 600;
+  const CLOSE_DELAY = 90;
+  let openTimer = null;
+  let closeTimer = null;
+  let coolTimer = null;
+  let groupActive = false;
+  let current = null;
+
+  const hideNow = () => {
+    current?.removeAttribute("data-tip-open");
+    current = null;
+  };
+
+  const open = (button) => {
+    if (current && current !== button) {
+      current.removeAttribute("data-tip-open");
+    }
+    current = button;
+    flipTip(button);
+    button.setAttribute("data-tip-open", "");
+    groupActive = true;
+    clearTimeout(coolTimer);
+  };
+
+  const close = () => {
+    hideNow();
+    clearTimeout(coolTimer);
+    coolTimer = setTimeout(() => {
+      groupActive = false;
+    }, COOLDOWN);
+  };
+
+  const enter = (button) => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    if (groupActive) {
+      open(button);
+    } else {
+      hideNow();
+      openTimer = setTimeout(() => open(button), OPEN_DELAY);
+    }
+  };
+
+  const leave = () => {
+    clearTimeout(openTimer);
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(close, CLOSE_DELAY);
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("pointerenter", () => enter(button));
+    button.addEventListener("pointerleave", leave);
+    button.addEventListener("focus", () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      open(button);
+    });
+    button.addEventListener("blur", leave);
+  });
+}
+
+document.querySelectorAll("[data-demo]").forEach(initCopyIntent);
+
 document.querySelectorAll("[data-copy-code]").forEach((button) => {
   button.addEventListener("click", async () => {
     const tip = button.querySelector("[data-copy-tip]");
     window.clearTimeout(copyTimers.get(button));
+    flipTip(button);
 
     try {
       await copyText(button.dataset.copyValue);

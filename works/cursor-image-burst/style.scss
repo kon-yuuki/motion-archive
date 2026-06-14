@@ -1,0 +1,112 @@
+:root {
+  --shell-chip: rgba(250, 224, 179, 0.78);
+  --shell-panel: rgba(250, 224, 179, 0.95);
+  --shell-line: rgba(72, 55, 41, 0.15);
+  --shell-muted: #725f4e;
+  --shell-text: #443729;
+}
+
+.burst-stage {
+  background: #f2d9a9;
+  cursor: crosshair;
+}
+
+.burst-stage::before {
+  background:
+    linear-gradient(90deg, rgba(72, 55, 41, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(72, 55, 41, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  content: "";
+  inset: 0;
+  opacity: 0.32;
+  position: absolute;
+}
+
+.burst-copy {
+  color: #514237;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 49%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.burst-copy p {
+  color: #514237;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.burst-copy h1 {
+  color: #514237;
+  font-size: clamp(76px, 11vw, 154px);
+  font-weight: 760;
+  letter-spacing: 0;
+  line-height: 0.82;
+  margin: 0;
+}
+
+.burst-copy button {
+  background: #15100d;
+  border: 0;
+  color: #f2d9a9;
+  font-size: 10px;
+  margin-top: 26px;
+  min-height: 30px;
+  padding: 8px 18px;
+}
+
+.burst-layer {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.burst-card {
+  animation: burst-card 980ms var(--ease-out-expo) forwards;
+  height: 118px;
+  left: var(--x);
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  top: var(--y);
+  transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.78);
+  width: 92px;
+}
+
+.burst-card img {
+  display: block;
+  filter: saturate(1.18) contrast(1.08);
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+@keyframes burst-card {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.62);
+  }
+  12%,
+  68% {
+    opacity: var(--alpha, 1);
+    transform: translate(-50%, -50%) rotate(var(--angle)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--drift-x)), calc(-50% + var(--drift-y))) rotate(var(--angle)) scale(0.94);
+  }
+}
+
+@media (max-width: 720px) {
+  .burst-card {
+    height: 92px;
+    width: 72px;
+  }
+}

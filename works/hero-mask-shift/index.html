@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="canvas上の角丸マスクをスクロールで回転・拡大し、屈折ノイズを外側から広げながら次セクションへフェードする実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Hero Mask Shift / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false"></button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+    <main class="mask-page">
+      <section class="mask-hero" data-mask-hero>
+        <div class="mask-sticky" data-mask-sticky>
+          <div class="mask-backdrop" aria-hidden="true"></div>
+          <img class="mask-photo-bg" src="../../src/assets/images/optimized/nature-1280.webp" alt="" aria-hidden="true" />
+          <div class="mask-visual" data-mask-visual aria-hidden="true"></div>
+          <div class="mask-photo-card" data-mask-photo-card aria-hidden="true">
+            <canvas data-mask-canvas></canvas>
+            <img data-mask-source src="../../src/assets/images/optimized/nature-1280.webp" alt="" />
+          </div>
+          <div class="mask-vignette" aria-hidden="true"></div>
+          <div class="mask-copy" data-mask-copy>
+            <p>Refraction opens the frame</p>
+            <h1><span>SHIFT THE VIEW</span></h1>
+          </div>
+        </div>
+      </section>
+      <section class="mask-next" data-mask-next>
+        <p>Next section</p>
+        <h2>The key visual opens into the next story.</h2>
+      </section>
+    </main>
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">12 / 12 &middot; 2026.06.14</p>
+      <div class="experiment-meta__title"><h1>Hero Mask Shift</h1><span class="experiment-status">Canvas</span></div>
+      <p class="experiment-meta__description">固定したFVと次セクションを重ね、スクロール進捗で角丸の縦長マスクを反時計回りに回転・拡大。canvas内の画像は回転させず、マスク内だけを屈折ノイズで揺らしながらフェードで次のビューへつなぐ。</p>
+      <div class="experiment-tags"><span>Canvas</span><span>Scroll</span><span>Mask</span><span>Refraction</span></div>
+      <div class="experiment-actions">
+        <a class="experiment-reference-link" href="https://www.takenaka.co.jp/recruit/fresh/recruit/" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+    <section class="tech-note" data-tech-note aria-hidden="true">
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>固定レイヤーと進行度</h3>
+          <p>FVと次セクションはどちらも固定レイヤーとして重ね、長めに取ったヒーロー区間のスクロール量を0から1へ正規化して遷移を制御する。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>Canvasマスク</h3>
+          <p>画像をcanvasへ描画し、回転した角丸矩形の距離場でアルファを作る。画像自体は回転させず、マスク形状だけを最大45度まで回転させる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>屈折ノイズ</h3>
+          <p>マスク周辺の屈折から始まり、後半では同じノイズ場の適用範囲が外側から中心へ広がる。中心は粗く、外側ほど細かい変位にして水面越しの歪みに寄せる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>描画負荷</h3>
+          <p>ノイズ計算はピクセルごとに行わず、低解像度の変位グリッドで計算して補間する。角丸境界は近傍だけを追加サンプルし、初期状態と回転中のジャギーを抑える。</p>
+        </section>
+      </div>
+    </section>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

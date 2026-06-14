@@ -5,8 +5,7 @@ Web モーション実験と UI パーツギャラリーをまとめる公開ア
 ## Pages
 
 - `/` - Motion Archive と UI Gallery を選ぶサイトトップ
-- `/motion-archive/` - Motion Archive のトップページと最新作品
-- `/works/` - 全作品一覧
+- `/motion-archive/` - Motion Archive のトップページと全作品一覧
 - `/categories/` - 技術別・表現別カテゴリ
 - `/works/<slug>/` - 個別のフルスクリーン実験ページ
 - `/ui-gallery/` - UI パーツギャラリーの目次
@@ -49,6 +48,29 @@ works/
     style.scss
 ```
 
+## Request New Demos
+
+追加したいdemoの参考URLと対象箇所は [`demo-requests/request.md`](demo-requests/request.md) に追記します。
+参考動画、スクショ、GIFは [`demo-requests/assets/`](demo-requests/assets/) に置きます。
+複数demoをまとめて依頼して問題ありません。依頼は上から順番に実装します。
+実装時は動画や画像だけを参考にせず、必ず参考URLの実サイトを確認します。
+動画、GIF、スクショは「どの部分を実装するか」を特定するための補助資料として扱います。
+
+最小限この2点だけで進められます。
+
+```md
+### Demo名 または 仮名
+- 参考URL:
+- 対象箇所:
+- Status: WIP
+```
+
+実装後も、依頼者が明確にOKを出すまでは完成扱いにしません。
+OK前のdemoにはページやカード上で `WIP` チップを付け、OK後に外します。
+判断に迷う場合は `WIP` のままにします。
+
+詳しい書き方と例は [`demo-requests/README.md`](demo-requests/README.md) を参照してください。
+
 ## Add A UI Gallery Page
 
 UI パーツをまとめて比較するページは、作品とは分けて `ui-gallery/<component>/` に追加します。
@@ -89,9 +111,15 @@ node --check works/<slug>/script.js
 
 ```sh
 node --check src/scripts/home.js
-node --check src/scripts/works-page.js
 node --check src/scripts/categories-page.js
 node --check src/scripts/ui.js
+```
+
+一覧用サムネイルを更新する場合:
+
+```sh
+npm run dev
+npm run thumbnails:generate
 ```
 
 ## X Video Recording
@@ -138,6 +166,54 @@ curl -I https://motion-archive-mu.vercel.app
 ```
 
 `HTTP/2 200` が返れば最低限の公開確認は完了です。見た目を確認する場合は Production URL をブラウザで開き、トップ、一覧、カテゴリ、作品詳細の遷移を確認します。
+
+### Standalone Demo Deployment
+
+Xなどで作品やUIギャラリー単体ページを共有する場合は、通常サイトとは別のVercelプロジェクト
+`yuuki-kons-projects/motion-demos`へ単独デモをデプロイします。
+このプロジェクトはリポジトリ内の別ディレクトリではなく、Vercel側の別プロジェクトです。
+作品ページの共有版にはサイトヘッダー、Infoモーダル、一覧へ戻る導線は含まれません。
+
+- Production: [https://motion-demos-psi.vercel.app](https://motion-demos-psi.vercel.app)
+- Project: `yuuki-kons-projects/motion-demos`
+- Build Command: `npm run build:share`
+- Output Directory: `dist-share`
+
+```sh
+npm run build:share
+```
+
+全作品とUIギャラリーの個別ページが`dist-share/`へ生成されます。`motion-demos`側のVercel Git連携が有効な場合は、
+`main`へのpushでこのビルドが実行されて公開されます。リポジトリ内の`.vercel/`は通常サイト
+`motion-archive`にリンクされているため、CLIで共有用デモをデプロイする場合はプロジェクト名を明示します。
+
+```text
+https://motion-demos-psi.vercel.app/fluid-image/
+https://motion-demos-psi.vercel.app/image-wipe-grid/
+https://motion-demos-psi.vercel.app/ui-gallery/buttons/
+https://motion-demos-psi.vercel.app/ui-gallery/tooltip-behavior/
+https://motion-demos-psi.vercel.app/ui-gallery/typography/
+```
+
+ローカル確認用に1ページだけ生成することもできます。
+
+```sh
+npm run build:share -- image-wipe-grid
+npm run build:share -- ui-gallery/typography
+```
+
+この状態で本番デプロイすると、そのページだけの`dist-share/`を公開することになります。
+全ページを公開する通常運用では、slug指定なしで`npm run build:share`を実行します。
+
+手動で本番デプロイする場合:
+
+```sh
+npx vercel deploy . \
+  --project motion-demos \
+  --scope yuuki-kons-projects \
+  --prod \
+  --yes
+```
 
 ## References
 

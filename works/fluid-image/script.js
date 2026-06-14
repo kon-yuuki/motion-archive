@@ -2,6 +2,20 @@ import { bindReplay } from "../_shared/detail-shell.js";
 
 const canvas = document.querySelector("[data-fluid-canvas]");
 const stage = document.querySelector("[data-stage]");
+const hint = document.querySelector("[data-fluid-hint]");
+const coarsePointer = window.matchMedia("(pointer: coarse)");
+
+function updateInputHint() {
+  if (!hint) {
+    return;
+  }
+  hint.textContent = coarsePointer.matches
+    ? "ドラッグまたはタップして墨を広げる"
+    : "カーソルを動かして墨を広げる";
+}
+
+updateInputHint();
+coarsePointer.addEventListener("change", updateInputHint);
 
 const gl = canvas.getContext("webgl2", {
   alpha: false,
@@ -393,6 +407,9 @@ window.addEventListener("pointermove", (event) => {
 });
 
 window.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "touch" && hint) {
+    hint.textContent = "指を動かして墨を広げる";
+  }
   // 押した瞬間に位置を合わせ、デルタを出さない（飛びを防ぐ）
   const rect = canvas.getBoundingClientRect();
   pointer.x = (event.clientX - rect.left) / rect.width;

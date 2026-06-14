@@ -1,10 +1,5 @@
 import { easingCss } from "./easing-functions.js";
 
-// 一覧の各行にホバーで説明文ツールチップを出す。
-// - 最初の行は約0.2秒の遅延で表示
-// - 表示中に行から行へ移動したときは遅延なしで即切り替え
-// - 一覧から離れたら隠し、次回はまた遅延ありに戻す
-
 const DELAY = 200;
 const OFFSET = 18;
 const EDGE = 12;
@@ -24,8 +19,7 @@ function ensureTooltip() {
   if (tooltip) {
     return tooltip;
   }
-  // 外側は位置決め（JSのtransformで追従）、内側がカード本体。
-  // 役割を分けることで、カーソル追従のたびにアニメが滑るのを防ぐ。
+
   tooltip = document.createElement("div");
   tooltip.className = "work-tooltip";
   tooltip.setAttribute("role", "tooltip");
@@ -40,6 +34,7 @@ function position() {
   if (!tooltip) {
     return;
   }
+
   const rect = tooltip.getBoundingClientRect();
   let left = pointerX + OFFSET;
   let top = pointerY + OFFSET;
@@ -54,9 +49,6 @@ function position() {
   tooltip.style.transform = `translate(${Math.max(EDGE, left)}px, ${Math.max(EDGE, top)}px)`;
 }
 
-// テキストを「視覚上の行」に分割する。
-// 日本語は文字単位で折り返すため1文字ずつ、英数字の連なりは塊にして
-// 単語の途中で切れないようにし、実際にレイアウトさせて offsetTop で行を判定する。
 function splitLines(text) {
   const tokens = text.match(/[A-Za-z0-9()._%/:#'"-]+|\s+|[^\s]/g) || [text];
   inner.textContent = "";
@@ -83,8 +75,6 @@ function splitLines(text) {
   return lines.map((parts) => parts.join("").replace(/^\s+|\s+$/g, ""));
 }
 
-// テキストを行マスクで（下から立ち上げて）描く。
-// ホバー行が変わるたびに呼ばれ、毎回この行アニメーションが走る。
 function reveal(text) {
   if (!inner?.animate || reduceMotion()) {
     inner.textContent = text;
@@ -100,7 +90,7 @@ function reveal(text) {
     mask.className = "work-tooltip__line";
     const lineInner = document.createElement("span");
     lineInner.className = "work-tooltip__line-inner";
-    lineInner.textContent = lineText || " ";
+    lineInner.textContent = lineText || " ";
     mask.appendChild(lineInner);
     inner.appendChild(mask);
     return lineInner;
@@ -124,13 +114,13 @@ function reveal(text) {
   });
 }
 
-// 初回表示。カードを出し、テキストを行マスクで立ち上げる。
 function show(row) {
   const text = row.dataset.description;
   if (!text) {
     hide();
     return;
   }
+
   const tip = ensureTooltip();
   visible = true;
   reveal(text);
@@ -144,7 +134,6 @@ function hide() {
   tooltip?.removeAttribute("data-visible");
 }
 
-// 表示中に行が変わったとき。カードはそのまま、テキストだけ行マスクで出し直す。
 function swap(row) {
   const text = row.dataset.description;
   if (!text) {
@@ -177,7 +166,6 @@ export function initWorkTooltip(container) {
     if (row !== currentRow) {
       currentRow = row;
       if (visible) {
-        // すでに表示中なら遅延なしで、旧→新を上へ流して差し替える
         swap(row);
       } else {
         clearTimeout(timer);

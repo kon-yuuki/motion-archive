@@ -10,7 +10,7 @@
     <nav class="experiment-nav" aria-label="Experiment navigation">
       <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
       <div class="experiment-nav__links">
-        <a class="experiment-nav__link" href="../">All Works</a>
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
         <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M7 4h7l3 3v13H7z" stroke="currentColor" stroke-linejoin="round" />
@@ -22,7 +22,7 @@
     </nav>
     <main class="experiment-stage fluid-stage" data-stage>
       <canvas class="fluid-canvas" data-fluid-canvas aria-hidden="true"></canvas>
-      <p class="fluid-hint" data-fluid-hint>Move your cursor to spread the ink</p>
+      <p class="fluid-hint" data-fluid-hint>カーソルを動かして墨を広げる</p>
       <p class="fluid-fallback">この実験には WebGL2 対応のブラウザが必要です。</p>
     </main>
     <aside class="experiment-meta" data-details>
@@ -31,13 +31,12 @@
       <p class="experiment-meta__description">カーソルの動きを流れの力に変換し、墨が和紙の上で滲み広がる様子を再現した WebGL の流体シミュレーション実験。</p>
       <div class="experiment-tags"><span>WebGL</span><span>GLSL</span><span>Fluid</span><span>Pointer</span></div>
       <div class="experiment-actions">
-        <button class="replay" data-replay>Reset</button>
-        <a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation" target="_blank" rel="noreferrer">Reference URL</a>
+        <a class="experiment-reference-link" href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation" target="_blank" rel="noreferrer" aria-label="参照サイトを見る（新しいタブで開きます）">参照サイトを見る <span aria-hidden="true">↗</span></a>
       </div>
     </aside>
     <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
       <div class="tech-note__panel">
-        <p class="tech-note__eyebrow">Technical memo</p>
+        <p class="tech-note__eyebrow">技術メモ</p>
         <h2 id="tech-note-title">Ink Bleed</h2>
         <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
