@@ -74,9 +74,8 @@ export const works = [
     title: "Hero Mask Shift",
     thumbnail: "/thumbnails/hero-mask-shift.jpg",
     date: "2026.06.14",
-    status: "WIP",
-    description: "スクロールでコピーとKVを拡大し、斜めマスクの角度を変えながら次セクションへ遷移するFV実験。",
-    techniques: ["JavaScript", "CSS"],
+    description: "Canvasで角丸マスクを拡大・回転させ、縁から広がる屈折ノイズとフェードで次ビューへつなぐFV遷移実験。",
+    techniques: ["Canvas", "JavaScript"],
     expressions: ["Scroll", "Image", "Reveal"],
     reference: {
       label: "Takenaka: Fresh recruit",

@@ -17,16 +17,16 @@
     </nav>
     <main class="experiment-stage burst-stage" data-burst-stage>
       <section class="burst-copy">
-        <h1>404</h1>
-        <p>Oops nothing here</p>
-        <button type="button">Go home</button>
+        <p>Pointer image study</p>
+        <h1>Trace Field</h1>
+        <span class="burst-copy__mark">Motion 011</span>
       </section>
       <div class="burst-layer" data-burst-layer aria-hidden="true"></div>
     </main>
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">11 / 12 &middot; 2026.06.14</p>
       <div class="experiment-meta__title"><h1>Cursor Image Burst</h1><span class="experiment-status">WIP</span></div>
-      <p class="experiment-meta__description">カーソル移動距離に応じて画像カードを生成し、回転・スケール・フェードで短く残像のように見せるポインタ演出。</p>
+      <p class="experiment-meta__description">カーソルの移動距離に応じて画像を1枚ずつ生成し、フェード・blur・拡大で現れたあと、水平のまま縮小しながら短く消えていくポインタ演出。</p>
       <div class="experiment-tags"><span>JavaScript</span><span>Hover</span><span>Image</span><span>Transition</span></div>
       <div class="experiment-actions">
         <a class="experiment-reference-link" href="https://x.com/CollectUI/status/2065252751505019020" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
@@ -35,12 +35,12 @@
     <section class="tech-note" data-tech-note aria-hidden="true">
       <div class="tech-note__body">
         <section class="tech-note__section">
-          <h3>距離ベースの発火</h3>
-          <p>前回生成位置から一定距離を超えた時だけカードを追加し、細かなマウスイベントを間引いて密度を安定させる。</p>
+          <h3>距離ベースの生成</h3>
+          <p>前回生成位置から一定距離を超えた時だけ画像を1枚追加し、カーソルの細かな揺れでは発火しないようにして密度を抑える。</p>
         </section>
         <section class="tech-note__section">
-          <h3>方向の反映</h3>
-          <p>移動ベクトルからカードの初期回転を決める。カーソルの進行方向に沿って画像が置かれるため、軌跡として読みやすい。</p>
+          <h3>スケールとフェード</h3>
+          <p>画像は透明で小さい状態から、blurを解きながら拡大して現れる。短く表示を保ったあと、再びblurしながら縮小して消える。</p>
         </section>
       </div>
     </section>

@@ -1,63 +1,70 @@
 :root {
-  --shell-chip: rgba(250, 224, 179, 0.78);
-  --shell-panel: rgba(250, 224, 179, 0.95);
-  --shell-line: rgba(72, 55, 41, 0.15);
-  --shell-muted: #725f4e;
-  --shell-text: #443729;
+  --shell-chip: rgba(226, 242, 233, 0.76);
+  --shell-panel: rgba(226, 242, 233, 0.95);
+  --shell-line: rgba(28, 70, 57, 0.16);
+  --shell-muted: #577366;
+  --shell-text: #14251f;
 }
 
 .burst-stage {
-  background: #f2d9a9;
+  background: #dbece3;
   cursor: crosshair;
 }
 
 .burst-stage::before {
   background:
-    linear-gradient(90deg, rgba(72, 55, 41, 0.06) 1px, transparent 1px),
-    linear-gradient(rgba(72, 55, 41, 0.05) 1px, transparent 1px);
-  background-size: 64px 64px;
+    linear-gradient(90deg, rgba(20, 37, 31, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(20, 37, 31, 0.05) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(241, 106, 75, 0.14), transparent 42%);
+  background-size:
+    56px 56px,
+    56px 56px,
+    100% 100%;
   content: "";
   inset: 0;
-  opacity: 0.32;
+  opacity: 0.48;
   position: absolute;
 }
 
 .burst-copy {
-  color: #514237;
-  left: 50%;
+  color: #14251f;
+  left: clamp(24px, 8vw, 116px);
+  max-width: min(620px, calc(100vw - 48px));
   position: absolute;
-  text-align: center;
-  top: 49%;
-  transform: translate(-50%, -50%);
+  text-align: left;
+  top: clamp(132px, 27vh, 260px);
   z-index: 2;
 }
 
 .burst-copy p {
-  color: #514237;
-  font-size: 10px;
+  color: #577366;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  margin: 0 0 18px;
+  letter-spacing: 0.14em;
+  margin: 0 0 16px;
   text-transform: uppercase;
 }
 
 .burst-copy h1 {
-  color: #514237;
-  font-size: clamp(76px, 11vw, 154px);
+  color: #14251f;
+  font-size: clamp(58px, 9vw, 132px);
   font-weight: 760;
   letter-spacing: 0;
-  line-height: 0.82;
+  line-height: 0.9;
   margin: 0;
+  max-width: 600px;
 }
 
-.burst-copy button {
-  background: #15100d;
-  border: 0;
-  color: #f2d9a9;
-  font-size: 10px;
+.burst-copy__mark {
+  border-top: 1px solid rgba(20, 37, 31, 0.22);
+  color: #f16a4b;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.12em;
   margin-top: 26px;
-  min-height: 30px;
-  padding: 8px 18px;
+  padding-top: 12px;
+  text-transform: uppercase;
 }
 
 .burst-layer {
@@ -69,15 +76,15 @@
 }
 
 .burst-card {
-  animation: burst-card 980ms var(--ease-out-expo) forwards;
-  height: 118px;
+  animation: burst-card 920ms var(--ease-out-expo) forwards;
+  height: 176px;
   left: var(--x);
   opacity: 0;
   overflow: hidden;
   position: absolute;
   top: var(--y);
-  transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.78);
-  width: 92px;
+  transform: translate(-50%, -50%) scale(0.44);
+  width: 136px;
 }
 
 .burst-card img {
@@ -90,23 +97,30 @@
 
 @keyframes burst-card {
   0% {
+    filter: blur(10px);
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.62);
+    transform: translate(-50%, -50%) scale(0.34);
   }
-  12%,
-  68% {
+  32% {
+    filter: blur(0);
     opacity: var(--alpha, 1);
-    transform: translate(-50%, -50%) rotate(var(--angle)) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  58% {
+    filter: blur(0);
+    opacity: var(--alpha, 1);
+    transform: translate(-50%, -50%) scale(1);
   }
   100% {
+    filter: blur(10px);
     opacity: 0;
-    transform: translate(calc(-50% + var(--drift-x)), calc(-50% + var(--drift-y))) rotate(var(--angle)) scale(0.94);
+    transform: translate(calc(-50% + var(--drift-x)), calc(-50% + var(--drift-y))) scale(0.38);
   }
 }
 
 @media (max-width: 720px) {
   .burst-card {
-    height: 92px;
-    width: 72px;
+    height: 132px;
+    width: 102px;
   }
 }
