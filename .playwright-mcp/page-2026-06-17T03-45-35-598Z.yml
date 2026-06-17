@@ -1,0 +1,48 @@
+- generic [active] [ref=e1]:
+  - link "本文へ移動" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Experiment navigation" [ref=e3]:
+    - link "Motion Archive" [ref=e4] [cursor=pointer]:
+      - /url: ../../motion-archive/
+    - generic [ref=e5]:
+      - link "Works" [ref=e6] [cursor=pointer]:
+        - /url: ../../motion-archive/
+      - 'link "Open the easing used on this page: ease-out-expo" [ref=e7] [cursor=pointer]':
+        - /url: ../../easings/#ease-out-expo
+        - text: Easings
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: WIP / Hover study
+      - heading "RGB Cursor Stalker" [level=1] [ref=e11]
+  - generic:
+    - dialog:
+      - button:
+        - img
+      - paragraph: 13 / 14 · 2026.06.17
+      - generic:
+        - heading [level=1]: RGB Cursor Stalker
+        - generic: WIP
+      - paragraph: 画像ホバー時にRGBシフトしたプレビューがカーソルへ追従するマウスストーカー演出の実装予定ページ。
+      - generic:
+        - link:
+          - /url: ../../categories/#technique-javascript
+          - text: JavaScript
+        - link:
+          - /url: ../../categories/#technique-css
+          - text: CSS
+        - link:
+          - /url: ../../categories/#expression-hover
+          - text: Hover
+        - link:
+          - /url: ../../categories/#expression-image
+          - text: Image
+        - link:
+          - /url: ../../categories/#expression-transition
+          - text: Transition
+      - generic:
+        - link:
+          - /url: https://www.pixelismo.it/
+          - text: www.pixelismo.it
+          - generic: ↗
+  - button "作品情報を開く" [ref=e12] [cursor=pointer]:
+    - img [ref=e13]

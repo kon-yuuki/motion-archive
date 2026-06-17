@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="スクロール位置に応じて画像カードのX軸回転が中央で平坦になるギャラリー実験。" />
+    <meta name="description" content="固定配置の画像カードを黒いステージ上に散らしたスクロールギャラリー実験。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
     <title>Scroll Tilt Gallery / Motion Archive</title>
@@ -18,18 +18,25 @@
     <main class="tilt-page">
       <header class="tilt-intro">
         <p>Scroll study</p>
-        <h1>Perspective images cross the black field.</h1>
+        <h1>Images cross the black field.</h1>
       </header>
-      <section class="tilt-stage-section" data-tilt-section aria-label="Perspective image stage">
+      <section class="tilt-stage-section" data-tilt-section aria-label="Image stage">
         <div class="tilt-stage">
           <div class="tilt-frame" data-tilt-frame>
-            <span class="tilt-chip" data-tilt-chip style="--x: 18%; --y: 18%; --w: 120px; --h: 148px; --r: -8deg;"><img src="../../src/assets/images/optimized/dummy_1-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 38%; --y: 24%; --w: 106px; --h: 84px; --r: 5deg;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 58%; --y: 18%; --w: 112px; --h: 132px; --r: -3deg;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 76%; --y: 34%; --w: 148px; --h: 112px; --r: 7deg;"><img src="../../src/assets/images/optimized/dummy_4-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 26%; --y: 58%; --w: 138px; --h: 96px; --r: 2deg;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 50%; --y: 66%; --w: 116px; --h: 148px; --r: -6deg;"><img src="../../src/assets/images/optimized/dummy_1-480.webp" alt="" /></span>
-            <span class="tilt-chip" data-tilt-chip style="--x: 70%; --y: 70%; --w: 96px; --h: 132px; --r: 4deg;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 10%; --y: 18%;"><img src="../../src/assets/images/optimized/dummy_1-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 30%; --y: 18%;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 50%; --y: 18%;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 70%; --y: 18%;"><img src="../../src/assets/images/optimized/dummy_4-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 90%; --y: 18%;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 10%; --y: 50%;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 30%; --y: 50%;"><img src="../../src/assets/images/optimized/dummy_1-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 50%; --y: 50%;"><img src="../../src/assets/images/optimized/dummy_4-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 70%; --y: 50%;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 90%; --y: 50%;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 20%; --y: 82%;"><img src="../../src/assets/images/optimized/dummy_4-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 40%; --y: 82%;"><img src="../../src/assets/images/optimized/dummy_2-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 60%; --y: 82%;"><img src="../../src/assets/images/optimized/dummy_1-480.webp" alt="" /></span>
+            <span class="tilt-chip" data-tilt-chip style="--x: 80%; --y: 82%;"><img src="../../src/assets/images/optimized/dummy_3-480.webp" alt="" /></span>
           </div>
         </div>
       </section>
@@ -41,7 +48,7 @@
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">10 / 12 &middot; 2026.06.14</p>
       <div class="experiment-meta__title"><h1>Scroll Tilt Gallery</h1><span class="experiment-status">WIP</span></div>
-      <p class="experiment-meta__description">白いページ内を黒いステージが上下に抜け、散らばった小画像が画面中央で平坦になり上下でX軸回転するスクロール実験。</p>
+      <p class="experiment-meta__description">白いページ内を黒いステージが上下に抜け、散らばった画像を固定配置で見せるスクロール実験。</p>
       <div class="experiment-tags"><span>JavaScript</span><span>Scroll</span><span>Image</span><span>Transition</span></div>
       <div class="experiment-actions">
         <a class="experiment-reference-link" href="https://x.com/madewithgsap/status/2065056246747570255" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
@@ -51,11 +58,11 @@
       <div class="tech-note__body">
         <section class="tech-note__section">
           <h3>中央との差分を使う</h3>
-          <p>カード中心と画面中心の差分を正規化し、<code>rotateX</code> に変換する。中央では値が0になり、上下へ離れるほど回転角が大きくなる。</p>
+          <p>スクロール位置を正規化し、黒いステージ全体の上下移動へ変換する。各画像は画面中央との差分から、横向き円柱の接線に近いX軸角度を決める。</p>
         </section>
         <section class="tech-note__section">
-          <h3>奥行きの補助</h3>
-          <p>回転角に合わせて <code>translateZ</code> と影を変え、平坦になる瞬間が最も手前に見えるように調整している。</p>
+          <h3>中央で平坦にする</h3>
+          <p>画像の中心が画面中央に近づくほど傾きを0度へ戻す。中央から上下へ離れると、画像自体は曲げずに逆向きへ傾ける。</p>
         </section>
       </div>
     </section>

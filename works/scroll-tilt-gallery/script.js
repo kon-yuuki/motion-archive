@@ -8,6 +8,8 @@ const chips = [...document.querySelectorAll("[data-tilt-chip]")];
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let raf = null;
 
+const maxTilt = 58;
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
@@ -17,15 +19,16 @@ function update() {
   const rect = section.getBoundingClientRect();
   const total = Math.max(1, rect.height - window.innerHeight);
   const progress = reducedMotion.matches ? 0.5 : clamp(-rect.top / total, 0, 1);
-  const centerProgress = (progress - 0.5) * 2;
   frame.style.setProperty("--stage-y", `${(0.5 - progress) * 520}px`);
-  frame.style.setProperty("--stage-tilt", `${centerProgress * 28}deg`);
 
-  chips.forEach((chip, index) => {
-    const phase = index / Math.max(1, chips.length - 1);
-    const local = clamp((progress - phase) * 2.2 + 0.5, -1, 1);
-    chip.style.setProperty("--tilt", `${local * -42}deg`);
-    chip.style.setProperty("--z", `${(1 - Math.abs(local)) * 130}px`);
+  const frameRect = frame.getBoundingClientRect();
+  const viewportCenter = window.innerHeight / 2;
+  const tiltRange = Math.max(1, window.innerHeight * 0.55);
+  chips.forEach((chip) => {
+    const chipCenter = frameRect.top + chip.offsetTop;
+    const distance = clamp((chipCenter - viewportCenter) / tiltRange, -1, 1);
+    const angle = distance * maxTilt;
+    chip.style.setProperty("--tilt", `${angle}deg`);
   });
 }
 

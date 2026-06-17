@@ -1,0 +1,42 @@
+:root {
+  --shell-chip: rgba(246, 248, 249, 0.78);
+  --shell-panel: rgba(246, 248, 249, 0.95);
+  --shell-line: rgba(14, 18, 22, 0.18);
+}
+
+.placeholder-stage {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #11161a;
+}
+
+.placeholder-stage--open {
+  background:
+    linear-gradient(90deg, rgba(17, 22, 26, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 22, 26, 0.08) 1px, transparent 1px),
+    linear-gradient(135deg, #f2f5f6 0%, #dfe9ee 48%, #ffffff 100%);
+  background-size: 88px 88px, 88px 88px, auto;
+}
+
+.placeholder-copy {
+  width: min(760px, calc(100vw - 40px));
+  text-align: center;
+}
+
+.placeholder-copy p {
+  margin: 0 0 18px;
+  color: rgba(17, 22, 26, 0.56);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.placeholder-copy h1 {
+  margin: 0;
+  font-size: clamp(42px, 11vw, 112px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: 0;
+}

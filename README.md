@@ -126,6 +126,11 @@ npm run thumbnails:generate
 
 X 発信用のデモ動画は Playwright で自動撮影できます。字幕、録画用カーソル、注目位置へのズーム、MP4 変換を含む手順は [`docs/x-video-recording.md`](docs/x-video-recording.md) を参照してください。
 
+## UI Gallery Content Guides
+
+UI Gallery の挙動デモ制作方針は [`docs/ui-demo-guideline.md`](docs/ui-demo-guideline.md) を参照してください。
+X 投稿文の作り方は [`docs/x-posting-guideline.md`](docs/x-posting-guideline.md)、Codex 依頼用の定型文は [`docs/codex-prompts.md`](docs/codex-prompts.md) にまとめています。
+
 ## Deployment
 
 このサイトは Vercel で公開しています。

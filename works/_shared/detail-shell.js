@@ -48,6 +48,8 @@ const detailEasings = {
   "cylindrical-image-flow": "ease-out-cubic",
   "scroll-tilt-gallery": "ease-out-quart",
   "cursor-image-burst": "ease-out-back",
+  "rgb-cursor-stalker": "ease-out-expo",
+  "scroll-open-ui": "ease-out-cubic",
   "hero-mask-shift": "ease-out-expo",
   "image-wipe-grid": "ease-out-expo",
   "scroll-type-reveal": "ease-out-cubic",

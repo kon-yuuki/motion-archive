@@ -1,5 +1,33 @@
 export const works = [
   {
+    slug: "rgb-cursor-stalker",
+    title: "RGB Cursor Stalker",
+    thumbnail: "/thumbnails/rgb-cursor-stalker.svg",
+    date: "2026.06.17",
+    status: "WIP",
+    description: "画像ホバー時にRGBシフトしたプレビューがカーソルへ追従するマウスストーカー演出の実装予定ページ。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Hover", "Image", "Transition"],
+    reference: {
+      label: "Pixelismo",
+      url: "https://www.pixelismo.it/"
+    }
+  },
+  {
+    slug: "scroll-open-ui",
+    title: "Scroll Open UI",
+    thumbnail: "/thumbnails/scroll-open-ui.svg",
+    date: "2026.06.17",
+    status: "WIP",
+    description: "スクロール進行に合わせてUI要素が開き、次の情報へ展開していく演出の実装予定ページ。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Reveal", "Transition"],
+    reference: {
+      label: "Horeca Social",
+      url: "https://www.horeca-social.com/en"
+    }
+  },
+  {
     slug: "cursor-pixel-field",
     title: "Cursor Pixel Field",
     thumbnail: "/thumbnails/cursor-pixel-field.jpg",

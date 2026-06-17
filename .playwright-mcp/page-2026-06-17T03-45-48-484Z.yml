@@ -1,0 +1,48 @@
+- generic [active] [ref=e1]:
+  - link "本文へ移動" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Experiment navigation" [ref=e3]:
+    - link "Motion Archive" [ref=e4] [cursor=pointer]:
+      - /url: ../../motion-archive/
+    - generic [ref=e5]:
+      - link "Works" [ref=e6] [cursor=pointer]:
+        - /url: ../../motion-archive/
+      - 'link "Open the easing used on this page: ease-out-cubic" [ref=e7] [cursor=pointer]':
+        - /url: ../../easings/#ease-out-cubic
+        - text: Easings
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - paragraph [ref=e10]: WIP / Scroll study
+      - heading "Scroll Open UI" [level=1] [ref=e11]
+  - generic:
+    - dialog:
+      - button:
+        - img
+      - paragraph: 14 / 14 · 2026.06.17
+      - generic:
+        - heading [level=1]: Scroll Open UI
+        - generic: WIP
+      - paragraph: スクロール進行に合わせてUI要素が開き、次の情報へ展開していく演出の実装予定ページ。
+      - generic:
+        - link:
+          - /url: ../../categories/#technique-javascript
+          - text: JavaScript
+        - link:
+          - /url: ../../categories/#technique-css
+          - text: CSS
+        - link:
+          - /url: ../../categories/#expression-scroll
+          - text: Scroll
+        - link:
+          - /url: ../../categories/#expression-reveal
+          - text: Reveal
+        - link:
+          - /url: ../../categories/#expression-transition
+          - text: Transition
+      - generic:
+        - link:
+          - /url: https://www.horeca-social.com/en
+          - text: www.horeca-social.com/en
+          - generic: ↗
+  - button "作品情報を開く" [ref=e12] [cursor=pointer]:
+    - img [ref=e13]
