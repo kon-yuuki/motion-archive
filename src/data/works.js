@@ -19,7 +19,7 @@ export const works = [
     thumbnail: "/thumbnails/scroll-open-ui.svg",
     date: "2026.06.17",
     status: "WIP",
-    description: "スクロール進行に合わせてUI要素が開き、次の情報へ展開していく演出の実装予定ページ。",
+    description: "下から画面内に入った項目が、中央到達後のスクロール進行に合わせて開いていくUI実験。",
     techniques: ["JavaScript", "CSS"],
     expressions: ["Scroll", "Reveal", "Transition"],
     reference: {
@@ -32,55 +32,21 @@ export const works = [
     title: "Cursor Pixel Field",
     thumbnail: "/thumbnails/cursor-pixel-field.jpg",
     date: "2026.06.14",
-    status: "WIP",
-    description: "カーソル位置に背景画像のピクセル片を生成し、ヒーロー画像を粒状に露出させるインタラクション実験。",
+    description: "カーソルの動きをグリッド単位の背景色ピクセルに変換し、大きなタイポグラフィの背面で反応させるホバー演出。",
     techniques: ["JavaScript", "CSS"],
-    expressions: ["Hover", "Image", "Reveal"],
-    reference: {
-      label: "Farm Minerals: CropTab promo",
-      url: "https://www.farmminerals.com/promo"
-    }
-  },
-  {
-    slug: "green-noise-gradient",
-    title: "Green Noise Gradient",
-    thumbnail: "/thumbnails/green-noise-gradient.jpg",
-    date: "2026.06.14",
-    status: "WIP",
-    description: "Canvasで複数の緑の色面と粒状ノイズを合成し、ゆっくり流動する背景グラデーションを描く実験。",
-    techniques: ["Canvas", "JavaScript"],
-    expressions: ["Background", "Loop"],
-    reference: {
-      label: "Otsuka AIR: About",
-      url: "https://otsuka-air.jp/about/"
-    }
+    expressions: ["Hover", "Text", "Background"]
   },
   {
     slug: "cylindrical-image-flow",
     title: "Cylindrical Image Flow",
     thumbnail: "/thumbnails/cylindrical-image-flow.jpg",
     date: "2026.06.14",
-    status: "WIP",
-    description: "画像面を円柱状に配置し、スクロール入力の勢いで回転速度が一時的に上がる3Dヒーロー実験。",
-    techniques: ["CSS", "JavaScript"],
+    description: "横長の画像面を円柱面に沿う曲面メッシュとして配置し、スクロール入力で回転速度と画像内の視差が一時的に強まる3Dギャラリー実験。",
+    techniques: ["WebGL", "JavaScript"],
     expressions: ["Scroll", "Image"],
     reference: {
       label: "Otsuka Plus One: AIR top",
       url: "https://www.otsuka-plus1.com/shop/formlp/air_top.aspx"
-    }
-  },
-  {
-    slug: "scroll-tilt-gallery",
-    title: "Scroll Tilt Gallery",
-    thumbnail: "/thumbnails/scroll-tilt-gallery.jpg",
-    date: "2026.06.14",
-    status: "WIP",
-    description: "スクロール中の画像カードが画面中央で平坦になり、上下に抜けるほどX軸方向へ傾くギャラリー実験。",
-    techniques: ["JavaScript", "CSS"],
-    expressions: ["Scroll", "Image", "Transition"],
-    reference: {
-      label: "Made with GSAP",
-      url: "https://x.com/madewithgsap/status/2065056246747570255"
     }
   },
   {

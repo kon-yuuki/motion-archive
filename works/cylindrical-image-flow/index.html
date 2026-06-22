@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="画像面を円柱状に配置し、スクロール速度で回転が加速する3Dヒーロー実験。" />
+    <meta name="description" content="画像面を円柱状に配置し、スクロール入力の勢いで回転速度が変わる3Dギャラリー実験。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
     <title>Cylindrical Image Flow / Motion Archive</title>
@@ -17,53 +17,51 @@
     </nav>
     <main class="cylinder-page">
       <section class="cylinder-sticky">
-        <div class="cylinder-scene" data-cylinder>
-          <div class="cylinder-ring" data-ring>
-            <figure style="--i: 0"><img src="../../src/assets/images/optimized/dummy_1-800.webp" alt="" /></figure>
-            <figure style="--i: 1"><img src="../../src/assets/images/optimized/dummy_2-800.webp" alt="" /></figure>
-            <figure style="--i: 2"><img src="../../src/assets/images/optimized/dummy_3-800.webp" alt="" /></figure>
-            <figure style="--i: 3"><img src="../../src/assets/images/optimized/dummy_4-800.webp" alt="" /></figure>
-            <figure style="--i: 4"><img src="../../src/assets/images/optimized/dummy_1-800.webp" alt="" /></figure>
-            <figure style="--i: 5"><img src="../../src/assets/images/optimized/dummy_2-800.webp" alt="" /></figure>
-            <figure style="--i: 6"><img src="../../src/assets/images/optimized/dummy_3-800.webp" alt="" /></figure>
-            <figure style="--i: 7"><img src="../../src/assets/images/optimized/dummy_4-800.webp" alt="" /></figure>
-            <figure style="--i: 8"><img src="../../src/assets/images/optimized/dummy_1-800.webp" alt="" /></figure>
-            <figure style="--i: 9"><img src="../../src/assets/images/optimized/dummy_2-800.webp" alt="" /></figure>
-            <figure style="--i: 10"><img src="../../src/assets/images/optimized/dummy_3-800.webp" alt="" /></figure>
-            <figure style="--i: 11"><img src="../../src/assets/images/optimized/dummy_4-800.webp" alt="" /></figure>
-            <figure style="--i: 12"><img src="../../src/assets/images/optimized/dummy_1-800.webp" alt="" /></figure>
-            <figure style="--i: 13"><img src="../../src/assets/images/optimized/dummy_2-800.webp" alt="" /></figure>
-            <figure style="--i: 14"><img src="../../src/assets/images/optimized/dummy_3-800.webp" alt="" /></figure>
-            <figure style="--i: 15"><img src="../../src/assets/images/optimized/dummy_4-800.webp" alt="" /></figure>
-          </div>
-        </div>
+        <div class="cylinder-grid" aria-hidden="true"></div>
         <div class="cylinder-copy">
-          <h1>Awaken Energy,<br />Drive Everything</h1>
+          <p>3D scroll study</p>
+          <h1>Cylindrical<br />Image Flow</h1>
         </div>
-        <div class="cylinder-pack" aria-hidden="true"></div>
-        <div class="cylinder-tablet" aria-hidden="true"></div>
-        <p class="cylinder-bottom-copy">アクティブな時も、休息する時も。</p>
+        <div class="cylinder-scene" data-cylinder>
+          <canvas class="cylinder-canvas" data-cylinder-canvas aria-hidden="true"></canvas>
+          <p class="cylinder-fallback">この実験にはWebGL対応のブラウザが必要です。</p>
+        </div>
+        <div class="cylinder-readout" aria-hidden="true">
+          <span>depth</span>
+          <span>velocity</span>
+          <span>loop</span>
+        </div>
+        <p class="cylinder-bottom-copy">Scroll to push the image ring</p>
       </section>
       <section class="cylinder-spacer" aria-hidden="true"></section>
     </main>
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">09 / 12 &middot; 2026.06.14</p>
-      <div class="experiment-meta__title"><h1>Cylindrical Image Flow</h1><span class="experiment-status">WIP</span></div>
-      <p class="experiment-meta__description">画像を円柱の外周に沿って配置し、通常は低速で回転、スクロール入力があると一時的に速度を上げるヒーローモーション。</p>
-      <div class="experiment-tags"><span>CSS</span><span>JavaScript</span><span>Scroll</span><span>Image</span></div>
-      <div class="experiment-actions">
-        <a class="experiment-reference-link" href="https://www.otsuka-plus1.com/shop/formlp/air_top.aspx" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="experiment-meta__title"><h1>Cylindrical Image Flow</h1></div>
+      <p class="experiment-meta__description">画像面、回転、視差、裏面表示を分けて調整できるようにしたWebGLギャラリー。曲面に貼った画像が伸びたり、裏側の写真が混ざったり、スクロール入力で動きが破綻したりしないことを優先している。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>JavaScript</span><span>Scroll</span><span>Image</span></div>
     </aside>
     <section class="tech-note" data-tech-note aria-hidden="true">
       <div class="tech-note__body">
         <section class="tech-note__section">
-          <h3>円柱配置</h3>
-          <p>各画像面に <code>rotateY</code> と <code>translateZ</code> を与え、親要素を回転させる。画像は常に円柱の接線方向を向く。</p>
+          <h3>曲面メッシュの幅</h3>
+          <p>画像面は横方向に分割し、各頂点を円筒座標へ置いている。半径、1枚あたりの弧の長さ、高さの比率はまとめて調整しないと、画像だけが横に伸びたり、隣の面との間隔が詰まりすぎたりする。</p>
         </section>
         <section class="tech-note__section">
-          <h3>スクロール速度</h3>
-          <p>前フレームとの差分から速度を作り、減衰させながらベース回転速度へ戻す。スクロール量そのものではなく入力の勢いを反映する。</p>
+          <h3>画像比率の維持</h3>
+          <p>テクスチャはパネル比率と画像比率をシェーダー内で比較して、中央を保ったままカバー表示にしている。視差でUVを動かしても端が見えにくいよう、画像は少し拡大して貼る。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>視差の振れ幅</h3>
+          <p>回転角度とスクロールの勢いからUVの横移動量を作る。移動量を上げる時は、画像の拡大率とclamp範囲も一緒に見る。UVだけを強めると、端の固定感や同じ画素に張り付く感じが出やすい。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>表裏判定の分離</h3>
+          <p>両面に同じ画像を出すと、奥側に回った面でも写真が読めてしまい、前後関係の手がかりが弱くなる。シェーダーの表裏判定で写真面と裏面色を分け、判定方向を変えた時は必ず回転中の前面側を確認する。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>傾きと入力速度</h3>
+          <p>傾きはカメラではなく円柱グループ側で持たせ、画面サイズごとの配置調整と分けている。自動回転、スクロール加速、減衰を同時に強めると入力後に流れすぎるため、速度を変える時は止まり際まで確認する。</p>
         </section>
       </div>
     </section>

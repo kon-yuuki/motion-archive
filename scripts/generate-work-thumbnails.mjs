@@ -7,10 +7,8 @@ const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
-  { slug: "cursor-pixel-field", pointer: true },
-  { slug: "green-noise-gradient", wait: 900 },
+  { slug: "cursor-pixel-field", pointer: true, pointerDown: false, pointerSettle: 220 },
   { slug: "cylindrical-image-flow", scroll: 520, wait: 500 },
-  { slug: "scroll-tilt-gallery", scroll: 900 },
   { slug: "cursor-image-burst", pointer: true },
   {
     slug: "hero-mask-shift",
@@ -97,6 +95,10 @@ for (const work of selectedWorks) {
       .fluid-hint {
         display: none !important;
       }
+
+      * {
+        user-select: none !important;
+      }
     `
   });
 
@@ -106,13 +108,17 @@ for (const work of selectedWorks) {
   }
   if (work.pointer) {
     await page.mouse.move(280, 380);
-    await page.mouse.down();
+    if (work.pointerDown !== false) {
+      await page.mouse.down();
+    }
     for (let step = 0; step < 18; step += 1) {
       await page.mouse.move(280 + step * 24, 380 - Math.sin(step / 2) * 100);
       await page.waitForTimeout(18);
     }
-    await page.mouse.up();
-    await page.waitForTimeout(900);
+    if (work.pointerDown !== false) {
+      await page.mouse.up();
+    }
+    await page.waitForTimeout(work.pointerSettle ?? 900);
   }
   if (work.wait) {
     await page.waitForTimeout(work.wait);

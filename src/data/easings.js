@@ -33,12 +33,8 @@ const usage = {
     { label: "Work List", href: "../motion-archive/" },
     { label: "Smooth Scroll", href: "../works/scroll-type-reveal/" }
   ],
-  easeInOutSine: [
-    { label: "Green Noise Gradient", href: "../works/green-noise-gradient/" }
-  ],
-  easeOutQuart: [
-    { label: "Scroll Tilt Gallery", href: "../works/scroll-tilt-gallery/" }
-  ],
+  easeInOutSine: [],
+  easeOutQuart: [],
   easeOutBack: [
     { label: "Cursor Image Burst", href: "../works/cursor-image-burst/" }
   ],

@@ -44,9 +44,7 @@ if (referenceLink) {
 
 const detailEasings = {
   "cursor-pixel-field": "ease-out-expo",
-  "green-noise-gradient": "ease-in-out-sine",
   "cylindrical-image-flow": "ease-out-cubic",
-  "scroll-tilt-gallery": "ease-out-quart",
   "cursor-image-burst": "ease-out-back",
   "rgb-cursor-stalker": "ease-out-expo",
   "scroll-open-ui": "ease-out-cubic",

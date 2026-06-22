@@ -1,13 +1,13 @@
 :root {
-  --shell-chip: rgba(231, 255, 232, 0.72);
-  --shell-panel: rgba(231, 255, 232, 0.94);
-  --shell-line: rgba(0, 120, 55, 0.18);
-  --shell-muted: #e5ffe7;
-  --shell-text: #ffffff;
+  --shell-chip: rgba(237, 242, 238, 0.78);
+  --shell-panel: rgba(237, 242, 238, 0.96);
+  --shell-line: rgba(31, 35, 34, 0.14);
+  --shell-muted: #66736f;
+  --shell-text: #1f2322;
 }
 
 body {
-  background: #00a63d;
+  background: #edf2ee;
 }
 
 .cylinder-page {
@@ -16,9 +16,13 @@ body {
 
 .cylinder-sticky {
   background:
-    radial-gradient(circle at 20% 74%, rgba(182, 255, 178, 0.38), transparent 26%),
-    radial-gradient(circle at 64% 45%, rgba(93, 221, 112, 0.38), transparent 32%),
-    linear-gradient(135deg, #12b74d 0%, #00a844 48%, #07b24c 100%);
+    linear-gradient(90deg, rgba(31, 35, 34, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(31, 35, 34, 0.07) 1px, transparent 1px),
+    linear-gradient(135deg, #edf2ee 0%, #f7e8dd 54%, #dce9f6 100%);
+  background-size:
+    72px 72px,
+    72px 72px,
+    100% 100%;
   height: 100svh;
   min-height: 620px;
   overflow: hidden;
@@ -26,120 +30,118 @@ body {
   top: 0;
 }
 
-.cylinder-copy {
-  color: #fff;
+.cylinder-grid {
+  border: 1px solid rgba(31, 35, 34, 0.16);
+  inset: clamp(72px, 9vw, 128px) clamp(20px, 4vw, 64px) clamp(58px, 7vw, 96px);
   position: absolute;
-  right: clamp(18px, 3vw, 46px);
-  text-align: right;
-  top: -6px;
-  z-index: 4;
 }
 
-.cylinder-copy h1 {
-  font-size: clamp(42px, 5.7vw, 88px);
-  font-weight: 420;
-  letter-spacing: 0;
-  line-height: 0.96;
-  margin: 0;
+.cylinder-grid::before,
+.cylinder-grid::after {
+  background: rgba(31, 35, 34, 0.16);
+  content: "";
+  position: absolute;
+}
+
+.cylinder-grid::before {
+  height: 1px;
+  left: 0;
+  right: 0;
+  top: 50%;
+}
+
+.cylinder-grid::after {
+  bottom: 0;
+  left: 56%;
+  top: 0;
+  width: 1px;
+}
+
+.cylinder-copy {
+  color: #1f2322;
+  left: clamp(24px, 6vw, 88px);
+  max-width: min(520px, calc(100vw - 48px));
+  position: absolute;
+  top: clamp(118px, 19vh, 190px);
+  z-index: 4;
 }
 
 .cylinder-copy p {
-  bottom: auto;
-  color: #fff;
-  font-size: clamp(15px, 1.4vw, 21px);
-  left: auto;
+  color: #c65e4b;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.cylinder-copy h1 {
+  font-size: clamp(58px, 8.7vw, 138px);
+  font-weight: 760;
   letter-spacing: 0;
-  margin: 0 0 4px;
-  text-transform: none;
+  line-height: 0.88;
+  margin: 0;
 }
 
 .cylinder-scene {
-  height: min(38vw, 390px);
-  left: 50%;
-  perspective: 1200px;
+  inset: 0;
+  overflow: hidden;
   position: absolute;
-  top: 52%;
-  transform: translate(-50%, -50%);
-  width: min(78vw, 980px);
   z-index: 2;
 }
 
-.cylinder-ring {
-  height: 100%;
-  position: relative;
-  width: 100%;
-}
-
-.cylinder-ring figure {
-  height: min(20vw, 230px);
-  left: 50%;
-  margin: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(var(--scale));
-  width: min(18vw, 210px);
-  z-index: var(--z);
-}
-
-.cylinder-ring figure::after {
-  background: linear-gradient(180deg, rgba(0, 130, 52, 0.05), rgba(0, 80, 32, 0.28));
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.cylinder-ring img {
+.cylinder-canvas {
   display: block;
   height: 100%;
-  object-fit: cover;
   width: 100%;
 }
 
-.cylinder-pack {
-  background:
-    linear-gradient(170deg, rgba(255, 255, 255, 0.2), transparent 22%),
-    linear-gradient(180deg, #35c76b, #0fa74e);
-  bottom: min(14vw, 120px);
-  box-shadow: 0 24px 44px rgba(0, 80, 34, 0.28);
-  color: #eaffec;
-  height: min(22vw, 260px);
-  left: 57%;
-  padding: 24px 18px;
+.cylinder-fallback {
+  color: #4f5d59;
+  display: none;
+  font-size: 13px;
+  left: 50%;
+  margin: 0;
   position: absolute;
-  transform: rotate(13deg);
-  width: min(16vw, 178px);
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 3;
 }
 
-.cylinder-pack::before {
-  content: "/zeroz";
-  font-size: clamp(18px, 2vw, 30px);
-  font-weight: 650;
+.cylinder-scene[data-webgl-unavailable] .cylinder-fallback {
+  display: block;
 }
 
-.cylinder-tablet {
-  background: #f4f3df;
-  border-radius: 999px;
-  bottom: min(8vw, 64px);
-  box-shadow: 0 12px 18px rgba(0, 77, 33, 0.28);
-  height: min(5vw, 58px);
-  left: 68%;
+.cylinder-readout {
+  bottom: clamp(84px, 10vw, 138px);
+  color: #1f2322;
+  display: grid;
+  gap: 10px;
+  right: clamp(22px, 5vw, 76px);
   position: absolute;
-  transform: rotate(24deg);
-  width: min(2.2vw, 26px);
+  text-align: right;
   z-index: 4;
+}
+
+.cylinder-readout span {
+  border-bottom: 1px solid rgba(31, 35, 34, 0.24);
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  padding-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .cylinder-bottom-copy {
   bottom: 18px;
-  color: #fff;
-  font-size: clamp(14px, 1.4vw, 22px);
-  font-weight: 650;
-  left: 14px;
-  letter-spacing: 0;
+  color: #66736f;
+  font-size: 11px;
+  font-weight: 760;
+  left: clamp(24px, 4vw, 64px);
+  letter-spacing: 0.13em;
   margin: 0;
   position: absolute;
+  text-transform: uppercase;
   z-index: 4;
 }
 
@@ -147,23 +149,69 @@ body {
   height: 150svh;
 }
 
+.detail-dialog {
+  background: rgba(23, 27, 26, 0.58);
+}
+
+.detail-dialog .experiment-meta {
+  background: rgba(248, 250, 246, 0.99);
+  border-color: rgba(31, 35, 34, 0.2);
+  box-shadow: 0 28px 82px rgba(31, 35, 34, 0.26);
+  color: #1f2322;
+}
+
+.detail-dialog .experiment-meta h1,
+.detail-dialog .experiment-meta h2 {
+  letter-spacing: 0;
+}
+
+.detail-dialog .experiment-meta__description,
+.detail-dialog .tech-note__section p,
+.detail-dialog .tech-note__section li {
+  color: #4f5d59;
+}
+
+.detail-dialog .experiment-meta__index,
+.detail-dialog .experiment-status,
+.detail-dialog .experiment-tags .experiment-tag-link,
+.detail-dialog .experiment-tags span,
+.detail-dialog .experiment-meta__close {
+  color: #62716d;
+}
+
+.detail-dialog .experiment-status,
+.detail-dialog .experiment-tags .experiment-tag-link,
+.detail-dialog .experiment-tags span,
+.detail-dialog .experiment-meta__close {
+  border-color: rgba(31, 35, 34, 0.18);
+}
+
 @media (max-width: 720px) {
-  .cylinder-scene {
-    height: 64vw;
-    width: 110vw;
+  .cylinder-sticky {
+    min-height: 680px;
   }
 
-  .cylinder-ring {
-    height: 100%;
+  .cylinder-grid {
+    inset: 76px 18px 56px;
   }
 
-  .cylinder-ring figure {
-    height: 30vw;
-    width: 25vw;
+  .cylinder-grid::after {
+    left: 50%;
   }
 
-  .cylinder-pack {
-    height: 33vw;
-    width: 23vw;
+  .cylinder-copy {
+    top: 112px;
+  }
+
+  .cylinder-copy h1 {
+    font-size: clamp(48px, 15vw, 76px);
+  }
+
+  .cylinder-readout {
+    display: none;
+  }
+
+  .cylinder-bottom-copy {
+    display: none;
   }
 }

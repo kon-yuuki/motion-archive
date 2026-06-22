@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="カーソル位置に背景画像のピクセル片を生成し、ヒーロー画像を粒状に露出させる実験。" />
+    <meta name="description" content="大きなタイポグラフィの背面に、カーソル位置へ整列した背景色ピクセルを表示するPC向けホバー演出。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
     <title>Cursor Pixel Field / Motion Archive</title>
@@ -18,10 +18,15 @@
 
     <main class="experiment-stage pixel-stage" data-stage>
       <section class="pixel-hero" data-pixel-field>
-        <p class="pixel-hero__brand">FARM MINERALS</p>
-        <p class="pixel-hero__note">precision nutrient delivery system / crop tablet interface</p>
-        <div class="pixel-product" data-pixel-product aria-label="Black rounded tablet product"></div>
-        <p class="pixel-hero__caption">For Your Crops.<br />For the Planet.</p>
+        <p class="pixel-hero__brand">PIXEL FIELD</p>
+        <p class="pixel-hero__note">cursor sampled light field / responsive lens interface</p>
+        <p class="pixel-hero__mobile-note">このデモはスマホ操作には対応していません。PCでカーソルを動かして確認してください。</p>
+        <div class="pixel-hero__type" aria-label="Cursor Pixel Field">
+          <span>Cursor</span>
+          <span>Pixel</span>
+          <span>Field</span>
+        </div>
+        <p class="pixel-hero__caption">Trace the grid with your cursor.</p>
         <button class="replay" data-replay type="button">Replay</button>
         <div class="pixel-layer" data-pixels aria-hidden="true"></div>
       </section>
@@ -29,22 +34,31 @@
 
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">07 / 12 &middot; 2026.06.14</p>
-      <div class="experiment-meta__title"><h1>Cursor Pixel Field</h1><span class="experiment-status">WIP</span></div>
-      <p class="experiment-meta__description">FV上でカーソルを動かすと、カーソル周辺に背景画像の断片を短時間だけ表示するピクセルサンプリング演出。</p>
-      <div class="experiment-tags"><span>JavaScript</span><span>Hover</span><span>Image</span><span>Reveal</span></div>
-      <div class="experiment-actions">
-        <a class="experiment-reference-link" href="https://www.farmminerals.com/promo" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="experiment-meta__title"><h1>Cursor Pixel Field</h1></div>
+      <p class="experiment-meta__description">カーソルの動きをグリッド単位の背景色ピクセルに変換し、大きなタイポグラフィの背面で反応させるホバー演出。</p>
+      <div class="experiment-tags"><span>JavaScript</span><span>Hover</span><span>Typography</span><span>Grid</span><span>Color</span></div>
     </aside>
     <section class="tech-note" data-tech-note aria-hidden="true">
       <div class="tech-note__body">
         <section class="tech-note__section">
-          <h3>背景位置の同期</h3>
-          <p>生成した小さなタイルに同じ背景画像を設定し、要素の座標から <code>background-position</code> を逆算して下地画像の該当箇所だけを表示する。</p>
+          <h3>グリッド単位の反応</h3>
+          <p>カーソルの座標をそのまま使わず、近いグリッドセルへ丸めてから反応させる。1px単位で追うと光が細かく震えて見えやすいが、セル単位にすると反応の粒度がそろい、通った場所が点の集まりではなく面の変化として残る。</p>
         </section>
         <section class="tech-note__section">
-          <h3>密度制御</h3>
-          <p>ポインタ移動距離が一定以上の時だけ粒を追加し、古い粒は上限数を超えたら破棄する。DOM数を抑えて連続移動でも重くなりにくくしている。</p>
+          <h3>背景色の近似</h3>
+          <p>ピクセルの色は固定色ではなく、表示位置に応じて背景グラデーションを近似して作る。背景と完全に分離させず、同じ光の中から切り出したように見せる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>明るさを少し足す</h3>
+          <p>背景になじませるだけだとピクセルが埋もれるため、近似した色に少しだけ明るさを足す。背景から浮きすぎない範囲で差を作り、カーソルの通過位置が読めるようにしている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>フェードの調整</h3>
+          <p>ピクセルは急に消さず、<code>opacity</code> を滑らかに落とす。表示時間とフェード量を調整することで、チカつきを抑えながらカーソルの余韻を残す。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>軌跡の補間</h3>
+          <p>カーソルを速く動かした時は、通過したグリッドを補間して表示する。反応が飛びすぎないようにしつつ、線ではなくセルの連なりとして軌跡を見せる。</p>
         </section>
       </div>
     </section>
