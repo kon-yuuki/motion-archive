@@ -6,6 +6,12 @@ export const uiGalleryItems = [
     count: 1
   },
   {
+    slug: "form",
+    title: "Form",
+    date: "2026.06.23",
+    count: 1
+  },
+  {
     slug: "tooltip-behavior",
     title: "Tooltip Behavior",
     date: "2026.06.12",

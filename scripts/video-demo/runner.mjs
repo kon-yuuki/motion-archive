@@ -306,12 +306,12 @@ export async function transcodeToMp4(
   output,
   { width = 1980, height = 1114, start = 0 } = {}
 ) {
-  const inputArgs = start > 0 ? ["-ss", String(start)] : [];
+  const seekArgs = start > 0 ? ["-ss", String(start)] : [];
 
   await execFileAsync(ffmpegPath, [
     "-y",
-    ...inputArgs,
     "-i", resolve(input),
+    ...seekArgs,
     "-vf", `scale=${width}:${height}:flags=lanczos`,
     "-c:v", "libx264",
     "-preset", "medium",

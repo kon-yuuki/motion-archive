@@ -12,6 +12,7 @@
     "thumbnails:generate": "node scripts/generate-work-thumbnails.mjs",
     "preview": "vite preview",
     "video:edge-collision": "node scripts/record-edge-collision.mjs",
+    "video:form-hit-area": "node scripts/record-form-hit-area.mjs",
     "video:hover-intent": "node scripts/record-hover-intent.mjs",
     "video:pie-chart": "node scripts/record-css-pie-chart-full.mjs",
     "video:typography-gui": "node scripts/record-typography-gui.mjs"

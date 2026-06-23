@@ -28,6 +28,7 @@ export default defineConfig({
         categories: resolve(__dirname, "categories/index.html"),
         "ui-gallery": resolve(__dirname, "ui-gallery/index.html"),
         "ui-gallery-buttons": resolve(__dirname, "ui-gallery/buttons/index.html"),
+        "ui-gallery-form": resolve(__dirname, "ui-gallery/form/index.html"),
         "ui-gallery-tooltip-behavior": resolve(__dirname, "ui-gallery/tooltip-behavior/index.html"),
         "ui-gallery-typography": resolve(__dirname, "ui-gallery/typography/index.html"),
         "cursor-pixel-field": resolve(__dirname, "works/cursor-pixel-field/index.html"),
