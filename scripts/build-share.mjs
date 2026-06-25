@@ -40,6 +40,13 @@ const uiPages = [
   },
   {
     type: "ui",
+    sourcePath: "ui-gallery/form/index.html",
+    outputPath: "ui-gallery/form/index.html",
+    requestKey: "ui-gallery/form",
+    logPath: "/ui-gallery/form/"
+  },
+  {
+    type: "ui",
     sourcePath: "ui-gallery/tooltip-behavior/index.html",
     outputPath: "ui-gallery/tooltip-behavior/index.html",
     requestKey: "ui-gallery/tooltip-behavior",

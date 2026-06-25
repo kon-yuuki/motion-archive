@@ -11,6 +11,7 @@ const pages = {
   easings: ["Easing Index", "Motion & UI"],
   "ui-gallery": ["UI Gallery", "Interface Studies"],
   "ui-gallery-buttons": ["Buttons", "UI Gallery"],
+  "ui-gallery-form": ["Form", "UI Gallery"],
   "ui-gallery-tooltip-behavior": ["Tooltip Behavior", "UI Gallery"],
   "ui-gallery-typography": ["Typography", "UI Gallery"],
   "cursor-pixel-field": ["Cursor Pixel Field", "Pointer Image Study"],
