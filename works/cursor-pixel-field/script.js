@@ -1,4 +1,4 @@
-import { bindReplay } from "../_shared/detail-shell.js";
+import "../_shared/detail-shell.js";
 
 const field = document.querySelector("[data-pixel-field]");
 const layer = document.querySelector("[data-pixels]");
@@ -90,11 +90,5 @@ field.addEventListener("pointermove", (event) => {
 });
 
 field.addEventListener("pointerleave", () => {
-  last = null;
-});
-
-bindReplay(() => {
-  layer.replaceChildren();
-  activePixels.clear();
   last = null;
 });

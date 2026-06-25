@@ -11,6 +11,10 @@ body {
   background: #20310f;
 }
 
+html {
+  scrollbar-gutter: auto;
+}
+
 .pixel-stage {
   background:
     radial-gradient(circle at 52% 74%, rgba(207, 220, 140, 0.85), transparent 28%),
@@ -18,7 +22,7 @@ body {
     radial-gradient(circle at 72% 48%, rgba(71, 101, 42, 0.72), transparent 34%),
     linear-gradient(180deg, #20310f 0%, #7f944b 72%, #c3cf79 100%);
   cursor: crosshair;
-  width: 100vw;
+  width: 100%;
 }
 
 .pixel-stage::before {
@@ -49,12 +53,6 @@ body {
   z-index: 3;
 }
 
-.pixel-hero .replay {
-  color: var(--shell-text);
-  position: absolute;
-  z-index: 4;
-}
-
 .pixel-hero__brand {
   font-size: 10px;
   font-weight: 650;
@@ -79,7 +77,6 @@ body {
 }
 
 .pixel-hero__type {
-  bottom: clamp(90px, 10vw, 128px);
   display: grid;
   font-size: clamp(64px, 13.6vw, 198px);
   font-weight: 560;
@@ -89,6 +86,7 @@ body {
   line-height: 0.84;
   margin: 0;
   max-width: min(980px, calc(100% - 44px));
+  top: clamp(118px, 17svh, 168px);
   text-transform: uppercase;
 }
 
@@ -113,11 +111,6 @@ body {
   line-height: 1.05;
   margin: 0;
   max-width: 320px;
-}
-
-.pixel-hero .replay {
-  bottom: 18px;
-  right: 18px;
 }
 
 .pixel-layer {
@@ -178,12 +171,12 @@ body {
   }
 
   .pixel-hero__type {
-    bottom: 112px;
     font-size: clamp(56px, 18vw, 94px);
     font-weight: 580;
     gap: 4px;
     left: 16px;
     line-height: 0.86;
+    top: clamp(210px, 36svh, 260px);
   }
 
   .pixel-hero__type span:nth-child(2),
