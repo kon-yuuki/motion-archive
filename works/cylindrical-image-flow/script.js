@@ -9,11 +9,11 @@ const canvas = document.querySelector("[data-cylinder-canvas]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const imageSources = [
-  "../../src/assets/images/optimized/dummy_1-1024.webp",
-  "../../src/assets/images/optimized/dummy_2-1024.webp",
-  "../../src/assets/images/optimized/dummy_3-1024.webp",
-  "../../src/assets/images/optimized/dummy_4-1024.webp"
-].map((path) => new URL(path, import.meta.url).href);
+  new URL("../../src/assets/images/optimized/dummy_1-1024.webp", import.meta.url).href,
+  new URL("../../src/assets/images/optimized/dummy_2-1024.webp", import.meta.url).href,
+  new URL("../../src/assets/images/optimized/dummy_3-1024.webp", import.meta.url).href,
+  new URL("../../src/assets/images/optimized/dummy_4-1024.webp", import.meta.url).href
+];
 
 function createCurvedPanelGeometry({ radius, arc, height, segments = 32 }) {
   const positions = [];
