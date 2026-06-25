@@ -15,7 +15,8 @@ const root = resolve(import.meta.dirname, "..");
 const requestedPage = process.argv[2];
 const temporaryDirectory = resolve(root, ".share-build");
 const outputDirectory = resolve(root, "dist-share");
-const sharedHead = readFileSync(resolve(root, "src/shared/head.html"), "utf8");
+const sharedHead = readFileSync(resolve(root, "src/shared/head.html"), "utf8")
+  .replace(/\n?<script type="module" src="\/src\/scripts\/metrics\.js"><\/script>\n?/, "\n");
 const workPages = readdirSync(resolve(root, "works"), { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
   .map((entry) => entry.name)
