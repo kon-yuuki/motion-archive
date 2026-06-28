@@ -2,29 +2,14 @@ export const works = [
   {
     slug: "rgb-cursor-stalker",
     title: "RGB Cursor Stalker",
-    thumbnail: "/thumbnails/rgb-cursor-stalker.svg",
+    thumbnail: "/thumbnails/rgb-cursor-stalker.jpg",
     date: "2026.06.17",
-    status: "WIP",
-    description: "画像ホバー時にRGBシフトしたプレビューがカーソルへ追従するマウスストーカー演出の実装予定ページ。",
-    techniques: ["JavaScript", "CSS"],
-    expressions: ["Hover", "Image", "Transition"],
+    description: "画像カードをWebGLのplaneとして描画し、カーソル位置から外方向へ頂点とUVを押し出しながらRGBチャンネルを分離するホバー演出。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Hover", "Image", "Cursor"],
     reference: {
       label: "Pixelismo",
       url: "https://www.pixelismo.it/"
-    }
-  },
-  {
-    slug: "scroll-open-ui",
-    title: "Scroll Open UI",
-    thumbnail: "/thumbnails/scroll-open-ui.svg",
-    date: "2026.06.17",
-    status: "WIP",
-    description: "下から画面内に入った項目が、中央到達後のスクロール進行に合わせて開いていくUI実験。",
-    techniques: ["JavaScript", "CSS"],
-    expressions: ["Scroll", "Reveal", "Transition"],
-    reference: {
-      label: "Horeca Social",
-      url: "https://www.horeca-social.com/en"
     }
   },
   {

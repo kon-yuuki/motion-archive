@@ -13,8 +13,10 @@ const globalDurationReset = document.querySelector("[data-global-duration-reset]
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const activeRuns = new WeakMap();
 const tracerRuns = new WeakMap();
+const tracerTimers = new WeakMap();
 const copyTimers = new WeakMap();
-const defaultDuration = 1200;
+const defaultDuration = 800;
+const tracerInterval = 2000;
 const trackPadding = 0;
 let currentDuration = defaultDuration;
 
@@ -99,6 +101,10 @@ function easingCard(easing, index) {
   const links = easing.uses
     .map(({ label, href }) => `<a href="${href}">${label}</a>`)
     .join("");
+  const codeTags = ["JS", easing.css ? "CSS" : null]
+    .filter(Boolean)
+    .map((label) => `<span class="easing-card__tag">${label}</span>`)
+    .join("");
   const cssCode = easing.css
     ? copyButton(`${easing.name} CSS code`, easing.css, "CSS")
     : `<p class="easing-row__no-css">CSS cubic-bezierでは再現不可</p>`;
@@ -115,7 +121,7 @@ function easingCard(easing, index) {
         <span class="easing-card__head">
           <span class="easing-card__index">${String(index + 1).padStart(2, "0")}</span>
           <span class="easing-card__name">${easing.name}</span>
-          <span class="easing-card__tag">${easing.css ? "CSS" : "JS"}</span>
+          <span class="easing-card__tags" aria-label="Available code formats">${codeTags}</span>
         </span>
         <span class="easing-card__graph">
           ${curveSvg(easingFunctions[easing.key])}
@@ -323,11 +329,53 @@ async function playDemo(card) {
   }
 }
 
-function playTracer(card) {
+function playTracer(card, onComplete) {
   if (reducedMotion.matches || card.hasAttribute("data-open")) {
-    return;
+    return false;
   }
 
+  const easing = easings.find((item) => item.id === card.dataset.easing);
+  const dot = card.querySelector(".easing-curve__dot");
+
+  if (!easing || !dot) {
+    return false;
+  }
+
+  stopTracer(card, { reset: false });
+  const easingFunction = easingFunctions[easing.key];
+  const { mapY } = curveGeometry(easingFunction);
+  const run = { cancelled: false, frame: 0 };
+  tracerRuns.set(card, run);
+  card.setAttribute("data-tracing", "");
+  dot.setAttribute("cx", "0");
+  dot.setAttribute("cy", mapY(0).toFixed(2));
+
+  const begin = performance.now();
+  const duration = Math.max(1, currentDuration);
+
+  const tick = (time) => {
+    if (run.cancelled) {
+      return;
+    }
+
+    const progress = Math.min(1, Math.max(0, (time - begin) / duration));
+    dot.setAttribute("cx", (progress * 100).toFixed(2));
+    dot.setAttribute("cy", mapY(easingFunction(progress)).toFixed(2));
+
+    if (progress < 1) {
+      run.frame = requestAnimationFrame(tick);
+    } else {
+      tracerRuns.delete(card);
+      card.removeAttribute("data-tracing");
+      onComplete?.();
+    }
+  };
+
+  run.frame = requestAnimationFrame(tick);
+  return true;
+}
+
+function setTracerPosition(card, progress) {
   const easing = easings.find((item) => item.id === card.dataset.easing);
   const dot = card.querySelector(".easing-curve__dot");
 
@@ -335,45 +383,66 @@ function playTracer(card) {
     return;
   }
 
-  stopTracer(card);
   const easingFunction = easingFunctions[easing.key];
   const { mapY } = curveGeometry(easingFunction);
-  const run = { cancelled: false, frame: 0 };
-  tracerRuns.set(card, run);
-  const begin = performance.now();
-
-  const tick = (time) => {
-    if (run.cancelled) {
-      return;
-    }
-
-    const progress = ((time - begin) % currentDuration) / currentDuration;
-    dot.setAttribute("cx", (progress * 100).toFixed(2));
-    dot.setAttribute("cy", mapY(easingFunction(progress)).toFixed(2));
-    run.frame = requestAnimationFrame(tick);
-  };
-
-  run.frame = requestAnimationFrame(tick);
+  dot.setAttribute("cx", (progress * 100).toFixed(2));
+  dot.setAttribute("cy", mapY(easingFunction(progress)).toFixed(2));
 }
 
-function stopTracer(card) {
+function stopTracer(card, { reset = true } = {}) {
   const run = tracerRuns.get(card);
   if (run) {
     run.cancelled = true;
     cancelAnimationFrame(run.frame);
+    tracerRuns.delete(card);
   }
+
+  card.removeAttribute("data-tracing");
 
   if (card.hasAttribute("data-open")) {
     return;
   }
 
-  const easing = easings.find((item) => item.id === card.dataset.easing);
-  const dot = card.querySelector(".easing-curve__dot");
-  if (easing && dot) {
-    const { mapY } = curveGeometry(easingFunctions[easing.key]);
-    dot.setAttribute("cx", "0");
-    dot.setAttribute("cy", mapY(0).toFixed(2));
+  if (reset) {
+    setTracerPosition(card, 0);
   }
+}
+
+function isTracerActive(card) {
+  return card.matches(":hover") || card.matches(":focus-within");
+}
+
+function startTracerTimer(card) {
+  window.clearTimeout(tracerTimers.get(card));
+
+  if (!isTracerActive(card) || reducedMotion.matches) {
+    stopTracer(card);
+    return;
+  }
+
+  if (tracerRuns.has(card)) {
+    return;
+  }
+
+  const started = playTracer(card, () => {
+    if (isTracerActive(card)) {
+      tracerTimers.set(card, window.setTimeout(() => startTracerTimer(card), tracerInterval));
+    }
+  });
+
+  if (!started) {
+    setTracerPosition(card, 1);
+  }
+}
+
+function stopTracerTimer(card) {
+  window.clearTimeout(tracerTimers.get(card));
+
+  if (tracerRuns.has(card)) {
+    return;
+  }
+
+  stopTracer(card);
 }
 
 async function copyText(value) {
@@ -424,6 +493,7 @@ function openModal(card) {
   backdrop.addEventListener("click", closeModal);
   document.body.append(backdrop);
 
+  window.clearTimeout(tracerTimers.get(card));
   stopTracer(card);
   card.classList.add("is-modal");
   card.setAttribute("data-open", "");
@@ -507,18 +577,28 @@ function closeModal() {
   activeModal = null;
   stopDemo(card);
   card.style.overflowY = "";
+  card.classList.add("is-closing");
+  toggle?.setAttribute("aria-expanded", "false");
+  if (demo) {
+    demo.hidden = true;
+  }
+  card.style.left = `${current.left}px`;
+  card.style.top = `${current.top}px`;
+  card.style.width = `${current.width}px`;
+  card.style.height = `${current.height}px`;
+  const closeEffects = [];
 
   const finish = () => {
-    card.classList.remove("is-modal");
+    card.classList.remove("is-modal", "is-closing");
     card.removeAttribute("data-open");
     card.removeAttribute("style");
-    toggle?.setAttribute("aria-expanded", "false");
-    if (demo) {
-      demo.hidden = true;
-    }
+    closeEffects.forEach((effect) => effect.cancel());
     placeholder.remove();
     backdrop.remove();
     smoothScroll.lenis?.start();
+    if (isTracerActive(card)) {
+      startTracerTimer(card);
+    }
   };
 
   if (reducedMotion.matches) {
@@ -527,6 +607,26 @@ function closeModal() {
   }
 
   backdrop.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: "forwards" });
+  closeEffects.push(
+    card.animate(
+      [
+        { boxShadow: "0 40px 120px rgba(18, 19, 19, 0.34)" },
+        { boxShadow: "0 0 0 rgba(18, 19, 19, 0)" }
+      ],
+      { duration: 360, easing: flipEasing, fill: "forwards" }
+    )
+  );
+  if (toggle) {
+    closeEffects.push(
+      toggle.animate(
+        [
+          { filter: "blur(10px)", opacity: 0.34, transform: "scale(0.985)" },
+          { filter: "blur(0px)", opacity: 1, transform: "scale(1)" }
+        ],
+        { duration: 360, easing: flipEasing, fill: "forwards" }
+      )
+    );
+  }
   const anim = card.animate(
     [
       { left: `${current.left}px`, top: `${current.top}px`, width: `${current.width}px`, height: `${current.height}px` },
@@ -537,7 +637,9 @@ function closeModal() {
   anim.onfinish = finish;
 }
 
-document.querySelectorAll("[data-easing]").forEach((card) => {
+const easingCards = [...document.querySelectorAll("[data-easing]")];
+
+easingCards.forEach((card) => {
   card.querySelector(".easing-demo__box").style.transform = "translate(0, -50%)";
   card.querySelector(".easing-demo__ghost").style.transform = "translate(0, -50%)";
 
@@ -554,10 +656,31 @@ document.querySelectorAll("[data-easing]").forEach((card) => {
     playDemo(card);
   });
 
-  card.addEventListener("pointerenter", () => playTracer(card));
-  card.addEventListener("pointerleave", () => stopTracer(card));
-  card.querySelector("[data-toggle]")?.addEventListener("focus", () => playTracer(card));
-  card.querySelector("[data-toggle]")?.addEventListener("blur", () => stopTracer(card));
+  card.addEventListener("pointerenter", () => startTracerTimer(card));
+  card.addEventListener("pointerleave", () => {
+    if (!card.matches(":focus-within")) {
+      stopTracerTimer(card);
+    }
+  });
+  card.addEventListener("focusin", () => startTracerTimer(card));
+  card.addEventListener("focusout", () => {
+    requestAnimationFrame(() => {
+      if (!isTracerActive(card)) {
+        stopTracerTimer(card);
+      }
+    });
+  });
+});
+
+reducedMotion.addEventListener("change", () => {
+  easingCards.forEach((card) => {
+    if (reducedMotion.matches) {
+      window.clearTimeout(tracerTimers.get(card));
+      stopTracer(card);
+    } else if (isTracerActive(card)) {
+      startTracerTimer(card);
+    }
+  });
 });
 
 document.addEventListener("keydown", (event) => {

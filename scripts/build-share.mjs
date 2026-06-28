@@ -15,8 +15,7 @@ const root = resolve(import.meta.dirname, "..");
 const requestedPage = process.argv[2];
 const temporaryDirectory = resolve(root, ".share-build");
 const outputDirectory = resolve(root, "dist-share");
-const sharedHead = readFileSync(resolve(root, "src/shared/head.html"), "utf8")
-  .replace(/\n?<script type="module" src="\/src\/scripts\/metrics\.js"><\/script>\n?/, "\n");
+const sharedHead = readFileSync(resolve(root, "src/shared/head.html"), "utf8");
 const workPages = readdirSync(resolve(root, "works"), { withFileTypes: true })
   .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
   .map((entry) => entry.name)
@@ -62,13 +61,23 @@ const uiPages = [
   }
 ];
 
-const availablePages = [...workPages, ...uiPages].filter((page) =>
+const standalonePages = [
+  {
+    type: "standalone",
+    sourcePath: "easings/index.html",
+    outputPath: "easings/index.html",
+    requestKey: "easings",
+    logPath: "/easings/"
+  }
+];
+
+const availablePages = [...workPages, ...uiPages, ...standalonePages].filter((page) =>
   existsSync(resolve(root, page.sourcePath))
 );
 const availablePageKeys = availablePages.map((page) => page.requestKey);
 
 if (requestedPage && !/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(requestedPage)) {
-  console.error("Usage: npm run build:share -- [work-slug|ui-gallery[/page]]");
+  console.error("Usage: npm run build:share -- [work-slug|ui-gallery[/page]|easings]");
   process.exit(1);
 }
 
@@ -140,6 +149,27 @@ function createUiShareHtml(html, page, temporaryHtml) {
   return shareHtml;
 }
 
+function createStandaloneShareHtml(html, page, temporaryHtml) {
+  const sourceDirectory = dirname(resolve(root, page.sourcePath));
+  let shareHtml = removeElement(html, '<header class="site-header"', "</header>");
+  shareHtml = removeElement(shareHtml, '<footer class="site-footer"', "</footer>");
+  shareHtml = shareHtml
+    .replaceAll(
+      'href="./style.scss"',
+      `href="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "style.scss"))}"`
+    )
+    .replace("<body>", '<body class="share-demo">');
+
+  if (existsSync(resolve(sourceDirectory, "script.js"))) {
+    shareHtml = shareHtml.replaceAll(
+      'src="./script.js"',
+      `src="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "script.js"))}"`
+    );
+  }
+
+  return shareHtml;
+}
+
 rmSync(temporaryDirectory, { recursive: true, force: true });
 rmSync(outputDirectory, { recursive: true, force: true });
 
@@ -152,7 +182,9 @@ for (const page of pages) {
     temporaryHtml,
     page.type === "work"
       ? createWorkShareHtml(sourceHtml, page.slug)
-      : createUiShareHtml(sourceHtml, page, temporaryHtml)
+      : page.type === "ui"
+        ? createUiShareHtml(sourceHtml, page, temporaryHtml)
+        : createStandaloneShareHtml(sourceHtml, page, temporaryHtml)
   );
   inputs[page.requestKey] = temporaryHtml;
 }
@@ -164,13 +196,16 @@ await build({
   plugins: [
     {
       name: "share-head",
-      transformIndexHtml(html, context) {
-        const withSharedHead = html.replace("<head>", `<head>\n${sharedHead}`);
-        const withMeta = injectSocialMeta(withSharedHead, {
-          pagePath: context.path,
-          share: true
-        });
-        return injectSkipLink(withMeta);
+      transformIndexHtml: {
+        order: "pre",
+        handler(html, context) {
+          const withSharedHead = html.replace("<head>", `<head>\n${sharedHead}`);
+          const withMeta = injectSocialMeta(withSharedHead, {
+            pagePath: context.path,
+            share: true
+          });
+          return injectSkipLink(withMeta);
+        }
       }
     }
   ],

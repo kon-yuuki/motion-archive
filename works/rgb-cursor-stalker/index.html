@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="画像ホバー時にRGBシフトしたプレビューがカーソルへ追従するマウスストーカー演出の実装予定ページ。" />
+    <meta name="description" content="画像カードをWebGLのplaneとして描画し、カード内のマウス座標から外方向へ頂点とUVを押し出し、RGBシフトを重ねるカーソル演出。" />
     <link rel="stylesheet" href="../_shared/detail-shell.scss" />
     <link rel="stylesheet" href="./style.scss" />
     <title>RGB Cursor Stalker / Motion Archive</title>
@@ -14,21 +14,95 @@
         <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
       </div>
     </nav>
-    <main class="experiment-stage placeholder-stage placeholder-stage--rgb">
-      <section class="placeholder-copy">
-        <p>WIP / Hover study</p>
-        <h1>RGB Cursor Stalker</h1>
+    <main class="experiment-stage rgb-stage" data-rgb-stage>
+      <canvas class="rgb-webgl-canvas" data-rgb-canvas aria-hidden="true"></canvas>
+      <div class="rgb-cursor-stalker" data-rgb-cursor aria-hidden="true"></div>
+      <section class="rgb-layout" aria-labelledby="rgb-title">
+        <div class="rgb-copy">
+          <p>Hover study / Sunlit chroma</p>
+          <h1 id="rgb-title">RGB Cursor Stalker</h1>
+        </div>
+        <div class="rgb-gallery" aria-label="Image targets">
+          <figure class="rgb-card rgb-card--tall" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-01.webp" alt="花越しに揺れる人物のポートレート" />
+          </figure>
+          <figure class="rgb-card rgb-card--wide" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-02.webp" alt="淡い光と花に包まれた横顔のポートレート" />
+          </figure>
+          <figure class="rgb-card" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-03.webp" alt="青い光とオレンジの花が重なる人物写真" />
+          </figure>
+          <figure class="rgb-card rgb-card--small" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-04.webp" alt="花畑の中で後ろを向く人物の写真" />
+          </figure>
+          <figure class="rgb-card rgb-card--wide rgb-card--lower" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-05.webp" alt="花と光に囲まれて上を向く人物のポートレート" />
+          </figure>
+          <figure class="rgb-card" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-06.webp" alt="花と人物の顔が柔らかく重なるクローズアップ" />
+          </figure>
+          <figure class="rgb-card rgb-card--small" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-07.webp" alt="逆光の中で花に囲まれる横顔のポートレート" />
+          </figure>
+          <figure class="rgb-card rgb-card--tall rgb-card--edge" data-rgb-card>
+            <img src="/src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-08.webp" alt="オレンジの花と残像が重なる人物のポートレート" />
+          </figure>
+        </div>
       </section>
     </main>
     <aside class="experiment-meta" data-details>
       <p class="experiment-meta__index">13 / 14 &middot; 2026.06.17</p>
-      <div class="experiment-meta__title"><h1>RGB Cursor Stalker</h1><span class="experiment-status">WIP</span></div>
-      <p class="experiment-meta__description">画像ホバー時にRGBシフトしたプレビューがカーソルへ追従するマウスストーカー演出の実装予定ページ。</p>
-      <div class="experiment-tags"><span>JavaScript</span><span>CSS</span><span>Hover</span><span>Image</span><span>Transition</span></div>
+      <div class="experiment-meta__title"><h1>RGB Cursor Stalker</h1><span class="experiment-status">WebGL</span></div>
+      <p class="experiment-meta__description">FVはサブタイトルと1行タイトルを左揃えで置き、その下に5カラムのスクロールギャラリーを組んでいる。fine pointer環境だけDOM画像をWebGLのplaneへ置き換え、カード内のマウス座標を頂点変形、UV変形、RGBチャンネル分離へ同じ基準で渡している。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>JavaScript</span><span>Shader</span><span>Image</span><span>Cursor</span></div>
       <div class="experiment-actions">
         <a class="experiment-reference-link" href="https://www.pixelismo.it/" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
       </div>
     </aside>
+    <section class="tech-note" data-tech-note aria-hidden="true">
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>FVとギャラリー配置</h3>
+          <p>FVは <code>.rgb-copy</code> を1カラムgridにし、<code>align-content: end</code> で画面下側の帯へ寄せている。サブタイトルと <code>h1</code> は同じ左端に置き、タイトルは <code>white-space: nowrap</code> と幅別の <code>clamp()</code> で1行を維持する。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>5カラムの余白設計</h3>
+          <p>ギャラリーは <code>repeat(5, minmax(0, 1fr))</code> と固定の行単位で組み、各カードに <code>grid-column</code> と <code>grid-row</code> を個別指定している。余白は <code>row-gap</code> と <code>column-gap</code> の <code>clamp()</code> で広げ、画像同士を重ねずにスクロール量で間を作っている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>WebGLの起動条件</h3>
+          <p><code>finePointer</code> が成立し、WebGLが使える場合だけ <code>initRgbScene()</code> を進める。タッチ環境では <code>data-webgl-ready</code> を付けないためDOM画像のまま表示され、CSS側の <code>opacity: 0</code> へ切り替わらない。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>DOMからplaneへの同期</h3>
+          <p><code>resize()</code> で各カードの <code>getBoundingClientRect()</code> を読み、stage左上を基準にmeshの中心座標を計算する。rectの幅と高さはmeshの <code>scale</code> と <code>uPlaneSize</code> へ入り、stage高から計算したcamera Zに合わせて <code>camera.far</code> も伸ばしている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>画像比率の保持</h3>
+          <p>fragment shaderの <code>coverUv()</code> でplane比率と画像比率を比較し、表示に使うUV範囲を縮める。CSSの <code>object-position</code> は <code>uObjectPosition</code> に変換し、DOM画像とWebGL textureの寄せ位置を同じ計算へ通している。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>カード単位の反応</h3>
+          <p>stage座標へ変換したマウス位置を、各カードのrectと比較する。内側にあるentryだけ <code>targetPointer</code> を更新し、render loopで <code>currentPointer</code> へ補間してから <code>uPointer</code> としてshaderへ渡す。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>放射方向の頂点変形</h3>
+          <p>vertex shaderで各頂点の画面座標 <code>screenPosition</code> から <code>uMouse</code> を引き、カーソルから外側へ向かう <code>radialDirection</code> を作る。距離は <code>smoothstep()</code> で減衰させ、XY方向の押し出しとZ方向の持ち上げを同じ中心から発生させている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>UV変形とRGB分離</h3>
+          <p>fragment shaderでも <code>vScreen</code> と <code>uMouse</code> から放射方向を作り、先に <code>suctionUv</code> でUVを少しずらす。そのUVを基準に、赤は放射方向へ、青は反対方向へ別々にサンプリングし、緑は基準UVの値を使って合成している。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>停止時の戻し方</h3>
+          <p>前回座標と現在座標の距離から <code>motion</code> を作り、動いていないフレームでは <code>targetPointer</code> が毎回減衰する。<code>currentMouse</code> は <code>lerp()</code>、<code>currentPointer</code> は補間で追従するため、カーソル停止後は頂点移動、UVずれ、RGBずれが同じ係数で戻る。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>小さなDOMカーソル</h3>
+          <p>丸いカーソルはshaderではなく <code>data-rgb-cursor</code> のDOM要素として重ねる。shaderへ渡す <code>currentMouse</code> と同じstage内座標を <code>left</code> と <code>top</code> に書き込むため、表示位置と変形中心が同じ座標系で動く。</p>
+        </section>
+      </div>
+    </section>
     <script type="module" src="./script.js"></script>
   </body>
 </html>

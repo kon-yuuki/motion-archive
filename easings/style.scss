@@ -515,11 +515,13 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
 .easing-card:hover .easing-curve__dot,
 .easing-card:focus-within .easing-curve__dot,
+.easing-card[data-tracing] .easing-curve__dot,
 .easing-card[data-open] .easing-curve__dot {
   opacity: 1;
 }
 
 .easing-grid {
+  align-items: stretch;
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -527,11 +529,12 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 }
 
 .easing-card {
-  align-self: start;
+  align-self: stretch;
   background: $white;
   border: 1px solid $line;
   display: flex;
   flex-direction: column;
+  height: 100%;
   transition: border-color 160ms ease;
 
   &:hover {
@@ -554,6 +557,7 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 14px;
   padding: 16px 16px 18px;
   text-align: left;
@@ -580,6 +584,13 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
   word-break: break-word;
 }
 
+.easing-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
 .easing-card__tag {
   border: 1px solid $line;
   border-radius: 999px;
@@ -591,7 +602,9 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 }
 
 .easing-card__graph {
+  align-self: end;
   position: relative;
+  width: 100%;
 }
 
 .easing-card__demo {
@@ -602,6 +615,33 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   &[hidden] {
     display: none;
+  }
+}
+
+@supports (grid-template-rows: subgrid) {
+  .easing-card {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+
+  .easing-card-placeholder {
+    grid-row: span 2;
+  }
+
+  .easing-card__toggle {
+    display: grid;
+    gap: 0;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+
+  .easing-card__head {
+    grid-row: 1;
+  }
+
+  .easing-card__graph {
+    grid-row: 2;
   }
 }
 
@@ -621,6 +661,9 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 .easing-card.is-modal {
   border-color: $black;
   box-shadow: 0 40px 120px rgba(18, 19, 19, 0.34);
+  display: flex;
+  grid-row: span 2;
+  grid-template-rows: none;
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -632,7 +675,10 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   .easing-card__toggle {
     cursor: default;
+    display: flex;
     gap: 20px;
+    grid-row: span 2;
+    grid-template-rows: none;
     padding: 22px 26px 4px;
   }
 
@@ -648,6 +694,33 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
 
   .easing-card__demo {
     padding: 22px 26px 26px;
+  }
+}
+
+.easing-card.is-modal.is-closing {
+  .easing-card__toggle {
+    cursor: pointer;
+    display: flex;
+    filter: blur(10px);
+    gap: 0;
+    opacity: 0.34;
+    padding: 16px 16px 18px;
+    pointer-events: none;
+    transform: scale(0.985);
+  }
+
+  .easing-card__name {
+    font-size: 13px;
+  }
+
+  .easing-card__graph {
+    margin: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .easing-card__demo {
+    display: none;
   }
 }
 

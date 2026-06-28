@@ -10,12 +10,15 @@ export default defineConfig({
   plugins: [
     {
       name: "shared-head",
-      transformIndexHtml(html, context) {
-        const withSharedHead = html.replace("<head>", `<head>\n${sharedHead}`);
-        const withMeta = injectSocialMeta(withSharedHead, {
-          pagePath: context.path
-        });
-        return injectSkipLink(withMeta);
+      transformIndexHtml: {
+        order: "pre",
+        handler(html, context) {
+          const withSharedHead = html.replace("<head>", `<head>\n${sharedHead}`);
+          const withMeta = injectSocialMeta(withSharedHead, {
+            pagePath: context.path
+          });
+          return injectSkipLink(withMeta);
+        }
       }
     }
   ],
@@ -35,7 +38,6 @@ export default defineConfig({
         "cylindrical-image-flow": resolve(__dirname, "works/cylindrical-image-flow/index.html"),
         "cursor-image-burst": resolve(__dirname, "works/cursor-image-burst/index.html"),
         "rgb-cursor-stalker": resolve(__dirname, "works/rgb-cursor-stalker/index.html"),
-        "scroll-open-ui": resolve(__dirname, "works/scroll-open-ui/index.html"),
         "hero-mask-shift": resolve(__dirname, "works/hero-mask-shift/index.html"),
         "latte-marble": resolve(__dirname, "works/latte-marble/index.html"),
         "fluid-image": resolve(__dirname, "works/fluid-image/index.html"),

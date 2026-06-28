@@ -7,6 +7,7 @@ const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
+  { slug: "rgb-cursor-stalker", scroll: 576, wait: 800 },
   { slug: "cursor-pixel-field", pointer: true, pointerDown: false, pointerSettle: 220 },
   { slug: "cylindrical-image-flow", scroll: 520, wait: 500 },
   { slug: "cursor-image-burst", pointer: true },
@@ -87,7 +88,7 @@ for (const work of selectedWorks) {
     continue;
   }
 
-  await page.goto(`${baseUrl}/works/${work.slug}/`, { waitUntil: "networkidle" });
+  await page.goto(`${baseUrl}/works/${work.slug}/`, { waitUntil: "load" });
   await page.addStyleTag({
     content: `
       .experiment-nav,
