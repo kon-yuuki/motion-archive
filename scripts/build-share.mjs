@@ -71,7 +71,24 @@ const standalonePages = [
   }
 ];
 
-const availablePages = [...workPages, ...uiPages, ...standalonePages].filter((page) =>
+const visualPages = [
+  {
+    type: "visual",
+    sourcePath: "visual-gallery/index.html",
+    outputPath: "visual-gallery/index.html",
+    requestKey: "visual-gallery",
+    logPath: "/visual-gallery/"
+  },
+  {
+    type: "visual",
+    sourcePath: "visual-gallery/free-drag/index.html",
+    outputPath: "visual-gallery/free-drag/index.html",
+    requestKey: "visual-gallery/free-drag",
+    logPath: "/visual-gallery/free-drag/"
+  }
+];
+
+const availablePages = [...workPages, ...uiPages, ...standalonePages, ...visualPages].filter((page) =>
   existsSync(resolve(root, page.sourcePath))
 );
 const availablePageKeys = availablePages.map((page) => page.requestKey);
@@ -128,6 +145,16 @@ function relativeImportPath(fromFile, toFile) {
   return importPath.startsWith(".") ? importPath : `./${importPath}`;
 }
 
+function addBodyClass(html, className) {
+  return html.replace(/<body(?:\s+class="([^"]*)")?>/, (_match, classList = "") => {
+    const classes = classList.split(/\s+/).filter(Boolean);
+    if (!classes.includes(className)) {
+      classes.push(className);
+    }
+    return `<body class="${classes.join(" ")}">`;
+  });
+}
+
 function createUiShareHtml(html, page, temporaryHtml) {
   const sourceDirectory = dirname(resolve(root, page.sourcePath));
   let shareHtml = removeElement(html, '<header class="gallery-header"', "</header>");
@@ -147,6 +174,26 @@ function createUiShareHtml(html, page, temporaryHtml) {
   }
 
   return shareHtml;
+}
+
+function createVisualShareHtml(html, page, temporaryHtml) {
+  const sourceDirectory = dirname(resolve(root, page.sourcePath));
+  let shareHtml = removeElement(html, '<header class="visual-header"', "</header>");
+  shareHtml = removeElement(shareHtml, '<section class="control-strip"', "</section>");
+  shareHtml = shareHtml
+    .replaceAll(
+      'href="./style.scss"',
+      `href="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "style.scss"))}"`
+    );
+
+  if (existsSync(resolve(sourceDirectory, "script.js"))) {
+    shareHtml = shareHtml.replaceAll(
+      'src="./script.js"',
+      `src="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "script.js"))}"`
+    );
+  }
+
+  return addBodyClass(shareHtml, "share-demo");
 }
 
 function createStandaloneShareHtml(html, page, temporaryHtml) {
@@ -184,7 +231,9 @@ for (const page of pages) {
       ? createWorkShareHtml(sourceHtml, page.slug)
       : page.type === "ui"
         ? createUiShareHtml(sourceHtml, page, temporaryHtml)
-        : createStandaloneShareHtml(sourceHtml, page, temporaryHtml)
+        : page.type === "visual"
+          ? createVisualShareHtml(sourceHtml, page, temporaryHtml)
+          : createStandaloneShareHtml(sourceHtml, page, temporaryHtml)
   );
   inputs[page.requestKey] = temporaryHtml;
 }

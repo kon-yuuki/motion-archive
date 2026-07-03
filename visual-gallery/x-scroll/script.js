@@ -13,8 +13,8 @@ const CANVAS_TEXTURE_EDGE_PADDING = 0.04;
 const CANVAS_GEOMETRY_SEGMENTS_X = 64;
 const CANVAS_GEOMETRY_SEGMENTS_Y = 64;
 const CANVAS_EDGE_WARP_EASE = 0.18;
-const CANVAS_EDGE_WARP_STRENGTH = 2.4;
-const CANVAS_EDGE_WARP_MAX = 0.16;
+const CANVAS_EDGE_WARP_STRENGTH = 0.72;
+const CANVAS_EDGE_WARP_MAX = 0.085;
 const CANVAS_GRID_COLUMNS = 10;
 const CANVAS_GRID_ROWS = 1;
 const CANVAS_PLANE_GAP_RATIO = 0.18;
@@ -50,7 +50,7 @@ void main() {
     warpedPosition.xy += direction * amount * centerBulge;
   }
 
-  vSampleUv = warpedPosition.xy + 0.5;
+  vSampleUv = position.xy + 0.5;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(warpedPosition, 1.0);
 }
 `;
@@ -280,9 +280,10 @@ function getEdgeWarpTarget(offsetStep) {
   const normalizedY = offsetStep.y / threeScene.visibleHeight;
   const normalizedLength = Math.hypot(normalizedX, normalizedY);
   if (normalizedLength < 0.00001) return new THREE.Vector2(0, 0);
+  const easedLength = normalizedLength * normalizedLength;
 
   const amount = THREE.MathUtils.clamp(
-    normalizedLength * CANVAS_EDGE_WARP_STRENGTH,
+    easedLength * CANVAS_EDGE_WARP_STRENGTH,
     0,
     CANVAS_EDGE_WARP_MAX
   );
