@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="アニメーションの速度を決める duration の考え方を比較するモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Duration / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a class="is-current" href="./" aria-current="page">Duration</a>
+        <a href="../easing/">Easing</a>
+        <a href="../transform-opacity/">Transform</a>
+        <a href="../state-change/">States</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 001</p>
+        <h1><span>Duration</span></h1>
+        <p class="guide-hero__copy">
+          duration は「何秒で動くか」です。速度が変わるだけで、軽い・重い・急かされる・待たされるという印象が変わります。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Compare</p>
+            <h2 id="compare-title">同じ距離でも、時間で印象が変わる。</h2>
+          </div>
+          <p>
+            速すぎると何が起きたか分かりにくく、遅すぎると操作を待たされます。
+            UIの小さな反応は、まず 0.2 秒から 0.35 秒くらいを基準にすると相談しやすくなります。
+          </p>
+        </header>
+
+        <div class="motion-demo-grid" data-duration-group>
+          <article class="motion-demo-card duration-card is-playing" style="--duration: 120ms">
+            <p class="motion-label">120ms</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>速い</h3>
+              <p>クリックの反応には使いやすいが、表示内容の移動には少し気づきにくい。</p>
+            </div>
+          </article>
+          <article class="motion-demo-card duration-card is-playing" style="--duration: 280ms">
+            <p class="motion-label">280ms</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>扱いやすい</h3>
+              <p>軽さを保ちながら、どこからどこへ動いたかが伝わりやすい。</p>
+            </div>
+          </article>
+          <article class="motion-demo-card duration-card is-playing" style="--duration: 700ms">
+            <p class="motion-label">700ms</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>遅い</h3>
+              <p>演出としては使えるが、操作直後の反応では待たされる感覚になりやすい。</p>
+            </div>
+          </article>
+        </div>
+        <div class="control-row duration-controls">
+          <button class="replay-button" type="button" data-replay-duration>Replay</button>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="tune-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Tune</p>
+            <h2 id="tune-title">数字で話せると、調整が速くなる。</h2>
+          </div>
+          <p>
+            「少し速く」よりも「0.36 秒を 0.24 秒にする」の方が、デザインと実装の差分を確認しやすくなります。
+          </p>
+        </header>
+
+        <div class="motion-panel motion-panel--split duration-tuner" data-duration-tuner style="--duration: 320ms">
+          <div class="duration-preview is-playing" aria-hidden="true">
+            <div class="track"><span class="motion-block"></span></div>
+          </div>
+          <div class="range-control">
+            <label for="duration-range">Duration</label>
+            <input id="duration-range" type="range" min="120" max="900" step="20" value="320" data-duration-range />
+            <span class="range-value" data-duration-value>0.32s</span>
+            <button class="replay-button" type="button" data-replay-tuner>Replay</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">指示では「速さ」ではなく「時間」を書く。</h2>
+          </div>
+          <p>
+            感覚の言葉は大切ですが、最後は数字に置き換えると再現しやすくなります。
+          </p>
+        </header>
+
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>カードをいい感じにふわっと出してください。少しゆっくりめでお願いします。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>カードは表示時に 0.28 秒で出す。押した直後の反応は 0.12 秒で返し、待たされる感じを出さない。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            実装者へ渡すときは、対象・きっかけ・秒数・戻る操作まで書くと認識が揃いやすくなります。
+          </p>
+        </header>
+        <p class="request-sample">カード一覧は、初回表示時に各カードを 0.28 秒で表示する。クリック直後の押し込みは 0.12 秒で返す。ページ遷移や再表示で何度も長い演出を見せず、操作中は短く反応する。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <span>Motion &amp; UI / Motion Guide</span>
+      <a href="../easing/">Next: Easing</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

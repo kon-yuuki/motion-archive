@@ -7,6 +7,7 @@ const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
+  { slug: "rotating-scroll-gallery", scroll: 2050, wait: 900 },
   { slug: "rgb-cursor-stalker", scroll: 576, wait: 800 },
   { slug: "cursor-pixel-field", pointer: true, pointerDown: false, pointerSettle: 220 },
   { slug: "cylindrical-image-flow", scroll: 520, wait: 500 },

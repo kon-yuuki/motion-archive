@@ -46,13 +46,14 @@
 }
 
 .burst-copy h1 {
-  color: #14251f;
-  font-size: clamp(58px, 9vw, 132px);
-  font-weight: 760;
-  letter-spacing: 0;
-  line-height: 0.9;
+  color: rgba(20, 37, 31, 0.92);
+  font-size: clamp(46px, 7.6vw, 110px);
+  font-weight: 420;
+  letter-spacing: 0.025em;
+  line-height: 0.94;
   margin: 0;
-  max-width: 600px;
+  max-width: calc(100vw - 48px);
+  white-space: nowrap;
 }
 
 .burst-copy__mark {

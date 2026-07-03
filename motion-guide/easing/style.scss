@@ -1,0 +1,45 @@
+@use "../_shared/guide";
+
+.easing-card .motion-dot,
+.easing-preview .motion-block {
+  animation: easing-move 900ms var(--curve, cubic-bezier(0.16, 1, 0.3, 1)) both;
+}
+
+.easing-card:not(.is-playing) .motion-dot,
+.easing-preview:not(.is-playing) .motion-block {
+  animation: none;
+}
+
+.easing-controls {
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.easing-preview {
+  --curve: cubic-bezier(0.16, 1, 0.3, 1);
+
+  .track {
+    height: 190px;
+  }
+}
+
+.easing-note {
+  color: #62645e;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 22px 0 0;
+}
+
+@keyframes easing-move {
+  from {
+    left: 18px;
+  }
+
+  to {
+    left: var(--end-left, calc(100% - 40px));
+  }
+}
+
+.motion-block {
+  --end-left: calc(100% - 74px);
+}

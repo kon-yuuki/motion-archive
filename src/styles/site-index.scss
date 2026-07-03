@@ -93,7 +93,7 @@ main {
   border-top: 1px solid $line;
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   padding-top: 24px;
 }
 
@@ -143,7 +143,7 @@ main {
   align-self: end;
 
   h2 {
-    font-size: clamp(58px, 8vw, 118px);
+    font-size: clamp(48px, 6.2vw, 96px);
     font-weight: 400;
     letter-spacing: -0.09em;
     line-height: 0.82;
@@ -192,6 +192,67 @@ main {
   text-transform: uppercase;
 }
 
+.practice-orb {
+  align-items: center;
+  background: $white;
+  border: 1px solid rgba($ink, 0.18);
+  bottom: 24px;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  position: fixed;
+  right: 24px;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  width: 44px;
+  z-index: 20;
+
+  span {
+    background: $ink;
+    display: block;
+    height: 15px;
+    position: relative;
+    transform: rotate(45deg);
+    transition: transform 180ms ease;
+    width: 15px;
+
+    &::after {
+      background: $accent;
+      content: "";
+      height: 7px;
+      left: 4px;
+      position: absolute;
+      top: 4px;
+      width: 7px;
+    }
+  }
+
+  &:hover {
+    background: $accent;
+    border-color: $ink;
+    transform: translateY(-2px);
+  }
+
+  &:hover span,
+  &:focus-visible span {
+    transform: rotate(135deg) scale(0.82);
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ink;
+    outline-offset: 4px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   .collection-grid {
     grid-template-columns: 1fr;
@@ -214,6 +275,11 @@ main {
 
   .index-hero h1 span:last-child {
     margin-left: 0.42em;
+  }
+
+  .practice-orb {
+    bottom: 16px;
+    right: 16px;
   }
 }
 

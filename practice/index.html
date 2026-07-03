@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="テーマごとの実装方法を手で学ぶプラクティスゾーン。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Practice Zone / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="practice-header">
+      <a class="site-brand" href="../">Motion &amp; UI</a>
+      <nav class="practice-nav" aria-label="Practice navigation">
+        <a href="../motion-archive/">Motion Archive</a>
+        <a href="../ui-gallery/">UI Gallery</a>
+        <a class="is-current" href="./" aria-current="page">Practice</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="practice-hero">
+        <p class="eyebrow">Side quest / hand-coded notes</p>
+        <h1><span>Practice</span><span>Zone</span></h1>
+        <p class="practice-hero__copy">
+          ここは公開用の演出アーカイブとは別に、特定のテーマを自分で書いて覚えるための練習場所です。
+        </p>
+      </section>
+
+      <section class="practice-index" aria-labelledby="practice-index-title">
+        <header class="section-heading">
+          <h2 id="practice-index-title">Themes</h2>
+          <span>Draft list</span>
+        </header>
+
+        <div class="theme-list">
+          <article class="theme-card">
+            <span class="theme-card__index">001</span>
+            <div>
+              <h3>CSS Layout</h3>
+              <p>Grid、Flex、余白、画面幅の変化を手で組んで、破綻しにくい配置を練習する。</p>
+            </div>
+            <span class="theme-card__status">Coming soon</span>
+          </article>
+          <article class="theme-card">
+            <span class="theme-card__index">002</span>
+            <div>
+              <h3>Interaction</h3>
+              <p>クリック、入力、キーボード操作など、押した後が伝わる小さな挙動を試す。</p>
+            </div>
+            <span class="theme-card__status">Coming soon</span>
+          </article>
+          <article class="theme-card">
+            <span class="theme-card__index">003</span>
+            <div>
+              <h3>Animation</h3>
+              <p>速度、遅延、イージングを変えながら、気持ちよく見える動きの理由を探る。</p>
+            </div>
+            <span class="theme-card__status">Coming soon</span>
+          </article>
+          <article class="theme-card">
+            <span class="theme-card__index">004</span>
+            <div>
+              <h3>Canvas</h3>
+              <p>座標、描画、更新ループを小さく分けて、動く表現の基礎を積み上げる。</p>
+            </div>
+            <span class="theme-card__status">Coming soon</span>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="practice-footer">
+      <span>Motion &amp; UI / Practice Zone</span>
+      <a href="../">Back to index</a>
+    </footer>
+  </body>
+</html>

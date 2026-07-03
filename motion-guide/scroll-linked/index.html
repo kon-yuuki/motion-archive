@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="スクロール量に連動するアニメーションの考え方を説明するモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Scroll Linked / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a href="../duration/">Duration</a>
+        <a href="../state-change/">States</a>
+        <a class="is-current" href="./" aria-current="page">Scroll</a>
+        <a href="../trigger-timing/">Trigger</a>
+        <a href="../parallax/">Parallax</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 005</p>
+        <h1><span>Scroll</span><span>Linked</span></h1>
+        <p class="guide-hero__copy">
+          スクロール連動は、時間ではなく「ページをどれだけ進んだか」に合わせて変化する動きです。
+          読む速度に寄り添える一方で、動かしすぎると本文の邪魔になりやすい表現です。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Concept</p>
+            <h2 id="compare-title">スクロール量を、動きの進行度に変える。</h2>
+          </div>
+          <p>
+            通常のアニメーションは再生開始からの秒数で進みます。
+            スクロール連動では、要素が画面に入ってから抜けるまでを 0 から 100% として扱うと相談しやすくなります。
+          </p>
+        </header>
+
+        <div class="motion-panel scroll-meter" data-scroll-meter>
+          <div class="scroll-meter__viewport" aria-hidden="true">
+            <span class="scroll-meter__line"></span>
+            <span class="scroll-meter__card">Target</span>
+          </div>
+          <div>
+            <p class="motion-label">Progress</p>
+            <strong data-scroll-progress>0%</strong>
+            <p>このページのスクロール位置から進行度を計算しています。スクロールすると、カードの位置と進行度が変わります。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section scroll-story" aria-labelledby="story-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Observe</p>
+            <h2 id="story-title">読んでいる場所に合わせて、少しずつ変える。</h2>
+          </div>
+          <p>
+            スクロール連動は、変化量を小さくすると読みやすくなります。
+            見出しや画像の補助として使い、本文そのものを大きく動かし続けない方が安全です。
+          </p>
+        </header>
+
+        <div class="scroll-linked-demo" data-scroll-demo>
+          <article class="scroll-scene">
+            <span>01</span>
+            <h3>Fade</h3>
+            <p>画面に入るにつれて透明度を上げる。内容が現れるタイミングを穏やかに伝える。</p>
+          </article>
+          <article class="scroll-scene">
+            <span>02</span>
+            <h3>Shift</h3>
+            <p>少しだけ上下に移動する。大きく動かすより、情報の流れが読みやすい。</p>
+          </article>
+          <article class="scroll-scene">
+            <span>03</span>
+            <h3>Scale</h3>
+            <p>画像や背景を少しだけ拡大する。主役の情報を邪魔しない範囲で奥行きを出す。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">「スクロールしたら動く」だけでは足りない。</h2>
+          </div>
+          <p>
+            どの範囲で、どの値からどの値へ変わるかを書くと、実装者が進行度を設計しやすくなります。
+          </p>
+        </header>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>スクロールに合わせて画像をいい感じに動かしてください。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>画像が画面下 80% に入ったら開始し、画面中央に来るまで opacity 0.4 から 1、translateY 24px から 0 に変化させる。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            スクロール連動では、開始位置・終了位置・変化する値・変化量をまとめて渡します。
+          </p>
+        </header>
+        <p class="request-sample">セクション内の画像は、要素の上端が画面下 80% に入った地点を 0%、画面中央に来た地点を 100% とする。0% では opacity 0.45、translateY 24px。100% では opacity 1、translateY 0。本文テキストは動かし続けない。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <a href="../state-change/">Back: State Change</a>
+      <a href="../trigger-timing/">Next: Trigger Timing</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

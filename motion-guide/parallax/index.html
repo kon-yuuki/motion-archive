@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="要素自体を動かすパララックスと、要素内だけを動かす車窓型パララックスを比較するモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Parallax / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a href="../scroll-linked/">Scroll</a>
+        <a href="../trigger-timing/">Trigger</a>
+        <a class="is-current" href="./" aria-current="page">Parallax</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 007</p>
+        <h1><span>Parallax</span></h1>
+        <p class="guide-hero__copy">
+          パララックスは、スクロールに対して手前と奥の動く速さを変え、奥行きを出す表現です。
+          要素そのものを動かす方法と、要素の中だけを動かす方法では、印象も実装条件も変わります。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Compare</p>
+            <h2 id="compare-title">視差を「どこにかけるか」を決める。</h2>
+          </div>
+          <p>
+            要素自体をずらすとレイアウト全体に動きが出ます。
+            要素内の画像だけをずらすと、車窓のようにフレームの中で景色だけが動きます。
+          </p>
+        </header>
+
+        <div class="parallax-grid" data-parallax-demo>
+          <article class="parallax-example">
+            <p class="motion-label">Element parallax</p>
+            <div class="parallax-stage parallax-stage--element" aria-hidden="true">
+              <span class="layer layer--back"></span>
+              <span class="layer layer--front"></span>
+            </div>
+            <h3>要素自体に視差をつける</h3>
+            <p>カードや画像ブロックの位置を少しずらす。画面全体に奥行きが出るが、重なりや余白の破綻に注意する。</p>
+          </article>
+          <article class="parallax-example">
+            <p class="motion-label">Window parallax</p>
+            <div class="parallax-stage parallax-stage--window" aria-hidden="true">
+              <span class="window-frame">
+                <span class="window-image"></span>
+              </span>
+            </div>
+            <h3>要素内に視差をつける</h3>
+            <p>フレームは固定し、中の画像だけを上下に動かす。車窓のような見え方で、レイアウトを崩しにくい。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section parallax-scroll-section" aria-labelledby="observe-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Observe</p>
+            <h2 id="observe-title">スクロールすると、手前と奥の速さが変わる。</h2>
+          </div>
+          <p>
+            視差は「大きく動かす」より「違う速さで動く」ことがポイントです。
+            変化量を抑えると、奥行きは出しつつ読みやすさを保ちやすくなります。
+          </p>
+        </header>
+
+        <div class="wide-parallax" data-wide-parallax>
+          <span class="wide-parallax__back"></span>
+          <span class="wide-parallax__middle"></span>
+          <span class="wide-parallax__front">Common language</span>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">「パララックス」だけでは、実装が分かれやすい。</h2>
+          </div>
+          <p>
+            要素全体を動かすのか、フレーム内の画像だけを動かすのかを先に決めます。
+          </p>
+        </header>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>画像にパララックスを入れて、奥行きが出るようにしてください。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>画像フレームの位置は固定し、中の画像だけを上下に 32px 動かす。スクロール量に合わせ、中央に近づくほど元の位置に戻す。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            パララックスでは、対象、動かす範囲、速度差、はみ出し処理をセットで渡すと認識が揃います。
+          </p>
+        </header>
+        <p class="request-sample">ヒーロー画像は、フレーム自体は固定し、内側の画像だけに車窓型のパララックスを入れる。画像は上下に最大 36px 動かすため、上下に余白を持たせる。テキストやボタンは視差を付けず、読める位置に固定する。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <a href="../trigger-timing/">Back: Trigger Timing</a>
+      <a href="../">Motion Guide index</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

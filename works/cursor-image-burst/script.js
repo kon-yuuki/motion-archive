@@ -1,13 +1,18 @@
 import "../_shared/detail-shell.js";
-import image1 from "../../src/assets/images/optimized/dummy_1-480.webp";
-import image2 from "../../src/assets/images/optimized/dummy_2-480.webp";
-import image3 from "../../src/assets/images/optimized/dummy_3-480.webp";
-import image4 from "../../src/assets/images/optimized/dummy_4-480.webp";
+import image1 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-01.webp";
+import image2 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-02.webp";
+import image3 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-03.webp";
+import image4 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-04.webp";
+import image5 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-05.webp";
+import image6 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-06.webp";
+import image7 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-07.webp";
+import image8 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-08.webp";
+import image9 from "../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-09.webp";
 
 const stage = document.querySelector("[data-burst-stage]");
 const layer = document.querySelector("[data-burst-layer]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const images = [image1, image2, image3, image4];
+const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
 let last = null;
 let imageIndex = 0;
 

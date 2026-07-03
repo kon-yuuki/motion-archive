@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="アニメーションの止まり方を決める easing の違いを比較するモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Easing / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a href="../duration/">Duration</a>
+        <a class="is-current" href="./" aria-current="page">Easing</a>
+        <a href="../transform-opacity/">Transform</a>
+        <a href="../state-change/">States</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 002</p>
+        <h1><span>Easing</span></h1>
+        <p class="guide-hero__copy">
+          easing は「どう加速して、どう止まるか」です。同じ 0.4 秒でも、一定速度か、最後にゆっくり止まるかで印象が変わります。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Compare</p>
+            <h2 id="compare-title">止まり方は、動きの性格を決める。</h2>
+          </div>
+          <p>
+            UIでは「最後に少し減速して止まる」動きがよく使われます。
+            いきなり止まるより、目で追いやすく、操作の邪魔にもなりにくいからです。
+          </p>
+        </header>
+
+        <div class="motion-demo-grid" data-easing-group>
+          <article class="motion-demo-card easing-card is-playing" style="--curve: linear">
+            <p class="motion-label">linear</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>一定速度</h3>
+              <p>機械的で、止まる瞬間が少し硬く見えやすい。進行状況のバーなどには向いています。</p>
+            </div>
+          </article>
+          <article class="motion-demo-card easing-card is-playing" style="--curve: cubic-bezier(0.7, 0, 0.84, 0)">
+            <p class="motion-label">ease-in</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>加速して抜ける</h3>
+              <p>最初はゆっくり、後半で速くなる。閉じる・退場する動きには使いやすいが、表示開始では反応が遅く見えやすい。</p>
+            </div>
+          </article>
+          <article class="motion-demo-card easing-card is-playing" style="--curve: cubic-bezier(0.16, 1, 0.3, 1)">
+            <p class="motion-label">ease-out</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>減速して止まる</h3>
+              <p>最初は素早く反応し、最後はゆっくり止まる。UIの表示や移動で扱いやすい動きです。</p>
+            </div>
+          </article>
+          <article class="motion-demo-card easing-card is-playing" style="--curve: cubic-bezier(0.34, 1.56, 0.64, 1)">
+            <p class="motion-label">back</p>
+            <div class="track" aria-hidden="true"><span class="motion-dot"></span></div>
+            <div>
+              <h3>少し弾む</h3>
+              <p>楽しい印象は出しやすいが、頻繁な操作や重要な情報では目立ちすぎることがあります。</p>
+            </div>
+          </article>
+        </div>
+        <div class="control-row easing-controls">
+          <button class="replay-button" type="button" data-replay-easing>Replay</button>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="chooser-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Choose</p>
+            <h2 id="chooser-title">「どんな気持ちで止まるか」を選ぶ。</h2>
+          </div>
+          <p>
+            使う場面によって、落ち着いた動き、事務的な動き、少し楽しい動きを選びます。
+            名前を暗記するより、見た目の違いを言葉で説明できることが大切です。
+          </p>
+        </header>
+
+        <div class="motion-panel motion-panel--split easing-lab" data-easing-lab>
+          <div class="easing-preview is-playing" aria-hidden="true">
+            <div class="track"><span class="motion-block"></span></div>
+          </div>
+          <div>
+            <div class="control-row" role="group" aria-label="止まり方を選ぶ">
+              <button class="option-button" type="button" data-easing-option="linear" aria-pressed="false">Linear</button>
+              <button class="option-button" type="button" data-easing-option="in" aria-pressed="false">Ease in</button>
+              <button class="option-button" type="button" data-easing-option="out" aria-pressed="true">Ease out</button>
+              <button class="option-button" type="button" data-easing-option="back" aria-pressed="false">Back</button>
+            </div>
+            <p class="easing-note" data-easing-note>最初に速く動き、最後はゆっくり止まります。メニューやカードの表示に使いやすい動きです。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">「ふわっと」を分解して伝える。</h2>
+          </div>
+          <p>
+            「ふわっと」は便利な言葉ですが、人によって想像する動きが違います。
+            どんな止まり方かを添えると、再現しやすくなります。
+          </p>
+        </header>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>モーダルをふわっと自然に出してください。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>モーダルを開く時は最初だけ少し速く、最後に減速して止める。閉じる時は少し加速して抜ける。弾みは入れず、落ち着いた印象にする。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            実装者には、easing の名前だけでなく、印象も一緒に渡すと調整しやすくなります。
+          </p>
+        </header>
+        <p class="request-sample">メニューは 0.32 秒で開く。開く時は最初に素早く動き、最後に減速して止まる ease-out 系にする。閉じる時は 0.2 秒で、少し加速して抜ける ease-in 系にする。弾みは入れない。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <a href="../duration/">Back: Duration</a>
+      <a href="../transform-opacity/">Next: Transform + Opacity</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

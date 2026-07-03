@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="hover、pressed、loading、complete などの状態変化をアニメーション指示に含めるためのモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>State Change / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a href="../duration/">Duration</a>
+        <a href="../easing/">Easing</a>
+        <a href="../transform-opacity/">Transform</a>
+        <a class="is-current" href="./" aria-current="page">States</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 004</p>
+        <h1><span>State</span><span>Change</span></h1>
+        <p class="guide-hero__copy">
+          UIのアニメーションは、表示される瞬間だけではありません。押した後、処理中、完了、失敗まで含めると、操作中に迷いにくくなります。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Compare</p>
+            <h2 id="compare-title">状態が変わると、安心して操作できる。</h2>
+          </div>
+          <p>
+            ボタンは見た目がきれいでも、押した後が変わらないと不安になります。
+            hover、pressed、loading、complete を分けると、今どうなっているかが伝わります。
+          </p>
+        </header>
+
+        <div class="motion-panel motion-panel--split state-lab" data-state-lab>
+          <div class="state-stage">
+            <button class="demo-action" type="button" data-demo-action data-state="idle">
+              <span class="demo-action__label" data-action-label>送信する</span>
+              <span class="demo-action__spinner" aria-hidden="true"></span>
+            </button>
+            <p class="state-message" data-state-message>押す前は、通常の見た目で待機します。</p>
+          </div>
+          <div>
+            <div class="state-list" role="group" aria-label="ボタンの状態を選ぶ">
+              <button class="state-button" type="button" data-state-option="idle" aria-pressed="true">Idle</button>
+              <button class="state-button" type="button" data-state-option="hover" aria-pressed="false">Hover</button>
+              <button class="state-button" type="button" data-state-option="pressed" aria-pressed="false">Pressed</button>
+              <button class="state-button" type="button" data-state-option="loading" aria-pressed="false">Loading</button>
+              <button class="state-button" type="button" data-state-option="complete" aria-pressed="false">Complete</button>
+            </div>
+            <p class="state-note" data-state-note>通常状態。まだ何も起きていないことが分かる、落ち着いた見た目です。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="flow-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Flow</p>
+            <h2 id="flow-title">1つの操作を、状態の流れで考える。</h2>
+          </div>
+          <p>
+            「ボタンを押したら動く」だけでは、処理中や完了後の見え方が抜けやすくなります。
+            どの状態が何秒で切り替わるかを決めると、実装者も作りやすくなります。
+          </p>
+        </header>
+
+        <ol class="state-flow">
+          <li>
+            <span>01</span>
+            <strong>Idle</strong>
+            <p>押せる状態。ラベルが読めて、他の要素より目立ちすぎない。</p>
+          </li>
+          <li>
+            <span>02</span>
+            <strong>Pressed</strong>
+            <p>押した瞬間に 0.1 秒程度で少し沈む。操作が届いたことを返す。</p>
+          </li>
+          <li>
+            <span>03</span>
+            <strong>Loading</strong>
+            <p>処理中はラベルかインジケーターを出す。連打できないことも見た目で伝える。</p>
+          </li>
+          <li>
+            <span>04</span>
+            <strong>Complete</strong>
+            <p>完了したら色や文言を変える。必要なら短い時間だけ表示して戻す。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">「押した後」を指示に入れる。</h2>
+          </div>
+          <p>
+            アニメーション指示では、最初の表示だけでなく、ユーザーが操作した後の状態も決めておくと迷いにくくなります。
+          </p>
+        </header>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>送信ボタンに押した感を付けてください。処理中もいい感じにしてください。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>押した瞬間に 0.1 秒で 2px 沈む。処理中はラベルを「送信中」に変え、スピナーを出す。完了後は「送信済み」を 1.2 秒表示して戻す。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            状態名を揃えると、デザインレビューでも実装レビューでも同じ話をしやすくなります。
+          </p>
+        </header>
+        <p class="request-sample">送信ボタンは idle / pressed / loading / complete の4状態を持つ。pressed は 0.1 秒で 2px 下がる。loading ではラベルを「送信中」にし、ボタン幅は変えない。complete は「送信済み」を 1.2 秒表示してから idle に戻る。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <a href="../transform-opacity/">Back: Transform + Opacity</a>
+      <a href="../scroll-linked/">Next: Scroll Linked</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

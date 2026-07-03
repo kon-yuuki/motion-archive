@@ -1,0 +1,37 @@
+@use "../_shared/guide";
+
+.duration-card .motion-dot {
+  animation: duration-move var(--duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.duration-card:not(.is-playing) .motion-dot,
+.duration-preview:not(.is-playing) .motion-block {
+  animation: none;
+}
+
+.duration-controls {
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.duration-preview .track {
+  height: 190px;
+}
+
+.duration-preview .motion-block {
+  animation: duration-move var(--duration) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes duration-move {
+  from {
+    left: 18px;
+  }
+
+  to {
+    left: var(--end-left, calc(100% - 40px));
+  }
+}
+
+.motion-block {
+  --end-left: calc(100% - 74px);
+}

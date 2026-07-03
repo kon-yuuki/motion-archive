@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="アニメーションをいつ発火させるかを決める trigger timing の考え方を説明するモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Trigger Timing / Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../">Motion Guide</a>
+        <a href="../scroll-linked/">Scroll</a>
+        <a class="is-current" href="./" aria-current="page">Trigger</a>
+        <a href="../parallax/">Parallax</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Motion Guide / 006</p>
+        <h1><span>Trigger</span><span>Timing</span></h1>
+        <p class="guide-hero__copy">
+          トリガーは「いつ動き始めるか」です。早すぎると見逃され、遅すぎると反応が鈍く見えます。
+          表示位置、操作、状態変化のどれで発火するかを分けて考えます。
+        </p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compare-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Compare</p>
+            <h2 id="compare-title">発火位置を決めると、見逃しにくくなる。</h2>
+          </div>
+          <p>
+            スクロールで表示する場合は「画面に入ったら」だけでは曖昧です。
+            画面下 80%、中央、完全に見えた時など、開始条件を言葉にします。
+          </p>
+        </header>
+
+        <div class="motion-panel trigger-lab" data-trigger-lab style="--trigger-line: 80%">
+          <div class="trigger-viewport-frame">
+            <span class="trigger-line" data-trigger-line></span>
+            <span class="trigger-line__label" data-trigger-label>80% line</span>
+            <div class="trigger-viewport" data-trigger-viewport tabindex="0" aria-label="発火タイミングを確認するスクロール領域">
+              <div class="trigger-scroll-content">
+                <span class="trigger-scroll-hint">Scroll inside</span>
+                <article class="trigger-card" data-trigger-card>
+                  <div class="trigger-card__surface">
+                    <span>Target</span>
+                    <strong>表示アニメーション</strong>
+                  </div>
+                </article>
+                <span class="trigger-scroll-end">End</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="control-row" role="group" aria-label="発火タイミングを選ぶ">
+              <button class="option-button" type="button" data-trigger-option="early" aria-pressed="true">Early</button>
+              <button class="option-button" type="button" data-trigger-option="center" aria-pressed="false">Center</button>
+              <button class="option-button" type="button" data-trigger-option="late" aria-pressed="false">Late</button>
+            </div>
+            <p class="trigger-note" data-trigger-note>画面下 80% に入ったら開始。読み始める少し前に準備できるため、一般的な表示演出で使いやすい条件です。</p>
+            <p class="trigger-status" data-trigger-status>ターゲットが 80% line に届くまで待機しています。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="types-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Types</p>
+            <h2 id="types-title">トリガーは、操作だけではない。</h2>
+          </div>
+          <p>
+            何をきっかけに動くかで、設計する値が変わります。
+            デザイン指示では、発火条件と再発火するかどうかをセットで伝えます。
+          </p>
+        </header>
+
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>Scroll trigger</h3>
+            <p>要素が画面に入ったら開始する。何%の位置で始めるか、1回だけか、戻ったら再実行するかを決める。</p>
+          </article>
+          <article class="copy-card">
+            <h3>Interaction trigger</h3>
+            <p>hover、click、focus、drag などの操作で開始する。スマホやキーボード操作でも伝わるか確認する。</p>
+          </article>
+          <article class="copy-card">
+            <h3>State trigger</h3>
+            <p>loading、complete、error など状態が変わった時に開始する。処理が遅い時や失敗時も決めておく。</p>
+          </article>
+          <article class="copy-card">
+            <h3>Time trigger</h3>
+            <p>ページ表示後や前の演出の後に開始する。待たせる理由がない場合は、長い delay を避ける。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="language-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Language</p>
+            <h2 id="language-title">「いつ」を具体的に書く。</h2>
+          </div>
+          <p>
+            発火タイミングが曖昧だと、実装後に「早い」「遅い」の調整が増えます。
+          </p>
+        </header>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>伝わりにくい言い方</h3>
+            <p>スクロールしたら順番に出してください。見えたら動く感じでお願いします。</p>
+          </article>
+          <article class="copy-card">
+            <h3>伝わりやすい言い方</h3>
+            <p>カード上端が画面下 80% に入ったら開始。各カードは 0.06 秒ずつ遅らせる。1回だけ再生し、戻っても再発火しない。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="request-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Request sample</p>
+            <h2 id="request-title">そのまま使える指示文</h2>
+          </div>
+          <p>
+            トリガーでは、発火条件、delay、再発火、スマホでの扱いを決めると実装しやすくなります。
+          </p>
+        </header>
+        <p class="request-sample">カード一覧は、各カードの上端が画面下 80% に入ったら表示を開始する。先頭から 0.06 秒ずつ delay を付ける。再生は初回1回だけで、スクロールで戻っても再発火しない。スマホでも同じ条件にするが、移動量は 12px に抑える。</p>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <a href="../scroll-linked/">Back: Scroll Linked</a>
+      <a href="../parallax/">Next: Parallax</a>
+    </footer>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

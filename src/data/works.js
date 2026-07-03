@@ -1,5 +1,18 @@
 export const works = [
   {
+    slug: "rotating-scroll-gallery",
+    title: "Rotating Scroll Gallery",
+    thumbnail: "/thumbnails/rotating-scroll-gallery.jpg",
+    date: "2026.06.29",
+    description: "縦に並ぶ画像列の上に、スクロール量で横に流れる固定タイトルを重ねるスクロール実験。画像の回転表現を追加する前のレイアウト土台。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Image", "Text"],
+    reference: {
+      label: "Codrops: Rotating On-Scroll Animations",
+      url: "https://tympanus.net/Development/RotatingOnScrollAnimations/index4.html"
+    }
+  },
+  {
     slug: "rgb-cursor-stalker",
     title: "RGB Cursor Stalker",
     thumbnail: "/thumbnails/rgb-cursor-stalker.jpg",

@@ -1,9 +1,24 @@
 import { works } from "../data/works.js";
 import { uiGalleryItems } from "../data/ui-gallery.js";
+import { motionGuideItems } from "../data/motion-guide.js";
+
+const visualImageModules = import.meta.glob("../assets/images/**/*.{png,jpg,jpeg,webp,avif}", {
+  eager: true,
+  query: "?url",
+  import: "default"
+});
+const visualImageCount = Object.keys(visualImageModules).length;
 
 const collections = {
   motion: works,
-  ui: uiGalleryItems
+  ui: uiGalleryItems,
+  guide: motionGuideItems,
+  visual: [
+    {
+      date: "2026.07.03",
+      count: visualImageCount
+    }
+  ]
 };
 
 function latestDate(items) {

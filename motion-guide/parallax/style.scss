@@ -1,0 +1,143 @@
+@use "../_shared/guide";
+
+.parallax-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.parallax-example {
+  background: #fffefa;
+  border: 1px solid #dcdcd5;
+  padding: 22px;
+
+  h3 {
+    font-size: 24px;
+    font-weight: 520;
+    letter-spacing: -0.03em;
+    margin: 22px 0 12px;
+  }
+
+  p:last-child {
+    color: #62645e;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+  }
+}
+
+.parallax-stage {
+  background:
+    linear-gradient(rgba(#141515, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(#141515, 0.05) 1px, transparent 1px),
+    rgba(#f5f4ef, 0.92);
+  background-size: 28px 28px;
+  border: 1px solid rgba(#141515, 0.14);
+  height: 280px;
+  margin-top: 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+.layer {
+  display: block;
+  position: absolute;
+}
+
+.layer--back {
+  background: #d9ff64;
+  height: 150px;
+  left: 38px;
+  top: calc(68px + var(--para-back, 0px));
+  width: 68%;
+}
+
+.layer--front {
+  background: #141515;
+  height: 118px;
+  left: 22%;
+  top: calc(104px + var(--para-front, 0px));
+  width: 54%;
+}
+
+.window-frame {
+  background: #141515;
+  display: block;
+  height: 190px;
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(78%, 360px);
+}
+
+.window-image {
+  background:
+    linear-gradient(135deg, #d9ff64 0 28%, transparent 28% 100%),
+    linear-gradient(45deg, transparent 0 42%, #fffefa 42% 58%, transparent 58% 100%),
+    #3975d7;
+  display: block;
+  height: calc(100% + 78px);
+  transform: translateY(calc(-39px + var(--window-y, 0px)));
+  width: 100%;
+}
+
+.parallax-scroll-section {
+  padding-bottom: 18vh;
+}
+
+.wide-parallax {
+  background: #141515;
+  color: #fffefa;
+  height: min(72vh, 620px);
+  min-height: 380px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wide-parallax__back,
+.wide-parallax__middle,
+.wide-parallax__front {
+  position: absolute;
+}
+
+.wide-parallax__back {
+  background: #d9ff64;
+  height: 42%;
+  left: 8%;
+  top: calc(16% + var(--wide-back, 0px));
+  width: 50%;
+}
+
+.wide-parallax__middle {
+  background: #3975d7;
+  height: 38%;
+  right: 10%;
+  top: calc(34% + var(--wide-middle, 0px));
+  width: 45%;
+}
+
+.wide-parallax__front {
+  align-items: center;
+  border: 1px solid rgba(#fffefa, 0.42);
+  display: flex;
+  font-size: clamp(38px, 8vw, 106px);
+  font-weight: 430;
+  inset: auto 7% calc(14% + var(--wide-front, 0px)) 7%;
+  justify-content: center;
+  letter-spacing: -0.07em;
+  line-height: 0.92;
+  min-height: 150px;
+  text-align: center;
+}
+
+@media (max-width: 820px) {
+  .parallax-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wide-parallax__front {
+    font-size: clamp(42px, 14vw, 72px);
+  }
+}

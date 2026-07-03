@@ -4,12 +4,14 @@ Web モーション実験と UI パーツギャラリーをまとめる公開ア
 
 ## Pages
 
-- `/` - Motion Archive と UI Gallery を選ぶサイトトップ
+- `/` - Motion Archive、UI Gallery、Motion Guide を選ぶサイトトップ
 - `/motion-archive/` - Motion Archive のトップページと全作品一覧
 - `/categories/` - 技術別・表現別カテゴリ
 - `/works/<slug>/` - 個別のフルスクリーン実験ページ
 - `/ui-gallery/` - UI パーツギャラリーの目次
 - `/ui-gallery/<component>/` - ボタンやスライダーなどの UI パーツギャラリー
+- `/motion-guide/` - デザイナーとエンジニアがアニメーションを同じ言葉で相談するためのガイド
+- `/motion-guide/<topic>/` - duration、easing、状態変化などの仕組み解説
 
 ## Development
 

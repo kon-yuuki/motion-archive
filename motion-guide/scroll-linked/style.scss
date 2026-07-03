@@ -1,0 +1,122 @@
+@use "../_shared/guide";
+
+.scroll-meter {
+  align-items: center;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+
+  strong {
+    display: block;
+    font-size: clamp(58px, 8vw, 112px);
+    font-weight: 430;
+    letter-spacing: -0.08em;
+    line-height: 0.9;
+    margin: 10px 0 18px;
+  }
+
+  p:last-child {
+    color: #62645e;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+  }
+}
+
+.scroll-meter__viewport {
+  background:
+    linear-gradient(rgba(#141515, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(#141515, 0.05) 1px, transparent 1px),
+    rgba(#fffefa, 0.72);
+  background-size: 28px 28px;
+  border: 1px solid rgba(#141515, 0.14);
+  height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-meter__line {
+  background: #d9ff64;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: calc(100% - var(--scroll-fill, 0%));
+  width: 100%;
+}
+
+.scroll-meter__card {
+  align-items: center;
+  background: #141515;
+  color: #fffefa;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  height: 74px;
+  justify-content: center;
+  left: 50%;
+  letter-spacing: 0.14em;
+  position: absolute;
+  text-transform: uppercase;
+  top: var(--scroll-card-top, 78%);
+  transform: translate(-50%, -50%);
+  width: min(220px, 70%);
+}
+
+.scroll-story {
+  padding-bottom: 18vh;
+}
+
+.scroll-linked-demo {
+  display: grid;
+  gap: 28vh;
+  padding: 8vh 0;
+}
+
+.scroll-scene {
+  background: #fffefa;
+  border: 1px solid #dcdcd5;
+  margin-left: auto;
+  max-width: 680px;
+  min-height: 220px;
+  opacity: var(--scene-opacity, 0.45);
+  padding: clamp(22px, 4vw, 42px);
+  transform: translateY(var(--scene-y, 28px)) scale(var(--scene-scale, 0.97));
+  transition: opacity 120ms linear, transform 120ms linear;
+
+  &:nth-child(even) {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  span {
+    color: #62645e;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  h3 {
+    font-size: clamp(42px, 6vw, 78px);
+    font-weight: 420;
+    letter-spacing: -0.07em;
+    line-height: 0.9;
+    margin: 26px 0 18px;
+  }
+
+  p {
+    color: #62645e;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+    max-width: 430px;
+  }
+}
+
+@media (max-width: 820px) {
+  .scroll-meter {
+    grid-template-columns: 1fr;
+  }
+
+  .scroll-linked-demo {
+    gap: 18vh;
+  }
+}

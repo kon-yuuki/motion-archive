@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="デザイナーとエンジニアがアニメーションを同じ言葉で相談するためのモーションガイド。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Motion Guide / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="guide-header">
+      <a class="site-brand" href="../">Motion &amp; UI</a>
+      <nav class="guide-nav" aria-label="Motion guide navigation">
+        <a href="../motion-archive/">Motion Archive</a>
+        <a href="../ui-gallery/">UI Gallery</a>
+        <a class="is-current" href="./" aria-current="page">Motion Guide</a>
+        <a href="../practice/">Practice</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="guide-hero">
+        <p class="eyebrow">Animation language / for designers and engineers</p>
+        <h1><span>Motion</span><span>Guide</span></h1>
+        <p class="guide-hero__copy">
+          アニメーションの指示を「なんとなく」から、タイミング・距離・止まり方・状態に分解して共有するためのガイドです。
+        </p>
+      </section>
+
+      <section class="guide-section mission-section" aria-labelledby="mission-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">Goal</p>
+            <h2 id="mission-title">エンジニアとデザイナーの共通言語を作る。</h2>
+          </div>
+          <p>
+            ここではコードを覚えることよりも、動きを観察して、言葉にして、実装者に伝えられる状態を目指します。
+            「ふわっと」だけではなく、いつ・何が・どこからどこへ・何秒で・どう止まるかを揃えると、相談が具体的になります。
+          </p>
+        </div>
+        <div class="copy-grid">
+          <article class="copy-card">
+            <h3>デザイナーが得られること</h3>
+            <ul>
+              <li>実装で扱いやすい動きの単位が分かる。</li>
+              <li>感覚的な要望を、指示文に変換しやすくなる。</li>
+              <li>Figmaのプロトタイプと実装の差を相談しやすくなる。</li>
+            </ul>
+          </article>
+          <article class="copy-card">
+            <h3>エンジニアが受け取りやすいこと</h3>
+            <ul>
+              <li>duration、easing、delay、trigger などの条件が明確になる。</li>
+              <li>状態変化や中断時のふるまいを事前に確認できる。</li>
+              <li>見た目の印象と実装上の制約を同じ場で話せる。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="guide-index" aria-labelledby="guide-index-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">Lessons</p>
+            <h2 id="guide-index-title">動きを相談するための7つの仕組み</h2>
+          </div>
+          <p>
+            速度、止まり方、動かす対象、状態変化に加えて、スクロール、発火タイミング、視差のかけ方を揃えると、指示の精度が上がります。
+          </p>
+        </header>
+        <div class="guide-card-grid">
+          <a class="guide-card" href="./duration/">
+            <span class="guide-card__index">001</span>
+            <div>
+              <h3>Duration</h3>
+              <p>同じ動きでも、速すぎる・遅すぎるだけで印象が変わる。まずは「何秒で動くか」を言葉にする。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./easing/">
+            <span class="guide-card__index">002</span>
+            <div>
+              <h3>Easing</h3>
+              <p>一定速度、減速して止まる、少し弾む。止まり方を選ぶと、動きの性格が伝わりやすくなる。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./transform-opacity/">
+            <span class="guide-card__index">003</span>
+            <div>
+              <h3>Transform<br />+ Opacity</h3>
+              <p>移動・拡大・透明度の組み合わせで、軽く、破綻しにくい表示アニメーションを考える。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./state-change/">
+            <span class="guide-card__index">004</span>
+            <div>
+              <h3>State<br />Change</h3>
+              <p>hover、pressed、loading、complete。押した後が伝わるように、状態ごとの動きを決める。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./scroll-linked/">
+            <span class="guide-card__index">005</span>
+            <div>
+              <h3>Scroll<br />Linked</h3>
+              <p>時間ではなく、スクロール量に合わせて変化する動き。開始位置と終了位置を言葉にする。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./trigger-timing/">
+            <span class="guide-card__index">006</span>
+            <div>
+              <h3>Trigger<br />Timing</h3>
+              <p>いつ動き始めるかを決める。見逃されず、読む邪魔にならない発火条件を揃える。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+          <a class="guide-card" href="./parallax/">
+            <span class="guide-card__index">007</span>
+            <div>
+              <h3>Parallax</h3>
+              <p>要素自体をずらす視差と、要素内だけをずらす車窓型の視差を比較する。</p>
+            </div>
+            <span class="guide-card__status">Open</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="guide-footer">
+      <span>Motion &amp; UI / Motion Guide</span>
+      <a href="../">Back to index</a>
+    </footer>
+  </body>
+</html>

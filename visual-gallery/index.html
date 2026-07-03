@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="AI生成画像やデモ素材を、複数のギャラリーレイアウトで見比べるビジュアルギャラリー。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Visual Gallery / Motion &amp; UI</title>
+  </head>
+  <body>
+    <header class="visual-header">
+      <a class="site-brand" href="../">Motion &amp; UI</a>
+      <nav class="visual-nav" aria-label="Site navigation">
+        <a href="../motion-archive/">Motion Archive</a>
+        <a href="../ui-gallery/">UI Gallery</a>
+        <a class="is-current" href="./" aria-current="page">Visual Gallery</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="control-strip" aria-label="Gallery controls">
+        <div class="layout-switcher" aria-label="Layout switcher" data-layout-switcher>
+          <a href="./?layout=masonry" data-layout-link="masonry">
+            <span>Masonry</span>
+          </a>
+          <a href="./?layout=magazine" data-layout-link="magazine">
+            <span>Magazine</span>
+          </a>
+          <a href="./?layout=rail" data-layout-link="rail">
+            <span>Rail</span>
+          </a>
+          <a href="./?layout=stack" data-layout-link="stack">
+            <span>Stack</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="image-section" aria-label="Images">
+        <div class="image-board" data-image-board data-layout="masonry" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <dialog class="image-dialog" data-image-dialog>
+      <div class="image-dialog__panel">
+        <button type="button" data-dialog-close>Close</button>
+        <img data-dialog-image alt="" />
+      </div>
+    </dialog>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

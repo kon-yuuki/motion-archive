@@ -11,12 +11,14 @@ Deploy: `npx vercel --prod --yes`（Vercel が `npm run build` を実行、`dist
 
 | パス | ファイル | 説明 |
 |---|---|---|
-| `/` | `index.html` | サイトトップ（Motion Archive / UI Gallery の選択） |
+| `/` | `index.html` | サイトトップ（Motion Archive / UI Gallery / Motion Guide の選択） |
 | `/motion-archive/` | `motion-archive/index.html` | Motion Archive トップ・全作品一覧 |
 | `/categories/` | `categories/index.html` | 技術別・表現別カテゴリ |
 | `/works/<slug>/` | `works/<slug>/index.html` | 個別実験ページ（フルスクリーン） |
 | `/ui-gallery/` | `ui-gallery/index.html` | UI パーツギャラリー目次 |
 | `/ui-gallery/<component>/` | `ui-gallery/<component>/index.html` | UI コンポーネントギャラリー |
+| `/motion-guide/` | `motion-guide/index.html` | アニメーションの共通言語を作るためのガイド目次 |
+| `/motion-guide/<topic>/` | `motion-guide/<topic>/index.html` | デザイナー向けのアニメーション仕組み解説 |
 
 すべてのページは `vite.config.js` の `build.rollupOptions.input` に登録する必要がある。新ページを追加したら必ず登録すること。
 
@@ -51,6 +53,7 @@ Deploy: `npx vercel --prod --yes`（Vercel が `npm run build` を実行、`dist
 ```
 src/
   data/works.js          # 作品メタデータ（唯一の情報源）
+  data/motion-guide.js   # Motion Guide の解説ページメタデータ
   scripts/
     ui.js                # workRow(), tags(), statusBadge() — 共通HTML生成
     home.js              # motion-archive/ のリスト描画
