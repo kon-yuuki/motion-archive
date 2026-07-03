@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="画像グリッドを上下左右・斜めに自由ドラッグできるThree.jsビジュアルギャラリー。" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Free Drag Visual Gallery / Motion &amp; UI</title>
+  </head>
+  <body class="is-loading">
+    <header class="visual-header">
+      <a class="site-brand" href="../../">Motion &amp; UI</a>
+      <nav class="visual-nav" aria-label="Site navigation">
+        <a href="../../motion-archive/">Motion Archive</a>
+        <a href="../../ui-gallery/">UI Gallery</a>
+        <a class="is-current" href="../" aria-current="page">Visual Gallery</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="control-strip" aria-label="Gallery controls">
+        <div class="layout-switcher" aria-label="Layout switcher" data-layout-switcher>
+          <a href="../">
+            <span>X Scroll</span>
+          </a>
+          <a href="./?layout=canvas-plane" data-layout-link="canvas-plane">
+            <span>Free Drag</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="image-section" aria-label="Images">
+        <div class="image-board" data-image-board data-layout="canvas-plane" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <canvas class="three-canvas" data-three-canvas aria-hidden="true"></canvas>
+    <div class="visual-loader" data-visual-loader role="status" aria-live="polite">
+      <div class="visual-loader__inner">
+        <p class="visual-loader__text">Loading visual field<span aria-hidden="true"></span></p>
+        <div class="visual-loader__track" aria-hidden="true">
+          <div class="visual-loader__bar" data-loader-bar></div>
+        </div>
+        <p class="visual-loader__count" data-loader-count>0 / 0</p>
+      </div>
+    </div>
+
+    <dialog class="image-dialog" data-image-dialog>
+      <div class="image-dialog__panel">
+        <button type="button" data-dialog-close>Close</button>
+        <img data-dialog-image alt="" />
+      </div>
+    </dialog>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

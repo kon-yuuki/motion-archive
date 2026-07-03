@@ -39,6 +39,8 @@ export default defineConfig({
         "motion-archive": resolve(__dirname, "motion-archive/index.html"),
         categories: resolve(__dirname, "categories/index.html"),
         "visual-gallery": resolve(__dirname, "visual-gallery/index.html"),
+        "visual-gallery-free-drag": resolve(__dirname, "visual-gallery/free-drag/index.html"),
+        "visual-gallery-x-scroll": resolve(__dirname, "visual-gallery/x-scroll/index.html"),
         "ui-gallery": resolve(__dirname, "ui-gallery/index.html"),
         "ui-gallery-buttons": resolve(__dirname, "ui-gallery/buttons/index.html"),
         "ui-gallery-form": resolve(__dirname, "ui-gallery/form/index.html"),

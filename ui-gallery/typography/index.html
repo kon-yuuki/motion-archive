@@ -17,6 +17,24 @@
       </nav>
     </header>
 
+    <aside class="text-control" aria-label="Typography text control">
+      <label class="text-control__field">
+        <span>Text</span>
+        <textarea
+          rows="2"
+          data-shared-text
+          aria-label="Shared typography text"
+        >Small moments make
+the interface feel alive.</textarea>
+      </label>
+      <label class="text-control__range">
+        <span>Size</span>
+        <input type="range" min="40" max="180" step="2" value="142" data-shared-size />
+        <output data-shared-size-output>142px</output>
+      </label>
+      <button class="text-control__button" type="button" data-shared-text-apply>Apply</button>
+    </aside>
+
     <main>
       <section class="gallery-hero">
         <p class="eyebrow">UI Gallery / 003</p>
@@ -37,9 +55,6 @@
             <p class="section-index">01</p>
             <h2 id="character-fade-title">Character Fade</h2>
           </div>
-          <div class="study-actions">
-            <button class="control-button" type="button" data-replay>Replay</button>
-          </div>
         </header>
 
         <div class="reveal-stage">
@@ -56,37 +71,63 @@
               data-drag-handle
               tabindex="0"
               aria-label="Drag to move Character Fade settings"
-            >Character Fade</div>
+            >
+              <span>Character Fade</span>
+              <button
+                class="gui-toggle"
+                type="button"
+                data-gui-toggle
+                aria-expanded="true"
+                aria-controls="character-fade-controls"
+                aria-label="Toggle Character Fade settings"
+              ></button>
+            </div>
 
-            <label class="gui-row">
-              <span class="gui-row__label">Initial color</span>
-              <input class="gui-row__color" type="color" value="#61e5c0" data-control="initialColor" />
-            </label>
+            <div class="gui-panel__body" id="character-fade-controls" data-gui-body>
+              <label class="gui-row">
+                <span class="gui-row__label">Progress</span>
+                <span class="gui-row__range">
+                  <input type="range" min="0" max="100" step="1" value="0" data-control="progress" />
+                  <output data-output="progress">0%</output>
+                </span>
+              </label>
 
-            <label class="gui-row">
-              <span class="gui-row__label">Final color</span>
-              <input class="gui-row__color" type="color" value="#083031" data-control="finalColor" />
-            </label>
+              <label class="gui-row">
+                <span class="gui-row__label">Initial color</span>
+                <input class="gui-row__color" type="color" value="#61e5c0" data-control="initialColor" />
+              </label>
 
-            <label class="gui-row">
-              <span class="gui-row__label">Duration</span>
-              <span class="gui-row__range">
-                <input type="range" min="100" max="1000" step="10" value="300" data-control="duration" />
-                <output data-output="duration">300ms</output>
-              </span>
-            </label>
+              <label class="gui-row">
+                <span class="gui-row__label">Final color</span>
+                <input class="gui-row__color" type="color" value="#083031" data-control="finalColor" />
+              </label>
 
-            <label class="gui-row">
-              <span class="gui-row__label">Stagger</span>
-              <span class="gui-row__range">
-                <input type="range" min="0" max="150" step="5" value="30" data-control="stagger" />
-                <output data-output="stagger">30ms</output>
-              </span>
-            </label>
+              <label class="gui-row">
+                <span class="gui-row__label">Duration</span>
+                <span class="gui-row__range">
+                  <input type="range" min="100" max="1000" step="10" value="300" data-control="duration" />
+                  <output data-output="duration">300ms</output>
+                </span>
+              </label>
 
-            <div class="gui-actions">
-              <button type="button" data-controls-reset>Reset</button>
-              <button type="button" data-controls-preview>Preview</button>
+              <label class="gui-row">
+                <span class="gui-row__label">Stagger</span>
+                <span class="gui-row__range">
+                  <input type="range" min="0" max="150" step="5" value="30" data-control="stagger" />
+                  <output data-output="stagger">30ms</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Easing</span>
+                <select class="gui-row__select" data-control="easing">
+                </select>
+              </label>
+
+              <div class="gui-actions">
+                <button type="button" data-controls-reset>Reset</button>
+                <button type="button" data-controls-preview>Preview</button>
+              </div>
             </div>
           </div>
         </div>
@@ -105,8 +146,125 @@
             <dd><span data-spec-stagger>30</span>ms</dd>
           </div>
           <div>
-            <dt>Trigger</dt>
-            <dd>Viewport enter / once</dd>
+            <dt>Easing</dt>
+            <dd data-spec-easing>Ease Out Expo</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="type-study" aria-labelledby="character-fade-variation-title">
+        <header class="section-heading">
+          <div>
+            <p class="section-index">02</p>
+            <h2 id="character-fade-variation-title">Character Fade Variation</h2>
+          </div>
+        </header>
+
+        <div class="reveal-stage reveal-stage--depth">
+          <p class="reveal-stage__label">Enter viewport / Once</p>
+          <h3
+            class="character-title character-title--fade"
+            data-character-fade
+            data-text="Small moments make&#10;the interface feel alive."
+          ></h3>
+
+          <div class="gui-panel" data-draggable-panel aria-label="Depth fade settings">
+            <div
+              class="gui-title"
+              data-drag-handle
+              tabindex="0"
+              aria-label="Drag to move Depth Fade settings"
+            >
+              <span>Depth Fade</span>
+              <button
+                class="gui-toggle"
+                type="button"
+                data-gui-toggle
+                aria-expanded="true"
+                aria-controls="depth-fade-controls"
+                aria-label="Toggle Depth Fade settings"
+              ></button>
+            </div>
+
+            <div class="gui-panel__body" id="depth-fade-controls" data-gui-body>
+              <label class="gui-row">
+                <span class="gui-row__label">Progress</span>
+                <span class="gui-row__range">
+                  <input type="range" min="0" max="100" step="1" value="0" data-depth-control="progress" />
+                  <output data-depth-output="progress">0%</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Duration</span>
+                <span class="gui-row__range">
+                  <input type="range" min="120" max="1200" step="20" value="520" data-depth-control="duration" />
+                  <output data-depth-output="duration">520ms</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Stagger</span>
+                <span class="gui-row__range">
+                  <input type="range" min="0" max="120" step="2" value="28" data-depth-control="stagger" />
+                  <output data-depth-output="stagger">28ms</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Tilt X</span>
+                <span class="gui-row__range">
+                  <input type="range" min="-60" max="60" step="1" value="-30" data-depth-control="tilt" />
+                  <output data-depth-output="tilt">-30deg</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Tilt Y</span>
+                <span class="gui-row__range">
+                  <input type="range" min="-60" max="60" step="1" value="0" data-depth-control="rotateY" />
+                  <output data-depth-output="rotateY">0deg</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Depth Z</span>
+                <span class="gui-row__range">
+                  <input type="range" min="-400" max="200" step="5" value="-200" data-depth-control="translateZ" />
+                  <output data-depth-output="translateZ">-200px</output>
+                </span>
+              </label>
+
+              <label class="gui-row">
+                <span class="gui-row__label">Easing</span>
+                <select class="gui-row__select" data-depth-control="easing">
+                </select>
+              </label>
+
+              <div class="gui-actions">
+                <button type="button" data-depth-reset>Reset</button>
+                <button type="button" data-depth-preview>Preview</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl class="motion-spec">
+          <div>
+            <dt>Property</dt>
+            <dd>Opacity + rotateX/Y + translateZ</dd>
+          </div>
+          <div>
+            <dt>Duration</dt>
+            <dd><span data-depth-spec-duration>520</span>ms / character</dd>
+          </div>
+          <div>
+            <dt>Stagger</dt>
+            <dd><span data-depth-spec-stagger>28</span>ms</dd>
+          </div>
+          <div>
+            <dt>Depth</dt>
+            <dd><span data-depth-spec-tilt>-30</span>deg X / <span data-depth-spec-rotate-y>0</span>deg Y / <span data-depth-spec-translate-z>-200</span>px Z / <span data-depth-spec-easing>Ease Out Expo</span></dd>
           </div>
         </dl>
       </section>

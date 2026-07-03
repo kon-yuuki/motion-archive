@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta name="description" content="AI生成画像やデモ素材を、複数のギャラリーレイアウトで見比べるビジュアルギャラリー。" />
+    <meta name="description" content="横方向に無限ドラッグとスクロールで移動できるThree.jsビジュアルギャラリー。" />
     <link rel="stylesheet" href="./style.scss" />
-    <title>Visual Gallery / Motion &amp; UI</title>
+    <title>X Scroll Visual Gallery / Motion &amp; UI</title>
   </head>
   <body>
     <header class="visual-header">
@@ -18,25 +18,21 @@
     <main>
       <section class="control-strip" aria-label="Gallery controls">
         <div class="layout-switcher" aria-label="Layout switcher" data-layout-switcher>
-          <a href="./?layout=masonry" data-layout-link="masonry">
-            <span>Masonry</span>
+          <a href="./" data-layout-link="canvas-row">
+            <span>X Scroll</span>
           </a>
-          <a href="./?layout=magazine" data-layout-link="magazine">
-            <span>Magazine</span>
-          </a>
-          <a href="./?layout=rail" data-layout-link="rail">
-            <span>Rail</span>
-          </a>
-          <a href="./?layout=stack" data-layout-link="stack">
-            <span>Stack</span>
+          <a href="./free-drag/">
+            <span>Free Drag</span>
           </a>
         </div>
       </section>
 
       <section class="image-section" aria-label="Images">
-        <div class="image-board" data-image-board data-layout="masonry" aria-live="polite"></div>
+        <div class="image-board" data-image-board data-layout="canvas-row" aria-live="polite"></div>
       </section>
     </main>
+
+    <canvas class="three-canvas" data-three-canvas aria-hidden="true"></canvas>
 
     <dialog class="image-dialog" data-image-dialog>
       <div class="image-dialog__panel">

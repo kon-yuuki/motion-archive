@@ -20,6 +20,7 @@ export function initDraggablePanel(panel) {
 
   function startDrag(event) {
     if (event.button !== 0) return;
+    if (event.target.closest("button, input, select, textarea, [data-gui-toggle]")) return;
 
     const panelRect = panel.getBoundingClientRect();
     const boundaryRect = boundary.getBoundingClientRect();

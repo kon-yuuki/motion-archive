@@ -21,6 +21,6 @@ export const uiGalleryItems = [
     slug: "typography",
     title: "Typography",
     date: "2026.06.12",
-    count: 1
+    count: 2
   }
 ];

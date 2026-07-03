@@ -13,6 +13,7 @@ $accent: #61e5c0;
   --final-color: #{$ink};
   --character-duration: 300ms;
   --character-stagger: 30ms;
+  --typography-title-size: clamp(52px, 8.8vw, 142px);
 }
 
 *,
@@ -151,6 +152,10 @@ main {
 .type-study {
   border-top: 1px solid $line;
   padding-top: 24px;
+
+  + .type-study {
+    margin-top: clamp(72px, 10vw, 132px);
+  }
 }
 
 .section-heading {
@@ -190,6 +195,85 @@ main {
   color: $card;
 }
 
+.text-control {
+  align-items: stretch;
+  backdrop-filter: blur(8px);
+  background: rgba($card, 0.94);
+  border: 1px solid $line;
+  display: flex;
+  gap: 8px;
+  left: 50%;
+  padding: 8px;
+  position: fixed;
+  top: 88px;
+  transform: translateX(-50%);
+  width: min(520px, calc(100vw - 32px));
+  z-index: 20;
+}
+
+.text-control__field {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+
+  span {
+    color: $muted;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  textarea {
+    background: transparent;
+    border: 1px solid $line;
+    color: $ink;
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.45;
+    min-height: 48px;
+    padding: 7px 8px;
+    resize: vertical;
+  }
+}
+
+.text-control__range {
+  align-items: center;
+  border: 1px solid $line;
+  display: grid;
+  gap: 5px;
+  min-width: 132px;
+  padding: 7px 8px;
+
+  span {
+    color: $muted;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  input {
+    accent-color: $ink;
+    width: 100%;
+  }
+
+  output {
+    color: $ink;
+    font-size: 11px;
+    text-align: right;
+  }
+}
+
+.text-control__button {
+  background: $ink;
+  border: 1px solid $ink;
+  color: $card;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  padding: 0 14px;
+  text-transform: uppercase;
+}
+
 .reveal-stage {
   background: $card;
   border: 1px solid $line;
@@ -199,13 +283,18 @@ main {
   position: relative;
 }
 
+.reveal-stage--depth {
+  perspective: 160px;
+  perspective-origin: 50% 56%;
+}
+
 .reveal-stage__label {
   align-self: start;
 }
 
 .character-title {
   align-self: center;
-  font-size: clamp(52px, 8.8vw, 142px);
+  font-size: var(--typography-title-size);
   font-weight: 400;
   letter-spacing: -0.07em;
   line-height: 0.88;
@@ -227,9 +316,24 @@ main {
   opacity: 0;
 }
 
-.character-title[data-visible] .character {
-  animation: character-fade var(--character-duration) ease-in-out forwards;
-  animation-delay: calc(var(--character-index) * var(--character-stagger));
+.character-title--fade {
+  color: $ink;
+
+  .character-word {
+    perspective: 1000px;
+  }
+
+  .character {
+    backface-visibility: hidden;
+    color: $ink;
+    transform: translate3d(0px, 0px, -200px) rotateX(-30deg);
+    transform-origin: 50% 0%;
+    will-change: opacity, transform;
+  }
+}
+
+.character-title--fade[data-visible] .character {
+  animation: none;
 }
 
 .motion-spec {
@@ -278,21 +382,60 @@ main {
   top: 16px;
 }
 
-@keyframes character-fade {
-  0% {
-    color: var(--initial-color);
-    opacity: 0;
+.gui-title {
+  gap: 8px;
+
+  &::after {
+    content: none;
+  }
+}
+
+.gui-toggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--gui-panel-line);
+  border-radius: 2px;
+  color: var(--gui-panel-ink);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 22px;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  width: 22px;
+
+  &::before {
+    content: "−";
+    line-height: 1;
   }
 
-  30% {
-    color: var(--initial-color);
-    opacity: 1;
+  &[aria-expanded="false"]::before {
+    content: "+";
   }
 
-  100% {
-    color: var(--final-color);
-    opacity: 1;
+  &:focus-visible {
+    outline: 2px solid var(--gui-panel-ink);
+    outline-offset: 2px;
   }
+}
+
+.gui-panel[data-collapsed] {
+  .gui-panel__body {
+    display: none;
+  }
+}
+
+.gui-row__select {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--gui-panel-line);
+  border-radius: 2px;
+  color: var(--gui-panel-ink);
+  cursor: pointer;
+  font: inherit;
+  min-height: 28px;
+  padding: 4px 24px 4px 8px;
 }
 
 @media (max-width: 860px) {
@@ -310,6 +453,12 @@ main {
 }
 
 @media (max-width: 680px) {
+  .text-control {
+    align-items: stretch;
+    display: grid;
+    top: 12px;
+  }
+
   .gui-panel {
     right: 10px;
     top: 10px;
@@ -346,10 +495,6 @@ main {
   .gallery-hero h1 {
     font-size: clamp(50px, 15vw, 68px);
     margin-left: 0;
-  }
-
-  .character-title {
-    font-size: clamp(43px, 13vw, 70px);
   }
 
   .motion-spec {
