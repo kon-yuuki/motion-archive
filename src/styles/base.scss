@@ -315,14 +315,27 @@ a {
   padding: 2px 0;
 }
 
-.work-row__date {
+.work-row__dates {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 10px;
+}
+
+.work-row__date-item {
+  align-items: baseline;
   color: $muted;
-  display: block;
+  display: inline-flex;
   font-size: 10px;
   letter-spacing: 0.16em;
   line-height: 1;
-  margin-bottom: 10px;
   text-transform: uppercase;
+
+  span {
+    color: rgba($black, 0.44);
+    margin-right: 8px;
+  }
 }
 
 .work-row__title {
@@ -673,7 +686,7 @@ a {
     gap: 0;
   }
 
-  .work-row__date {
+  .work-row__dates {
     margin-bottom: 12px;
   }
 

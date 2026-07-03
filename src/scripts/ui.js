@@ -17,9 +17,36 @@ export function statusBadge(work) {
   return work.status ? `<span class="status-badge">${work.status}</span>` : "";
 }
 
-export function workRow(work, prefix, index = 0) {
-  const displayDate = work.date.replaceAll(".", " / ");
+function displayDate(date) {
+  return date.replaceAll(".", " / ");
+}
 
+function machineDate(date) {
+  return date.replaceAll(".", "-");
+}
+
+function workDates(work) {
+  const createdDate = work.createdDate ?? work.date;
+  const updatedDate = work.updatedDate ?? work.updated;
+  const updatedMarkup = updatedDate
+    ? `
+            <span class="work-row__date-item">
+              <span>Updated</span>
+              <time datetime="${machineDate(updatedDate)}">${displayDate(updatedDate)}</time>
+            </span>`
+    : "";
+
+  return `
+          <span class="work-row__dates">
+            <span class="work-row__date-item">
+              <span>Created</span>
+              <time datetime="${machineDate(createdDate)}">${displayDate(createdDate)}</time>
+            </span>${updatedMarkup}
+          </span>
+  `;
+}
+
+export function workRow(work, prefix, index = 0) {
   return `
     <a class="work-row" href="${prefix}${work.slug}/" data-description="${escapeAttr(work.description)}" aria-label="${escapeAttr(`${work.title}を開く`)}">
       <div class="work-row__meta">
@@ -30,7 +57,7 @@ export function workRow(work, prefix, index = 0) {
       </span>
       <div class="work-row__content">
         <div>
-          <time class="work-row__date" datetime="${work.date.replaceAll(".", "-")}">${displayDate}</time>
+${workDates(work)}
           <span class="work-row__title">${work.title}${statusBadge(work)}</span>
         </div>
         <span class="tag-group">${displayTags(work)}</span>
