@@ -1,4 +1,5 @@
 @use "../../src/styles/global";
+@use "../../src/styles/info-dialog";
 
 $ink: #121313;
 $muted: #696964;
@@ -118,13 +119,6 @@ body.is-loading .three-canvas {
 
 .three-canvas[hidden] {
   display: none;
-}
-
-body.is-three-layout .stats-monitor {
-  bottom: clamp(14px, 3vw, 32px) !important;
-  left: clamp(14px, 3vw, 32px) !important;
-  top: auto !important;
-  z-index: 20 !important;
 }
 
 .visual-loader {
@@ -374,10 +368,6 @@ body:not(.is-loading) .visual-loader {
   .control-strip {
     left: clamp(14px, 3vw, 32px);
     width: auto;
-  }
-
-  body.is-three-layout .stats-monitor {
-    bottom: calc(clamp(14px, 3vw, 32px) + 52px) !important;
   }
 
   .visual-nav {

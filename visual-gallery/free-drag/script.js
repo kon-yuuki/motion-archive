@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import Stats from "three/examples/jsm/libs/stats.module.js";
+import { initInfoDialog } from "../../src/scripts/info-dialog.js";
 
 const VALID_LAYOUTS = ["canvas-plane"];
 const CANVAS_DRAG_EASE = 0.075;
@@ -169,7 +169,6 @@ function setActiveLayout(layout) {
 
   if (isCanvasLayout) {
     startThreeScene(layout);
-    startStatsMonitor();
   } else {
     stopThreeScene();
   }
@@ -478,10 +477,6 @@ function startThreeScene() {
 
   camera.position.set(0, 0, 0);
   camera.lookAt(0, 0, -1);
-  const stats = new Stats();
-  stats.showPanel(0);
-  stats.dom.classList.add("stats-monitor");
-
   threeScene = {
     camera,
     geometry,
@@ -504,8 +499,6 @@ function startThreeScene() {
     pressZoom: 1,
     targetPressZoom: 1,
     frameId: null,
-    stats,
-    statsFrameId: null,
     planeLayout: null
   };
 
@@ -517,30 +510,6 @@ function renderThreeScene() {
   if (!threeScene) return;
 
   threeScene.renderer.render(threeScene.scene, threeScene.camera);
-}
-
-function startStatsMonitor() {
-  if (!threeScene || threeScene.statsFrameId !== null) return;
-
-  if (!threeScene.stats.dom.isConnected) {
-    document.body.appendChild(threeScene.stats.dom);
-  }
-  threeScene.statsFrameId = window.requestAnimationFrame(updateStatsMonitor);
-}
-
-function updateStatsMonitor() {
-  if (!threeScene) return;
-
-  threeScene.stats.update();
-  threeScene.statsFrameId = window.requestAnimationFrame(updateStatsMonitor);
-}
-
-function stopStatsMonitor() {
-  if (!threeScene) return;
-
-  window.cancelAnimationFrame(threeScene.statsFrameId);
-  threeScene.statsFrameId = null;
-  threeScene.stats.dom.remove();
 }
 
 function handleCanvasPointerDown(event) {
@@ -659,7 +628,6 @@ function stopThreeScene() {
   if (!threeScene) return;
 
   canvas.classList.remove("is-dragging");
-  stopStatsMonitor();
   window.cancelAnimationFrame(threeScene.frameId);
   threeScene.geometry.dispose();
   threeScene.materials.forEach((material) => material.dispose());
@@ -670,6 +638,10 @@ function stopThreeScene() {
 
 renderImages();
 setActiveLayout(getLayoutFromUrl());
+initInfoDialog({
+  openLabel: "ギャラリー情報を開く",
+  closeLabel: "ギャラリー情報を閉じる"
+});
 
 window.addEventListener("resize", resizeThreeScene);
 canvas.addEventListener("pointerdown", handleCanvasPointerDown);
@@ -678,7 +650,7 @@ canvas.addEventListener("pointerup", handleCanvasPointerUp);
 canvas.addEventListener("pointercancel", handleCanvasPointerUp);
 canvas.addEventListener("wheel", handleCanvasWheel, { passive: false });
 
-document.querySelector("[data-layout-switcher]").addEventListener("click", (event) => {
+document.querySelector("[data-layout-switcher]")?.addEventListener("click", (event) => {
   const link = event.target.closest("[data-layout-link]");
   if (!link) return;
 

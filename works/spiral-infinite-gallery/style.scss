@@ -1,0 +1,116 @@
+:root {
+  --shell-chip: rgba(232, 229, 220, 0.82);
+  --shell-panel: rgba(237, 234, 225, 0.98);
+  --shell-line: rgba(28, 27, 23, 0.17);
+  --shell-muted: #706e64;
+  --shell-text: #1c1b17;
+}
+
+body {
+  background: #d8d5cb;
+  overscroll-behavior: none;
+}
+
+.spiral-stage {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(248, 245, 232, 0.8), transparent 34%),
+    linear-gradient(125deg, #c9c6bc, #e5e2d9 55%, #c5c3ba);
+  cursor: grab;
+  height: 100svh;
+  min-height: 580px;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+}
+
+.spiral-stage::after {
+  background: radial-gradient(circle, transparent 45%, rgba(42, 39, 31, 0.2) 125%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.spiral-stage.is-dragging { cursor: grabbing; }
+
+.spiral-canvas {
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.spiral-title {
+  bottom: clamp(92px, 14vh, 140px);
+  color: #1c1b17;
+  left: clamp(22px, 4.8vw, 76px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.spiral-title span,
+.spiral-instruction {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.spiral-title h1 {
+  font-size: clamp(62px, 10vw, 154px);
+  font-weight: 760;
+  letter-spacing: -0.065em;
+  line-height: 0.78;
+  margin: 22px 0 0 -0.07em;
+}
+
+.spiral-index {
+  align-items: center;
+  bottom: clamp(30px, 5vw, 68px);
+  color: #1c1b17;
+  display: flex;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  gap: 10px;
+  left: clamp(22px, 4.8vw, 76px);
+  position: absolute;
+  z-index: 3;
+}
+
+.spiral-index i { background: currentColor; height: 1px; opacity: 0.5; width: 34px; }
+
+.spiral-instruction {
+  bottom: clamp(30px, 5vw, 68px);
+  color: #5f5c54;
+  margin: 0;
+  position: absolute;
+  right: clamp(22px, 4.8vw, 76px);
+  z-index: 3;
+}
+
+.spiral-fallback {
+  display: none;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.spiral-stage[data-webgl-unavailable] .spiral-fallback { display: block; }
+
+@media (max-width: 720px) {
+  .spiral-title { bottom: 96px; }
+  .spiral-title h1 { font-size: clamp(52px, 18vw, 86px); }
+  .spiral-instruction { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spiral-instruction { display: none; }
+}

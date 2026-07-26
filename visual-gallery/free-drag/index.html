@@ -33,6 +33,38 @@
     </main>
 
     <canvas class="three-canvas" data-three-canvas aria-hidden="true"></canvas>
+    <button class="detail-toggle" type="button" data-info-toggle aria-expanded="false">Info</button>
+    <aside class="experiment-meta" data-info-panel>
+      <p class="experiment-meta__index">Visual Gallery / Free Drag</p>
+      <h2>Free Drag</h2>
+      <p class="experiment-meta__description">
+          グリッドの各planeは平面上に置かず、頂点ごとにyawとpitchを計算して球面上へ投影する。
+          カメラは球の中心に置き、ドラッグやスクロールではplane単体ではなくグリッド全体の角度オフセットを動かす。
+      </p>
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>球面への配置</h3>
+          <p>
+            shader内で <code>uSphereCenterAngles</code> に頂点座標と <code>uPlaneAngularSize</code> を足し、各頂点を <code>uSphereRadius</code> 上の方向ベクトルへ変換する。
+            planeの四辺も頂点分割に沿って球面へ乗るため、左右だけでなく上下方向にも弧を持つ。
+          </p>
+        </section>
+        <section class="tech-note__section">
+          <h3>入力と余韻</h3>
+          <p>
+            pointer入力とwheel入力は <code>targetOffset</code> に入り、<code>dragOffset</code> が <code>CANVAS_DRAG_EASE</code> で追従する。
+            高速スクロールでは <code>CANVAS_WHEEL_MAX_STEP</code> で1フレームの移動量を抑え、ループ境界で弾んで戻るような見え方を避けている。
+          </p>
+        </section>
+        <section class="tech-note__section">
+          <h3>視差と読み込み</h3>
+          <p>
+            画像内の視差は、球面上の位置と画面中心との差をUVオフセットへ変換して作る。
+            すべてのテクスチャが読み込まれるまではローディングを出し、描画可能な状態になってからcanvasを表示する。
+          </p>
+        </section>
+      </div>
+    </aside>
     <div class="visual-loader" data-visual-loader role="status" aria-live="polite">
       <div class="visual-loader__inner">
         <p class="visual-loader__text">Loading visual field<span aria-hidden="true"></span></p>

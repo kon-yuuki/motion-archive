@@ -1,0 +1,205 @@
+.detail-dialog-toggle {
+  align-items: center;
+  backdrop-filter: blur(14px);
+  background: var(--shell-chip, rgba(255, 255, 255, 0.58));
+  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
+  border-radius: 50%;
+  bottom: clamp(22px, 3vw, 36px);
+  color: var(--shell-text, #151616);
+  cursor: pointer;
+  display: inline-flex;
+  height: 48px;
+  justify-content: center;
+  left: clamp(22px, 3vw, 36px);
+  padding: 0;
+  position: fixed;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 150ms var(--ease-out-expo);
+  width: 48px;
+  z-index: 55;
+
+  svg {
+    display: block;
+    height: 21px;
+    stroke-width: 1.7;
+    width: 21px;
+  }
+
+  &:hover,
+  &[aria-expanded="true"] {
+    background: var(--shell-text, #151616);
+    border-color: var(--shell-text, #151616);
+    color: var(--shell-panel, #fff);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+.detail-dialog {
+  align-items: center;
+  background: rgba(7, 8, 8, 0.5);
+  display: block;
+  inset: 0;
+  opacity: 0;
+  padding: clamp(18px, 4vw, 44px);
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 220ms ease;
+  z-index: 60;
+
+  &[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.detail-dialog .experiment-meta {
+  backdrop-filter: blur(22px);
+  background: var(--shell-panel, rgba(250, 249, 245, 0.92));
+  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
+  border-radius: 22px;
+  box-shadow: 0 24px 74px rgba(10, 12, 12, 0.22);
+  display: block;
+  left: 50%;
+  max-height: min(720px, calc(100svh - 44px));
+  max-width: 620px;
+  opacity: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 30px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + 14px)) scale(0.975);
+  transition:
+    opacity 180ms ease,
+    transform 280ms var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+  width: min(100% - 44px, 620px);
+
+  &[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  h1,
+  h2 {
+    font-size: 37px;
+    font-weight: 400;
+    letter-spacing: -0.07em;
+    line-height: 1;
+    margin: 15px 0 13px;
+  }
+}
+
+.experiment-meta__close {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--shell-line, rgba(20, 20, 20, 0.15));
+  border-radius: 999px;
+  color: var(--shell-muted, #666762);
+  cursor: pointer;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 150ms var(--ease-out-expo);
+  width: 44px;
+
+  svg {
+    display: block;
+    height: 15px;
+    stroke-width: 1.8;
+    width: 15px;
+  }
+
+  &:hover {
+    background: var(--shell-text, #151616);
+    border-color: var(--shell-text, #151616);
+    color: var(--shell-panel, #fff);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+.experiment-meta__index {
+  color: var(--shell-muted, #666762);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  margin: 0;
+  padding-right: 36px;
+  text-transform: uppercase;
+}
+
+.experiment-meta__description {
+  color: var(--shell-muted, #666762);
+  font-size: 13px;
+  line-height: 1.75;
+  margin: 0 0 18px;
+}
+
+.tech-note__body {
+  display: grid;
+  gap: 30px;
+  margin-top: 14px;
+}
+
+.detail-dialog .experiment-meta .tech-note__section {
+  h2,
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    margin: 0 0 7px;
+  }
+}
+
+.tech-note__section {
+  p,
+  li {
+    color: var(--shell-muted, #666762);
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-dialog .experiment-meta {
+    border-radius: 18px;
+    padding: 24px 20px;
+    width: calc(100% - 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-dialog,
+  .detail-dialog .experiment-meta {
+    transition-duration: 1ms;
+  }
+}

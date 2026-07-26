@@ -205,10 +205,21 @@ main {
   left: 50%;
   padding: 8px;
   position: fixed;
-  top: 88px;
-  transform: translateX(-50%);
+  top: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -12px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
   width: min(520px, calc(100vw - 32px));
   z-index: 20;
+}
+
+.text-control[data-visible] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
 }
 
 .text-control__field {
@@ -377,13 +388,22 @@ main {
 }
 
 .gui-panel {
+  --gui-panel-bg: rgba(248, 251, 247, 0.96);
+  --gui-panel-line: rgba(8, 48, 49, 0.16);
+  --gui-panel-muted: rgba(8, 48, 49, 0.58);
+
+  border-radius: 6px;
+  box-shadow: 0 12px 34px rgba(8, 48, 49, 0.12);
   position: absolute;
   right: 16px;
   top: 16px;
+  width: 252px;
 }
 
 .gui-title {
   gap: 8px;
+  min-height: 32px;
+  padding: 7px 9px 7px 10px;
 
   &::after {
     content: none;
@@ -426,16 +446,120 @@ main {
   }
 }
 
+.gui-row {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 86px minmax(0, 1fr);
+  height: 34px;
+  padding: 0 10px;
+}
+
+.gui-row__label {
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gui-row__color {
+  height: 22px;
+  justify-self: end;
+  width: 22px;
+
+  &::-webkit-color-swatch {
+    border-radius: 5px;
+  }
+
+  &::-moz-color-swatch {
+    border-radius: 5px;
+  }
+}
+
+.gui-row__range {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) 46px;
+  height: 22px;
+  justify-content: initial;
+  width: 100%;
+
+  input {
+    appearance: none;
+    cursor: pointer;
+    height: 22px;
+    max-width: none;
+    min-width: 0;
+    outline: none;
+    width: 100%;
+
+    &::-webkit-slider-runnable-track {
+      background: color-mix(in srgb, var(--gui-panel-ink) 18%, transparent);
+      border-radius: 999px;
+      height: 2px;
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      background: var(--gui-panel-ink);
+      border: 0;
+      border-radius: 50%;
+      height: 10px;
+      margin-top: -4px;
+      width: 10px;
+    }
+
+    &::-moz-range-track {
+      background: color-mix(in srgb, var(--gui-panel-ink) 18%, transparent);
+      border-radius: 999px;
+      height: 2px;
+    }
+
+    &::-moz-range-thumb {
+      background: var(--gui-panel-ink);
+      border: 0;
+      border-radius: 50%;
+      height: 10px;
+      width: 10px;
+    }
+  }
+
+  output {
+    color: var(--gui-panel-ink);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    line-height: 22px;
+    min-width: 46px;
+    text-align: right;
+  }
+}
+
 .gui-row__select {
   appearance: none;
-  background: transparent;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--gui-panel-muted) 50%) right 9px center / 5px 5px no-repeat,
+    linear-gradient(135deg, var(--gui-panel-muted) 50%, transparent 50%) right 4px center / 5px 5px no-repeat,
+    color-mix(in srgb, var(--gui-panel-ink) 4%, transparent);
   border: 1px solid var(--gui-panel-line);
-  border-radius: 2px;
+  border-radius: 3px;
   color: var(--gui-panel-ink);
   cursor: pointer;
   font: inherit;
-  min-height: 28px;
-  padding: 4px 24px 4px 8px;
+  height: 22px;
+  min-height: 0;
+  padding: 0 22px 0 7px;
+  width: 100%;
+}
+
+.gui-actions {
+  gap: 8px;
+  padding: 9px 10px 10px;
+
+  button {
+    min-height: 26px;
+    padding: 0 8px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -456,7 +580,7 @@ main {
   .text-control {
     align-items: stretch;
     display: grid;
-    top: 12px;
+    top: 8px;
   }
 
   .gui-panel {

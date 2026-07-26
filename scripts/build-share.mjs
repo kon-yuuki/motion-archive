@@ -8,10 +8,11 @@ import {
 } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { build } from "vite";
 import { injectSkipLink, injectSocialMeta } from "./html-meta.mjs";
 
-const root = resolve(import.meta.dirname, "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const requestedPage = process.argv[2];
 const temporaryDirectory = resolve(root, ".share-build");
 const outputDirectory = resolve(root, "dist-share");

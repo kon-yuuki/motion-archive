@@ -33,6 +33,31 @@
     </main>
 
     <canvas class="three-canvas" data-three-canvas aria-hidden="true"></canvas>
+    <button class="detail-toggle" type="button" data-info-toggle aria-expanded="false">Info</button>
+    <aside class="experiment-meta" data-info-panel>
+      <p class="experiment-meta__index">Visual Gallery / X Scroll</p>
+      <h2>X Scroll</h2>
+      <p class="experiment-meta__description">
+          横方向のドラッグ量とホイール量を <code>targetOffset</code> に加算し、<code>dragOffset</code> が一定割合で追いつくことで余韻を作る。
+          表示位置は <code>loopWidth</code> で折り返すため、実際の入力値を止めずに同じ列を無限に再配置できる。
+      </p>
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>視差とトリミング</h3>
+          <p>
+            画像は各テクスチャの縦横比から <code>uTextureRepeat</code> と <code>uTextureOffset</code> を決め、中央ではなく画像ごとの <code>focus</code> を基準に切り出す。
+            移動中の視差はplaneの位置差をUVオフセットへ変換しており、画像全体を伸ばさず、表示窓の中だけをずらす。
+          </p>
+        </section>
+        <section class="tech-note__section">
+          <h3>マスクのたわみ</h3>
+          <p>
+            移動速度から <code>uWarpVector</code> を作り、頂点shaderでplaneの外形だけを進行方向へ押す。
+            サンプリングUVは歪ませた座標ではなく元の <code>position.xy</code> を使うため、マスクはたわんでも画像端のピクセルは引き伸ばされない。
+          </p>
+        </section>
+      </div>
+    </aside>
 
     <dialog class="image-dialog" data-image-dialog>
       <div class="image-dialog__panel">

@@ -1,12 +1,16 @@
 import { mkdir, readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
-const root = resolve(import.meta.dirname, "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
+  { slug: "hover-video-cards", wait: 500 },
+  { slug: "rainy-neon-cylinder", wait: 1200 },
+  { slug: "spiral-infinite-gallery", wait: 900 },
   { slug: "rotating-scroll-gallery", scroll: 2050, wait: 900 },
   { slug: "rgb-cursor-stalker", scroll: 576, wait: 800 },
   { slug: "cursor-pixel-field", pointer: true, pointerDown: false, pointerSettle: 220 },
@@ -92,6 +96,10 @@ for (const work of selectedWorks) {
   await page.goto(`${baseUrl}/works/${work.slug}/`, { waitUntil: "load" });
   await page.addStyleTag({
     content: `
+      html {
+        scrollbar-gutter: auto !important;
+      }
+
       .experiment-nav,
       .detail-dialog-toggle,
       .fluid-hint {

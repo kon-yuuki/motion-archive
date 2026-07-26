@@ -1,5 +1,40 @@
 export const works = [
   {
+    slug: "hover-video-cards",
+    title: "Hover Video Cards",
+    thumbnail: "/thumbnails/hover-video-cards.jpg",
+    date: "2026.07.20",
+    description: "2枚の映像カードにポインターを重ねると、選んだカードだけが静かに再生されるホバーインタラクション実験。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Hover", "Transition"]
+  },
+  {
+    slug: "rainy-neon-cylinder",
+    title: "Rainy Neon Cylinder",
+    thumbnail: "/thumbnails/rainy-neon-cylinder.jpg",
+    date: "2026.07.19",
+    description: "雨の夜景10枚を発光する円筒状に配置し、ドラッグ・前後ボタン・自動送りで滑らかに巡るWebGLギャラリー。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Hover", "Image", "Transition"],
+    reference: {
+      label: "ApeChain",
+      url: "https://apechain.com/"
+    }
+  },
+  {
+    slug: "spiral-infinite-gallery",
+    title: "Spiral Infinite Gallery",
+    thumbnail: "/thumbnails/spiral-infinite-gallery.jpg",
+    date: "2026.07.19",
+    description: "画像を奥行きのある螺旋上に配置し、ホイールやドラッグの入力で前後へ途切れなく巡るWebGLギャラリー実験。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Scroll", "Image", "Loop"],
+    reference: {
+      label: "Pacôme Pertant Portfolio",
+      url: "https://pacomepertant.com/"
+    }
+  },
+  {
     slug: "rotating-scroll-gallery",
     title: "Rotating Scroll Gallery",
     thumbnail: "/thumbnails/rotating-scroll-gallery.jpg",

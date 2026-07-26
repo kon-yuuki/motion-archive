@@ -12,6 +12,7 @@ const title = document.querySelector("[data-character-reveal]");
 const depthTitle = document.querySelector("[data-character-fade]");
 const splitTargets = [...document.querySelectorAll("[data-character-reveal], [data-character-fade]")];
 const revealTargets = [...document.querySelectorAll("[data-character-reveal], [data-character-fade]")];
+const textControl = document.querySelector(".text-control");
 const sharedTextInput = document.querySelector("[data-shared-text]");
 const sharedTextApply = document.querySelector("[data-shared-text-apply]");
 const sharedSizeInput = document.querySelector("[data-shared-size]");
@@ -413,6 +414,10 @@ function updateSharedSize() {
   sharedSizeOutput.value = `${size}px`;
 }
 
+function updateTextControlVisibility() {
+  textControl.toggleAttribute("data-visible", window.scrollY > 96);
+}
+
 function initDepthEasingSelect() {
   const select = document.querySelector('[data-depth-control="easing"]');
   if (!select) return;
@@ -499,6 +504,8 @@ depthControls.forEach((control) => {
 });
 depthReset.addEventListener("click", resetDepthSettings);
 depthPreview.addEventListener("click", playDepthReveal);
+updateTextControlVisibility();
+window.addEventListener("scroll", updateTextControlVisibility, { passive: true });
 sharedTextApply.addEventListener("click", applySharedText);
 sharedTextInput.addEventListener("keydown", (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
