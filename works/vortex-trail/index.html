@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="カーソルの軌跡に沿って背景画像のUVが円周方向へ捩れ、ゆっくり元へ戻るWebGL実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Vortex Trail / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 4h7l3 3v13H7z" stroke="currentColor" stroke-linejoin="round" />
+            <path d="M14 4v4h4M10 12h5M10 16h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main class="experiment-stage vortex-stage" data-stage>
+      <canvas class="vortex-canvas" data-canvas aria-hidden="true"></canvas>
+      <img class="vortex-fallback" data-fallback src="../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-04.webp" alt="" />
+      <div class="vortex-shade" aria-hidden="true"></div>
+      <p class="vortex-label" aria-hidden="true">Vortex<br />Trail</p>
+      <p class="vortex-hint" data-hint>Move your cursor slowly</p>
+      <p class="vortex-fallback-message">この実験にはWebGL対応のブラウザが必要です。</p>
+    </main>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">2026.08.04</p>
+      <div class="experiment-meta__title">
+        <h1>Vortex Trail</h1>
+        <span class="experiment-status">WIP</span>
+      </div>
+      <p class="experiment-meta__description">背景画像をカーソルでなぞると、その軌跡に小さな渦が連なって残るWebGL実験。円周方向へ捩れたUVは時間とともにじわっと弱まり、元の画像へ戻る。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>Shader</span><span>Cursor</span><span>Image</span></div>
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>軌跡をテクスチャとして残す</h3>
+          <p>ポインター位置を低解像度の浮動小数点テクスチャへ書き込み、前フレームの値を少しずつ減衰させる。イベントの点と点は補間しているため、速く動かしても軌跡が途切れにくい。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>円周方向の変位を作る</h3>
+          <p>カーソル側を丸い頭、移動方向と逆側を細く絞った尾とする彗星型の影響範囲を作る。低速時にも短い尾を残し、速度が上がるほど尾を長くしながら全体の強度は弱くする。輪郭にはガウス分布を使い、さらに進行方向の先端を最も強く、尾へ遠ざかるほど弱くなる方向性を加えてUVを捩っている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>外へ広がりながら戻す</h3>
+          <p>生成した歪みごとに残り寿命を持たせ、約0.82秒かけて毎フレーム寿命を減らす。後から重なる歪みで既存領域の寿命を更新しないため、軌跡は古い部分ほど長く外へ移動し、先頭の新しい部分ほど小さく残る。そのまま寿命の終盤で強度を滑らかに0へ落とし、移動中も停止後も外へほどけながら元の画像へ戻る。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>軌跡全体の縁を強くする</h3>
+          <p>連続する円を塗り領域として別チャンネルへ蓄積し、隣接ピクセルとの強度差から軌跡全体の輪郭を求める。輪郭ではUV変位を強め、重なった軌跡の内側では弱めるため、先頭の円から後方へ続く形の縁がひと続きに歪む。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>画面比率を保ったまま敷く</h3>
+          <p>画像とCanvasの縦横比をシェーダー内で比較し、CSSのcoverと同じ切り抜きになるようUVを補正する。画面サイズが変わっても画像を引き伸ばさず、全面を埋める。</p>
+        </section>
+      </div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
+      <div class="tech-note__panel">
+        <p class="tech-note__eyebrow">技術メモ</p>
+        <h2 id="tech-note-title">Vortex Trail</h2>
+        <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" /></svg>
+        </button>
+      </div>
+    </section>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-import { categories, works } from "../data/works.js";
+import { categories, visibleWorks } from "../data/works.js";
 import { statusBadge } from "./ui.js";
 
 function categorySlug(value) {
@@ -10,7 +10,7 @@ function groupMarkup(items, key) {
 
   return items
     .map((category) => {
-      const matches = works.filter((work) => work[key].includes(category));
+      const matches = visibleWorks.filter((work) => work[key].includes(category));
       const links = matches.length
         ? matches
             .map(

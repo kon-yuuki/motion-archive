@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="画像をWebGLで引き延ばし、歪みの中から次のイメージへつなぐポインタ操作のスライダー実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Veiled Transition / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 4h7l3 3v13H7z" stroke="currentColor" stroke-linejoin="round" />
+            <path d="M14 4v4h4M10 12h5M10 16h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main class="experiment-stage veiled-stage" data-stage tabindex="0" aria-label="WebGL画像スライダー。左右キーでも操作できます">
+      <div class="veiled-grain" aria-hidden="true"></div>
+      <p class="veiled-kicker" aria-hidden="true">Studies in light and form</p>
+      <div class="veiled-title" aria-hidden="true">
+        <span data-title-primary>Veiled</span>
+        <span data-title-secondary>Silence</span>
+      </div>
+
+      <div class="veiled-frame">
+        <canvas class="veiled-canvas" data-canvas aria-hidden="true"></canvas>
+        <img
+          class="veiled-fallback"
+          data-fallback
+          src="../../src/assets/images/misty-veiled-portraits/misty-veiled-portrait-01.webp"
+          alt=""
+        />
+      </div>
+
+      <div class="veiled-index" aria-live="polite">
+        <span data-current>01</span>
+        <span class="veiled-index__line" aria-hidden="true"></span>
+        <span>05</span>
+      </div>
+      <p class="veiled-caption" data-caption>Soft study, I</p>
+      <p class="veiled-hint">Move &amp; click / Arrow keys</p>
+
+      <button class="veiled-touch-control veiled-touch-control--previous" data-prev type="button" aria-label="前の画像へ">←</button>
+      <button class="veiled-touch-control veiled-touch-control--next" data-next type="button" aria-label="次の画像へ">→</button>
+      <div class="veiled-gui" data-gui hidden>
+        <div class="veiled-gui__title">
+          <span>Shader controls</span>
+        </div>
+        <label class="veiled-gui__field" for="transition-progress">
+          <span class="veiled-gui__heading">
+            <span>Progress</span>
+            <output data-progress-output for="transition-progress">0%</output>
+          </span>
+          <input
+            id="transition-progress"
+            data-progress
+            type="range"
+            min="0"
+            max="1"
+            step="0.001"
+            value="0"
+            aria-label="画像切り替えの進捗"
+          />
+        </label>
+        <label class="veiled-gui__field" for="twist-strength">
+          <span class="veiled-gui__heading">
+            <span>Twist</span>
+            <output data-uniform-output="uTwistStrength" for="twist-strength">0.320</output>
+          </span>
+          <input id="twist-strength" data-uniform-control="uTwistStrength" type="range" min="0" max="0.32" step="0.001" value="0.32" />
+        </label>
+        <label class="veiled-gui__field" for="ripple-strength">
+          <span class="veiled-gui__heading">
+            <span>Sine strength</span>
+            <output data-uniform-output="uRippleStrength" for="ripple-strength">0.140</output>
+          </span>
+          <input id="ripple-strength" data-uniform-control="uRippleStrength" type="range" min="0" max="0.14" step="0.001" value="0.14" />
+        </label>
+        <label class="veiled-gui__field" for="ripple-frequency">
+          <span class="veiled-gui__heading">
+            <span>Sine frequency</span>
+            <output data-uniform-output="uRippleFrequency" for="ripple-frequency">51</output>
+          </span>
+          <input id="ripple-frequency" data-uniform-control="uRippleFrequency" type="range" min="8" max="100" step="1" value="51" />
+        </label>
+        <label class="veiled-gui__field" for="range-scale">
+          <span class="veiled-gui__heading">
+            <span>Wave range</span>
+            <output data-uniform-output="uRangeScale" for="range-scale">0.20</output>
+          </span>
+          <input id="range-scale" data-uniform-control="uRangeScale" type="range" min="0.05" max="2" step="0.01" value="0.2" />
+        </label>
+        <label class="veiled-gui__field" for="slide-scale">
+          <span class="veiled-gui__heading">
+            <span>Slide scale</span>
+            <output data-uniform-output="uSlideScale" for="slide-scale">2.00</output>
+          </span>
+          <input id="slide-scale" data-uniform-control="uSlideScale" type="range" min="1" max="3" step="0.01" value="2" />
+        </label>
+        <label class="veiled-gui__field" for="wave-scale">
+          <span class="veiled-gui__heading">
+            <span>Wave outside scale</span>
+            <output data-uniform-output="uWaveScale" for="wave-scale">3.00</output>
+          </span>
+          <input id="wave-scale" data-uniform-control="uWaveScale" type="range" min="1" max="3" step="0.01" value="3" />
+        </label>
+        <div class="veiled-gui__footer">
+          <span data-copy-status aria-live="polite">Ready</span>
+          <div class="veiled-gui__actions">
+            <button data-progress-reset type="button">Reset</button>
+            <button data-copy-values type="button">Copy values</button>
+          </div>
+        </div>
+      </div>
+      <div class="veiled-cursor" data-cursor aria-hidden="true"><span data-cursor-arrow>→</span></div>
+      <p class="veiled-live sr-only" data-live aria-live="polite"></p>
+      <p class="veiled-fallback-message">この実験にはWebGL対応のブラウザが必要です。</p>
+    </main>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">2026.07.28</p>
+      <div class="experiment-meta__title">
+        <h1>Veiled Transition</h1>
+        <span class="experiment-status">WebGL</span>
+      </div>
+      <p class="experiment-meta__description">画像中央から広がる波を境界に、放射方向の揺れと円周方向のねじれを加えながら次のテクスチャへ切り替えるWebGLスライダー。次画像の全体倍率と波の外側の倍率を分け、波が通過した範囲から通常サイズへ戻している。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>Shader</span><span>Cursor</span><span>Image</span></div>
+      <div class="experiment-actions">
+        <a class="experiment-reference-link" href="https://izanami-official.com/ja/philosophy/" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
+      <div class="tech-note__panel">
+        <p class="tech-note__eyebrow">技術メモ</p>
+        <h2 id="tech-note-title">Veiled Transition</h2>
+        <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="tech-note__body">
+          <section class="tech-note__section">
+            <h3>画像比率をUVへ反映する</h3>
+            <p>現在画像を<code>uFrom</code>、次画像を<code>uTo</code>へ渡す。<code>coverUv()</code>で各画像の実寸比率とCanvas比率を比較し、長い辺のUV範囲を中央基準で切り詰める。素材ごとに縦横比が異なっても、フレームを埋めた状態から同じ波形を適用できる。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>進捗を波の半径へ変換する</h3>
+            <p>アスペクト比を補正したUVから画像中央までの距離を求め、<code>uProgress</code>を波の半径へ変換する。半径は画像外から四隅の外まで移動し、<code>smoothstep</code>で作る<code>outsideWave</code>の内側を次画像、外側を現在画像として合成する。100%で四隅まで確実に次画像へ切り替わる。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>放射方向と円周方向を別々に歪ませる</h3>
+            <p>波の半径との差をガウス状の<code>ring</code>へ変換する。正弦波は<code>radialDirection</code>へ掛けて中心から外へ押し引きし、ねじれは直交する<code>tangent</code>へ掛ける。両方の強度は進捗80%まで設定値を維持し、80〜100%で0へ戻すため、停止時にはUVの歪みが残らない。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>全体倍率と波の外側を分ける</h3>
+            <p><code>uSlideScale</code>は次画像全体を2から1へ戻す基本倍率、<code>uWaveScale</code>は波がまだ通過していない外側の倍率として別々に扱う。<code>outsideWave</code>で2つの倍率を補間するため、波が通過した内側から全体倍率へ戻り、完了時は画像全域が等倍になる。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>時間進捗と見た目の進捗を分ける</h3>
+            <p>切り替え時間は2秒とし、経過時間へ<code>easeOutExpo()</code>を適用した値を<code>uProgress</code>へ渡す。操作中に追加クリックされた場合は方向を1件だけ<code>queuedStep</code>へ保存し、現在の切り替えが完了してから次の1枚を開始する。連打回数は蓄積しない。</p>
+          </section>
+          <section class="tech-note__section">
+            <h3>ポインター位置を方向へ変換する</h3>
+            <p>ステージ内のポインターX座標を中央と比較し、左側なら前、右側なら次へ進む。円形カーソルは表示座標を補間して追従させ、クリック方向と矢印表示を同じ値から決める。タッチ操作ではスワイプ距離を判定して同じ<code>move()</code>へ渡す。</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

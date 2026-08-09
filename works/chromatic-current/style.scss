@@ -1,0 +1,231 @@
+:root {
+  --current-background: #2b2325;
+  --current-foreground: #eee8da;
+  --current-accent: #ed6956;
+  --current-line: rgba(238, 232, 218, 0.22);
+  --shell-chip: rgba(43, 35, 37, 0.62);
+  --shell-line: rgba(238, 232, 218, 0.24);
+  --shell-muted: rgba(238, 232, 218, 0.72);
+  --shell-panel: #eee8da;
+  --shell-text: #eee8da;
+}
+
+body {
+  background: var(--current-background);
+}
+
+.current-stage {
+  background: var(--current-background);
+  color: var(--current-foreground);
+  cursor: crosshair;
+  isolation: isolate;
+  min-height: 620px;
+  touch-action: none;
+}
+
+.current-canvas {
+  display: block;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+.current-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.65fr);
+  grid-template-rows: auto 1fr auto;
+  inset: 0;
+  padding: clamp(104px, 14vh, 148px) clamp(26px, 4.5vw, 72px) clamp(30px, 4.5vh, 52px);
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.current-eyebrow,
+.current-statement,
+.current-footer p {
+  margin: 0;
+}
+
+.current-eyebrow {
+  align-self: start;
+  font-size: 10px;
+  font-weight: 600;
+  grid-column: 1;
+  letter-spacing: 0.2em;
+  padding-left: 24px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.current-eyebrow::before {
+  background: var(--current-accent);
+  content: "";
+  height: 7px;
+  left: 0;
+  position: absolute;
+  top: 5px;
+  width: 7px;
+}
+
+.current-title {
+  align-self: center;
+  font-size: clamp(68px, 11.15vw, 178px);
+  font-weight: 300;
+  grid-column: 1 / -1;
+  letter-spacing: -0.072em;
+  line-height: 0.73;
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.current-title span {
+  display: block;
+}
+
+.current-title__second {
+  color: var(--current-accent);
+  font-family: Didot, "Bodoni 72", "Bodoni MT", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  margin-left: 0.29em;
+}
+
+.current-title sup {
+  color: var(--current-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.075em;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-left: 1.1em;
+  vertical-align: top;
+}
+
+.current-statement {
+  align-self: end;
+  font-size: clamp(13px, 1vw, 16px);
+  grid-column: 2;
+  line-height: 1.48;
+  max-width: 31ch;
+  padding-bottom: clamp(35px, 7vh, 82px);
+}
+
+.current-footer {
+  align-items: end;
+  border-top: 1px solid var(--current-line);
+  display: grid;
+  font-size: 9px;
+  font-weight: 600;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, 1fr);
+  letter-spacing: 0.16em;
+  padding-top: 15px;
+  text-transform: uppercase;
+}
+
+.current-footer p:nth-child(2) {
+  text-align: center;
+}
+
+.current-footer p:first-child {
+  padding-left: 58px;
+}
+
+.current-footer p:last-child {
+  text-align: right;
+}
+
+.experiment-nav__brand,
+.experiment-nav__link,
+.detail-toggle {
+  box-shadow: 0 8px 32px rgba(14, 9, 10, 0.16);
+}
+
+.experiment-nav__brand:hover,
+.experiment-nav__link:hover,
+.detail-toggle:hover {
+  background: rgba(238, 232, 218, 0.12);
+  border-color: rgba(238, 232, 218, 0.42);
+}
+
+.experiment-nav__brand:focus-visible,
+.experiment-nav__link:focus-visible,
+.detail-toggle:focus-visible {
+  outline: 2px solid var(--current-foreground);
+  outline-offset: 3px;
+}
+
+.experiment-meta {
+  --shell-text: #2b2325;
+  --shell-muted: rgba(43, 35, 37, 0.68);
+  --shell-line: rgba(43, 35, 37, 0.18);
+}
+
+@media (max-width: 760px) {
+  .current-stage {
+    min-height: 560px;
+  }
+
+  .current-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;
+    padding: 104px 22px 26px;
+  }
+
+  .current-title {
+    align-self: center;
+    font-size: clamp(54px, 18.2vw, 118px);
+    grid-column: 1;
+    line-height: 0.78;
+  }
+
+  .current-title__second {
+    margin-left: 0;
+  }
+
+  .current-statement {
+    grid-column: 1;
+    max-width: 34ch;
+    padding: 0 0 34px;
+  }
+
+  .current-footer {
+    gap: 8px;
+    grid-column: 1;
+    grid-template-columns: 1fr auto;
+  }
+
+  .current-footer p:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .current-stage {
+    cursor: default;
+  }
+}
+
+@media (max-width: 420px) {
+  .current-title {
+    font-size: clamp(49px, 17vw, 72px);
+  }
+
+  .current-statement {
+    font-size: 12px;
+  }
+
+  .current-footer {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .current-canvas {
+    image-rendering: auto;
+  }
+}

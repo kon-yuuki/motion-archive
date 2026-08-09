@@ -1,0 +1,117 @@
+:root {
+  --shell-chip: rgba(12, 16, 13, 0.48);
+  --shell-line: rgba(255, 250, 235, 0.2);
+  --shell-muted: rgba(255, 250, 235, 0.7);
+  --shell-panel: rgba(13, 17, 14, 0.94);
+  --shell-text: #fffbed;
+}
+
+body {
+  background: #111912;
+}
+
+.vortex-stage {
+  background: #111912;
+  color: #fffbed;
+  cursor: crosshair;
+  min-height: 100svh;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.vortex-canvas,
+.vortex-fallback,
+.vortex-shade {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.vortex-canvas {
+  display: block;
+  z-index: 1;
+}
+
+.vortex-fallback {
+  object-fit: cover;
+}
+
+.vortex-stage[data-webgl-ready] .vortex-fallback {
+  visibility: hidden;
+}
+
+.vortex-shade {
+  background: linear-gradient(180deg, rgba(6, 10, 7, 0.18), transparent 38%, rgba(6, 10, 7, 0.18));
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vortex-label {
+  bottom: clamp(36px, 5vw, 76px);
+  font-family: Didot, "Bodoni 72", "Times New Roman", serif;
+  font-size: clamp(58px, 9vw, 150px);
+  font-style: italic;
+  font-weight: 300;
+  left: clamp(28px, 5vw, 80px);
+  letter-spacing: -0.055em;
+  line-height: 0.68;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  text-shadow: 0 2px 30px rgba(8, 14, 9, 0.3);
+  z-index: 3;
+}
+
+.vortex-hint {
+  bottom: clamp(34px, 4vw, 64px);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  margin: 0;
+  position: absolute;
+  right: clamp(28px, 5vw, 80px);
+  text-transform: uppercase;
+  transition: opacity 700ms ease;
+  z-index: 3;
+}
+
+.vortex-stage[data-interacted] .vortex-hint {
+  opacity: 0;
+}
+
+.vortex-fallback-message {
+  display: none;
+}
+
+.vortex-stage[data-unsupported] .vortex-canvas,
+.vortex-stage[data-unsupported] .vortex-shade,
+.vortex-stage[data-unsupported] .vortex-label,
+.vortex-stage[data-unsupported] .vortex-hint {
+  display: none;
+}
+
+.vortex-stage[data-unsupported] .vortex-fallback-message {
+  align-items: center;
+  background: rgba(8, 12, 9, 0.45);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  margin: 0;
+  padding: 24px;
+  position: absolute;
+  text-align: center;
+}
+
+@media (pointer: coarse) {
+  .vortex-stage { cursor: default; }
+  .vortex-hint { text-transform: none; }
+}
+
+@media (max-width: 640px) {
+  .vortex-label { bottom: 76px; }
+  .vortex-hint { bottom: 30px; left: 28px; right: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vortex-hint { transition-duration: 0ms; }
+}

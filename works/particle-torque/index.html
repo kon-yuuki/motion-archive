@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="画像を粒子へほどき、渦を巻きながら次のイメージへ再構成するWebGLスライダー。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Particle Torque / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main class="experiment-stage petal-stage" data-stage tabindex="0" aria-label="粒子画像スライダー。画面の左右をクリックするか、左右キーで操作できます">
+      <p class="petal-kicker">An image dispersed in orbit</p>
+      <div class="petal-title" aria-hidden="true">
+        <span data-title-primary>Particle</span><span data-title-secondary>Torque</span>
+      </div>
+      <div class="petal-frame" data-frame>
+        <canvas class="petal-canvas" data-canvas aria-hidden="true"></canvas>
+        <img class="petal-fallback" data-fallback src="../../src/assets/images/misty-veiled-portraits/misty-veiled-portrait-02.webp" alt="" />
+      </div>
+      <div class="petal-index"><span data-current>01</span><span class="petal-index__line" aria-hidden="true"></span><span>05</span></div>
+      <p class="petal-caption" data-caption>Torque study, I</p>
+      <p class="petal-note">Click / Arrow keys</p>
+      <button class="petal-control petal-control--previous" data-prev type="button" aria-label="前の画像へ">←</button>
+      <button class="petal-control petal-control--next" data-next type="button" aria-label="次の画像へ">→</button>
+      <div class="petal-cursor" data-cursor aria-hidden="true"><span data-cursor-arrow>→</span></div>
+      <p class="sr-only" data-live aria-live="polite">1枚目、Particle Torque</p>
+
+      <div class="petal-gui" data-gui>
+        <label class="petal-gui__field" for="transition-progress"><span class="petal-gui__header"><span>Transition progress</span><output data-progress-output for="transition-progress">0%</output></span><input id="transition-progress" data-progress type="range" min="0" max="1" step="0.001" value="0" /></label>
+        <label class="petal-gui__field" for="transition-duration"><span class="petal-gui__header"><span>Duration</span><output data-duration-output for="transition-duration">1.8s</output></span><input id="transition-duration" data-duration type="range" min="700" max="6000" step="100" value="1800" /></label>
+        <label class="petal-gui__field" for="spiral-force"><span class="petal-gui__header"><span>Spiral force</span><output data-spiral-output for="spiral-force">1.0</output></span><input id="spiral-force" data-spiral type="range" min="0.2" max="1.8" step="0.05" value="1" /></label>
+        <label class="petal-gui__field" for="noise-strength"><span class="petal-gui__header"><span>Noise strength</span><output data-noise-output for="noise-strength">1.0</output></span><input id="noise-strength" data-noise-strength type="range" min="0" max="2" step="0.05" value="1" /></label>
+        <label class="petal-gui__field" for="noise-settle"><span class="petal-gui__header"><span>Noise settle</span><output data-noise-settle-output for="noise-settle">68%</output></span><input id="noise-settle" data-noise-settle type="range" min="0.5" max="0.95" step="0.01" value="0.68" /></label>
+        <button data-progress-reset type="button">Reset</button>
+      </div>
+    </main>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">2026.08.04</p>
+      <div class="experiment-meta__title"><h1>Particle Torque</h1></div>
+      <p class="experiment-meta__description">画像を細かな粒子へほどき、縦のY軸を中心に手前と奥へ回り込む渦を通して、次のイメージへ再構成するWebGLスライダー。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>Shader</span><span>Particle</span><span>Transition</span></div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
+      <div class="tech-note__panel">
+        <p class="tech-note__eyebrow">技術メモ</p><h2 id="tech-note-title">Particle Torque</h2>
+        <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" /></svg></button>
+        <div class="tech-note__body">
+          <section class="tech-note__section"><h3>画像を粒子の格子へ置き換える</h3><p>細分化したplaneの頂点を<code>THREE.Points</code>として描画し、各点のUVから画像色を取得する。静止時は粒子同士の隙間を小さくして、ひとつの画像として読める密度を保つ。</p></section>
+          <section class="tech-note__section"><h3>上から下へ切り替えを伝える</h3><p>粒子のUVのY座標を遅延へ変換し、上の横一列から順に「粒子化・Y軸回転・画像交換・再整列」を進める。横位置では開始時間を変えないため、次の画像も上から下へ読み取れる順序で現れる。</p></section>
+          <section class="tech-note__section"><h3>Soft Torqueと同じ斜め軸で面を捩る</h3><p>UVを傾いた軸へ投影して頂点ごとの開始時間をずらし、Rodriguesの回転式で360度回す。裏側を通る区間だけUVを反転し、1周後は頂点と画像の向きがそろって元の平面へ戻る。</p></section>
+          <section class="tech-note__section"><h3>粒子ごとに軌道を崩す</h3><p>UVから固定のランダム値を作り、回転角、Y軸からの距離、高さ、奥行きを粒子ごとにずらす。ばらつきは回転の中央だけ強くし、開始時と終了時はゼロに戻して画像の整列を保つ。</p></section>
+          <section class="tech-note__section"><h3>ねじれ面をすべての位置の土台にする</h3><p>各頂点をY軸まわりに回した<code>surfacePosition</code>を先に計算し、粒子の位置は常にそこから求める。画像面の頂点対応を保ったまま回転するため、拡散の前後にも画像自体がねじれている様子が残る。</p></section>
+          <section class="tech-note__section"><h3>面の頂点位置へノイズを足して拡散する</h3><p>粒子化は別の渦座標へ切り替えず、<code>surfacePosition</code>の回転角、半径、高さ、奥行きへ粒子固有のノイズを加える。戻りではノイズ量だけを徐々にゼロへ戻すため、粒子が連続したねじれ面へ自然に合流する。</p></section>
+          <section class="tech-note__section"><h3>渦の中で次の色へ移る</h3><p>粒子が最も集まる付近で<code>uFrom</code>から<code>uTo</code>へ色を切り替える。形が崩れている時間に画像を交換するため、切り替えの境目を見せずに次の像へ戻せる。</p></section>
+          <section class="tech-note__section"><h3>操作中の入力を一件だけ保持する</h3><p>連打で遷移が重ならないよう、アニメーション中の追加入力は最後の方向を一件だけ記録する。完了後に続けて再生し、現在位置と表示内容のずれを防ぐ。</p></section>
+        </div>
+      </div>
+    </section>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

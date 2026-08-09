@@ -9,6 +9,9 @@ const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
   { slug: "section-layer-transition", wait: 500 },
+  { slug: "particle-torque", progress: 0.46, wait: 300 },
+  { slug: "webgl-plane-reveal", scroll: 550, wait: 2300 },
+  { slug: "webgl-image-slider", wait: 900 },
   { slug: "hover-video-cards", wait: 500 },
   { slug: "rainy-neon-cylinder", wait: 1200 },
   { slug: "spiral-infinite-gallery", wait: 900 },
@@ -130,6 +133,13 @@ for (const work of selectedWorks) {
       await page.mouse.up();
     }
     await page.waitForTimeout(work.pointerSettle ?? 900);
+  }
+  if (work.progress !== undefined) {
+    await page.locator("[data-progress]").evaluate((input, progress) => {
+      input.value = String(progress);
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }, work.progress);
+    await page.waitForTimeout(120);
   }
   if (work.wait) {
     await page.waitForTimeout(work.wait);

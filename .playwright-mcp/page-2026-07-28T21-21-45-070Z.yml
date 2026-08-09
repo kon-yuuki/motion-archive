@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - link "本文へ移動" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main "WebGL画像スライダー。左右キーでも操作できます" [ref=e3]:
+    - paragraph [ref=e4]: Studies in light and form
+    - generic:
+      - generic: Veiled
+      - generic: Silence
+    - generic [ref=e7]:
+      - generic [ref=e8]: "01"
+      - generic [ref=e10]: "05"
+    - paragraph [ref=e11]: Soft study, I
+    - paragraph [ref=e12]: Move & click / Arrow keys
+    - generic: →
+    - paragraph [ref=e13]

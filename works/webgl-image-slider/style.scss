@@ -1,0 +1,423 @@
+:root {
+  --shell-chip: rgba(8, 8, 7, 0.56);
+  --shell-panel: rgba(12, 12, 10, 0.96);
+  --shell-line: rgba(238, 234, 222, 0.2);
+  --shell-muted: rgba(238, 234, 222, 0.68);
+  --shell-text: #eeeade;
+}
+
+body {
+  background: #090907;
+}
+
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.veiled-stage {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(87, 82, 67, 0.17), transparent 35%),
+    #090907;
+  color: #eeeade;
+  cursor: none;
+  isolation: isolate;
+  min-height: 620px;
+}
+
+.veiled-stage::before,
+.veiled-stage::after {
+  background: rgba(238, 234, 222, 0.14);
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+}
+
+.veiled-stage::before {
+  bottom: clamp(28px, 4.5vh, 52px);
+  height: 1px;
+  left: clamp(28px, 4vw, 64px);
+  right: clamp(28px, 4vw, 64px);
+}
+
+.veiled-stage::after {
+  bottom: clamp(28px, 4.5vh, 52px);
+  right: clamp(28px, 4vw, 64px);
+  top: clamp(92px, 13vh, 124px);
+  width: 1px;
+}
+
+.veiled-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+  inset: 0;
+  mix-blend-mode: soft-light;
+  opacity: 0.13;
+  pointer-events: none;
+  position: absolute;
+  z-index: 10;
+}
+
+.veiled-frame {
+  aspect-ratio: 4 / 5.35;
+  height: min(76vh, 790px);
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -49%);
+  width: min(56.82vh, 590.65px);
+  z-index: 2;
+}
+
+.veiled-canvas,
+.veiled-fallback {
+  display: block;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.veiled-stage[data-webgl-ready] .veiled-fallback {
+  visibility: hidden;
+}
+
+.veiled-title {
+  display: flex;
+  color: rgba(238, 234, 222, 0.9);
+  font-family: Didot, "Bodoni 72", "Bodoni MT", "Times New Roman", serif;
+  font-size: clamp(48px, 7vw, 112px);
+  font-style: italic;
+  font-synthesis: none;
+  font-weight: 300;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+  pointer-events: none;
+  position: absolute;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.veiled-title span {
+  display: block;
+  position: absolute;
+  top: calc(50% + min(0.76vh, 7.9px));
+  transform: translateY(-50%);
+  transition:
+    filter 480ms ease,
+    opacity 480ms ease,
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.veiled-title span:first-child {
+  right: calc(50% + min(28.41vh, 295.33px) - 32px);
+  top: calc(50% + min(0.76vh, 7.9px) - 0.29em);
+}
+
+.veiled-title span:last-child {
+  left: calc(50% + min(28.41vh, 295.33px) - 32px);
+  top: calc(50% + min(0.76vh, 7.9px) + 0.29em);
+}
+
+.veiled-stage[data-changing] .veiled-title span:first-child {
+  filter: blur(8px);
+  opacity: 0;
+  transform: translateX(-32px) translateY(-50%);
+}
+
+.veiled-stage[data-changing] .veiled-title span:last-child {
+  filter: blur(8px);
+  opacity: 0;
+  transform: translateX(32px) translateY(-50%);
+}
+
+.veiled-kicker,
+.veiled-caption,
+.veiled-hint,
+.veiled-index {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  margin: 0;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 6;
+}
+
+.veiled-kicker {
+  left: clamp(28px, 4vw, 64px);
+  top: 50%;
+  transform: rotate(-90deg) translateX(-50%);
+  transform-origin: left top;
+}
+
+.veiled-index {
+  align-items: center;
+  display: flex;
+  gap: 13px;
+  right: clamp(48px, 5.4vw, 88px);
+  top: 50%;
+}
+
+.veiled-index__line {
+  background: rgba(238, 234, 222, 0.42);
+  height: 1px;
+  width: 42px;
+}
+
+.veiled-caption {
+  bottom: clamp(45px, 6.5vh, 74px);
+  left: clamp(28px, 4vw, 64px);
+}
+
+.veiled-hint {
+  bottom: clamp(45px, 6.5vh, 74px);
+  color: rgba(238, 234, 222, 0.45);
+  right: clamp(48px, 5.4vw, 88px);
+}
+
+.veiled-cursor {
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: rgba(238, 234, 222, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 50%;
+  color: #090907;
+  display: flex;
+  font-size: 23px;
+  height: 74px;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transform: translate(-50%, -50%) scale(0.66);
+  transition:
+    opacity 180ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  width: 74px;
+  z-index: 30;
+}
+
+.veiled-cursor[data-visible] {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.veiled-cursor[data-pressed] {
+  transform: translate(-50%, -50%) scale(0.82);
+}
+
+.veiled-touch-control {
+  display: none;
+}
+
+.veiled-gui {
+  backdrop-filter: blur(16px);
+  background: rgba(14, 14, 12, 0.74);
+  border: 1px solid rgba(238, 234, 222, 0.18);
+  cursor: default;
+  padding: 15px 16px 13px;
+  position: absolute;
+  right: clamp(48px, 5vw, 80px);
+  top: clamp(94px, 12vh, 126px);
+  width: min(292px, calc(100vw - 48px));
+  z-index: 12;
+}
+
+.veiled-gui__title,
+.veiled-gui__heading,
+.veiled-gui__footer {
+  align-items: center;
+  display: flex;
+}
+
+.veiled-gui__title {
+  border-bottom: 1px solid rgba(238, 234, 222, 0.14);
+  color: rgba(238, 234, 222, 0.82);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  margin-bottom: 13px;
+  padding-bottom: 11px;
+  text-transform: uppercase;
+}
+
+.veiled-gui__heading {
+  color: rgba(238, 234, 222, 0.62);
+  font-size: 9px;
+  justify-content: space-between;
+  letter-spacing: 0.18em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.veiled-gui__field {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.veiled-gui input[type="range"] {
+  accent-color: #eeeade;
+  cursor: ew-resize;
+  display: block;
+  height: 18px;
+  margin: 0;
+  width: 100%;
+}
+
+.veiled-gui__footer {
+  border-top: 1px solid rgba(238, 234, 222, 0.14);
+  color: rgba(238, 234, 222, 0.36);
+  font-size: 8px;
+  justify-content: space-between;
+  letter-spacing: 0.14em;
+  margin-top: 2px;
+  padding-top: 8px;
+  text-transform: uppercase;
+}
+
+.veiled-gui__actions {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.veiled-gui button {
+  background: transparent;
+  border: 0;
+  color: rgba(238, 234, 222, 0.7);
+  cursor: pointer;
+  font: inherit;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.veiled-gui button:hover,
+.veiled-gui button:focus-visible {
+  color: #fff;
+  outline: none;
+}
+
+.veiled-fallback-message {
+  display: none;
+}
+
+.veiled-stage[data-unsupported] {
+  cursor: default;
+
+  .veiled-fallback-message {
+    display: block;
+    font-size: 12px;
+    left: 50%;
+    position: absolute;
+    top: calc(50% + min(39vh, 410px));
+    transform: translateX(-50%);
+    z-index: 6;
+  }
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  .veiled-stage {
+    cursor: default;
+    min-height: 560px;
+  }
+
+  .veiled-frame {
+    height: min(64vh, 570px);
+    transform: translate(-50%, -52%);
+    width: min(47.85vh, 426.17px);
+  }
+
+  .veiled-title {
+    font-size: clamp(44px, 13vw, 72px);
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .veiled-title span:first-child {
+    right: calc(50% + min(23.93vh, 213.08px) - 24px);
+  }
+
+  .veiled-title span {
+    top: calc(50% - min(1.28vh, 11.4px));
+  }
+
+  .veiled-title span:first-child {
+    top: calc(50% - min(1.28vh, 11.4px) - 0.29em);
+  }
+
+  .veiled-title span:last-child {
+    left: calc(50% + min(23.93vh, 213.08px) - 24px);
+    top: calc(50% - min(1.28vh, 11.4px) + 0.29em);
+  }
+
+  .veiled-kicker,
+  .veiled-hint,
+  .veiled-cursor {
+    display: none;
+  }
+
+  .veiled-index {
+    right: 24px;
+    top: 112px;
+  }
+
+  .veiled-caption {
+    bottom: 42px;
+    left: 24px;
+  }
+
+  .veiled-gui {
+    bottom: 90px;
+    left: 20px;
+    right: 20px;
+    top: auto;
+    width: auto;
+  }
+
+  .veiled-touch-control {
+    align-items: center;
+    background: rgba(9, 9, 7, 0.48);
+    border: 1px solid rgba(238, 234, 222, 0.36);
+    border-radius: 50%;
+    bottom: 28px;
+    color: #eeeade;
+    display: flex;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    position: absolute;
+    width: 48px;
+    z-index: 8;
+  }
+
+  .veiled-touch-control--previous {
+    right: 84px;
+  }
+
+  .veiled-touch-control--next {
+    right: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veiled-title span,
+  .veiled-cursor {
+    transition-duration: 1ms;
+  }
+}

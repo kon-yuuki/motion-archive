@@ -1,0 +1,4 @@
+[    1680ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://motion-archive-mu.vercel.app/motion-archive/undefined:0
+[    1835ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://motion-archive-mu.vercel.app/favicon.ico:0
+[  115773ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://motion-archive-mu.vercel.app/motion-archive/undefined:0
+[  119007ms] [WARNING] The resource https://motion-archive-mu.vercel.app/assets/libre-franklin-latin-C8Es8peX.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://motion-archive-mu.vercel.app/motion-archive/:0

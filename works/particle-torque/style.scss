@@ -1,0 +1,50 @@
+@use "../soft-torque/style.scss";
+
+:root {
+  --shell-chip: rgba(236, 241, 242, 0.8);
+  --shell-panel: #e8eff0;
+  --shell-line: rgba(20, 39, 43, 0.18);
+  --shell-muted: rgba(20, 39, 43, 0.62);
+  --shell-text: #14272b;
+}
+
+body,
+.petal-stage {
+  background: #dfe8e9;
+  color: #14272b;
+}
+
+.petal-stage::before,
+.petal-stage::after,
+.petal-index__line {
+  background: rgba(20, 39, 43, 0.2);
+}
+
+.petal-canvas {
+  height: 154%;
+  left: -44%;
+  top: -27%;
+  width: 188%;
+}
+
+.petal-title {
+  font-style: normal;
+  letter-spacing: -0.06em;
+  mix-blend-mode: difference;
+}
+
+.petal-control,
+.petal-cursor,
+.petal-gui {
+  background: rgba(236, 241, 242, 0.86);
+  border-color: rgba(20, 39, 43, 0.18);
+  color: #14272b;
+}
+
+.petal-gui {
+  display: none;
+}
+
+.petal-gui input[type="range"] {
+  accent-color: #14272b;
+}

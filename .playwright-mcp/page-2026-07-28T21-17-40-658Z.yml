@@ -1,0 +1,120 @@
+- generic [active] [ref=e1]:
+  - link "本文へ移動" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Experiment navigation" [ref=e3]:
+    - link "Motion Archive" [ref=e4] [cursor=pointer]:
+      - /url: ../../motion-archive/
+    - generic [ref=e5]:
+      - link "Works" [ref=e6] [cursor=pointer]:
+        - /url: ../../motion-archive/
+      - link "Easings" [ref=e7] [cursor=pointer]:
+        - /url: ../../easings/
+  - main "WebGL画像スライダー。左右キーでも操作できます" [ref=e8]:
+    - paragraph [ref=e9]: Studies in light and form
+    - generic:
+      - generic: Veiled
+      - generic: Silence
+    - generic [ref=e12]:
+      - generic [ref=e13]: "01"
+      - generic [ref=e15]: "05"
+    - paragraph [ref=e16]: Soft study, I
+    - paragraph [ref=e17]: Move & click / Arrow keys
+    - generic [ref=e18]:
+      - generic [ref=e19]: Shader controls
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: Progress
+          - status [ref=e24]: 0%
+        - slider "画像切り替えの進捗" [ref=e25]: "0"
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]: Twist
+          - status [ref=e29]: "0.320"
+        - slider "Twist" [ref=e30]: "0.32"
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: Sine strength
+          - status [ref=e34]: "0.140"
+        - slider "Sine strength" [ref=e35]: "0.14"
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: Sine frequency
+          - status [ref=e39]: "51"
+        - slider "Sine frequency" [ref=e40]: "51"
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: Wave range
+          - status [ref=e44]: "0.20"
+        - slider "Wave range" [ref=e45]: "0.2"
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]: Slide scale
+          - status [ref=e49]: "2.00"
+        - slider "Slide scale" [ref=e50]: "2"
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - generic [ref=e53]: Wave outside scale
+          - status [ref=e54]: "3.00"
+        - slider "Wave outside scale" [ref=e55]: "3"
+      - generic [ref=e56]:
+        - generic [ref=e57]: Ready
+        - generic [ref=e58]:
+          - button "Reset" [ref=e59] [cursor=pointer]
+          - button "Copy values" [ref=e60] [cursor=pointer]
+    - generic: →
+    - paragraph [ref=e61]
+  - generic:
+    - dialog:
+      - button
+      - paragraph: WIP · 2026.07.28
+      - generic:
+        - heading [level=1]: Veiled Transition
+        - generic: WIP
+      - paragraph: 画面の左右で方向が変わるマウスストーカーを操作の入口にして、画像を縦へ引き延ばしながら次のテクスチャへつなぐWebGLスライダー。
+      - generic:
+        - link:
+          - /url: ../../categories/#technique-webgl
+          - text: WebGL
+        - generic: Shader
+        - generic: Cursor
+        - link:
+          - /url: ../../categories/#expression-image
+          - text: Image
+      - generic:
+        - generic:
+          - heading [level=2]: 2枚のテクスチャを受け渡す
+          - paragraph:
+            - text: 現在画像を
+            - code: uFrom
+            - text: 、次画像を
+            - code: uTo
+            - text: へ渡し、
+            - code: uProgress
+            - text: を0から1まで進める。画像ごとの実寸とCanvas比率を比較してUVをcover補正するため、縦横比の違う素材でも中央のフレームを埋めたまま切り替わる。
+        - generic:
+          - heading [level=2]: 中央から円形の波を広げる
+          - paragraph:
+            - text: 各ピクセルのUVと画像中央との距離を求め、
+            - code: uProgress
+            - text: から作った半径との差をリング状の強度へ変換する。フラグメント側ではリング付近だけUVを放射方向へ押し引きする。ねじれと正弦波は進捗80%までGUIの設定値を保ち、80〜100%で滑らかに0へ戻す。
+        - generic:
+          - heading [level=2]: 波頭のPlaneを持ち上げる
+          - paragraph: 画像Planeを横96、縦128セグメントへ分割し、頂点シェーダーでも切り替え境界と同じリングを計算する。リングの頂点だけをZ方向へ持ち上げ、波が通過した内側はZ=0へ戻す。透視投影にすることで、次画像が中央から現れ、持ち上がった紙の縁が外へ進みながら平面へ接地する奥行きを見せる。
+        - generic:
+          - heading [level=2]: 歪みの中で画像を切り替える
+          - paragraph:
+            - text: 波の半径より内側を次画像、外側を現在画像として
+            - code: smoothstep
+            - text: で混ぜる。切り替え境界とUVを歪ませるリングに同じ半径を使うため、画像が変わる場所と波打つ場所が離れない。完了時は両uniformを確定画像へ揃える。
+        - generic:
+          - heading [level=2]: ポインター位置を方向へ変換する
+          - paragraph:
+            - text: ステージ内のポインターX座標を中央と比較し、左側なら前、右側なら次へ進む。円形カーソルは表示座標を補間して追従させ、クリック方向と矢印表示を同じ値から決める。タッチ操作ではスワイプ距離を判定して同じ
+            - code: move()
+            - text: へ渡す。
+      - generic:
+        - link:
+          - /url: https://izanami-official.com/ja/philosophy/
+          - text: izanami-official.com/ja/philosophy
+          - generic: ↗
+  - button "作品情報を開く" [ref=e62] [cursor=pointer]

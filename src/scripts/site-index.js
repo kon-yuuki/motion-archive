@@ -1,4 +1,4 @@
-import { works } from "../data/works.js";
+import { visibleWorks } from "../data/works.js";
 import { uiGalleryItems } from "../data/ui-gallery.js";
 import { motionGuideItems } from "../data/motion-guide.js";
 
@@ -14,7 +14,7 @@ const visualGalleryLayouts = [
 ];
 
 const collections = {
-  motion: works,
+  motion: visibleWorks,
   ui: uiGalleryItems,
   guide: motionGuideItems,
   visual: visualGalleryLayouts

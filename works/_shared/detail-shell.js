@@ -43,6 +43,8 @@ if (referenceLink) {
 }
 
 const detailEasings = {
+  "vortex-trail": "ease-out-expo",
+  "webgl-plane-reveal": "ease-out-expo",
   "cursor-pixel-field": "ease-out-expo",
   "rotating-scroll-gallery": "ease-out-cubic",
   "cylindrical-image-flow": "ease-out-cubic",

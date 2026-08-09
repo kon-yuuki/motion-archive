@@ -12,6 +12,12 @@ export const uiGalleryItems = [
     count: 1
   },
   {
+    slug: "mega-menu",
+    title: "Mega Menu",
+    date: "2026.08.06",
+    count: 2
+  },
+  {
     slug: "tooltip-behavior",
     title: "Tooltip Behavior",
     date: "2026.06.12",

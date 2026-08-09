@@ -9,6 +9,68 @@ export const works = [
     expressions: ["Scroll", "Transition"]
   },
   {
+    slug: "particle-torque",
+    title: "Particle Torque",
+    thumbnail: "/thumbnails/particle-torque.jpg",
+    date: "2026.08.04",
+    description: "画像を細かな粒子へほどき、縦のY軸を中心に手前と奥へ回り込む渦を通して、次のイメージへ再構成するWebGLスライダー。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Image", "Particle", "Transition"]
+  },
+  {
+    slug: "vortex-trail",
+    title: "Vortex Trail",
+    date: "2026.08.04",
+    description: "カーソルの軌跡に小さな渦を連ね、背景画像のUVを円周方向へ捩りながらじわっと元へ戻すWebGLインタラクション。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Background", "Image", "Cursor"],
+    status: "WIP"
+  },
+  {
+    slug: "webgl-plane-reveal",
+    title: "WebGL Plane Reveal",
+    thumbnail: "/thumbnails/webgl-plane-reveal.jpg",
+    date: "2026.08.02",
+    description: "DOM画像と同期したWebGL planeの水平vertex行が、Y方向へstaggerしながらeaseOutExpoでZ=0へ収束する画像出現アニメーション。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Image", "Reveal"]
+  },
+  {
+    slug: "chromatic-current",
+    title: "Chromatic Current",
+    date: "2026.08.01",
+    description: "カーソルの速度を流れの力と明るさへ変換し、背景色から生まれた絵の具が水の中で滲むように広がるWebGL流体アニメーション実験。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Background", "Text"],
+    status: "pending",
+    reference: {
+      label: "Flowty",
+      url: "https://flowty.co/"
+    }
+  },
+  {
+    slug: "soft-torque",
+    title: "Soft Torque",
+    thumbnail: "/thumbnails/soft-torque.jpg",
+    date: "2026.07.29",
+    description: "画像planeの上端から順にY軸回転をずらし、布のような捩れを作りながら前後のイメージへ切り替えるWebGLスライダー。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Image", "Transition"]
+  },
+  {
+    slug: "webgl-image-slider",
+    title: "Radial Veil Transition",
+    thumbnail: "/thumbnails/webgl-image-slider.jpg",
+    date: "2026.07.28",
+    description: "画像中央から広がる波に放射方向の揺れと円周方向のねじれを加え、次のテクスチャへつなぐWebGLスライダー。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Cursor", "Image", "Transition"],
+    reference: {
+      label: "IZANAMI Philosophy",
+      url: "https://izanami-official.com/ja/philosophy/"
+    }
+  },
+  {
     slug: "hover-video-cards",
     title: "Hover Video Cards",
     thumbnail: "/thumbnails/hover-video-cards.jpg",
@@ -196,6 +258,8 @@ export const works = [
     }
   }
 ];
+
+export const visibleWorks = works.filter((work) => work.status !== "pending");
 
 export const categories = {
   techniques: ["CSS", "JavaScript", "SVG", "Canvas", "WebGL"],

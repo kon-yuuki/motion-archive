@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="明るい色と大きなタイポグラフィで構成する、WebGL画像スライダーのレイアウト実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Soft Torque / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main
+      class="experiment-stage petal-stage"
+      data-stage
+      tabindex="0"
+      aria-label="画像スライダー。画面の左右をクリックするか、左右キーで操作できます"
+    >
+      <p class="petal-kicker">A brighter study in motion</p>
+
+      <div class="petal-title" aria-hidden="true">
+        <span data-title-primary>Soft</span>
+        <span data-title-secondary>Torque</span>
+      </div>
+
+      <div class="petal-frame" data-frame>
+        <canvas class="petal-canvas" data-canvas aria-hidden="true"></canvas>
+        <img
+          class="petal-fallback"
+          data-fallback
+          src="../../src/assets/images/sunlit-floral-portraits/sunlit-floral-portrait-01.webp"
+          alt=""
+        />
+      </div>
+
+      <div class="petal-index">
+        <span data-current>01</span>
+        <span class="petal-index__line" aria-hidden="true"></span>
+        <span>05</span>
+      </div>
+
+      <p class="petal-caption" data-caption>Motion study, I</p>
+      <p class="petal-note">Click / Arrow keys</p>
+
+      <button class="petal-control petal-control--previous" data-prev type="button" aria-label="前の画像へ">←</button>
+      <button class="petal-control petal-control--next" data-next type="button" aria-label="次の画像へ">→</button>
+      <div class="petal-cursor" data-cursor aria-hidden="true">
+        <span data-cursor-arrow>→</span>
+      </div>
+      <p class="sr-only" data-live aria-live="polite">1枚目、Soft Torque</p>
+
+      <div class="petal-gui" data-gui>
+        <label class="petal-gui__field" for="transition-progress">
+          <span class="petal-gui__header">
+            <span>Transition progress</span>
+            <output data-progress-output for="transition-progress">0%</output>
+          </span>
+          <input
+            id="transition-progress"
+            data-progress
+            type="range"
+            min="0"
+            max="1"
+            step="0.001"
+            value="0"
+            aria-label="画像切り替えの進捗"
+          />
+        </label>
+        <label class="petal-gui__field" for="transition-duration">
+          <span class="petal-gui__header">
+            <span>Duration</span>
+            <output data-duration-output for="transition-duration">1.2s</output>
+          </span>
+          <input
+            id="transition-duration"
+            data-duration
+            type="range"
+            min="500"
+            max="6000"
+            step="100"
+            value="1200"
+            aria-label="画像切り替えの時間"
+          />
+        </label>
+        <label class="petal-gui__field" for="axis-tilt">
+          <span class="petal-gui__header">
+            <span>Axis tilt</span>
+            <output data-axis-tilt-output for="axis-tilt">25°</output>
+          </span>
+          <input
+            id="axis-tilt"
+            data-axis-tilt
+            type="range"
+            min="-30"
+            max="30"
+            step="1"
+            value="25"
+            aria-label="回転軸の傾き"
+          />
+        </label>
+        <button data-progress-reset type="button">Reset</button>
+      </div>
+    </main>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">2026.07.29</p>
+      <div class="experiment-meta__title">
+        <h1>Soft Torque</h1>
+      </div>
+      <p class="experiment-meta__description">
+        画像planeの頂点を斜めの回転軸へ投影し、位置ごとに開始時間をずらして180度回転させるWebGLスライダー。未回転と回転中の境界をガウス状に補間し、布を捩るような連続した変形で次のテクスチャへつなぐ。
+      </p>
+      <div class="experiment-tags"><span>WebGL</span><span>Shader</span><span>Image</span><span>Transition</span></div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tech-note-title">
+      <div class="tech-note__panel">
+        <p class="tech-note__eyebrow">技術メモ</p>
+        <h2 id="tech-note-title">Soft Torque</h2>
+        <button class="tech-note__close" data-tech-note-close type="button" aria-label="Close technical memo">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="tech-note__body">
+          <section class="tech-note__section">
+            <h3>回転軸へ投影して開始位置をずらす</h3>
+            <p>
+              <code>uAxisTilt</code>から画面上の回転軸ベクトルを作り、各頂点のUV座標をその軸へ投影する。投影位置を<code>delay</code>へ変換することで、軸の傾きに沿った端から順に回転が始まる。GUIでは傾きを-30〜30度で変更でき、回転軸と開始ラインの両方へ同じ値を渡している。
+            </p>
+          </section>
+          <section class="tech-note__section">
+            <h3>ガウス補間で変形の境界をぼかす</h3>
+            <p>
+              全体の<code>uProgress</code>から頂点ごとの遅延を引き、ローカル進捗へ変換する。未回転と回転中を<code>clamp</code>だけで分けると境界が直線的に折れるため、誤差関数の近似から作った<code>gaussianRamp()</code>を通し、変形量が帯状に滑らかにつながるようにしている。
+            </p>
+          </section>
+          <section class="tech-note__section">
+            <h3>頂点ごとに行きすぎて戻る</h3>
+            <p>
+              ガウス補間後のローカル進捗へ<code>easeOutExpoBack()</code>を適用し、それぞれの頂点を180度回転させる。オーバーシュートはplane全体へ後付けせず、各頂点の回転カーブへ含めるため、上側から順に回転の勢いを残したまま行きすぎて定位置へ戻る。
+            </p>
+          </section>
+          <section class="tech-note__section">
+            <h3>斜め軸のまま終了角度を揃える</h3>
+            <p>
+              頂点はRodriguesの回転式で固定した斜め軸の周囲を回す。斜め軸で180度回すと矩形の角度が残るため、同じ頂点進捗から軸角度の2倍を面内回転として補正する。軸自体を途中で垂直へ戻さず、回転中の斜め方向を保ったまま完了時だけ元の角度へ揃える。
+            </p>
+          </section>
+          <section class="tech-note__section">
+            <h3>真横を向く位置で画像を切り替える</h3>
+            <p>
+              現在画像を<code>uFrom</code>、次画像を<code>uTo</code>へ渡し、各頂点の回転が90度を越える付近で2枚を切り替える。裏面側ではX方向のUVを反転し、180度回転後に画像が左右反転しないよう補正する。<code>coverUv()</code>は素材の実寸比率からフレームを埋めるUV範囲を求める。
+            </p>
+          </section>
+          <section class="tech-note__section">
+            <h3>時間と確認用プログレスを分ける</h3>
+            <p>
+              通常の切り替え時間は1.5秒で、経過時間を<code>uProgress</code>へ渡す。GUIのProgressはアニメーションを止めて同じuniformを直接変更するため、頂点の開始位置や画像が切り替わる地点を静止状態で確認できる。操作中の追加入力は1件だけ保持し、現在の遷移完了後に実行する。
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

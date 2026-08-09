@@ -16,7 +16,7 @@
   height: auto;
   min-height: 100svh;
   overflow: visible;
-  width: 100vw;
+  width: 100%;
 }
 
 .rgb-stage::before {
@@ -48,11 +48,13 @@
 
 .rgb-webgl-canvas {
   display: block;
+  height: 100%;
   inset: 0;
   opacity: 0;
   pointer-events: none;
   position: absolute;
   transition: opacity 220ms ease;
+  width: 100%;
   z-index: 1;
 }
 

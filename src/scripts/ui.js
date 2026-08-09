@@ -47,13 +47,17 @@ function workDates(work) {
 }
 
 export function workRow(work, prefix, index = 0) {
+  const thumbnailMarkup = work.thumbnail
+    ? `<img src="${escapeAttr(work.thumbnail)}" width="960" height="600" loading="lazy" alt="" />`
+    : "";
+
   return `
     <a class="work-row" href="${prefix}${work.slug}/" data-description="${escapeAttr(work.description)}" aria-label="${escapeAttr(`${work.title}を開く`)}">
       <div class="work-row__meta">
         <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
       </div>
       <span class="work-row__media">
-        <img src="${work.thumbnail}" width="960" height="600" loading="lazy" alt="" />
+        ${thumbnailMarkup}
       </span>
       <div class="work-row__content">
         <div>

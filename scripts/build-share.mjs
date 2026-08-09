@@ -48,6 +48,13 @@ const uiPages = [
   },
   {
     type: "ui",
+    sourcePath: "ui-gallery/mega-menu/index.html",
+    outputPath: "ui-gallery/mega-menu/index.html",
+    requestKey: "ui-gallery/mega-menu",
+    logPath: "/ui-gallery/mega-menu/"
+  },
+  {
+    type: "ui",
     sourcePath: "ui-gallery/tooltip-behavior/index.html",
     outputPath: "ui-gallery/tooltip-behavior/index.html",
     requestKey: "ui-gallery/tooltip-behavior",
