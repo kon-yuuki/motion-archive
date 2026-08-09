@@ -46,6 +46,7 @@ export default defineConfig({
         "ui-gallery-form": resolve(__dirname, "ui-gallery/form/index.html"),
         "ui-gallery-tooltip-behavior": resolve(__dirname, "ui-gallery/tooltip-behavior/index.html"),
         "ui-gallery-typography": resolve(__dirname, "ui-gallery/typography/index.html"),
+        "section-layer-transition": resolve(__dirname, "works/section-layer-transition/index.html"),
         "hover-video-cards": resolve(__dirname, "works/hover-video-cards/index.html"),
         "spiral-infinite-gallery": resolve(__dirname, "works/spiral-infinite-gallery/index.html"),
         "rotating-scroll-gallery": resolve(__dirname, "works/rotating-scroll-gallery/index.html"),

@@ -1,0 +1,244 @@
+:root {
+  --shell-text: #f7f4ed;
+  --shell-muted: rgba(247, 244, 237, 0.72);
+  --shell-chip: rgba(17, 18, 18, 0.34);
+  --shell-line: rgba(255, 255, 255, 0.18);
+  --shell-panel: rgba(16, 17, 17, 0.94);
+}
+
+html,
+body {
+  background: #171813;
+}
+
+.transition-stage {
+  --scene-gutter: clamp(1.5rem, 4vw, 4rem);
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+.transition-story {
+  height: auto;
+  position: relative;
+}
+
+.transition-viewport {
+  background: #d8d4c9;
+  height: auto;
+  min-height: 600px;
+  overflow: visible;
+  position: relative;
+}
+
+.chapter {
+  height: 120svh;
+  position: relative;
+}
+
+.chapter--last {
+  height: 120svh;
+}
+
+.scene {
+  color: #20211f;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  visibility: hidden;
+}
+
+.scene--one {
+  background: #ebeae4;
+}
+
+.scene--two {
+  background: #fff;
+}
+
+.scene--three {
+  background: #919598;
+}
+
+.scene.is-transition-preview {
+  inset: 0;
+  position: fixed;
+  transform: translate3d(0, var(--preview-y, 100%), 0);
+  visibility: visible;
+  z-index: 7;
+}
+
+.scene.is-current-scene {
+  inset: 0;
+  position: fixed;
+  visibility: visible;
+  z-index: 0;
+}
+
+.transition-bands {
+  display: grid;
+  grid-template-rows: repeat(5, 20%);
+  height: 100vh;
+  pointer-events: none;
+  inset: 0;
+  position: fixed;
+  top: 0;
+  visibility: hidden;
+  z-index: 6;
+}
+
+.transition-bands i {
+  background: var(--transition-color);
+  display: block;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+.scene__topline {
+  display: flex;
+  font-size: 10px;
+  justify-content: space-between;
+  left: var(--scene-gutter);
+  letter-spacing: 0.18em;
+  opacity: 0.72;
+  position: absolute;
+  right: var(--scene-gutter);
+  text-transform: uppercase;
+  top: clamp(6.3rem, 14vh, 8.5rem);
+  z-index: 2;
+}
+
+.scene__copy {
+  bottom: clamp(5rem, 10vh, 7.5rem);
+  left: clamp(1.5rem, 7vw, 7rem);
+  max-width: 36rem;
+  position: absolute;
+  z-index: 3;
+}
+
+.scene__copy--right {
+  left: auto;
+  right: clamp(1.5rem, 7vw, 7rem);
+}
+
+.scene__eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  margin: 0 0 1.2rem;
+  text-transform: uppercase;
+}
+
+.scene h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(4.5rem, 8.5vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -0.075em;
+  line-height: 0.72;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.scene__lead {
+  font-size: clamp(12px, 1.15vw, 15px);
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+  margin: 2rem 0 0;
+  max-width: 27rem;
+}
+
+.scene__media {
+  margin: 0;
+  position: absolute;
+  right: var(--scene-gutter);
+  top: clamp(8.5rem, 17vh, 11rem);
+  width: min(48vw, 43rem);
+  z-index: 2;
+}
+
+.scene__media img {
+  aspect-ratio: 1;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.scene__media figcaption {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  margin-top: 0.75rem;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.scene--two .scene__media {
+  left: var(--scene-gutter);
+  right: auto;
+}
+
+.scene--three .scene__media {
+  right: var(--scene-gutter);
+  top: clamp(7.5rem, 14vh, 9rem);
+}
+
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (max-width: 720px) {
+  .transition-stage {
+    --scene-gutter: 1.4rem;
+  }
+
+  .scene__topline span:last-child {
+    display: none;
+  }
+
+  .scene__copy,
+  .scene__copy--right {
+    bottom: 4.5rem;
+    left: 1.4rem;
+    right: 1.4rem;
+  }
+
+  .scene h2 {
+    font-size: clamp(4.6rem, 24vw, 7.5rem);
+  }
+
+  .scene__lead {
+    max-width: 19rem;
+  }
+
+  .scene__media,
+  .scene--two .scene__media,
+  .scene--three .scene__media {
+    left: var(--scene-gutter);
+    right: var(--scene-gutter);
+    top: 8.5rem;
+    width: auto;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter {
+    height: 120svh;
+  }
+
+  .chapter--last {
+    height: 120svh;
+  }
+
+  .transition-bands i {
+    will-change: auto;
+  }
+}

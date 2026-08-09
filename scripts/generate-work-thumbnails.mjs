@@ -8,6 +8,7 @@ const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
+  { slug: "section-layer-transition", wait: 500 },
   { slug: "hover-video-cards", wait: 500 },
   { slug: "rainy-neon-cylinder", wait: 1200 },
   { slug: "spiral-infinite-gallery", wait: 900 },

@@ -1,5 +1,14 @@
 export const works = [
   {
+    slug: "section-layer-transition",
+    title: "Layered Section Transition",
+    thumbnail: "/thumbnails/section-layer-transition.jpg",
+    date: "2026.08.10",
+    description: "次の背景を5本の横帯に分割し、下から順にscaleYで立ち上げて画面を覆うセクション切り替え実験。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Transition"]
+  },
+  {
     slug: "hover-video-cards",
     title: "Hover Video Cards",
     thumbnail: "/thumbnails/hover-video-cards.jpg",
