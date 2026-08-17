@@ -1,0 +1,13 @@
+@use "../../src/styles/global";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.webgl {
+  height: 100%;
+  width: 100%;
+  display: block;
+}

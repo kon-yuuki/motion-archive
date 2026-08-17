@@ -11,16 +11,20 @@ Deploy: `npx vercel --prod --yes`（Vercel が `npm run build` を実行、`dist
 
 | パス | ファイル | 説明 |
 |---|---|---|
-| `/` | `index.html` | サイトトップ（Motion Archive / UI Gallery / Motion Guide の選択） |
+| `/` | `index.html` | サイトトップ（Motion Archive / UI Gallery の選択） |
 | `/motion-archive/` | `motion-archive/index.html` | Motion Archive トップ・全作品一覧 |
 | `/categories/` | `categories/index.html` | 技術別・表現別カテゴリ |
 | `/works/<slug>/` | `works/<slug>/index.html` | 個別実験ページ（フルスクリーン） |
 | `/ui-gallery/` | `ui-gallery/index.html` | UI パーツギャラリー目次 |
 | `/ui-gallery/<component>/` | `ui-gallery/<component>/index.html` | UI コンポーネントギャラリー |
-| `/motion-guide/` | `motion-guide/index.html` | アニメーションの共通言語を作るためのガイド目次 |
-| `/motion-guide/<topic>/` | `motion-guide/<topic>/index.html` | デザイナー向けのアニメーション仕組み解説 |
+| `/motion-guide/` | `motion-guide/index.html` | **非公開・WIP**。作りかけのガイド目次（本番ビルド対象外） |
+| `/motion-guide/<topic>/` | `motion-guide/<topic>/index.html` | **非公開・WIP**。作りかけの仕組み解説（本番ビルド対象外） |
 
 すべてのページは `vite.config.js` の `build.rollupOptions.input` に登録する必要がある。新ページを追加したら必ず登録すること。
+
+Motion Guide は内容と使い勝手の見直し中のため、トップページの導線と `build.rollupOptions.input` から意図的に外している。公開可能と判断できるまでは再登録しないこと。
+
+Easingsは非公開とし、`easings/` 以下のソースだけを内部リファレンスとして残す。内容を見直すまでは、`vite.config.js`、`scripts/build-share.mjs`、ヘッダー、一覧、詳細ページへ再登録しないこと。
 
 ---
 

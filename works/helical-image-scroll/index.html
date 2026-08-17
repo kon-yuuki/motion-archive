@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="一列の画像planeがスクロールに合わせて螺旋軌道を上昇するWebGLギャラリー実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Helical Image Scroll / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main class="helix-page" data-helix-page>
+      <section class="helix-sticky" data-helix-stage>
+        <div class="helix-backdrop" aria-hidden="true">
+          <p>WebGL image sequence / 01</p>
+          <h1>Curved<br /><em>in motion</em></h1>
+          <span>Scroll study</span>
+        </div>
+
+        <canvas class="helix-canvas" data-helix-canvas aria-hidden="true"></canvas>
+
+        <div class="helix-readout" aria-hidden="true">
+          <span data-helix-index>01 / 10</span>
+          <i></i>
+          <span data-helix-progress>000</span>
+        </div>
+        <p class="helix-instruction">Scroll to lift the sequence</p>
+        <p class="helix-status" data-helix-status>Loading image planes</p>
+      </section>
+    </main>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">2026.08.11</p>
+      <div class="experiment-meta__title"><h1>Helical Image Scroll</h1></div>
+      <p class="experiment-meta__description">ホイールやドラッグの移動量で、画像planeの列を螺旋軌道に沿って送るWebGLギャラリー。入力が止まると最寄りの画像を正面へ揃え、カレント画像をクリックすると、曲面を平面へ戻しながら画面中央へ拡大する。</p>
+      <div class="experiment-tags"><span>WebGL</span><span>JavaScript</span><span>Shader</span><span>Scroll</span><span>Image</span></div>
+      <div class="experiment-actions">
+        <a class="experiment-reference-link" href="https://trionn.com/" target="_blank" rel="noreferrer" aria-label="参照サイトを見る（新しいタブで開きます）">参照サイトを見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true">
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>位相から作る螺旋</h3>
+          <p>各planeの位相を <code>helixPosition()</code> へ渡し、XとZを正弦・余弦、Yを位相とピッチの積から求める。同じ位相をY軸回転にも使い、位置だけでなく画像面の法線も螺旋の半径方向へ揃えている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>曲面から平面への補間</h3>
+          <p>頂点シェーダーではplaneのX座標を円弧へ変換し、螺旋上では画像面を横方向に湾曲させる。クリック時は <code>uExpand</code> で円弧座標と元の平面座標を補間し、移動・拡大・回転の補間と同時に曲率をゼロへ戻す。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>入力とスナップ</h3>
+          <p>ページのスクロール位置は使わず、ホイール、タッチ、縦ドラッグの移動量を <code>targetOffset</code> へ加える。操作停止後は位相を <code>PHASE_STEP</code> 単位へ丸め、画像の中心が正面に来る位置まで補間する。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>途切れない画像列</h3>
+          <p>同じ画像セットを複数周期ぶん用意し、各planeの位相を <code>LOOP_SPAN</code> 内へ折り返す。カメラ外へ抜けたplaneを反対側の位相へ戻すため、実際のスクロール領域を伸ばさずに順番と間隔を保ったまま循環できる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>逆方向へ流れるライン</h3>
+          <p>画像の上辺と下辺の外側に、螺旋の一部分だけを切り出した2本の <code>Line</code> を置く。画像列とは逆符号のoffsetから線分の中心位相を更新するため、画像が上へ進む時は有限長のラインが上から下へ通過する。各頂点は画像と同じ <code>helixPosition()</code> から作り、深度バッファにも書き込むことで、画像とラインの前後関係を同じZ座標で判定している。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>速度に反応するグロー</h3>
+          <p>フレーム間の <code>currentOffset</code> の差から移動速度を求め、白いコア線の周囲に重ねた3px・7px・13pxの加算合成ラインへ透明度として渡す。外側のラインほど強度を下げて光を段階的に減衰させ、停止時はグローだけを消して18%の細いコア線を残す。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>カレントの判定</h3>
+          <p>毎フレーム、各planeの位相と正面位相の差を比較し、最も近い一枚をカレントにする。カレント以外はシェーダーの <code>uFocus</code> を下げて彩度と明度を抑え、scaleも少し小さくする。どちらの値もフレーム間で補間し、切り替えを連続させている。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>クリック拡大と反転</h3>
+          <p>Raycasterでカレントplaneへのクリックを判定し、そのplaneを一時的にscene直下へ付け替える。開始時のposition・quaternion・scaleから、画像比率を保った90vw相当の中央位置まで <code>easeOutQuint</code> で補間する。途中で方向を反転した場合は現在のprogressを新しい始点にし、位置を飛ばさず拡大・縮小を再開する。</p>
+        </section>
+      </div>
+    </section>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

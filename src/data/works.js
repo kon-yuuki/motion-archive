@@ -1,5 +1,40 @@
 export const works = [
   {
+    slug: "scale-through-scroll",
+    title: "Scale Through Scroll",
+    thumbnail: "/thumbnails/scale-through-scroll.jpg",
+    date: "2026.08.15",
+    description: "ランダムな位置に現れる画像が、スクロールでscale 0から1へ鮮明になり、scale 3まで鮮明なまま迫った後、scale 4までの間にぼけて消える無限ループ。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Scroll", "Image", "Loop"]
+  },
+  {
+    slug: "helical-image-scroll",
+    title: "Helical Image Scroll",
+    thumbnail: "/thumbnails/helical-image-scroll.jpg",
+    date: "2026.08.11",
+    description: "一列に連ねた画像planeが、スクロールに合わせて下奥から手前を通り、螺旋軌道を上へ抜けていくWebGLギャラリー。",
+    techniques: ["WebGL", "JavaScript", "Shader"],
+    expressions: ["Scroll", "Image"],
+    reference: {
+      label: "TRIONN",
+      url: "https://trionn.com/"
+    }
+  },
+  {
+    slug: "random-image-stream",
+    title: "Random Image Stream",
+    thumbnail: "/thumbnails/random-image-stream.jpg",
+    date: "2026.08.11",
+    description: "10枚の画像を再利用しながら右から左へ流し、スクロール入力と奥行きごとの速度差を加えた無限イメージストリーム。",
+    techniques: ["JavaScript", "CSS"],
+    expressions: ["Image", "Loop"],
+    reference: {
+      label: "Made With GSAP",
+      url: "https://madewithgsap.com/"
+    }
+  },
+  {
     slug: "section-layer-transition",
     title: "Layered Section Transition",
     thumbnail: "/thumbnails/section-layer-transition.jpg",
@@ -34,19 +69,6 @@ export const works = [
     description: "DOM画像と同期したWebGL planeの水平vertex行が、Y方向へstaggerしながらeaseOutExpoでZ=0へ収束する画像出現アニメーション。",
     techniques: ["WebGL", "JavaScript", "Shader"],
     expressions: ["Image", "Reveal"]
-  },
-  {
-    slug: "chromatic-current",
-    title: "Chromatic Current",
-    date: "2026.08.01",
-    description: "カーソルの速度を流れの力と明るさへ変換し、背景色から生まれた絵の具が水の中で滲むように広がるWebGL流体アニメーション実験。",
-    techniques: ["WebGL", "JavaScript", "Shader"],
-    expressions: ["Background", "Text"],
-    status: "pending",
-    reference: {
-      label: "Flowty",
-      url: "https://flowty.co/"
-    }
   },
   {
     slug: "soft-torque",
@@ -104,6 +126,26 @@ export const works = [
       label: "Pacôme Pertant Portfolio",
       url: "https://pacomepertant.com/"
     }
+  },
+  {
+    slug: "free-drag-gallery",
+    title: "Free Drag Gallery",
+    thumbnail: "/thumbnails/free-drag-gallery.jpg",
+    date: "2026.07.04",
+    description: "球面に沿って並ぶ画像グリッドを上下左右や斜めへ自由に動かし、どの方向へ進んでも途切れず探索できるWebGLギャラリー。",
+    techniques: ["WebGL", "JavaScript"],
+    expressions: ["Image", "Loop"],
+    status: "WIP"
+  },
+  {
+    slug: "x-scroll-gallery",
+    title: "X Scroll Gallery",
+    thumbnail: "/thumbnails/x-scroll-gallery.jpg",
+    date: "2026.07.03",
+    description: "横方向のドラッグやホイール操作に画像列が余韻をもって追従し、端まで進んでも途切れず巡り続けるWebGLギャラリー。",
+    techniques: ["WebGL", "JavaScript"],
+    expressions: ["Image", "Loop"],
+    status: "WIP"
   },
   {
     slug: "rotating-scroll-gallery",

@@ -1,0 +1,34 @@
+{
+  "redirects": [
+    {
+      "source": "/visual-gallery",
+      "destination": "/works/x-scroll-gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-gallery/",
+      "destination": "/works/x-scroll-gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-gallery/x-scroll",
+      "destination": "/works/x-scroll-gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-gallery/x-scroll/",
+      "destination": "/works/x-scroll-gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-gallery/free-drag",
+      "destination": "/works/free-drag-gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/visual-gallery/free-drag/",
+      "destination": "/works/free-drag-gallery/",
+      "permanent": true
+    }
+  ]
+}

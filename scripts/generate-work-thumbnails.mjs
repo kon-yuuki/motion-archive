@@ -8,6 +8,9 @@ const outputDirectory = resolve(root, "public", "thumbnails");
 const baseUrl = process.env.THUMBNAIL_BASE_URL || "http://127.0.0.1:5173";
 const requestedSlug = process.env.THUMBNAIL_SLUG;
 const works = [
+  { slug: "scale-through-scroll", wheel: 360, pointer: true, pointerDown: false, pointerSettle: 180 },
+  { slug: "helical-image-scroll", scroll: 1050, wait: 1000 },
+  { slug: "random-image-stream", wait: 800 },
   { slug: "section-layer-transition", wait: 500 },
   { slug: "particle-torque", progress: 0.46, wait: 300 },
   { slug: "webgl-plane-reveal", scroll: 550, wait: 2300 },
@@ -15,6 +18,8 @@ const works = [
   { slug: "hover-video-cards", wait: 500 },
   { slug: "rainy-neon-cylinder", wait: 1200 },
   { slug: "spiral-infinite-gallery", wait: 900 },
+  { slug: "free-drag-gallery", pointer: true, wait: 500 },
+  { slug: "x-scroll-gallery", pointer: true, wait: 500 },
   { slug: "rotating-scroll-gallery", scroll: 2050, wait: 900 },
   { slug: "rgb-cursor-stalker", scroll: 576, wait: 800 },
   { slug: "cursor-pixel-field", pointer: true, pointerDown: false, pointerSettle: 220 },
@@ -118,6 +123,11 @@ for (const work of selectedWorks) {
 
   if (work.scroll) {
     await page.evaluate((top) => window.scrollTo({ top, behavior: "instant" }), work.scroll);
+    await page.waitForTimeout(700);
+  }
+  if (work.wheel) {
+    await page.mouse.move(480, 300);
+    await page.mouse.wheel(0, work.wheel);
     await page.waitForTimeout(700);
   }
   if (work.pointer) {

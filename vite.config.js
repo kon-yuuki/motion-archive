@@ -5,9 +5,45 @@ import { injectSkipLink, injectSocialMeta } from "./scripts/html-meta.mjs";
 
 const sharedHead = readFileSync(new URL("./src/shared/head.html", import.meta.url), "utf8");
 
+const legacyVisualRedirects = new Map([
+  ["/visual-gallery", "/works/x-scroll-gallery/"],
+  ["/visual-gallery/", "/works/x-scroll-gallery/"],
+  ["/visual-gallery/x-scroll", "/works/x-scroll-gallery/"],
+  ["/visual-gallery/x-scroll/", "/works/x-scroll-gallery/"],
+  ["/visual-gallery/free-drag", "/works/free-drag-gallery/"],
+  ["/visual-gallery/free-drag/", "/works/free-drag-gallery/"]
+]);
+
+function redirectLegacyVisualGallery(server) {
+  server.middlewares.use((request, response, next) => {
+    const pathname = new URL(request.url || "/", "http://localhost").pathname;
+    const destination = legacyVisualRedirects.get(pathname);
+    if (!destination) {
+      next();
+      return;
+    }
+
+    response.statusCode = 308;
+    response.setHeader("Location", destination);
+    response.end();
+  });
+}
+
 export default defineConfig({
   base: "./",
   plugins: [
+    {
+      name: "remove-local-only-links",
+      apply: "build",
+      transformIndexHtml(html) {
+        return html.replace(/\s*<a\b[^>]*\bdata-local-only\b[^>]*>[\s\S]*?<\/a>/g, "");
+      }
+    },
+    {
+      name: "legacy-visual-gallery-redirects",
+      configureServer: redirectLegacyVisualGallery,
+      configurePreviewServer: redirectLegacyVisualGallery
+    },
     {
       name: "shared-head",
       transformIndexHtml: {
@@ -26,31 +62,23 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: resolve(__dirname, "index.html"),
-        easings: resolve(__dirname, "easings/index.html"),
-        practice: resolve(__dirname, "practice/index.html"),
-        "motion-guide": resolve(__dirname, "motion-guide/index.html"),
-        "motion-guide-duration": resolve(__dirname, "motion-guide/duration/index.html"),
-        "motion-guide-easing": resolve(__dirname, "motion-guide/easing/index.html"),
-        "motion-guide-transform-opacity": resolve(__dirname, "motion-guide/transform-opacity/index.html"),
-        "motion-guide-state-change": resolve(__dirname, "motion-guide/state-change/index.html"),
-        "motion-guide-scroll-linked": resolve(__dirname, "motion-guide/scroll-linked/index.html"),
-        "motion-guide-trigger-timing": resolve(__dirname, "motion-guide/trigger-timing/index.html"),
-        "motion-guide-parallax": resolve(__dirname, "motion-guide/parallax/index.html"),
         "motion-archive": resolve(__dirname, "motion-archive/index.html"),
         categories: resolve(__dirname, "categories/index.html"),
-        "visual-gallery": resolve(__dirname, "visual-gallery/index.html"),
-        "visual-gallery-free-drag": resolve(__dirname, "visual-gallery/free-drag/index.html"),
-        "visual-gallery-x-scroll": resolve(__dirname, "visual-gallery/x-scroll/index.html"),
         "ui-gallery": resolve(__dirname, "ui-gallery/index.html"),
         "ui-gallery-buttons": resolve(__dirname, "ui-gallery/buttons/index.html"),
         "ui-gallery-form": resolve(__dirname, "ui-gallery/form/index.html"),
         "ui-gallery-mega-menu": resolve(__dirname, "ui-gallery/mega-menu/index.html"),
         "ui-gallery-tooltip-behavior": resolve(__dirname, "ui-gallery/tooltip-behavior/index.html"),
         "ui-gallery-typography": resolve(__dirname, "ui-gallery/typography/index.html"),
+        "scale-through-scroll": resolve(__dirname, "works/scale-through-scroll/index.html"),
+        "x-scroll-gallery": resolve(__dirname, "works/x-scroll-gallery/index.html"),
+        "free-drag-gallery": resolve(__dirname, "works/free-drag-gallery/index.html"),
+        "helical-image-scroll": resolve(__dirname, "works/helical-image-scroll/index.html"),
+        "random-image-stream": resolve(__dirname, "works/random-image-stream/index.html"),
+        "random-image-stream-ver2": resolve(__dirname, "works/random-image-stream-ver2/index.html"),
         "section-layer-transition": resolve(__dirname, "works/section-layer-transition/index.html"),
         "vortex-trail": resolve(__dirname, "works/vortex-trail/index.html"),
         "webgl-plane-reveal": resolve(__dirname, "works/webgl-plane-reveal/index.html"),
-        "chromatic-current": resolve(__dirname, "works/chromatic-current/index.html"),
         "soft-torque": resolve(__dirname, "works/soft-torque/index.html"),
         "particle-torque": resolve(__dirname, "works/particle-torque/index.html"),
         "webgl-image-slider": resolve(__dirname, "works/webgl-image-slider/index.html"),

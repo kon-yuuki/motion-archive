@@ -1,23 +1,9 @@
 import { visibleWorks } from "../data/works.js";
 import { uiGalleryItems } from "../data/ui-gallery.js";
-import { motionGuideItems } from "../data/motion-guide.js";
-
-const visualGalleryLayouts = [
-  {
-    title: "X Scroll",
-    date: "2026.07.03"
-  },
-  {
-    title: "Free Drag",
-    date: "2026.07.03"
-  }
-];
 
 const collections = {
   motion: visibleWorks,
-  ui: uiGalleryItems,
-  guide: motionGuideItems,
-  visual: visualGalleryLayouts
+  ui: uiGalleryItems
 };
 
 function latestDate(items) {

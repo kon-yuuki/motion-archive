@@ -9,7 +9,6 @@ const pages = {
   "motion-archive": ["Motion Archive", "Web Animation Studies"],
   categories: ["Categories", "Motion Archive"],
   easings: ["Easing Index", "Motion & UI"],
-  "visual-gallery": ["Visual Gallery", "Generated Image Layouts"],
   "ui-gallery": ["UI Gallery", "Interface Studies"],
   "ui-gallery-buttons": ["Buttons", "UI Gallery"],
   "ui-gallery-form": ["Form", "UI Gallery"],

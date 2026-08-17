@@ -1,48 +1,4 @@
-// フォントは自己ホストし、レンダーブロッキングな外部CSSの往復をなくす。
-// font-display: optional で、遅れて届いたフォントによる見た目の差し替えを防ぐ。
-@font-face {
-  font-family: "Libre Franklin";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: optional;
-  src: url("/src/assets/fonts/libre-franklin-latin.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "Libre Franklin";
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: optional;
-  src: url("/src/assets/fonts/libre-franklin-latin-italic.woff2") format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 $card-title-gap: 24px;
-
-:root {
-  // Latin は Libre Franklin（自己ホスト・latin のみ）。
-  // LatinはLibre Franklin、日本語はOS標準の和文ゴシックを優先する。
-  --font-sans: "Libre Franklin", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
-    "Yu Gothic", "YuGothic", Meiryo, "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
-  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-body {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.7;
-  font-optical-sizing: auto;
-  -webkit-font-smoothing: antialiased;
-}
 
 .skip-link {
   background: #121313;

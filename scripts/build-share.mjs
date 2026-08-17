@@ -69,52 +69,32 @@ const uiPages = [
   }
 ];
 
-const standalonePages = [
-  {
-    type: "standalone",
-    sourcePath: "easings/index.html",
-    outputPath: "easings/index.html",
-    requestKey: "easings",
-    logPath: "/easings/"
-  }
-];
-
-const visualPages = [
-  {
-    type: "visual",
-    sourcePath: "visual-gallery/index.html",
-    outputPath: "visual-gallery/index.html",
-    requestKey: "visual-gallery",
-    logPath: "/visual-gallery/"
-  },
-  {
-    type: "visual",
-    sourcePath: "visual-gallery/free-drag/index.html",
-    outputPath: "visual-gallery/free-drag/index.html",
-    requestKey: "visual-gallery/free-drag",
-    logPath: "/visual-gallery/free-drag/"
-  }
-];
-
-const availablePages = [...workPages, ...uiPages, ...standalonePages, ...visualPages].filter((page) =>
+const availablePages = [...workPages, ...uiPages].filter((page) =>
   existsSync(resolve(root, page.sourcePath))
 );
 const availablePageKeys = availablePages.map((page) => page.requestKey);
+const randomImageStreamVersionKey = "random-image-stream-versions";
+const groupedPageKeys = [randomImageStreamVersionKey];
+const shareHead = requestedPage === randomImageStreamVersionKey
+  ? sharedHead.replace(/\s*<script\b[^>]*src="\/src\/scripts\/metrics\.js"[^>]*><\/script>/, "")
+  : sharedHead;
 
 if (requestedPage && !/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(requestedPage)) {
-  console.error("Usage: npm run build:share -- [work-slug|ui-gallery[/page]|easings]");
+  console.error("Usage: npm run build:share -- [work-slug|ui-gallery[/page]]");
   process.exit(1);
 }
 
-if (requestedPage && !availablePageKeys.includes(requestedPage)) {
+if (requestedPage && !availablePageKeys.includes(requestedPage) && !groupedPageKeys.includes(requestedPage)) {
   console.error(`Share page not found: ${requestedPage}`);
-  console.error(`Available pages: ${availablePageKeys.join(", ")}`);
+  console.error(`Available pages: ${[...groupedPageKeys, ...availablePageKeys].join(", ")}`);
   process.exit(1);
 }
 
-const pages = requestedPage
-  ? availablePages.filter((page) => page.requestKey === requestedPage)
-  : availablePages;
+const pages = requestedPage === randomImageStreamVersionKey
+  ? availablePages.filter((page) => ["random-image-stream", "random-image-stream-ver2"].includes(page.requestKey))
+  : requestedPage
+    ? availablePages.filter((page) => page.requestKey === requestedPage)
+    : availablePages;
 
 function removeElement(html, startMarker, endMarker) {
   const start = html.indexOf(startMarker);
@@ -184,26 +164,6 @@ function createUiShareHtml(html, page, temporaryHtml) {
   return shareHtml;
 }
 
-function createVisualShareHtml(html, page, temporaryHtml) {
-  const sourceDirectory = dirname(resolve(root, page.sourcePath));
-  let shareHtml = removeElement(html, '<header class="visual-header"', "</header>");
-  shareHtml = removeElement(shareHtml, '<section class="control-strip"', "</section>");
-  shareHtml = shareHtml
-    .replaceAll(
-      'href="./style.scss"',
-      `href="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "style.scss"))}"`
-    );
-
-  if (existsSync(resolve(sourceDirectory, "script.js"))) {
-    shareHtml = shareHtml.replaceAll(
-      'src="./script.js"',
-      `src="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, "script.js"))}"`
-    );
-  }
-
-  return addBodyClass(shareHtml, "share-demo");
-}
-
 function createStandaloneShareHtml(html, page, temporaryHtml) {
   const sourceDirectory = dirname(resolve(root, page.sourcePath));
   let shareHtml = removeElement(html, '<header class="site-header"', "</header>");
@@ -239,9 +199,7 @@ for (const page of pages) {
       ? createWorkShareHtml(sourceHtml, page.slug)
       : page.type === "ui"
         ? createUiShareHtml(sourceHtml, page, temporaryHtml)
-        : page.type === "visual"
-          ? createVisualShareHtml(sourceHtml, page, temporaryHtml)
-          : createStandaloneShareHtml(sourceHtml, page, temporaryHtml)
+        : createStandaloneShareHtml(sourceHtml, page, temporaryHtml)
   );
   inputs[page.requestKey] = temporaryHtml;
 }
@@ -256,7 +214,7 @@ await build({
       transformIndexHtml: {
         order: "pre",
         handler(html, context) {
-          const withSharedHead = html.replace("<head>", `<head>\n${sharedHead}`);
+          const withSharedHead = html.replace("<head>", `<head>\n${shareHead}`);
           const withMeta = injectSocialMeta(withSharedHead, {
             pagePath: context.path,
             share: true

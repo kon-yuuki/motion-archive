@@ -6,14 +6,14 @@
     <title>Motion Archive</title>
   </head>
   <body>
-    <header class="site-header">
+    <header id="site-header" class="site-header">
       <a class="site-brand" href="../">Motion &amp; UI</a>
       <nav class="site-nav" aria-label="Main">
         <a class="is-current" href="./">Motion Archive</a>
         <a href="../categories/">Categories</a>
-        <a href="../easings/">Easings</a>
       </nav>
     </header>
+    <div id="swup" class="transition-fade">
     <main>
       <section class="hero">
         <p class="eyebrow">Web animation studies / 2026-</p>
@@ -36,6 +36,8 @@
       </section>
     </main>
     <footer class="site-footer">Motion Archive / Built with Vanilla JS + SCSS</footer>
-    <script type="module" src="/src/scripts/home.js"></script>
+    <script type="module" src="/src/scripts/home.js" data-swup-reload-script></script>
+    </div>
+    <script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script>
   </body>
 </html>

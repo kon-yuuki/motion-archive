@@ -1,0 +1,19 @@
+@use "../../visual-gallery/x-scroll/style";
+
+.gallery-stage {
+  min-height: 100svh;
+  padding: 0;
+}
+
+.gallery-stage .three-canvas {
+  z-index: 0;
+}
+
+.experiment-nav {
+  pointer-events: none;
+
+  a,
+  button {
+    pointer-events: auto;
+  }
+}

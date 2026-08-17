@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta name="description" content="サイズ・縦位置・タイミングの異なる画像が、重なりながら右から左へ途切れなく流れるモーション実験。" />
+    <link rel="stylesheet" href="../_shared/detail-shell.scss" />
+    <link rel="stylesheet" href="./style.scss" />
+    <title>Random Image Stream / Motion Archive</title>
+  </head>
+  <body>
+    <nav class="experiment-nav" aria-label="Experiment navigation">
+      <a class="experiment-nav__brand" href="../../motion-archive/">Motion Archive</a>
+      <div class="experiment-nav__links">
+        <a class="experiment-nav__link" href="../../motion-archive/">Works</a>
+        <button class="memo-toggle" data-tech-note-toggle type="button" aria-label="Open technical memo" aria-expanded="false"></button>
+        <button class="detail-toggle" data-details-toggle aria-expanded="false">Info</button>
+      </div>
+    </nav>
+
+    <main class="experiment-stage stream-stage version-content" data-stream-stage data-version-content>
+      <div class="stream-heading" aria-hidden="true">
+        <p>Continuous image study</p>
+        <h1>Passing<br />Frames</h1>
+        <span>Right / Center / Left</span>
+      </div>
+      <div class="stream-layer" data-stream-layer aria-hidden="true"></div>
+      <p class="stream-status" aria-hidden="true"><span></span> Infinite sequence</p>
+    </main>
+
+    <nav class="version-switcher" aria-label="バージョン切り替え">
+      <a class="version-switcher__link" href="../random-image-stream/">Ver1</a>
+      <a class="version-switcher__link" href="../random-image-stream-ver2/" aria-current="page">Ver2</a>
+    </nav>
+
+    <aside class="experiment-meta" data-details>
+      <p class="experiment-meta__index">01 / 01 &middot; 2026.08.11</p>
+      <h1>Random Image Stream Ver2</h1>
+      <p class="experiment-meta__description">16枚の画像を右から左へ流し、画面の両端では縦中央に揃え、中央へ近づくほど上下へ広げる無限イメージストリーム。中央の配置を上下同数の固有位置へ分け、小さい画像を前面に重ねることで、密度を保ちながら各画像が見える流れに調整した。</p>
+      <div class="experiment-tags"><span>JavaScript</span><span>CSS</span><span>Image</span><span>Loop</span></div>
+      <div class="experiment-actions">
+        <a class="experiment-reference-link" href="https://madewithgsap.com/" target="_blank" rel="noreferrer">参照サイトを見る <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <section class="tech-note" data-tech-note aria-hidden="true">
+      <div class="tech-note__body">
+        <section class="tech-note__section">
+          <h3>画面端を基準にした拡大区間</h3>
+          <p><code>stream-crossing</code> は進捗18%で画像の右辺を画面右端、50%で画像の中心を画面中央、82%で画像の左辺を画面左端へ合わせ、X位置、scale、opacity、blurを同期する。各区間は <code>cubic-bezier(0.45, 0.15, 0.55, 0.85)</code> で補間し、両端を柔らかくしながら中央では速度を残して通過させる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>中央だけ上下へ広がる軌道</h3>
+          <p>各フレームの基準位置は <code>top: 50%</code> に固定する。進捗18%と82%ではY移動を <code>-50%</code> に揃え、50%だけ <code>--frame-y-offset</code> を加えることで、左右では中央に集まり、中央通過時だけ上下へ広がる。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>上下が偏らない配置スロット</h3>
+          <p>16フレームを <code>data-vertical-side</code> で上8枚・下8枚に分け、それぞれ6〜34vhの異なる8段階へ割り当てる。同じ側で高さを共有せず、各位置へ±1.25vhの差だけを加えることで、ランダムさを残しながら中央通過時の完全な重なりを避ける。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>等間隔の再生位相</h3>
+          <p>16フレームは同じ34秒周期を使い、開始進捗を16等分して配置する。中央帯にあたる進捗35〜65%へ同時に入る枚数を約5枚に保ちつつ、<code>ensureCoverage()</code> は進捗18〜82%の表示中フレームが8枚未満になった場合だけ再配置する。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>画像幅から決める重なり順</h3>
+          <p><code>randomizeFrame()</code> で決めた画像幅を <code>1000 - width</code> に変換して <code>z-index</code> へ設定する。幅が小さい画像ほど前面、幅が大きい画像ほど背面になるため、中央付近で矩形が重なっても、小さい画像が大きい画像に完全に隠れない。</p>
+        </section>
+        <section class="tech-note__section">
+          <h3>間隔を保つスクロール操作</h3>
+          <p>ホイールとスワイプの入力を補間し、同じ時間差分を各CSS Animationの <code>currentTime</code> へ加える。画像ごとに移動量を変えないため、操作中も16等分した間隔と中央の枚数が崩れない。4段階の <code>depth</code> は画像幅とopacityへ反映する。</p>
+        </section>
+      </div>
+    </section>
+
+    <script type="module" src="./script.js" data-version-entry></script>
+  </body>
+</html>

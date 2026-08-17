@@ -11,6 +11,7 @@ const globalDurationCompactOutput = document.querySelector("[data-global-duratio
 const globalDurationToggle = document.querySelector("[data-global-duration-toggle]");
 const globalDurationReset = document.querySelector("[data-global-duration-reset]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const pageEvents = new AbortController();
 const activeRuns = new WeakMap();
 const tracerRuns = new WeakMap();
 const tracerTimers = new WeakMap();
@@ -99,7 +100,14 @@ function curveSvg(easingFunction) {
 
 function easingCard(easing, index) {
   const links = easing.uses
-    .map(({ label, href }) => `<a href="${href}">${label}</a>`)
+    .map(({ label, href }) => {
+      const isDetailPage = href.startsWith("../works/") || /^\.\.\/ui-gallery\/[^/]+\/$/.test(href);
+      const newTabAttributes = isDetailPage
+        ? ` target="_blank" rel="noopener" aria-label="${label}を新しいタブで開く"`
+        : "";
+
+      return `<a href="${href}"${newTabAttributes}>${label}</a>`;
+    })
     .join("");
   const codeTags = ["JS", easing.css ? "CSS" : null]
     .filter(Boolean)
@@ -681,13 +689,13 @@ reducedMotion.addEventListener("change", () => {
       startTracerTimer(card);
     }
   });
-});
+}, { signal: pageEvents.signal });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeModal();
   }
-});
+}, { signal: pageEvents.signal });
 
 function applyGlobalDuration(value) {
   currentDuration = Number(value) || defaultDuration;
@@ -719,7 +727,7 @@ document.addEventListener("pointerdown", (event) => {
 
   globalControl.removeAttribute("data-open");
   globalDurationToggle?.setAttribute("aria-expanded", "false");
-});
+}, { signal: pageEvents.signal });
 
 // Edge collision: show the tip below the button when there is no room above.
 function flipTip(button) {
@@ -828,7 +836,29 @@ document.querySelectorAll("[data-copy-code]").forEach((button) => {
   });
 });
 
-window.addEventListener("hashchange", () => syncCurrentEasing());
+window.addEventListener("hashchange", () => syncCurrentEasing(), { signal: pageEvents.signal });
 document.fonts.ready.then(() => {
   requestAnimationFrame(() => syncCurrentEasing());
 });
+
+window.addEventListener("site:before-content-replace", () => {
+  pageEvents.abort();
+  smoothScroll.destroy();
+  document.body.removeAttribute("data-modal-open");
+  activeModal?.backdrop.remove();
+
+  easingCards.forEach((card) => {
+    window.clearTimeout(tracerTimers.get(card));
+    card.querySelectorAll("[data-copy-code]").forEach((button) => {
+      window.clearTimeout(copyTimers.get(button));
+    });
+    stopTracer(card, false);
+
+    const box = card.querySelector(".easing-demo__box");
+    const run = box && activeRuns.get(box);
+    if (run) {
+      run.cancelled = true;
+      cancelAnimationFrame(run.frame);
+    }
+  });
+}, { once: true });

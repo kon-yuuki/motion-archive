@@ -134,6 +134,13 @@ function hide() {
   tooltip?.removeAttribute("data-visible");
 }
 
+window.addEventListener("site:before-content-replace", () => {
+  hide();
+  tooltip?.remove();
+  tooltip = null;
+  inner = null;
+});
+
 function swap(row) {
   const text = row.dataset.description;
   if (!text) {

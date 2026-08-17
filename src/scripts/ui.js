@@ -52,7 +52,7 @@ export function workRow(work, prefix, index = 0) {
     : "";
 
   return `
-    <a class="work-row" href="${prefix}${work.slug}/" data-description="${escapeAttr(work.description)}" aria-label="${escapeAttr(`${work.title}を開く`)}">
+    <a class="work-row" href="${prefix}${work.slug}/" target="_blank" rel="noopener" data-description="${escapeAttr(work.description)}" aria-label="${escapeAttr(`${work.title}を新しいタブで開く`)}">
       <div class="work-row__meta">
         <span class="work-row__number">${String(index + 1).padStart(2, "0")}</span>
       </div>

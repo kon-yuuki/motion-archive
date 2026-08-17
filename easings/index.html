@@ -10,7 +10,7 @@
     <title>Easing Index / Motion &amp; UI</title>
   </head>
   <body>
-    <header class="site-header">
+    <header id="site-header" class="site-header">
       <a class="site-brand" href="../">Motion &amp; UI</a>
       <nav class="site-nav" aria-label="Main">
         <a href="../motion-archive/">Motion Archive</a>
@@ -19,6 +19,7 @@
       </nav>
     </header>
 
+    <div id="swup" class="transition-fade">
     <main class="easing-page">
       <header class="easing-hero">
         <p class="eyebrow">Motion tokens / <span data-easing-count>00</span></p>
@@ -73,6 +74,8 @@
     </aside>
 
     <footer class="site-footer">Motion &amp; UI / Easing reference</footer>
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./script.js" data-swup-reload-script></script>
+    </div>
+    <script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script>
   </body>
 </html>

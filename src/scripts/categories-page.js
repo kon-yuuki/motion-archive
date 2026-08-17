@@ -15,7 +15,7 @@ function groupMarkup(items, key) {
         ? matches
             .map(
               (work) =>
-                `<a class="category-work" href="../works/${work.slug}/">${work.title}${statusBadge(work)}</a>`
+                `<a class="category-work" href="../works/${work.slug}/" target="_blank" rel="noopener" aria-label="${work.title}を新しいタブで開く">${work.title}${statusBadge(work)}</a>`
             )
             .join("")
         : '<span class="category-empty">No experiments yet</span>';

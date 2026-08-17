@@ -6,7 +6,7 @@
     <title>UI Gallery / Motion &amp; UI</title>
   </head>
   <body>
-    <header class="gallery-header">
+    <header id="site-header" class="gallery-header">
       <a class="site-brand" href="../">Motion &amp; UI</a>
       <nav class="gallery-nav" aria-label="UI gallery navigation">
         <a class="is-current" href="./" aria-current="page">UI Gallery</a>
@@ -17,6 +17,7 @@
       </nav>
     </header>
 
+    <div id="swup" class="transition-fade">
     <main>
       <section class="gallery-hero">
         <p class="eyebrow">Interface studies / 2026-</p>
@@ -32,7 +33,7 @@
           <span>05 available</span>
         </header>
         <div class="component-grid">
-          <a class="component-card component-card--available" href="./buttons/">
+          <a class="component-card component-card--available" href="./buttons/" target="_blank" rel="noopener" aria-label="Buttonsを新しいタブで開く">
             <span class="component-card__index">001</span>
             <div>
               <h3>Buttons</h3>
@@ -40,7 +41,7 @@
             </div>
             <span class="component-card__status">Open</span>
           </a>
-          <a class="component-card component-card--available" href="./form/">
+          <a class="component-card component-card--available" href="./form/" target="_blank" rel="noopener" aria-label="Formを新しいタブで開く">
             <span class="component-card__index">002</span>
             <div>
               <h3>Form</h3>
@@ -48,7 +49,7 @@
             </div>
             <span class="component-card__status">Open</span>
           </a>
-          <a class="component-card component-card--available" href="./tooltip-behavior/">
+          <a class="component-card component-card--available" href="./tooltip-behavior/" target="_blank" rel="noopener" aria-label="Tooltip Behaviorを新しいタブで開く">
             <span class="component-card__index">003</span>
             <div>
               <h3>Tooltip Behavior</h3>
@@ -56,7 +57,7 @@
             </div>
             <span class="component-card__status">Open</span>
           </a>
-          <a class="component-card component-card--available" href="./typography/">
+          <a class="component-card component-card--available" href="./typography/" target="_blank" rel="noopener" aria-label="Typographyを新しいタブで開く">
             <span class="component-card__index">004</span>
             <div>
               <h3>Typography</h3>
@@ -64,7 +65,7 @@
             </div>
             <span class="component-card__status">Open</span>
           </a>
-          <a class="component-card component-card--available" href="./mega-menu/">
+          <a class="component-card component-card--available" href="./mega-menu/" target="_blank" rel="noopener" aria-label="Mega Menuを新しいタブで開く">
             <span class="component-card__index">005</span>
             <div>
               <h3>Mega Menu</h3>
@@ -85,5 +86,7 @@
       <span>Motion &amp; UI / UI Gallery</span>
       <a href="../motion-archive/">Motion Archive</a>
     </footer>
+    </div>
+    <script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script>
   </body>
 </html>

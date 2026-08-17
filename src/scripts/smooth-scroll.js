@@ -28,9 +28,11 @@ export function initSmoothScroll(options = {}) {
     attributeFilter: ["data-modal-open"]
   });
 
-  reducedMotion.addEventListener("change", () => {
+  const syncReducedMotion = () => {
     lenis.options.smoothWheel = !reducedMotion.matches;
-  });
+  };
+
+  reducedMotion.addEventListener("change", syncReducedMotion);
 
   return {
     lenis,
@@ -44,6 +46,11 @@ export function initSmoothScroll(options = {}) {
         immediate: reducedMotion.matches,
         ...scrollOptions
       });
+    },
+    destroy() {
+      modalObserver.disconnect();
+      reducedMotion.removeEventListener("change", syncReducedMotion);
+      lenis.destroy();
     }
   };
 }

@@ -4,14 +4,16 @@ Web モーション実験と UI パーツギャラリーをまとめる公開ア
 
 ## Pages
 
-- `/` - Motion Archive、UI Gallery、Motion Guide を選ぶサイトトップ
+- `/` - Motion ArchiveとUI Galleryを選ぶサイトトップ
 - `/motion-archive/` - Motion Archive のトップページと全作品一覧
 - `/categories/` - 技術別・表現別カテゴリ
 - `/works/<slug>/` - 個別のフルスクリーン実験ページ
 - `/ui-gallery/` - UI パーツギャラリーの目次
 - `/ui-gallery/<component>/` - ボタンやスライダーなどの UI パーツギャラリー
-- `/motion-guide/` - デザイナーとエンジニアがアニメーションを同じ言葉で相談するためのガイド
-- `/motion-guide/<topic>/` - duration、easing、状態変化などの仕組み解説
+
+> **Motion Guide は非公開（WIP）です。** `motion-guide/` 以下には作りかけのソースを残していますが、現在はトップページの導線と本番ビルド対象から外しています。内容と使い勝手を見直し、公開可能と判断できるまでは再登録しないでください。
+
+> **Easingsは非公開です。** `easings/` 以下のソースは内部リファレンスとして残していますが、通常ビルドと共有用ビルドの対象から外しています。内容を見直すまでは、ビルド設定やサイト内の導線へ再登録しないでください。
 
 ## Development
 
@@ -132,6 +134,10 @@ X 発信用のデモ動画は Playwright で自動撮影できます。字幕、
 
 UI Gallery の挙動デモ制作方針は [`docs/ui-demo-guideline.md`](docs/ui-demo-guideline.md) を参照してください。
 X 投稿文の作り方は [`docs/x-posting-guideline.md`](docs/x-posting-guideline.md)、Codex 依頼用の定型文は [`docs/codex-prompts.md`](docs/codex-prompts.md) にまとめています。
+
+## Project Roadmap
+
+サイトの直近の目標と長期方針は [`docs/motion-ui-roadmap.md`](docs/motion-ui-roadmap.md) にまとめています。
 
 ## Deployment
 

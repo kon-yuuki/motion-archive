@@ -6,6 +6,16 @@ const toggle = document.querySelector("[data-details-toggle]");
 const memo = document.querySelector("[data-tech-note]");
 const memoToggle = document.querySelector("[data-tech-note-toggle]");
 const navLinks = document.querySelector(".experiment-nav__links");
+const navBrand = document.querySelector(".experiment-nav__brand");
+
+if (navBrand?.matches("a")) {
+  const brandLabel = document.createElement("span");
+  brandLabel.className = navBrand.className;
+  brandLabel.textContent = navBrand.textContent;
+  navBrand.replaceWith(brandLabel);
+}
+
+navLinks?.querySelectorAll(".experiment-nav__link").forEach((link) => link.remove());
 
 // Turn category tags into links to the matching card on the Categories page.
 const categorySlug = (value) => value.trim().toLowerCase().replaceAll(" ", "-");
@@ -16,7 +26,8 @@ const categoryType = (label) => {
   return null;
 };
 
-document.querySelectorAll(".experiment-tags span").forEach((tag) => {
+function enhanceTags(root = document) {
+root.querySelectorAll(".experiment-tags span").forEach((tag) => {
   const type = categoryType(tag.textContent);
   if (!type) {
     return;
@@ -29,9 +40,11 @@ document.querySelectorAll(".experiment-tags span").forEach((tag) => {
   link.setAttribute("aria-label", `Browse ${tag.textContent.trim()} experiments`);
   tag.replaceWith(link);
 });
+}
 
 // Use the URL itself as the reference link label (drop the protocol / trailing slash).
-const referenceLink = document.querySelector(".experiment-reference-link");
+function enhanceReferenceLink(root = document) {
+const referenceLink = root.querySelector(".experiment-reference-link");
 if (referenceLink) {
   const arrow = referenceLink.querySelector("span");
   const url = referenceLink.getAttribute("href") || "";
@@ -41,56 +54,56 @@ if (referenceLink) {
     referenceLink.append(arrow);
   }
 }
-
-const detailEasings = {
-  "vortex-trail": "ease-out-expo",
-  "webgl-plane-reveal": "ease-out-expo",
-  "cursor-pixel-field": "ease-out-expo",
-  "rotating-scroll-gallery": "ease-out-cubic",
-  "cylindrical-image-flow": "ease-out-cubic",
-  "cursor-image-burst": "ease-out-back",
-  "rgb-cursor-stalker": "ease-out-expo",
-  "hero-mask-shift": "ease-out-expo",
-  "image-wipe-grid": "ease-out-expo",
-  "scroll-type-reveal": "ease-out-cubic",
-  "css-pie-chart": "ease-out-quint",
-  "fluid-image": "ease-out-expo",
-  "pixel-glitch": "ease-out-cubic",
-  "latte-marble": "ease-out-expo"
-};
-
-if (navLinks && !navLinks.querySelector("[data-easing-index-link]")) {
-  const detailSlug = window.location.pathname.split("/").filter(Boolean).at(-1);
-  const easingId = detailEasings[detailSlug];
-  const easingLink = document.createElement("a");
-  easingLink.className = "experiment-nav__link experiment-nav__easing-link";
-  easingLink.href = `../../easings/${easingId ? `#${easingId}` : ""}`;
-  easingLink.textContent = "Easings";
-  if (easingId) {
-    easingLink.setAttribute("aria-label", `Open the easing used on this page: ${easingId}`);
-  }
-  easingLink.setAttribute("data-easing-index-link", "");
-  navLinks.insertBefore(easingLink, toggle);
 }
+
+function mergeMemoIntoPanel(targetPanel, targetMemo) {
+  const memoBody = targetMemo?.querySelector(".tech-note__body");
+  if (memoBody) targetPanel.append(memoBody);
+
+  const actions = targetPanel.querySelector(".experiment-actions");
+  if (actions) targetPanel.append(actions);
+}
+
+enhanceTags();
+enhanceReferenceLink();
 
 if (panel && toggle) {
   if (memo) {
-    const memoBody = memo.querySelector(".tech-note__body");
-    if (memoBody) {
-      panel.append(memoBody);
-    }
+    mergeMemoIntoPanel(panel, memo);
     memo.remove();
   }
   memoToggle?.remove();
 
   // Keep the external reference link as the dialog's closing action, below the
   // title / description / tags and the technical memo body.
-  const actions = panel.querySelector(".experiment-actions");
-  if (actions) {
-    panel.append(actions);
+  initInfoDialog({ panel, toggle });
+}
+
+export function replaceDetailContent(nextPanel, nextMemo) {
+  const livePanel = document.querySelector("[data-details]");
+  if (!livePanel || !nextPanel) return;
+
+  mergeMemoIntoPanel(nextPanel, nextMemo);
+  enhanceTags(nextPanel);
+  enhanceReferenceLink(nextPanel);
+
+  const incomingTitle = nextPanel.querySelector(":scope > h1");
+  if (incomingTitle) {
+    const replacement = document.createElement("h2");
+    for (const attribute of incomingTitle.attributes) replacement.setAttribute(attribute.name, attribute.value);
+    replacement.innerHTML = incomingTitle.innerHTML;
+    incomingTitle.replaceWith(replacement);
   }
 
-  initInfoDialog({ panel, toggle });
+  const close = livePanel.querySelector(":scope > .experiment-meta__close");
+  const incomingNodes = [...nextPanel.childNodes];
+  livePanel.replaceChildren(...(close ? [close] : []), ...incomingNodes);
+
+  const title = livePanel.querySelector(":scope > h2, :scope > h1");
+  if (title) {
+    title.id ||= "work-information-title";
+    livePanel.setAttribute("aria-labelledby", title.id);
+  }
 }
 
 export function bindReplay(callback) {
