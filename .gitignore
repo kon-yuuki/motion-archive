@@ -4,3 +4,5 @@ dist-share
 .share-build
 .DS_Store
 .vercel
+
+.ui-motion-qa/

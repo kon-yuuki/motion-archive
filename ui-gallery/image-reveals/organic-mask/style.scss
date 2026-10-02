@@ -1,0 +1,129 @@
+.organic-mask {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 26px clamp(22px, 5vw, 60px);
+  background: #e9d7ce;
+  color: #4a392f;
+  &__top,
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 20px;
+    font-size: 10px;
+    line-height: 1.7;
+    color: #5e473c;
+  }
+  &__top {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c4aea0;
+  }
+  &__body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: clamp(24px, 5vw, 60px);
+    align-items: center;
+    padding: 35px 0;
+  }
+  &__figure {
+    margin: 0;
+    min-width: 0;
+  }
+  &__canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #d4ab9e;
+  }
+  &__figure figcaption {
+    margin-top: 11px;
+    font-size: 9px;
+    color: #5e473c;
+  }
+  &__eyebrow {
+    font-size: 10px !important;
+    margin: 0 0 18px !important;
+    color: #5e473c;
+  }
+  &__copy h2 {
+    margin: 0 0 20px;
+    font-size: clamp(35px, 4.5vw, 55px);
+    line-height: 1.03;
+    font-weight: 400;
+  }
+  &__copy > p {
+    font-size: 11px;
+    line-height: 1.9;
+    margin: 0;
+  }
+  &__copy button {
+    min-height: 44px;
+    border: 1px solid #9d7f6c;
+    background: transparent;
+    padding: 10px 16px;
+    margin-top: 24px;
+    color: inherit;
+    font-size: 11px;
+    touch-action: manipulation;
+  }
+  &__copy button:hover {
+    background: #dac2b3;
+  }
+  &__copy button:focus-visible {
+    outline: 2px solid #684a38;
+    outline-offset: 4px;
+  }
+  &__bottom {
+    border-top: 1px solid #c4aea0;
+    padding-top: 20px;
+  }
+  &__bottom [role="status"] {
+    text-align: right;
+    max-width: 65%;
+  }
+}
+[data-reduced-motion="true"] .organic-mask [data-art] {
+  mask: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .organic-mask [data-art] {
+    mask: none;
+  }
+}
+@media (max-width: 600px) {
+  .organic-mask {
+    padding: 22px;
+    min-height: 510px;
+    &__top span:last-child {
+      display: none;
+    }
+    &__body {
+      grid-template-columns: 1fr;
+      gap: 27px;
+      padding: 26px 0;
+    }
+    &__copy {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+    &__eyebrow {
+      grid-column: 1 / -1;
+      margin-bottom: 0 !important;
+    }
+    &__copy h2 {
+      font-size: 36px;
+      margin: 0;
+    }
+    &__copy button {
+      grid-column: 1 / -1;
+      margin-top: 6px;
+    }
+    &__bottom {
+      font-size: 9px;
+    }
+  }
+}

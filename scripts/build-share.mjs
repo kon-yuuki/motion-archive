@@ -69,7 +69,16 @@ const uiPages = [
   }
 ];
 
-const availablePages = [...workPages, ...uiPages].filter((page) =>
+const referenceCategories = ["buttons", "sliders", "section-transitions", "text-reveals", "image-reveals"];
+const referencePages = referenceCategories.flatMap((category) => {
+  const directory = resolve(root, "ui-gallery", category);
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(resolve(directory, entry.name, "meta.js")) && existsSync(resolve(directory, entry.name, "index.html")))
+    .map((entry) => ({ type: "ui", sourcePath: `ui-gallery/${category}/${entry.name}/index.html`, outputPath: `ui-gallery/${category}/${entry.name}/index.html`, requestKey: `ui-gallery/${category}/${entry.name}`, logPath: `/ui-gallery/${category}/${entry.name}/` }));
+});
+
+const availablePages = [...workPages, ...uiPages, ...referencePages].filter((page) =>
   existsSync(resolve(root, page.sourcePath))
 );
 const availablePageKeys = availablePages.map((page) => page.requestKey);
@@ -161,6 +170,21 @@ function createUiShareHtml(html, page, temporaryHtml) {
     );
   }
 
+  // Reference demos use multiple explicit head stylesheets and a Swup-aware shell.
+  // Resolve every stylesheet against the source page before moving the HTML.
+  shareHtml = shareHtml.replace(/href="((?:\.\.\/)+_motion\/[^"\s]+\.scss)"/g, (_match, href) =>
+    `href="${relativeImportPath(temporaryHtml, resolve(sourceDirectory, href))}"`
+  );
+  if (html.includes("data-motion-page")) {
+    shareHtml = shareHtml.replace(/<header id="site-header" class="motion-header">[\s\S]*?<\/header>/, "")
+      .replace(/<footer class="motion-footer">[\s\S]*?<\/footer>/, "")
+      .replace(/<script type="module" src="\/src\/scripts\/page-transitions.js"[^>]*><\/script>/, "");
+  }
+  // Buttons collection's reference section is gallery navigation, not standalone content.
+  if (page.requestKey === "ui-gallery/buttons") {
+    shareHtml = shareHtml.replace(/<section class="reference-collection"[\s\S]*?<\/section>/, "")
+      .replace(/<script type="module" src="\.\/references.js"><\/script>/, "");
+  }
   return shareHtml;
 }
 

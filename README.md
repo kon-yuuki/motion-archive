@@ -75,6 +75,17 @@ OK前のdemoにはページやカード上で `WIP` チップを付け、OK後�
 
 詳しい書き方と例は [`demo-requests/README.md`](demo-requests/README.md) を参照してください。
 
+## SOTD Motion References
+
+UI Gallery に、5カテゴリー × 6件の独立したモーション実装を追加しています。各ページで Replay / Reset、動きを控える設定、実装コード、出典と再現範囲を確認できます。既存の UI 比較デモはそのまま残しています。
+
+- Buttons / Sliders / Section transitions / Text motion / Image reveals
+- 入口: `/ui-gallery/`
+- 部品: `ui-gallery/<category>/<slug>/`
+- 全30件の出典・再利用方法・検証手順: [UI Motion References](docs/ui-motion-references.md)
+- 新規30件はユーザーレビュー前のため WIP 表示。実装テストの結果とは別に扱います
+- [検証結果と確認範囲](docs/ui-motion-verification.md)
+
 ## Add A UI Gallery Page
 
 UI パーツをまとめて比較するページは、作品とは分けて `ui-gallery/<component>/` に追加します。

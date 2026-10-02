@@ -1,0 +1,108 @@
+.character-xray {
+  background: #efe1c8;
+  color: #563423;
+  > header,
+  > footer {
+    padding: 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    font-size: 9px;
+    border-bottom: 1px solid #96795b5e;
+  }
+  > footer {
+    border-top: 1px solid #96795b5e;
+    border-bottom: 0;
+  }
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: center;
+    gap: 30px;
+    padding: 32px 5%;
+  }
+  h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.12;
+    margin: 0 0 22px;
+  }
+  p {
+    font-size: 12px;
+    line-height: 1.9;
+    margin: 0 0 25px;
+  }
+  button {
+    min-height: 44px;
+    border: 1px solid #8b6849;
+    border-radius: 30px;
+    background: transparent;
+    color: inherit;
+    padding: 11px 18px;
+    font-size: 11px;
+  }
+  button[aria-pressed="true"] {
+    background: #563423;
+    color: #f8edd9;
+  }
+  &__surface {
+    min-width: 0;
+    cursor: crosshair;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  &__lens {
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+  &.is-active &__lens {
+    opacity: 1;
+  }
+  footer label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
+  }
+  input {
+    width: 140px;
+    accent-color: #875131;
+  }
+  @media (max-width: 700px) {
+    &__layout {
+      grid-template-columns: 1fr;
+      padding: 28px 25px;
+      gap: 12px;
+    }
+    h2 {
+      font-size: 36px;
+    }
+    p {
+      font-size: 11px;
+      margin-bottom: 15px;
+    }
+    &__surface {
+      max-width: 420px;
+      justify-self: center;
+      width: 100%;
+    }
+    > footer {
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 18px;
+    }
+  }
+}
+[data-reduced-motion="true"] .character-xray__lens {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .character-xray__lens {
+    transition: none;
+  }
+}

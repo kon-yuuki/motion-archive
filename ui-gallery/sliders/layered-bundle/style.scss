@@ -1,0 +1,181 @@
+.layered-bundle {
+  min-width: 0;
+  min-height: 510px;
+  padding: 28px clamp(18px, 4vw, 48px) 22px;
+  color: #39313a;
+  background: #eee9df;
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 22px;
+  }
+  header p {
+    font-size: 9px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 130px;
+  }
+  h2 {
+    font-size: clamp(25px, 3.2vw, 38px);
+    line-height: 1.07;
+    font-weight: 500;
+    margin: 0;
+  }
+  &__stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr);
+    align-items: center;
+    gap: 10px;
+    min-height: 340px;
+    touch-action: pan-y;
+    user-select: none;
+  }
+  &__base {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    gap: 7px;
+  }
+  &__base svg {
+    width: min(100%, 210px);
+    display: block;
+  }
+  &__base > span {
+    font-size: 9px;
+    text-align: center;
+  }
+  &__plus {
+    font-size: clamp(24px, 4vw, 48px);
+    font-weight: 300;
+  }
+  &__variants {
+    display: grid;
+    min-width: 0;
+    align-items: center;
+  }
+  &__variant {
+    grid-area: 1 / 1;
+    display: grid;
+    text-align: center;
+    pointer-events: none;
+    min-width: 0;
+  }
+  &__objects {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 250px;
+    place-items: center;
+    width: min(100%, 320px);
+    justify-self: center;
+  }
+  &__piece {
+    grid-area: 1 / 1;
+    width: min(100%, 200px);
+    transform-origin: center 70%;
+  }
+  &__piece svg {
+    width: 100%;
+    display: block;
+  }
+  &__piece--back {
+    width: 115px;
+    justify-self: start;
+    align-self: end;
+    margin: 0 0 4px 2%;
+  }
+  &__piece--front {
+    width: 105px;
+    justify-self: end;
+    align-self: end;
+    margin: 0 0 0;
+    z-index: 2;
+  }
+  &__piece--main {
+    z-index: 1;
+  }
+  h3 {
+    font-size: clamp(18px, 2.4vw, 29px);
+    line-height: 1.05;
+    margin: 5px 0 0;
+    font-weight: 700;
+  }
+  &__variant p {
+    font-size: 10px;
+    line-height: 1.6;
+    margin: 8px 0 0;
+  }
+  > footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+  footer button {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #8d7c8b;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+  }
+  footer button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  footer > span {
+    width: 210px;
+    text-align: center;
+    font-size: 10px;
+  }
+  &__hint {
+    text-align: center;
+    font-size: 10px;
+    margin: 14px 0 0;
+    line-height: 1.7;
+  }
+  @media (max-width: 600px) {
+    padding: 24px 16px 20px;
+    > header {
+      gap: 14px;
+    }
+    header p {
+      font-size: 8px;
+      max-width: 100px;
+    }
+    h2 {
+      font-size: 25px;
+    }
+    &__stage {
+      min-height: 300px;
+      gap: 4px;
+      grid-template-columns: minmax(0, 0.85fr) 18px minmax(0, 1.2fr);
+    }
+    &__objects {
+      grid-template-rows: 190px;
+    }
+    &__piece--back {
+      width: 78px;
+      margin-left: 0;
+    }
+    &__piece--front {
+      width: 73px;
+    }
+    &__piece--main {
+      width: 140px;
+    }
+    &__base > span {
+      font-size: 7px;
+    }
+    h3 {
+      font-size: 17px;
+    }
+    &__variant p {
+      font-size: 8px;
+    }
+    > footer {
+      gap: 10px;
+    }
+  }
+}

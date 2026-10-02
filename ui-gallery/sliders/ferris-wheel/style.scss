@@ -1,0 +1,139 @@
+.ferris-wheel {
+  min-width: 0;
+  min-height: 500px;
+  padding: 28px clamp(18px, 4vw, 48px) 22px;
+  color: #383b35;
+  background: #eae7df;
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 9px;
+  }
+  header p {
+    margin: 0;
+  }
+  header > span {
+    color: #5e665d;
+  }
+  &__gallery {
+    height: 360px;
+    display: grid;
+    position: relative;
+    touch-action: pan-y;
+    user-select: none;
+  }
+  &__wheel {
+    grid-area: 1 / 1;
+    display: grid;
+    place-items: center;
+    perspective: 950px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+  }
+  &__picture {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border: 1px solid #00000012;
+    box-shadow: 0 7px 24px #1e241611;
+    transform-origin: center;
+    will-change: transform;
+  }
+  &__picture svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__caption {
+    grid-area: 1 / 1;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    pointer-events: none;
+    z-index: 20;
+  }
+  h2 {
+    max-width: 140px;
+    margin: 0;
+    font-size: clamp(19px, 2.2vw, 28px);
+    line-height: 1.05;
+    font-weight: 500;
+    padding: 8px;
+    background: #eae7dfe6;
+  }
+  &__caption > span {
+    font-size: 9px;
+    padding: 8px;
+    background: #eae7dfe6;
+  }
+  > footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+  footer button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid #9ca292;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+  }
+  footer button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  footer label {
+    display: grid;
+    gap: 5px;
+    font-size: 9px;
+    width: min(200px, 35%);
+    text-align: center;
+  }
+  footer input {
+    width: 100%;
+    min-height: 28px;
+    accent-color: #495e44;
+    cursor: pointer;
+  }
+  footer [data-status] {
+    min-width: 42px;
+    font-size: 11px;
+  }
+  &__hint {
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.7;
+    margin: 13px 0 0;
+    color: #5e665d;
+  }
+  @media (max-width: 600px) {
+    > header > span {
+      display: none;
+    }
+    &__gallery {
+      height: 340px;
+    }
+    &__caption {
+      align-self: end;
+      margin-bottom: 9px;
+    }
+    h2 {
+      font-size: 19px;
+      max-width: 65%;
+      padding: 5px 0;
+    }
+    &__caption > span {
+      font-size: 8px;
+      padding: 5px 0;
+    }
+    > footer {
+      gap: 10px;
+    }
+  }
+}

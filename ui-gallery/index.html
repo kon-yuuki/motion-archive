@@ -23,13 +23,18 @@
         <p class="eyebrow">Interface studies / 2026-</p>
         <h1><span>UI</span><span>Gallery</span></h1>
         <p class="gallery-hero__copy">
-          ボタン、スライダー、入力欄など、小さな操作部品を種類ごとに集めて比較するためのギャラリー。
+          公開サイトや公式記録から見つけた動きを、小さなパーツに分解する。触って比べて、仕組みを読んで、次の制作に使うための UI リファレンス。
         </p>
       </section>
 
+      <section class="gallery-index" aria-labelledby="motion-reference-title">
+        <header class="section-heading"><h2 id="motion-reference-title">Motion references</h2><span data-motion-total>5 categories</span></header>
+        <p class="gallery-reference-intro">Awwwards SOTD サイトの観察から生まれた実装。各パーツに参考 URL、操作のポイント、コードを添えています。<br />新規デモはレビュー前のため WIP 表示です。</p>
+        <div class="component-grid" data-motion-categories></div>
+      </section>
       <section class="gallery-index" aria-labelledby="gallery-index-title">
         <header class="section-heading">
-          <h2 id="gallery-index-title">Components</h2>
+          <h2 id="gallery-index-title">Usability studies</h2>
           <span>05 available</span>
         </header>
         <div class="component-grid">
@@ -86,6 +91,7 @@
       <span>Motion &amp; UI / UI Gallery</span>
       <a href="../motion-archive/">Motion Archive</a>
     </footer>
+    <script type="module" src="./motion-index.js" data-swup-reload-script></script>
     </div>
     <script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script>
   </body>

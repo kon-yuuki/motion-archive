@@ -1,0 +1,64 @@
+.contour-ripple {
+  background: #14211d;
+  color: #d5e4d9;
+  min-width: 0;
+  > header,
+  > footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+    font-size: 9px;
+    border-bottom: 1px solid #6a8e795e;
+  }
+  > footer {
+    border-top: 1px solid #6a8e795e;
+    border-bottom: 0;
+  }
+  &__surface {
+    height: 370px;
+    position: relative;
+    cursor: crosshair;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  footer p {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  footer label {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  input {
+    width: 140px;
+    accent-color: #a5c77a;
+  }
+  @media (max-width: 600px) {
+    &__surface {
+      height: 290px;
+    }
+    > header,
+    > footer {
+      padding: 18px;
+      font-size: 8px;
+    }
+    footer {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer p {
+      font-size: 10px;
+    }
+    input {
+      width: 140px;
+    }
+  }
+}

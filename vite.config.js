@@ -1,7 +1,19 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { injectSkipLink, injectSocialMeta } from "./scripts/html-meta.mjs";
+
+// Discover only the five reference categories and their explicit demo HTML entries.
+const referenceCategories = ["buttons", "sliders", "section-transitions", "text-reveals", "image-reveals"];
+const referenceInputs = Object.fromEntries(referenceCategories.flatMap((category) => {
+  const directory = resolve(__dirname, "ui-gallery", category);
+  if (!existsSync(directory)) return [];
+  const pages = readdirSync(directory, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(resolve(directory, entry.name, "meta.js")) && existsSync(resolve(directory, entry.name, "index.html")))
+    .map((entry) => [`ui-gallery-${category}-${entry.name}`, resolve(directory, entry.name, "index.html")]);
+  if (category !== "buttons") pages.unshift([`ui-gallery-${category}`, resolve(directory, "index.html")]);
+  return pages;
+}));
 
 const sharedHead = readFileSync(new URL("./src/shared/head.html", import.meta.url), "utf8");
 
@@ -61,6 +73,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        ...referenceInputs,
         index: resolve(__dirname, "index.html"),
         "motion-archive": resolve(__dirname, "motion-archive/index.html"),
         categories: resolve(__dirname, "categories/index.html"),

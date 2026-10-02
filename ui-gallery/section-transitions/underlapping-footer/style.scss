@@ -1,0 +1,143 @@
+.underlapping-footer {
+  background: #edece4;
+  color: #293229;
+  min-width: 0;
+  > header,
+  > footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    font-size: 10px;
+  }
+  &__scroller {
+    height: 440px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  &__stack {
+    position: relative;
+  }
+  &__backdrop {
+    position: sticky;
+    top: 0;
+    height: 440px;
+    margin-bottom: -440px;
+    background: #273529;
+    color: #f1f3df;
+    overflow: hidden;
+  }
+  &__scene {
+    height: 100%;
+    padding: 35px 5%;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 18px;
+    position: relative;
+    will-change: transform;
+  }
+  &__scene > span {
+    font-size: 9px;
+    grid-column: 1/-1;
+  }
+  &__scene h2 {
+    font-size: clamp(36px, 4.8vw, 66px);
+    line-height: 1.02;
+    font-weight: 500;
+    margin: 0;
+    align-self: center;
+    z-index: 1;
+  }
+  &__scene > p {
+    font-size: 10px;
+    grid-column: 1/-1;
+    margin: 0;
+    border-top: 1px solid #ffffff3d;
+    padding-top: 18px;
+  }
+  &__art {
+    align-self: center;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    max-height: 245px;
+  }
+  &__art svg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  &__sheet {
+    position: relative;
+    z-index: 1;
+    height: 440px;
+    padding: 40px 6%;
+    background: #f7f6ed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 12px 40px #0002;
+  }
+  &__sheet span {
+    font-size: 9px;
+  }
+  &__sheet h3 {
+    font-size: clamp(48px, 6vw, 82px);
+    line-height: 1;
+    font-weight: 500;
+    margin: 20px 0;
+  }
+  &__sheet p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  &__rule {
+    height: 1px;
+    background: #cbd1c0;
+    margin: 20px 0;
+  }
+  &__space {
+    height: 440px;
+    pointer-events: none;
+  }
+  footer label {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  input {
+    width: 140px;
+    accent-color: #3d5830;
+  }
+  @media (max-width: 600px) {
+    &__scroller,
+    &__sheet,
+    &__space,
+    &__backdrop {
+      height: 360px;
+    }
+    &__backdrop {
+      margin-bottom: -360px;
+    }
+    &__scene {
+      grid-template-columns: 1.3fr 1fr;
+      padding: 28px 6%;
+      gap: 12px;
+    }
+    &__scene h2 {
+      font-size: 34px;
+    }
+    &__sheet {
+      padding: 30px 7%;
+    }
+    &__sheet h3 {
+      font-size: 56px;
+    }
+    &__sheet p {
+      font-size: 11px;
+    }
+  }
+}

@@ -1,0 +1,84 @@
+.blur-dissolve {
+  background: #171b18;
+  color: #f2f0e6;
+  min-width: 0;
+  > header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 28px;
+    color: #bac0b4;
+    font-size: 9px;
+    border-bottom: 1px solid #ffffff20;
+  }
+  &__scene {
+    height: 350px;
+    position: relative;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  &__caption {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    text-align: center;
+    font-size: 10px;
+    color: #a0aa97;
+  }
+  > footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    padding: 20px 28px;
+    border-top: 1px solid #ffffff20;
+  }
+  footer button {
+    border: 1px solid #8e9d80;
+    background: transparent;
+    color: #f2f0e6;
+    border-radius: 50px;
+    padding: 13px 20px;
+    font-size: 12px;
+    min-height: 44px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    white-space: nowrap;
+  }
+  footer button:hover {
+    background: #33412d;
+  }
+  footer button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+  }
+  footer p {
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: right;
+    color: #b8c3ad;
+  }
+  @media (max-width: 600px) {
+    > header {
+      font-size: 8px;
+      padding: 20px;
+    }
+    &__scene {
+      height: 290px;
+    }
+    > footer {
+      padding: 18px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    footer p {
+      text-align: left;
+      margin: 4px 0;
+    }
+  }
+}

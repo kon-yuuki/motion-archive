@@ -15,7 +15,8 @@
     "video:form-hit-area": "node scripts/record-form-hit-area.mjs",
     "video:hover-intent": "node scripts/record-hover-intent.mjs",
     "video:pie-chart": "node scripts/record-css-pie-chart-full.mjs",
-    "video:typography-gui": "node scripts/record-typography-gui.mjs"
+    "video:typography-gui": "node scripts/record-typography-gui.mjs",
+    "verify:ui-motion": "node scripts/motion/validate-metadata.mjs && node scripts/motion/verify-browser.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
