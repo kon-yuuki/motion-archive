@@ -1,0 +1,131 @@
+{
+  "results": [
+    {
+      "name": "144px source diameter",
+      "pass": true,
+      "details": 144.00250244140625
+    },
+    {
+      "name": "Source dark color",
+      "pass": true
+    },
+    {
+      "name": "Source blue color",
+      "pass": true
+    },
+    {
+      "name": "Plain About me label",
+      "pass": true
+    },
+    {
+      "name": "No arrow or orbit",
+      "pass": true
+    },
+    {
+      "name": "Real link not toggle",
+      "pass": true
+    },
+    {
+      "name": "Circle follows source strength 100",
+      "pass": true,
+      "details": {
+        "rect": {
+          "x": 547.1661376953125,
+          "y": 393.0168151855469,
+          "width": 144.0029296875,
+          "height": 144.00289916992188,
+          "top": 393.0168151855469,
+          "right": 691.1690673828125,
+          "bottom": 537.0197143554688,
+          "left": 547.1661376953125
+        },
+        "color": "rgb(28, 29, 32)",
+        "labelRect": {
+          "x": 600.8449096679688,
+          "y": 439.0263366699219,
+          "width": 65.79791259765625,
+          "height": 25.596405029296875,
+          "top": 439.0263366699219,
+          "right": 666.642822265625,
+          "bottom": 464.62274169921875,
+          "left": 600.8449096679688
+        },
+        "orb": "matrix(1, 2.00713e-05, -2.00713e-05, 1, 29.1676, -26.388)",
+        "label": "matrix(1, 2.00713e-05, -2.00713e-05, 1, 14.5838, -13.194)",
+        "fill": "matrix(1, 0, 0, 1, 0, 0)",
+        "blue": "rgb(69, 92, 233)"
+      }
+    },
+    {
+      "name": "Nested label follows strength 50",
+      "pass": true,
+      "details": "matrix(1, 2.00713e-05, -2.00713e-05, 1, 14.5838, -13.194)"
+    },
+    {
+      "name": "Fill covers circle after enter",
+      "pass": true
+    },
+    {
+      "name": "Fill exits upward",
+      "pass": true,
+      "details": "matrix(1, 0, 0, 1, 0, -218.88)"
+    },
+    {
+      "name": "Circle returns to origin",
+      "pass": true,
+      "details": "matrix(1, 2.00713e-05, -2.00713e-05, 1, -0.000190337, 0.000174651)"
+    },
+    {
+      "name": "Repeated enter/exit settles",
+      "pass": true
+    },
+    {
+      "name": "Reset cancels replay",
+      "pass": true
+    },
+    {
+      "name": "Keyboard fallback visible",
+      "pass": true
+    },
+    {
+      "name": "Keyboard activation requests source About",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion keeps circle at origin",
+      "pass": true
+    },
+    {
+      "name": "390px no overflow",
+      "pass": true
+    },
+    {
+      "name": "320px no overflow",
+      "pass": true
+    },
+    {
+      "name": "No serious/critical accessibility issue",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Touch fallback has no magnetic translation",
+      "pass": true
+    },
+    {
+      "name": "Touch fallback is a link",
+      "pass": true
+    },
+    {
+      "name": "No page errors",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "sourceViewport": {
+    "width": 1180,
+    "height": 757
+  },
+  "scope": "Component trace. Source typeface and full-page transition excluded."
+}

@@ -197,7 +197,7 @@ try {
     await page.locator(".reference-card").first().click();
     await page.waitForSelector("[data-demo-ready=true]");
     await page.locator("[data-demo-replay]").click();
-    await page.locator('.motion-header a[href="../"]').click();
+    await page.locator('[data-gallery-categories] a[aria-current="location"]').click();
     await page.waitForSelector(".reference-card");
   }
   check(

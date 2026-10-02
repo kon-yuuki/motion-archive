@@ -1,0 +1,168 @@
+{
+  "checks": [
+    {
+      "path": "/ui-gallery/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/form/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/tooltip-behavior/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/typography/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/mega-menu/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/arrow-swap/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/checker-dissolve/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/directional-underline/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/icon-sequence/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/magnetic-fill/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/buttons/menu-icon-morph/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/bending-cards/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/ferris-wheel/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/free-drag-rail/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/lateral-panels/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/layered-bundle/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/sliders/vertical-aperture/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/depth-tunnel/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/gradient-frame-wipe/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/numeral-mask/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/reel-expansion/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/underlapping-footer/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/section-transitions/upward-curtain/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/blur-dissolve/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/character-xray/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/contour-ripple/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/masked-lines/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/proximity-weight/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/text-reveals/scan-band-reveal/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/accordion-unfold/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/cube-tiles/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/cursor-preview/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/menu-crossfade/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/organic-mask/",
+      "passed": true
+    },
+    {
+      "path": "/ui-gallery/image-reveals/texture-mask/",
+      "passed": true
+    }
+  ],
+  "flow": "gallery/category/demo/category/cross-category/back/forward/Buttons/Form/category/keyboard",
+  "accessibilityViolations": [],
+  "errors": [],
+  "noJavaScript": true
+}

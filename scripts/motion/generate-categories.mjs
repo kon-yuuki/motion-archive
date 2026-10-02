@@ -57,15 +57,9 @@ for (const [slug, title, label, description] of categories) {
     continue;
   }
   mkdirSync(`ui-gallery/${slug}`, { recursive: true });
-  const nav = categories
-    .map(
-      ([id, name]) =>
-        `<a href="../${id}/"${id === "buttons" ? " data-no-swup" : ""}${id === slug ? ' aria-current="page"' : ""}>${name}</a>`,
-    )
-    .join("");
   writeFileSync(
     `ui-gallery/${slug}/index.html`,
-    `<!doctype html><html lang="ja"><head><meta name="description" content="${description}" /><link rel="stylesheet" href="./style.scss" /><title>${title} / UI Gallery / Motion &amp; UI</title></head><body><header id="site-header" class="motion-header"><a class="motion-brand" href="../../">Motion &amp; UI</a><nav aria-label="ページ案内"><a href="../">UI Gallery</a><a href="../../motion-archive/">Motion Archive</a></nav></header><div id="swup" class="transition-fade"><main class="motion-category-page"><div class="motion-category-hero"><div><p class="motion-eyebrow">UI Gallery / ${label}</p><h1>${title}</h1></div><p class="motion-category-hero__copy">${description}<br />過去の Awwwards SOTD サイトや公式記録映像を観察し、使い回せる小さなデモに分解しています。</p></div><nav class="motion-category-navigation" aria-label="カテゴリー">${nav}</nav>${section}<aside class="motion-reference-disclaimer"><h2>観察して、触って、使う</h2><p>各デモに参考 URL・受賞日・観察箇所・再現の限界・ソースコードを掲載しています。実装の検証済みでも、ユーザーレビュー前は WIP 表示です。サイトの意匠をそのまま複製せず、動きの仕組みを独立して学ぶためのリファレンスです。</p></aside></main><footer class="motion-footer"><a href="../">← UI Gallery</a><span>Motion &amp; UI / Component references</span></footer><script type="module" src="./script.js" data-swup-reload-script></script></div><script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script></body></html>\n`,
+    `<!doctype html><html lang="ja"><head><meta name="description" content="${description}" /><link rel="stylesheet" href="./style.scss" /><title>${title} / UI Gallery / Motion &amp; UI</title></head><body><header id="site-header" class="motion-header"><a class="motion-brand" href="../../">Motion &amp; UI</a><nav aria-label="ページ案内"><a href="../">UI Gallery</a><a href="../../motion-archive/">Motion Archive</a></nav></header><div id="swup" class="transition-fade"><main class="motion-category-page"><div class="motion-category-hero"><div><p class="motion-eyebrow">UI Gallery / ${label}</p><h1>${title}</h1></div><p class="motion-category-hero__copy">${description}<br />過去の Awwwards SOTD サイトや公式記録映像を観察し、使い回せる小さなデモに分解しています。</p></div>${section}<aside class="motion-reference-disclaimer"><h2>観察して、触って、使う</h2><p>各デモに参考 URL・受賞日・観察箇所・再現の限界・ソースコードを掲載しています。実装の検証済みでも、ユーザーレビュー前は WIP 表示です。サイトの意匠をそのまま複製せず、動きの仕組みを独立して学ぶためのリファレンスです。</p></aside></main><footer class="motion-footer"><a href="../">← UI Gallery</a><span>Motion &amp; UI / Component references</span></footer><script type="module" src="./script.js" data-swup-reload-script></script></div><script type="module" src="/src/scripts/page-transitions.js" data-swup-ignore-script></script></body></html>\n`,
   );
   writeFileSync(
     `ui-gallery/${slug}/style.scss`,

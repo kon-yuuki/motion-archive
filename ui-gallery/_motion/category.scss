@@ -22,23 +22,6 @@
   color: var(--motion-muted);
   line-height: 1.9;
 }
-.motion-category-navigation {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 0 0 28px;
-}
-.motion-category-navigation a {
-  font-size: 11px;
-  border: 1px solid var(--motion-line);
-  padding: 12px 16px;
-  border-radius: 100px;
-}
-.motion-category-navigation a[aria-current="page"] {
-  background: var(--motion-ink);
-  color: #fff;
-  border-color: var(--motion-ink);
-}
 .reference-collection {
   padding: 0 0 50px;
 }

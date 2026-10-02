@@ -1,0 +1,45 @@
+{
+  "viewport": {
+    "width": 1180,
+    "height": 757
+  },
+  "label": {
+    "bottom": 596.685546875,
+    "height": 25.5960693359375,
+    "left": 848.4683227539062,
+    "right": 914.2504272460938,
+    "top": 571.0894775390625,
+    "width": 65.7821044921875,
+    "x": 848.4683227539062,
+    "y": 571.0894775390625
+  },
+  "link": {
+    "bottom": 655.8887939453125,
+    "height": 144.0025634765625,
+    "left": 809.3580932617188,
+    "right": 953.360595703125,
+    "top": 511.88623046875,
+    "width": 144.00250244140625,
+    "x": 809.3580932617188,
+    "y": 511.88623046875
+  },
+  "parent": {
+    "bottom": 655.8875122070312,
+    "height": 144,
+    "left": 809.359375,
+    "right": 953.359375,
+    "top": 511.8875122070313,
+    "width": 144,
+    "x": 809.359375,
+    "y": 511.8875122070313
+  },
+  "source": "https://dennissnellenberg.com/",
+  "observed": "2026-10-02",
+  "circleColor": "#1c1d20",
+  "fillColor": "#455ce9",
+  "circleStrength": 100,
+  "nestedLabelStrength": 50,
+  "font": "Dennis Sans / Neue Montreal, 16px, 450",
+  "fillWidthPercent": 150,
+  "fillHeightPercent": 200
+}

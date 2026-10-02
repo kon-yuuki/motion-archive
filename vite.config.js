@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { injectSkipLink, injectSocialMeta } from "./scripts/html-meta.mjs";
+import { injectGalleryNavigation } from "./scripts/html-gallery-navigation.mjs";
 
 // Discover only the five reference categories and their explicit demo HTML entries.
 const referenceCategories = ["buttons", "sliders", "section-transitions", "text-reveals", "image-reveals"];
@@ -65,7 +66,7 @@ export default defineConfig({
           const withMeta = injectSocialMeta(withSharedHead, {
             pagePath: context.path
           });
-          return injectSkipLink(withMeta);
+          return injectSkipLink(injectGalleryNavigation(withMeta, context.path));
         }
       }
     }
