@@ -1,0 +1,639 @@
+{
+  "results": [
+    {
+      "name": "Source 74.765625 × 15.953125px link",
+      "pass": true,
+      "details": {
+        "x": 1002.046875,
+        "y": 307.421875,
+        "width": 74.765625,
+        "height": 15.953125
+      }
+    },
+    {
+      "name": "Source label width 54.765625px",
+      "pass": true,
+      "details": 54.765625
+    },
+    {
+      "name": "14px type / white on black",
+      "pass": true,
+      "details": "14px / 15.96px Arial, \"DejaVu Sans\", sans-serif"
+    },
+    {
+      "name": "Unicode arrows with no invented artwork",
+      "pass": true
+    },
+    {
+      "name": "Ordinary Contact link",
+      "pass": true
+    },
+    {
+      "name": "Source link clips arrows",
+      "pass": true
+    },
+    {
+      "name": "Source 15px arrow box and 5px gap",
+      "pass": true,
+      "details": {
+        "x": 1061.8125,
+        "y": 307.421875,
+        "width": 15,
+        "height": 15.953125,
+        "top": 307.421875,
+        "right": 1076.8125,
+        "bottom": 323.375,
+        "left": 1061.8125
+      }
+    },
+    {
+      "name": "Rest arrow endpoints",
+      "pass": true,
+      "details": {
+        "rect": {
+          "x": 1002.046875,
+          "y": 307.421875,
+          "width": 74.765625,
+          "height": 15.953125,
+          "top": 307.421875,
+          "right": 1076.8125,
+          "bottom": 323.375,
+          "left": 1002.046875
+        },
+        "font": "14px / 15.96px Arial, \"DejaVu Sans\", sans-serif",
+        "overflow": "hidden",
+        "color": "rgb(255, 255, 255)",
+        "label": {
+          "transform": "none",
+          "opacity": 1,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 1002.046875,
+            "y": 307.421875,
+            "width": 54.765625,
+            "height": 15.953125,
+            "top": 307.421875,
+            "right": 1056.8125,
+            "bottom": 323.375,
+            "left": 1002.046875
+          }
+        },
+        "left": {
+          "transform": "matrix(1, 0, 0, 1, -18.75, 7.97656)",
+          "opacity": 0,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 983.296875,
+            "y": 315.3984375,
+            "width": 15,
+            "height": 15.953125,
+            "top": 315.3984375,
+            "right": 998.296875,
+            "bottom": 331.3515625,
+            "left": 983.296875
+          }
+        },
+        "right": {
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "opacity": 1,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 1061.8125,
+            "y": 307.421875,
+            "width": 15,
+            "height": 15.953125,
+            "top": 307.421875,
+            "right": 1076.8125,
+            "bottom": 323.375,
+            "left": 1061.8125
+          }
+        },
+        "underline": {
+          "transform": "matrix(0, 0, 0, 1, 0, 0)",
+          "origin": "0px 0.5px",
+          "duration": "0.6s",
+          "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+          "height": "1px"
+        }
+      }
+    },
+    {
+      "name": "Rest underline hidden, 1px, left origin",
+      "pass": true,
+      "details": {
+        "transform": "matrix(0, 0, 0, 1, 0, 0)",
+        "origin": "0px 0.5px",
+        "duration": "0.6s",
+        "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "height": "1px"
+      }
+    },
+    {
+      "name": "Exact 700ms source transition",
+      "pass": true,
+      "details": {
+        "transform": "none",
+        "opacity": 1,
+        "duration": "0.7s, 0.7s",
+        "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+        "rect": {
+          "x": 1002.046875,
+          "y": 307.421875,
+          "width": 54.765625,
+          "height": 15.953125,
+          "top": 307.421875,
+          "right": 1056.8125,
+          "bottom": 323.375,
+          "left": 1002.046875
+        }
+      }
+    },
+    {
+      "name": "Exact 600ms source underline transition",
+      "pass": true,
+      "details": {
+        "transform": "matrix(0, 0, 0, 1, 0, 0)",
+        "origin": "0px 0.5px",
+        "duration": "0.6s",
+        "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "height": "1px"
+      }
+    },
+    {
+      "name": "Hover label moves 20px",
+      "pass": true,
+      "details": {
+        "transform": "matrix(1, 0, 0, 1, 20, 0)",
+        "opacity": 1,
+        "duration": "0.7s, 0.7s",
+        "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+        "rect": {
+          "x": 1022.046875,
+          "y": 307.421875,
+          "width": 54.765625,
+          "height": 15.953125,
+          "top": 307.421875,
+          "right": 1076.8125,
+          "bottom": 323.375,
+          "left": 1022.046875
+        }
+      }
+    },
+    {
+      "name": "Hover arrow endpoints",
+      "pass": true,
+      "details": {
+        "rect": {
+          "x": 1002.046875,
+          "y": 307.421875,
+          "width": 74.765625,
+          "height": 15.953125,
+          "top": 307.421875,
+          "right": 1076.8125,
+          "bottom": 323.375,
+          "left": 1002.046875
+        },
+        "font": "14px / 15.96px Arial, \"DejaVu Sans\", sans-serif",
+        "overflow": "hidden",
+        "color": "rgb(255, 255, 255)",
+        "label": {
+          "transform": "matrix(1, 0, 0, 1, 20, 0)",
+          "opacity": 1,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 1022.046875,
+            "y": 307.421875,
+            "width": 54.765625,
+            "height": 15.953125,
+            "top": 307.421875,
+            "right": 1076.8125,
+            "bottom": 323.375,
+            "left": 1022.046875
+          }
+        },
+        "left": {
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "opacity": 1,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 1002.046875,
+            "y": 307.421875,
+            "width": 15,
+            "height": 15.953125,
+            "top": 307.421875,
+            "right": 1017.046875,
+            "bottom": 323.375,
+            "left": 1002.046875
+          }
+        },
+        "right": {
+          "transform": "matrix(1, 0, 0, 1, 18.75, -7.97656)",
+          "opacity": 0,
+          "duration": "0.7s, 0.7s",
+          "easing": "cubic-bezier(0.52, 0, 0, 1), cubic-bezier(0.52, 0, 0, 1)",
+          "rect": {
+            "x": 1080.5625,
+            "y": 299.4453125,
+            "width": 15,
+            "height": 15.953125,
+            "top": 299.4453125,
+            "right": 1095.5625,
+            "bottom": 315.3984375,
+            "left": 1080.5625
+          }
+        },
+        "underline": {
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "origin": "0px 0.5px",
+          "duration": "0.6s",
+          "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+          "height": "1px"
+        }
+      }
+    },
+    {
+      "name": "Hover underline fills fixed width",
+      "pass": true,
+      "details": {
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "origin": "0px 0.5px",
+        "duration": "0.6s",
+        "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "height": "1px"
+      }
+    },
+    {
+      "name": "Exit underline keeps LEFT origin",
+      "pass": true,
+      "details": {
+        "transform": "matrix(0.909214, 0, 0, 1, 0, 0)",
+        "origin": "0px 0.5px",
+        "duration": "0.6s",
+        "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+        "height": "1px"
+      }
+    },
+    {
+      "name": "Exit restores initial endpoints",
+      "pass": true
+    },
+    {
+      "name": "Interrupted entry reverses continuously from leave event",
+      "pass": true,
+      "details": [
+        {
+          "elapsedMs": 0,
+          "x": 4.71479
+        },
+        {
+          "elapsedMs": 0.6000000014901161,
+          "x": 4.71479
+        },
+        {
+          "elapsedMs": 15.800000004470348,
+          "x": 4.63831
+        },
+        {
+          "elapsedMs": 32.5,
+          "x": 4.26676
+        },
+        {
+          "elapsedMs": 49.399999998509884,
+          "x": 2.7383
+        },
+        {
+          "elapsedMs": 66.20000000298023,
+          "x": 1.28964
+        },
+        {
+          "elapsedMs": 83.70000000298023,
+          "x": 0.695264
+        },
+        {
+          "elapsedMs": 99.10000000149012,
+          "x": 0.372031
+        },
+        {
+          "elapsedMs": 117.70000000298023,
+          "x": 0.179795
+        },
+        {
+          "elapsedMs": 132.5,
+          "x": 0.069052
+        },
+        {
+          "elapsedMs": 149.20000000298023,
+          "x": 0.0142894
+        },
+        {
+          "elapsedMs": 165.80000000447035,
+          "x": 0
+        },
+        {
+          "elapsedMs": 184.10000000149012,
+          "x": 0
+        },
+        {
+          "elapsedMs": 199.20000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 216.70000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 233.10000000149012,
+          "x": 0
+        },
+        {
+          "elapsedMs": 249.20000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 266.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 283.5,
+          "x": 0
+        },
+        {
+          "elapsedMs": 299.1000000014901,
+          "x": 0
+        },
+        {
+          "elapsedMs": 316.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 333.30000000447035,
+          "x": 0
+        },
+        {
+          "elapsedMs": 349.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 365.80000000447035,
+          "x": 0
+        },
+        {
+          "elapsedMs": 383,
+          "x": 0
+        },
+        {
+          "elapsedMs": 399.1000000014901,
+          "x": 0
+        },
+        {
+          "elapsedMs": 415.80000000447035,
+          "x": 0
+        },
+        {
+          "elapsedMs": 432.70000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 450.70000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 465.70000000298023,
+          "x": 0
+        },
+        {
+          "elapsedMs": 482.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 499,
+          "x": 0
+        },
+        {
+          "elapsedMs": 515.8000000044703,
+          "x": 0
+        },
+        {
+          "elapsedMs": 532.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 549.2000000029802,
+          "x": 0
+        },
+        {
+          "elapsedMs": 565.8000000044703,
+          "x": 0
+        },
+        {
+          "elapsedMs": 582.3000000044703,
+          "x": 0
+        },
+        {
+          "elapsedMs": 599.3000000044703,
+          "x": 0
+        },
+        {
+          "elapsedMs": 615.8000000044703,
+          "x": 0
+        },
+        {
+          "elapsedMs": 632.5,
+          "x": 0
+        },
+        {
+          "elapsedMs": 649.2000000029802,
+          "x": 0
+        },
+        {
+          "elapsedMs": 665.7000000029802,
+          "x": 0
+        },
+        {
+          "elapsedMs": 682.5,
+          "x": 0
+        },
+        {
+          "elapsedMs": 699,
+          "x": 0
+        },
+        {
+          "elapsedMs": 716,
+          "x": 0
+        },
+        {
+          "elapsedMs": 732.3999999985099,
+          "x": 0
+        },
+        {
+          "elapsedMs": 750.1000000014901,
+          "x": 0
+        }
+      ]
+    },
+    {
+      "name": "Rapid hover settles at rest",
+      "pass": true
+    },
+    {
+      "name": "Reset cancels Replay timer and frame",
+      "pass": true
+    },
+    {
+      "name": "Replay reaches hover endpoint",
+      "pass": true
+    },
+    {
+      "name": "Replay completes exit",
+      "pass": true
+    },
+    {
+      "name": "Keyboard fallback: visible outline / static underline",
+      "pass": true
+    },
+    {
+      "name": "Keyboard focus leaves source label at rest",
+      "pass": true
+    },
+    {
+      "name": "Enter activates Contact in separate tab",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion switches endpoints without transitions",
+      "pass": true,
+      "details": {
+        "rect": {
+          "x": 1002.046875,
+          "y": 370.421875,
+          "width": 74.765625,
+          "height": 15.953125,
+          "top": 370.421875,
+          "right": 1076.8125,
+          "bottom": 386.375,
+          "left": 1002.046875
+        },
+        "font": "14px / 15.96px Arial, \"DejaVu Sans\", sans-serif",
+        "overflow": "hidden",
+        "color": "rgb(255, 255, 255)",
+        "label": {
+          "transform": "matrix(1, 0, 0, 1, 20, 0)",
+          "opacity": 1,
+          "duration": "0s",
+          "easing": "ease",
+          "rect": {
+            "x": 1022.046875,
+            "y": 370.421875,
+            "width": 54.765625,
+            "height": 15.953125,
+            "top": 370.421875,
+            "right": 1076.8125,
+            "bottom": 386.375,
+            "left": 1022.046875
+          }
+        },
+        "left": {
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "opacity": 1,
+          "duration": "0s",
+          "easing": "ease",
+          "rect": {
+            "x": 1002.046875,
+            "y": 370.421875,
+            "width": 15,
+            "height": 15.953125,
+            "top": 370.421875,
+            "right": 1017.046875,
+            "bottom": 386.375,
+            "left": 1002.046875
+          }
+        },
+        "right": {
+          "transform": "matrix(1, 0, 0, 1, 18.75, -7.97656)",
+          "opacity": 0,
+          "duration": "0s",
+          "easing": "ease",
+          "rect": {
+            "x": 1080.5625,
+            "y": 362.4453125,
+            "width": 15,
+            "height": 15.953125,
+            "top": 362.4453125,
+            "right": 1095.5625,
+            "bottom": 378.3984375,
+            "left": 1080.5625
+          }
+        },
+        "underline": {
+          "transform": "matrix(1, 0, 0, 1, 0, 0)",
+          "origin": "0px 0.5px",
+          "duration": "0s",
+          "easing": "ease",
+          "height": "1px"
+        }
+      }
+    },
+    {
+      "name": "OS reduced motion switches endpoints without transitions",
+      "pass": true
+    },
+    {
+      "name": "OS preference changes remount cleanly at rest",
+      "pass": true
+    },
+    {
+      "name": "390px no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "320px no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "No serious/critical accessibility violations",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Abort cancels timers, frames, listeners, animations",
+      "pass": true,
+      "details": {
+        "mutations": 0,
+        "unchanged": true,
+        "animations": 0
+      }
+    },
+    {
+      "name": "Back navigation remounts working component",
+      "pass": true
+    },
+    {
+      "name": "Touch fallback has 44px target",
+      "pass": true
+    },
+    {
+      "name": "First tap activates ordinary link",
+      "pass": true
+    },
+    {
+      "name": "Touch does not latch synthetic hover",
+      "pass": true
+    },
+    {
+      "name": "No page errors",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1180,
+    "height": 757
+  },
+  "scope": "Component trace. Typeface substitution is disclosed. Source PNGs are 1165×747; phase captures are not frame-synchronized."
+}

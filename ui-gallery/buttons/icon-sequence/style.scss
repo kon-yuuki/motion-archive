@@ -1,189 +1,44 @@
 .icon-sequence {
-  display: flex;
-  flex-direction: column;
-  min-height: 480px;
-  padding: 26px clamp(22px, 5vw, 60px);
-  color: #493c29;
-  background: #f0d882;
-  &__top,
-  &__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 20px;
-    font-size: 10px;
-    line-height: 1.7;
-    color: #615233;
-  }
-  &__top {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #c4ac6e;
-  }
-  &__body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 30px;
-    flex: 1;
-    padding: 40px 0;
-  }
-  &__copy h2 {
-    margin: 0 0 24px;
-    font-size: clamp(42px, 6vw, 72px);
-    font-weight: 400;
-    line-height: 1.02;
-  }
-  &__copy p {
-    margin: 0;
-    font-size: 11px;
-    line-height: 1.9;
-  }
-  &__field {
-    display: grid;
-    place-items: center;
-    align-content: center;
-    gap: 24px;
-    min-height: 230px;
-  }
-  &__field > span {
-    font-size: 10px;
-    color: #615233;
-  }
+  // The recorded crop is 918×656. Keep its plain, centered composition.
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 918 / 656;
+  min-height: 340px;
+  max-height: 656px;
+  background: #f7cd49;
+  color: #292929;
+  isolation: isolate;
+
   &__button {
+    position: relative;
     display: grid;
     place-items: center;
-    position: relative;
-    width: min(100%, 280px);
-    height: 74px;
+    width: min(278px, calc(100% - 36px));
+    height: 94px;
+    margin: 4px 0 0 2px;
+    padding: 0;
     border: 0;
     border-radius: 999px;
     overflow: hidden;
-    color: #322d26;
-    background: #fffaf0;
-    font-size: 17px;
+    background: #fdfdfd;
+    color: #292929;
+    font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
     touch-action: manipulation;
-    transition:
-      background-color 250ms ease,
-      color 250ms ease;
   }
-  &__button:focus-visible {
-    outline: 2px solid #594589;
-    outline-offset: 7px;
-  }
-  &__first,
-  &__last,
-  &__sparks {
-    grid-area: 1/1;
-    pointer-events: none;
-  }
-  &__first {
-    opacity: 1;
-    transition: opacity 130ms ease;
-  }
-  &__last {
-    opacity: 0;
-    transition: opacity 250ms ease;
-  }
-  &__sparks {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    color: #90683d;
-  }
-  &__sparks > span {
-    display: block;
-    opacity: 0;
-  }
-  &.is-playing &__first,
-  &.is-settled &__first {
-    opacity: 0;
-  }
-  &.is-playing &__sparks > span {
-    animation: icon-sequence-spark 480ms ease-out var(--delay) both;
-  }
-  &.is-settled &__button {
-    background: #66508f;
-    color: #fff9ee;
-  }
-  &.is-settled &__last {
-    opacity: 1;
-  }
-  &__bottom {
-    padding-top: 20px;
-    border-top: 1px solid #c4ac6e;
-  }
-  &__bottom [role="status"] {
-    max-width: 65%;
-    text-align: right;
-  }
+  &__first, &__last, &__flames { grid-area: 1 / 1; pointer-events: none; }
+  &__first { white-space: nowrap; }
+  &__last { color: #fff; opacity: 0; white-space: nowrap; }
+  &__flames { display: flex; gap: 0; width: 144px; font-size: 36px; line-height: 1; }
+  &__flames > span { display: block; width: 36px; opacity: 0; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+  &__button:focus-visible { outline: 3px solid #25269c; outline-offset: 7px; }
+  &__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }
-@keyframes icon-sequence-spark {
-  0% {
-    opacity: 0;
-    transform: scale(0.75);
-  }
-  25%,
-  55% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-}
-[data-reduced-motion="true"] .icon-sequence {
-  &__button,
-  &__first,
-  &__last {
-    transition: none;
-  }
-  &__sparks {
-    display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .icon-sequence {
-    &__button,
-    &__first,
-    &__last {
-      transition: none;
-    }
-    &__sparks {
-      display: none;
-    }
-  }
-}
-@media (max-width: 600px) {
-  .icon-sequence {
-    padding: 22px;
-    min-height: 470px;
-    &__top span:last-child {
-      display: none;
-    }
-    &__body {
-      grid-template-columns: 1fr;
-      gap: 15px;
-      padding: 28px 0;
-    }
-    &__copy {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-    }
-    &__copy h2 {
-      font-size: 44px;
-      margin: 0;
-    }
-    &__copy p {
-      font-size: 10px;
-    }
-    &__field {
-      min-height: 200px;
-    }
-    &__bottom {
-      font-size: 9px;
-    }
-  }
+@media (max-width: 400px) {
+  .icon-sequence__button { font-size: 28px; height: 84px; }
 }

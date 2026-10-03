@@ -1,0 +1,79 @@
+{
+  "children": [
+    {
+      "class": "icon icon-b",
+      "font": "14px / 15.96px SuisseIntl, sans-serif",
+      "opacity": "0",
+      "rect": {
+        "bottom": 59.9453125,
+        "height": 15.953125,
+        "left": 1031.484375,
+        "right": 1046.484375,
+        "top": 43.9921875,
+        "width": 15,
+        "x": 1031.484375,
+        "y": 43.9921875
+      },
+      "transform": "matrix(1, 0, 0, 1, -18.75, 7.97656)",
+      "transition": "transform 0.7s cubic-bezier(0.52, 0, 0, 1), opacity 0.7s cubic-bezier(0.52, 0, 0, 1)"
+    },
+    {
+      "class": "content",
+      "font": "14px / 15.96px SuisseIntl, sans-serif",
+      "opacity": "1",
+      "rect": {
+        "bottom": 51.96875,
+        "height": 15.953125,
+        "left": 1050.234375,
+        "right": 1105,
+        "top": 36.015625,
+        "width": 54.765625,
+        "x": 1050.234375,
+        "y": 36.015625
+      },
+      "transform": "none",
+      "transition": "transform 0.7s cubic-bezier(0.52, 0, 0, 1), opacity 0.7s cubic-bezier(0.52, 0, 0, 1)"
+    },
+    {
+      "class": "icon icon-a",
+      "font": "14px / 15.96px SuisseIntl, sans-serif",
+      "opacity": "1",
+      "rect": {
+        "bottom": 51.96875,
+        "height": 15.953125,
+        "left": 1110,
+        "right": 1125,
+        "top": 36.015625,
+        "width": 15,
+        "x": 1110,
+        "y": 36.015625
+      },
+      "transform": "none",
+      "transition": "transform 0.7s cubic-bezier(0.52, 0, 0, 1), opacity 0.7s cubic-bezier(0.52, 0, 0, 1)"
+    }
+  ],
+  "color": "rgb(255, 255, 255)",
+  "font": "14px / 15.96px SuisseIntl, sans-serif",
+  "html": "<a href=\"/contact\" class=\"b-arrow link-active cta\" data-v-62f3805e=\"\" data-v-963c9ccb=\"\"><span class=\"icon icon-b\" data-v-963c9ccb=\"\">↗</span><span class=\"content\" data-v-963c9ccb=\"\"><!--[-->Let's talk<!--]--></span><span class=\"icon icon-a\" data-v-963c9ccb=\"\">↗</span></a>",
+  "rect": {
+    "bottom": 51.96875,
+    "height": 15.953125,
+    "left": 1050.234375,
+    "right": 1125,
+    "top": 36.015625,
+    "width": 74.765625,
+    "x": 1050.234375,
+    "y": 36.015625
+  },
+  "underline": {
+    "duration": "0.6s",
+    "easing": "cubic-bezier(0.85, 0, 0.15, 1)",
+    "origin": "0px 0.5px",
+    "transform": "matrix(0, 0, 0, 1, 0, 0)"
+  },
+  "url": "https://www.rejouice.com/",
+  "viewport": {
+    "height": 757,
+    "width": 1180
+  }
+}

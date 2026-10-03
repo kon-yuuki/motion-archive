@@ -1,0 +1,265 @@
+{
+  "scope": "In-sample comparison against source used for tracing. Color-segmentation confidence exclusions apply; source silhouette topology is an estimate, not hand-labeled ground truth. Component/hole counts and cleaned contour distances ignore regions smaller than 150 source pixels. Raw boundary distances are sensitive to codec speckles and can be very large near completion; see clean_boundary_p95_px for meaningful-region segmentation.",
+  "measurements": [
+    {
+      "clean_boundary_p95_px": null,
+      "clean_boundary_sample_count": 0,
+      "elapsed_ms": 0,
+      "source_frame": 119,
+      "source_timestamp_s": 3.933333333333333,
+      "confidence_evaluated_fraction": 0.85893,
+      "masked_iou": 1.0,
+      "boundary_sample_count": 0,
+      "boundary_p95_px": null,
+      "source_segmented_topology": {
+        "components_min150px": 0,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 0,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.0
+    },
+    {
+      "clean_boundary_p95_px": 2.0,
+      "clean_boundary_sample_count": 271,
+      "elapsed_ms": 67,
+      "source_frame": 121,
+      "source_timestamp_s": 4.0,
+      "confidence_evaluated_fraction": 0.84398,
+      "masked_iou": 0.95945,
+      "boundary_sample_count": 593,
+      "boundary_p95_px": 7.443,
+      "source_segmented_topology": {
+        "components_min150px": 4,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 4,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.02327
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 534,
+      "elapsed_ms": 133,
+      "source_frame": 123,
+      "source_timestamp_s": 4.066666666666666,
+      "confidence_evaluated_fraction": 0.83525,
+      "masked_iou": 0.98487,
+      "boundary_sample_count": 858,
+      "boundary_p95_px": 3.0,
+      "source_segmented_topology": {
+        "components_min150px": 6,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 6,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.08708
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 943,
+      "elapsed_ms": 200,
+      "source_frame": 125,
+      "source_timestamp_s": 4.133333333333334,
+      "confidence_evaluated_fraction": 0.82248,
+      "masked_iou": 0.99122,
+      "boundary_sample_count": 1671,
+      "boundary_p95_px": 4.0,
+      "source_segmented_topology": {
+        "components_min150px": 8,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 8,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.20402
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 1447,
+      "elapsed_ms": 267,
+      "source_frame": 127,
+      "source_timestamp_s": 4.2,
+      "confidence_evaluated_fraction": 0.80774,
+      "masked_iou": 0.99312,
+      "boundary_sample_count": 2381,
+      "boundary_p95_px": 3.0,
+      "source_segmented_topology": {
+        "components_min150px": 7,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 7,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.35506
+    },
+    {
+      "clean_boundary_p95_px": 1.414,
+      "clean_boundary_sample_count": 1858,
+      "elapsed_ms": 333,
+      "source_frame": 129,
+      "source_timestamp_s": 4.266666666666667,
+      "confidence_evaluated_fraction": 0.78013,
+      "masked_iou": 0.99251,
+      "boundary_sample_count": 3171,
+      "boundary_p95_px": 4.123,
+      "source_segmented_topology": {
+        "components_min150px": 5,
+        "enclosed_holes_min150px": 3
+      },
+      "browser_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 3
+      },
+      "browser_visible_fraction": 0.59833
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 1558,
+      "elapsed_ms": 400,
+      "source_frame": 131,
+      "source_timestamp_s": 4.333333333333333,
+      "confidence_evaluated_fraction": 0.78338,
+      "masked_iou": 0.99519,
+      "boundary_sample_count": 2837,
+      "boundary_p95_px": 7.28,
+      "source_segmented_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 4
+      },
+      "browser_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 3
+      },
+      "browser_visible_fraction": 0.74476
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 1182,
+      "elapsed_ms": 467,
+      "source_frame": 133,
+      "source_timestamp_s": 4.4,
+      "confidence_evaluated_fraction": 0.80025,
+      "masked_iou": 0.99697,
+      "boundary_sample_count": 2020,
+      "boundary_p95_px": 7.082,
+      "source_segmented_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 4
+      },
+      "browser_topology": {
+        "components_min150px": 3,
+        "enclosed_holes_min150px": 4
+      },
+      "browser_visible_fraction": 0.82506
+    },
+    {
+      "clean_boundary_p95_px": 1.0,
+      "clean_boundary_sample_count": 850,
+      "elapsed_ms": 533,
+      "source_frame": 135,
+      "source_timestamp_s": 4.466666666666667,
+      "confidence_evaluated_fraction": 0.80556,
+      "masked_iou": 0.99684,
+      "boundary_sample_count": 1526,
+      "boundary_p95_px": 31.229,
+      "source_segmented_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 5
+      },
+      "browser_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 5
+      },
+      "browser_visible_fraction": 0.88255
+    },
+    {
+      "clean_boundary_p95_px": 1.414,
+      "clean_boundary_sample_count": 568,
+      "elapsed_ms": 600,
+      "source_frame": 137,
+      "source_timestamp_s": 4.533333333333333,
+      "confidence_evaluated_fraction": 0.81349,
+      "masked_iou": 0.99683,
+      "boundary_sample_count": 1066,
+      "boundary_p95_px": 48.083,
+      "source_segmented_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 4
+      },
+      "browser_topology": {
+        "components_min150px": 2,
+        "enclosed_holes_min150px": 4
+      },
+      "browser_visible_fraction": 0.92898
+    },
+    {
+      "clean_boundary_p95_px": 1.414,
+      "clean_boundary_sample_count": 174,
+      "elapsed_ms": 700,
+      "source_frame": 140,
+      "source_timestamp_s": 4.633333333333334,
+      "confidence_evaluated_fraction": 0.82135,
+      "masked_iou": 0.9985,
+      "boundary_sample_count": 496,
+      "boundary_p95_px": 85.25,
+      "source_segmented_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 3
+      },
+      "browser_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 3
+      },
+      "browser_visible_fraction": 0.98826
+    },
+    {
+      "clean_boundary_p95_px": null,
+      "clean_boundary_sample_count": 0,
+      "elapsed_ms": 833,
+      "source_frame": 144,
+      "source_timestamp_s": 4.766666666666667,
+      "confidence_evaluated_fraction": 0.82706,
+      "masked_iou": 0.99888,
+      "boundary_sample_count": 218,
+      "boundary_p95_px": 173.0,
+      "source_segmented_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 1
+      },
+      "browser_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 0.99965
+    },
+    {
+      "clean_boundary_p95_px": null,
+      "clean_boundary_sample_count": 0,
+      "elapsed_ms": 900,
+      "source_frame": 146,
+      "source_timestamp_s": 4.833333333333333,
+      "confidence_evaluated_fraction": 0.85343,
+      "masked_iou": 0.99967,
+      "boundary_sample_count": 32,
+      "boundary_p95_px": 141.0,
+      "source_segmented_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_topology": {
+        "components_min150px": 1,
+        "enclosed_holes_min150px": 0
+      },
+      "browser_visible_fraction": 1.0
+    }
+  ]
+}

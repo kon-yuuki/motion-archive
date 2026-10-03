@@ -1,0 +1,365 @@
+{
+  "results": [
+    {
+      "name": "Initial browser load / meaningful content / no error overlay",
+      "pass": true
+    },
+    {
+      "name": "Source desktop image rectangle",
+      "pass": true,
+      "detail": {
+        "x": 288,
+        "y": 68.984375,
+        "width": 374.984375,
+        "height": 534,
+        "top": 68.984375,
+        "right": 662.984375,
+        "bottom": 602.984375,
+        "left": 288
+      }
+    },
+    {
+      "name": "Playback advances through an intermediate mask",
+      "pass": true,
+      "detail": {
+        "state": "playing",
+        "elapsed": "383",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "hidden",
+        "canvasVisible": "visible"
+      }
+    },
+    {
+      "name": "Playback settles to a complete normal image",
+      "pass": true,
+      "detail": {
+        "state": "complete",
+        "elapsed": "900",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "visible",
+        "canvasVisible": "hidden"
+      }
+    },
+    {
+      "name": "Reset cancels playback at 0ms",
+      "pass": true,
+      "detail": {
+        "state": "ready",
+        "elapsed": "0",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "hidden",
+        "canvasVisible": "visible"
+      }
+    },
+    {
+      "name": "Reset cancels playback at 60ms",
+      "pass": true,
+      "detail": {
+        "state": "ready",
+        "elapsed": "0",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "hidden",
+        "canvasVisible": "visible"
+      }
+    },
+    {
+      "name": "Reset cancels playback at 300ms",
+      "pass": true,
+      "detail": {
+        "state": "ready",
+        "elapsed": "0",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "hidden",
+        "canvasVisible": "visible"
+      }
+    },
+    {
+      "name": "Reset cancels playback at 700ms",
+      "pass": true,
+      "detail": {
+        "state": "ready",
+        "elapsed": "0",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "hidden",
+        "canvasVisible": "visible"
+      }
+    },
+    {
+      "name": "Repeated replay settles once",
+      "pass": true
+    },
+    {
+      "name": "Keyboard replay",
+      "pass": true
+    },
+    {
+      "name": "Abort cancels RAF and prevents new playback",
+      "pass": true
+    },
+    {
+      "name": "Destroyed replay is inert",
+      "pass": true
+    },
+    {
+      "name": "Reduced-motion replay/reset remain fully visible",
+      "pass": true,
+      "detail": {
+        "state": "complete",
+        "elapsed": "900",
+        "loaded": "true",
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "width": 918,
+          "height": 656,
+          "top": 0,
+          "right": 918,
+          "bottom": 656,
+          "left": 0
+        },
+        "figure": {
+          "x": 288,
+          "y": 68.984375,
+          "width": 374.984375,
+          "height": 534,
+          "top": 68.984375,
+          "right": 662.984375,
+          "bottom": 602.984375,
+          "left": 288
+        },
+        "imageVisible": "visible",
+        "canvasVisible": "hidden"
+      }
+    },
+    {
+      "name": "Reset during image loading is retained",
+      "pass": true
+    },
+    {
+      "name": "Replay during image loading is retained",
+      "pass": true
+    },
+    {
+      "name": "Abort during loading prevents observer and paint",
+      "pass": true
+    },
+    {
+      "name": "Mask CPU work stays below one 60fps frame on this runner",
+      "pass": true,
+      "detail": {
+        "meanDrawMs": 1.1433333333581686
+      }
+    },
+    {
+      "name": "600px mobile preserves portrait ratio and stays in bounds",
+      "pass": true,
+      "detail": {
+        "x": 102,
+        "y": 167.375,
+        "width": 396,
+        "height": 563.890625,
+        "top": 167.375,
+        "right": 498,
+        "bottom": 731.265625,
+        "left": 102
+      }
+    },
+    {
+      "name": "390px mobile preserves portrait ratio and stays in bounds",
+      "pass": true,
+      "detail": {
+        "x": 66.296875,
+        "y": 108.796875,
+        "width": 257.390625,
+        "height": 366.515625,
+        "top": 108.796875,
+        "right": 323.6875,
+        "bottom": 475.3125,
+        "left": 66.296875
+      }
+    },
+    {
+      "name": "320px mobile preserves portrait ratio and stays in bounds",
+      "pass": true,
+      "detail": {
+        "x": 54.390625,
+        "y": 89.265625,
+        "width": 211.1875,
+        "height": 300.71875,
+        "top": 89.265625,
+        "right": 265.578125,
+        "bottom": 389.984375,
+        "left": 54.390625
+      }
+    },
+    {
+      "name": "Trace notes tab exposes recorded-mask limitations",
+      "pass": true
+    },
+    {
+      "name": "Integrated toolbar reset persists",
+      "pass": true
+    },
+    {
+      "name": "Integrated reduced toggle",
+      "pass": true
+    },
+    {
+      "name": "Integrated lab axe violations",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Back navigation restores functioning controls",
+      "pass": true
+    },
+    {
+      "name": "OS reduced-motion change remounts safely",
+      "pass": true
+    },
+    {
+      "name": "Integrated mobile has no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "No runtime errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "No failed local asset requests",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Missing mask fails open to the normal photograph",
+      "pass": true
+    },
+    {
+      "name": "Missing-mask reset/replay keep a truthful full-image status",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "failedResponses": []
+}

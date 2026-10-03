@@ -1,0 +1,199 @@
+{
+  "checks": [
+    {
+      "name": "Recorded capsule geometry",
+      "pass": true,
+      "detail": {
+        "x": 321,
+        "y": 283,
+        "width": 278,
+        "height": 94,
+        "top": 283,
+        "right": 599,
+        "bottom": 377,
+        "left": 321
+      }
+    },
+    {
+      "name": "Source yellow / near-white",
+      "pass": true,
+      "detail": {
+        "time": 0,
+        "phase": "rest",
+        "box": {
+          "x": 321,
+          "y": 283,
+          "width": 278,
+          "height": 94,
+          "top": 283,
+          "right": 599,
+          "bottom": 377,
+          "left": 321
+        },
+        "background": "rgb(247, 205, 73)",
+        "color": "rgb(253, 253, 253)",
+        "first": 1,
+        "last": 0,
+        "flames": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "Four actual flame characters",
+      "pass": true
+    },
+    {
+      "name": "No invented selection toggle",
+      "pass": true
+    },
+    {
+      "name": "Four flames visible around600ms",
+      "pass": true,
+      "detail": {
+        "requestedTime": 600,
+        "time": 588,
+        "phase": "flames",
+        "box": {
+          "x": 321,
+          "y": 283,
+          "width": 278,
+          "height": 94,
+          "top": 283,
+          "right": 599,
+          "bottom": 377,
+          "left": 321
+        },
+        "background": "rgb(247, 205, 73)",
+        "color": "rgb(253, 253, 253)",
+        "first": 0,
+        "last": 0,
+        "flames": [
+          1,
+          1,
+          1,
+          0.871273
+        ]
+      }
+    },
+    {
+      "name": "Flames leave in original left-to-right order",
+      "pass": true,
+      "detail": {
+        "requestedTime": 800,
+        "time": 796,
+        "phase": "flames",
+        "box": {
+          "x": 321,
+          "y": 283,
+          "width": 278,
+          "height": 94,
+          "top": 283,
+          "right": 599,
+          "bottom": 377,
+          "left": 321
+        },
+        "background": "rgb(247, 205, 73)",
+        "color": "rgb(253, 253, 253)",
+        "first": 0,
+        "last": 0,
+        "flames": [
+          0,
+          0.0326061,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "1800ms blue / final label",
+      "pass": true,
+      "detail": {
+        "time": 1800,
+        "phase": "settled",
+        "box": {
+          "x": 321,
+          "y": 283,
+          "width": 278,
+          "height": 94,
+          "top": 283,
+          "right": 599,
+          "bottom": 377,
+          "left": 321
+        },
+        "background": "rgb(247, 205, 73)",
+        "color": "rgb(50, 51, 193)",
+        "first": 0,
+        "last": 1,
+        "flames": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "Reset cancels sequence",
+      "pass": true
+    },
+    {
+      "name": "Replay starts a fresh timeline",
+      "pass": true
+    },
+    {
+      "name": "Abort stops all future updates",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion switches immediately",
+      "pass": true
+    },
+    {
+      "name": "Reduced Reset is immediate",
+      "pass": true
+    },
+    {
+      "name": "Keyboard focus replays",
+      "pass": true
+    },
+    {
+      "name": "Enter restarts without selection",
+      "pass": true
+    },
+    {
+      "name": "Space restarts",
+      "pass": true
+    },
+    {
+      "name": "390px no overflow",
+      "pass": true
+    },
+    {
+      "name": "320px no overflow",
+      "pass": true
+    },
+    {
+      "name": "Gallery shows new source title",
+      "pass": true
+    },
+    {
+      "name": "Gallery reduced toggle uses immediate endpoint",
+      "pass": true
+    },
+    {
+      "name": "Gallery Reset restores initial state",
+      "pass": true
+    },
+    {
+      "name": "No page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "scope": "Local implementation tests. Source footage time origin and OS emoji glyph differ; these checks are not a fidelity certification."
+}

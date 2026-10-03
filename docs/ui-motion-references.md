@@ -1,6 +1,6 @@
 # UI Motion References
 
-30 種類の操作・表示パターンを、19 件の Awwwards SOTD サイトの観察から独立して実装しました。色違い・文言違いは別件として数えていません。
+30 種類の操作・表示パターンと、19 件の Awwwards SOTD サイトの出典を収録しています。現在、原作と実装の見た目・途中フレーム・時間変化を比較し、再現度を修正しています。件数や操作テストの合格だけでは、再現できたとは判断しません。
 
 ## 見る
 
@@ -16,20 +16,20 @@
 - 新規デモは、実装テストとは別にユーザーレビューが必要なため **WIP** としています
 - 参考サイトの現在の画面と、受賞時の版が同一とは限りません
 - **実サイト操作**と**公式記録映像の観察**を各ページに明記しています。映像だけから、未確認のドラッグ・スクロール仕様や内部コードを断定していません
-- 時間、距離、イージングは、この独立実装の調整値です。原作の値を抽出したものではありません
-- 元サイトのコード・写真・動画・ロゴ・専用書体は同梱していません。SVG、Canvas、文章は独自のプレースホルダーです
+- 原作の公開 CSS / 表示 DOM から計測した値、記録映像から読み取った値、独立実装の推定値を各ページで区別します。原作の内部実装が不明な箇所は、その限界を記載します
+- 動作するデモには元サイトの写真・動画・ロゴ・専用書体を同梱していません。比較資料の出典スクリーンショットと、デモで使う代替素材は区別しています。素材を置き換えても、寸法・配置・動きの一致は別に確認します
 - WebGL や立体表現を CSS / SVG / Canvas で近似した場合は、各ページの「再現範囲と違い」に記載しています
 
 ## Buttons / 6 studies
 
 | デモ | 見どころ | SOTD 出典 / 受賞日 | 観察方法 |
 |---|---|---|---|
-| [Arrow swap](../ui-gallery/buttons/arrow-swap/) | 矢印の場所を変えて、前へ誘う | [REJOUICE®](https://www.awwwards.com/sites/rejouice-r-3) / 2025-02-06 | 実サイト操作 |
+| [Arrow swap](../ui-gallery/buttons/arrow-swap/) | REJOUICE の Let's talk を部品単位で再現 | [REJOUICE®](https://www.awwwards.com/sites/rejouice-r-3) / 2025-02-06 | 実サイト操作 |
 | [Checker dissolve](../ui-gallery/buttons/checker-dissolve/) | 小さな四角で、面を切り替える | [Noomo Agency](https://www.awwwards.com/sites/noomo-agency) / 2023-09-21 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/button-hover-interaction-noomo-agency) |
+| [Dennis / About me](../ui-gallery/buttons/magnetic-fill/) | 円と文字が別々に追従する CTA | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
 | [Directional underline](../ui-gallery/buttons/directional-underline/) | 文字を動かさず、行き先を示す | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
-| [Icon sequence](../ui-gallery/buttons/icon-sequence/) | 短い合図を挟んで、次の言葉へ | [Joseph Berry Masterclass](https://www.awwwards.com/sites/joseph-berry-masterclass) / 2021-08-27 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/joseph-berry-masterclass-hover-button-animation) |
-| [Magnetic fill](../ui-gallery/buttons/magnetic-fill/) | 引き寄せて、色で応える | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
-| [Menu icon morph](../ui-gallery/buttons/menu-icon-morph/) | 開くと閉じるを、同じ場所で伝える | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
+| [Joseph Berry / Hall of Fame](../ui-gallery/buttons/icon-sequence/) | 文字、四つの炎、青いカプセルの順序 | [Joseph Berry Masterclass](https://www.awwwards.com/sites/joseph-berry-masterclass) / 2021-08-27 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/joseph-berry-masterclass-hover-button-animation) |
+| [Menu icon morph](../ui-gallery/buttons/menu-icon-morph/) | 曲がった先端が伸び、リンクが少し遅れて入る | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
 
 ## Sliders / 6 studies
 
@@ -71,7 +71,7 @@
 | [Accordion unfold](../ui-gallery/image-reveals/accordion-unfold/) | 折り目がほどけて、景色が広がる | [B&O PLAY Spring/Summer 2017](https://www.awwwards.com/sites/b-o-play-spring-summer-2017) / 2017-03-30 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/unfolding-effect) |
 | [Cursor preview](../ui-gallery/image-reveals/cursor-preview/) | 一覧の上に、気配を見せる | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
 | [Menu crossfade](../ui-gallery/image-reveals/menu-crossfade/) | 同じ枠の中で、選択の気配を変える | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
-| [Organic mask](../ui-gallery/image-reveals/organic-mask/) | 小さな窓がつながって、全体になる | [Stuuudio](https://www.awwwards.com/sites/stuuudio) / 2019-08-01 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/image-reveal-animation-mask-stuuudio) |
+| [Organic mask](../ui-gallery/image-reveals/organic-mask/) | 不規則な窓がつながり、最後の穴が消える | [Stuuudio](https://www.awwwards.com/sites/stuuudio) / 2019-08-01 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/image-reveal-animation-mask-stuuudio) |
 | [Perspective tiles](../ui-gallery/image-reveals/cube-tiles/) | 離れた断片が、一枚に揃う | [B&O PLAY Spring/Summer 2017](https://www.awwwards.com/sites/b-o-play-spring-summer-2017) / 2017-03-30 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/cube-effect-image-reveal) |
 | [Texture mask](../ui-gallery/image-reveals/texture-mask/) | 文字の内側に、素材をのぞかせる | [Duten](https://www.awwwards.com/sites/duten) / 2024-11-03 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/texture-hover-reveal-duten) |
 

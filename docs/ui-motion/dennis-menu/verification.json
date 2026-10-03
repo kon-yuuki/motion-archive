@@ -1,0 +1,803 @@
+{
+  "results": [
+    {
+      "name": "Closed panel is inert and offstage",
+      "pass": true,
+      "details": {
+        "state": "closed",
+        "panel": {
+          "x": 1250.7933349609375,
+          "y": -0.00416555255651474,
+          "width": 477.3570556640625,
+          "height": 757.00830078125,
+          "top": -0.00416555255651474,
+          "right": 1728.150390625,
+          "bottom": 757.0041352286935,
+          "left": 1250.7933349609375
+        },
+        "panelTransform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 548.144, 0)",
+        "panelDuration": "0.8s",
+        "panelEasing": "cubic-bezier(0.7, 0, 0.2, 1)",
+        "panelColor": "rgb(28, 29, 32)",
+        "curveWidth": 70.7969,
+        "curveDuration": "0.85s",
+        "curveOverflow": "hidden",
+        "ellipseLeft": 35.3906,
+        "overlayOpacity": 0,
+        "trigger": {
+          "x": 1088.4525146484375,
+          "y": 26.655683517456055,
+          "width": 64.891845703125,
+          "height": 64.89175415039062,
+          "top": 26.655683517456055,
+          "right": 1153.3443603515625,
+          "bottom": 91.54743766784668,
+          "left": 1088.4525146484375
+        },
+        "triggerTransform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+        "magnetTransform": "none",
+        "fillTransform": "matrix(1, 0, 0, 1, 0, -98.6338)",
+        "fillColor": "rgb(69, 92, 233)",
+        "glyph": {
+          "x": 1109.703125,
+          "y": 56.49980545043945,
+          "width": 22.390625,
+          "height": 5.187889099121094,
+          "top": 56.49980545043945,
+          "right": 1132.09375,
+          "bottom": 61.68769454956055,
+          "left": 1109.703125
+        },
+        "bars": [
+          {
+            "transform": "matrix(1, 0, 0, 1, -11.1953, -0.5)",
+            "height": "1px",
+            "duration": "0.3s, 0.3s"
+          },
+          {
+            "transform": "matrix(1, 0, 0, 1, -11.1953, -0.5)",
+            "height": "1px",
+            "duration": "0.3s, 0.3s"
+          }
+        ],
+        "innerPadding": "113.55px 88.5px 75.7px",
+        "innerTransform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+        "links": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 1516.3033447265625,
+              "y": 191.390380859375,
+              "width": 135.6131591796875,
+              "height": 72.27273559570312,
+              "top": 191.390380859375,
+              "right": 1651.91650390625,
+              "bottom": 263.6631164550781,
+              "left": 1516.3033447265625
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 177, 0)",
+            "delay": "0s"
+          },
+          {
+            "text": "Work",
+            "rect": {
+              "x": 1516.3009033203125,
+              "y": 263.6561279296875,
+              "width": 117.4256591796875,
+              "height": 72.27178955078125,
+              "top": 263.6561279296875,
+              "right": 1633.7265625,
+              "bottom": 335.92791748046875,
+              "left": 1516.3009033203125
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 177, 0)",
+            "delay": "0.03s"
+          },
+          {
+            "text": "About",
+            "rect": {
+              "x": 1516.29833984375,
+              "y": 335.921630859375,
+              "width": 132.3006591796875,
+              "height": 72.2725830078125,
+              "top": 335.921630859375,
+              "right": 1648.5989990234375,
+              "bottom": 408.1942138671875,
+              "left": 1516.29833984375
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 177, 0)",
+            "delay": "0.06s"
+          },
+          {
+            "text": "Contact",
+            "rect": {
+              "x": 1516.2957763671875,
+              "y": 408.1868896484375,
+              "width": 174.2537841796875,
+              "height": 72.2747802734375,
+              "top": 408.1868896484375,
+              "right": 1690.549560546875,
+              "bottom": 480.461669921875,
+              "left": 1516.2957763671875
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 177, 0)",
+            "delay": "0.09s"
+          }
+        ],
+        "inert": true,
+        "hidden": "true",
+        "expanded": "false",
+        "animations": 0,
+        "animationTargets": []
+      }
+    },
+    {
+      "name": "Panel 800ms measured easing",
+      "pass": true
+    },
+    {
+      "name": "Curve 6vw and 850ms",
+      "pass": true,
+      "details": 70.7969
+    },
+    {
+      "name": "Curve inherits source clipping and centered ellipse",
+      "pass": true
+    },
+    {
+      "name": "Trigger measured size and inset",
+      "pass": true,
+      "details": {
+        "x": 1088.4525146484375,
+        "y": 26.655683517456055,
+        "width": 64.891845703125,
+        "height": 64.89175415039062,
+        "top": 26.655683517456055,
+        "right": 1153.3443603515625,
+        "bottom": 91.54743766784668,
+        "left": 1088.4525146484375
+      }
+    },
+    {
+      "name": "Bars 1px / 300ms",
+      "pass": true,
+      "details": [
+        {
+          "transform": "matrix(1, 0, 0, 1, -11.1953, -0.5)",
+          "height": "1px",
+          "duration": "0.3s, 0.3s"
+        },
+        {
+          "transform": "matrix(1, 0, 0, 1, -11.1953, -0.5)",
+          "height": "1px",
+          "duration": "0.3s, 0.3s"
+        }
+      ]
+    },
+    {
+      "name": "Opened geometry",
+      "pass": true,
+      "details": {
+        "x": 702.649658203125,
+        "y": -0.00416555255651474,
+        "width": 477.35693359375,
+        "height": 757.00830078125,
+        "top": -0.00416555255651474,
+        "right": 1180.006591796875,
+        "bottom": 757.0041352286935,
+        "left": 702.649658203125
+      }
+    },
+    {
+      "name": "Opened content geometry",
+      "pass": true,
+      "details": {
+        "text": "Home",
+        "rect": {
+          "x": 791.1596069335938,
+          "y": 191.38418579101562,
+          "width": 135.6131591796875,
+          "height": 72.27276611328125,
+          "top": 191.38418579101562,
+          "right": 926.7727661132812,
+          "bottom": 263.6569519042969,
+          "left": 791.1596069335938
+        },
+        "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+        "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+        "delay": "0s"
+      }
+    },
+    {
+      "name": "Opened trigger stays blue",
+      "pass": true,
+      "details": "matrix(1, 0, 0, 1, 0, 0)"
+    },
+    {
+      "name": "Overlay .35 / curve 0 / exact dark",
+      "pass": true
+    },
+    {
+      "name": "Measured stagger 0/30/60/90ms",
+      "pass": true,
+      "details": [
+        "0s",
+        "0.03s",
+        "0.06s",
+        "0.09s"
+      ]
+    },
+    {
+      "name": "Navigation is explicitly inert",
+      "pass": true
+    },
+    {
+      "name": "Tab enters navigation",
+      "pass": true
+    },
+    {
+      "name": "Backward Tab wraps within component",
+      "pass": true
+    },
+    {
+      "name": "Forward Tab wraps to trigger",
+      "pass": true
+    },
+    {
+      "name": "Escape restores focus and hides interactions",
+      "pass": true
+    },
+    {
+      "name": "Overlay closes",
+      "pass": true
+    },
+    {
+      "name": "Interrupted open/close/open at 30ms settles",
+      "pass": true
+    },
+    {
+      "name": "Interrupted open/close/open at 180ms settles",
+      "pass": true
+    },
+    {
+      "name": "Interrupted open/close/open at 460ms settles",
+      "pass": true
+    },
+    {
+      "name": "Interrupted open/close/open at 780ms settles",
+      "pass": true
+    },
+    {
+      "name": "Repeated input then reset stays closed",
+      "pass": true
+    },
+    {
+      "name": "Enter opens the native trigger",
+      "pass": true
+    },
+    {
+      "name": "Space closes the native trigger",
+      "pass": true
+    },
+    {
+      "name": "Mid-transition reset is immediately closed",
+      "pass": true
+    },
+    {
+      "name": "Repeated replay settles open",
+      "pass": true
+    },
+    {
+      "name": "Leaving the component closes without stealing outside focus",
+      "pass": true
+    },
+    {
+      "name": "Trigger strength 50 / nested bars 25",
+      "pass": true,
+      "details": "matrix(1, 2.00713e-05, -2.00713e-05, 1, 11.4969, -9.2723)"
+    },
+    {
+      "name": "Magnet returns on leave",
+      "pass": true
+    },
+    {
+      "name": "540px full-width drawer",
+      "pass": true,
+      "details": {
+        "x": -0.007365248166024685,
+        "y": -0.0047123245894908905,
+        "width": 540.0147705078125,
+        "height": 844.0093994140625,
+        "top": -0.0047123245894908905,
+        "right": 540.0074052596465,
+        "bottom": 844.004687089473,
+        "left": -0.007365248166024685
+      }
+    },
+    {
+      "name": "540px mobile delays",
+      "pass": true,
+      "details": [
+        {
+          "text": "Home",
+          "rect": {
+            "x": 32.3958740234375,
+            "y": 191.89401245117188,
+            "width": 119.56582641601562,
+            "height": 63.693756103515625,
+            "top": 191.89401245117188,
+            "right": 151.96170043945312,
+            "bottom": 255.5877685546875,
+            "left": 32.3958740234375
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.1s"
+        },
+        {
+          "text": "Work",
+          "rect": {
+            "x": 32.393653869628906,
+            "y": 255.58151245117188,
+            "width": 103.5189437866211,
+            "height": 63.692901611328125,
+            "top": 255.58151245117188,
+            "right": 135.91259765625,
+            "bottom": 319.2744140625,
+            "left": 32.393653869628906
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.13s"
+        },
+        {
+          "text": "About",
+          "rect": {
+            "x": 32.39143371582031,
+            "y": 319.2690124511719,
+            "width": 116.64393615722656,
+            "height": 63.693634033203125,
+            "top": 319.2690124511719,
+            "right": 149.03536987304688,
+            "bottom": 382.962646484375,
+            "left": 32.39143371582031
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.16s"
+        },
+        {
+          "text": "Contact",
+          "rect": {
+            "x": 32.38920593261719,
+            "y": 382.9565124511719,
+            "width": 153.6283416748047,
+            "height": 63.695556640625,
+            "top": 382.9565124511719,
+            "right": 186.01754760742188,
+            "bottom": 446.6520690917969,
+            "left": 32.38920593261719
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.19s"
+        }
+      ]
+    },
+    {
+      "name": "540px no horizontal page overflow",
+      "pass": true
+    },
+    {
+      "name": "390px full-width drawer",
+      "pass": true,
+      "details": {
+        "x": -0.007365259807556868,
+        "y": -0.0034033276606351137,
+        "width": 390.01470947265625,
+        "height": 844.0068359375,
+        "top": -0.0034033276606351137,
+        "right": 390.0073442128487,
+        "bottom": 844.0034326098394,
+        "left": -0.007365259807556868
+      }
+    },
+    {
+      "name": "390px mobile delays",
+      "pass": true,
+      "details": [
+        {
+          "text": "Home",
+          "rect": {
+            "x": 23.395877838134766,
+            "y": 191.89747619628906,
+            "width": 119.56582641601562,
+            "height": 63.69374084472656,
+            "top": 191.89747619628906,
+            "right": 142.9617042541504,
+            "bottom": 255.59121704101562,
+            "left": 23.395877838134766
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.1s"
+        },
+        {
+          "text": "Work",
+          "rect": {
+            "x": 23.393653869628906,
+            "y": 255.58499145507812,
+            "width": 103.51896667480469,
+            "height": 63.692901611328125,
+            "top": 255.58499145507812,
+            "right": 126.9126205444336,
+            "bottom": 319.27789306640625,
+            "left": 23.393653869628906
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.13s"
+        },
+        {
+          "text": "About",
+          "rect": {
+            "x": 23.391429901123047,
+            "y": 319.2724609375,
+            "width": 116.64393615722656,
+            "height": 63.69366455078125,
+            "top": 319.2724609375,
+            "right": 140.0353660583496,
+            "bottom": 382.96612548828125,
+            "left": 23.391429901123047
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.16s"
+        },
+        {
+          "text": "Contact",
+          "rect": {
+            "x": 23.389205932617188,
+            "y": 382.9599609375,
+            "width": 153.6283416748047,
+            "height": 63.695587158203125,
+            "top": 382.9599609375,
+            "right": 177.01754760742188,
+            "bottom": 446.6555480957031,
+            "left": 23.389205932617188
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.19s"
+        }
+      ]
+    },
+    {
+      "name": "390px no horizontal page overflow",
+      "pass": true
+    },
+    {
+      "name": "320px full-width drawer",
+      "pass": true,
+      "details": {
+        "x": -0.007365264929831028,
+        "y": -0.0027924624737352133,
+        "width": 320.01470947265625,
+        "height": 844.005615234375,
+        "top": -0.0027924624737352133,
+        "right": 320.0073442077264,
+        "bottom": 844.0028227719013,
+        "left": -0.007365264929831028
+      }
+    },
+    {
+      "name": "320px mobile delays",
+      "pass": true,
+      "details": [
+        {
+          "text": "Home",
+          "rect": {
+            "x": 19.192752838134766,
+            "y": 191.8990936279297,
+            "width": 119.56582641601562,
+            "height": 63.69377136230469,
+            "top": 191.8990936279297,
+            "right": 138.7585792541504,
+            "bottom": 255.59286499023438,
+            "left": 19.192752838134766
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.1s"
+        },
+        {
+          "text": "Work",
+          "rect": {
+            "x": 19.190528869628906,
+            "y": 255.58657836914062,
+            "width": 103.51896667480469,
+            "height": 63.692962646484375,
+            "top": 255.58657836914062,
+            "right": 122.7094955444336,
+            "bottom": 319.279541015625,
+            "left": 19.190528869628906
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.13s"
+        },
+        {
+          "text": "About",
+          "rect": {
+            "x": 19.188304901123047,
+            "y": 319.2740478515625,
+            "width": 116.64393615722656,
+            "height": 63.693634033203125,
+            "top": 319.2740478515625,
+            "right": 135.8322410583496,
+            "bottom": 382.9676818847656,
+            "left": 19.188304901123047
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.16s"
+        },
+        {
+          "text": "Contact",
+          "rect": {
+            "x": 19.186080932617188,
+            "y": 382.9615478515625,
+            "width": 153.6283416748047,
+            "height": 63.695556640625,
+            "top": 382.9615478515625,
+            "right": 172.81442260742188,
+            "bottom": 446.6571044921875,
+            "left": 19.186080932617188
+          },
+          "font": "45.5px / 63.7px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+          "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+          "delay": "0.19s"
+        }
+      ]
+    },
+    {
+      "name": "320px no horizontal page overflow",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion is immediate",
+      "pass": true,
+      "details": {
+        "state": "open",
+        "panel": {
+          "x": 702.649658203125,
+          "y": -0.00416555255651474,
+          "width": 477.35693359375,
+          "height": 757.00830078125,
+          "top": -0.00416555255651474,
+          "right": 1180.006591796875,
+          "bottom": 757.0041352286935,
+          "left": 702.649658203125
+        },
+        "panelTransform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+        "panelDuration": "0s",
+        "panelEasing": "ease",
+        "panelColor": "rgb(28, 29, 32)",
+        "curveWidth": 0,
+        "curveDuration": "0s",
+        "curveOverflow": "hidden",
+        "ellipseLeft": 0,
+        "overlayOpacity": 0.35,
+        "trigger": {
+          "x": 1088.4525146484375,
+          "y": 26.65559959411621,
+          "width": 64.891845703125,
+          "height": 64.89192199707031,
+          "top": 26.65559959411621,
+          "right": 1153.3443603515625,
+          "bottom": 91.54752159118652,
+          "left": 1088.4525146484375
+        },
+        "triggerTransform": "matrix(1, 2.00713e-05, -2.00713e-05, 1, 0, 0)",
+        "magnetTransform": "matrix(1, 0, 0, 1, 0, 0)",
+        "fillTransform": "matrix(1, 0, 0, 1, 0, 0)",
+        "fillColor": "rgb(69, 92, 233)",
+        "glyph": {
+          "x": 1109.703125,
+          "y": 56.49977493286133,
+          "width": 22.390625,
+          "height": 5.187950134277344,
+          "top": 56.49977493286133,
+          "right": 1132.09375,
+          "bottom": 61.68772506713867,
+          "left": 1109.703125
+        },
+        "bars": [
+          {
+            "transform": "matrix(0.707107, -0.707107, 0.707107, 0.707107, -11.1953, -0.5)",
+            "height": "1px",
+            "duration": "0s"
+          },
+          {
+            "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -11.1953, -0.5)",
+            "height": "1px",
+            "duration": "0s"
+          }
+        ],
+        "innerPadding": "113.55px 88.5px 75.7px",
+        "innerTransform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+        "links": [
+          {
+            "text": "Home",
+            "rect": {
+              "x": 791.1596069335938,
+              "y": 191.38418579101562,
+              "width": 135.6131591796875,
+              "height": 72.27276611328125,
+              "top": 191.38418579101562,
+              "right": 926.7727661132812,
+              "bottom": 263.6569519042969,
+              "left": 791.1596069335938
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+            "delay": "0s"
+          },
+          {
+            "text": "Work",
+            "rect": {
+              "x": 791.1571044921875,
+              "y": 263.64996337890625,
+              "width": 117.4256591796875,
+              "height": 72.27178955078125,
+              "top": 263.64996337890625,
+              "right": 908.582763671875,
+              "bottom": 335.9217529296875,
+              "left": 791.1571044921875
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+            "delay": "0s"
+          },
+          {
+            "text": "About",
+            "rect": {
+              "x": 791.1546020507812,
+              "y": 335.91546630859375,
+              "width": 132.3006591796875,
+              "height": 72.2725830078125,
+              "top": 335.91546630859375,
+              "right": 923.4552612304688,
+              "bottom": 408.18804931640625,
+              "left": 791.1546020507812
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+            "delay": "0s"
+          },
+          {
+            "text": "Contact",
+            "rect": {
+              "x": 791.1520385742188,
+              "y": 408.18072509765625,
+              "width": 174.2537841796875,
+              "height": 72.2747802734375,
+              "top": 408.18072509765625,
+              "right": 965.4058227539062,
+              "bottom": 480.45550537109375,
+              "left": 791.1520385742188
+            },
+            "font": "51.625px / 72.275px \"Liberation Sans\", Arial, Helvetica, sans-serif",
+            "transform": "matrix(1, 1.74533e-05, -1.74533e-05, 1, 0, 0)",
+            "delay": "0s"
+          }
+        ],
+        "inert": false,
+        "hidden": "false",
+        "expanded": "true",
+        "animations": 0,
+        "animationTargets": []
+      }
+    },
+    {
+      "name": "Abort destroys listeners and animations",
+      "pass": true
+    },
+    {
+      "name": "Gallery retains WIP and source identity",
+      "pass": true
+    },
+    {
+      "name": "No serious/critical gallery accessibility findings",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Gallery reduced-motion control remounts",
+      "pass": true
+    },
+    {
+      "name": "Route-leave hook resets component",
+      "pass": true
+    },
+    {
+      "name": "Route-leave hook removes toggle listener",
+      "pass": true
+    },
+    {
+      "name": "Back navigation mounts an operable component",
+      "pass": true
+    },
+    {
+      "name": "Gallery 390px no overflow",
+      "pass": true
+    },
+    {
+      "name": "Gallery 320px no overflow",
+      "pass": true
+    },
+    {
+      "name": "Touch tap opens full-width menu without magnet",
+      "pass": true
+    },
+    {
+      "name": "Touch tap closes menu",
+      "pass": true
+    },
+    {
+      "name": "OS reduced-motion remount is immediate",
+      "pass": true
+    },
+    {
+      "name": "No uncaught page errors",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "comparison": {
+    "panelDelta": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0
+    },
+    "typeDelta": [
+      {
+        "label": "Home",
+        "x": 0.001220703125,
+        "y": 0.0023040771484375,
+        "width": 2.29437255859375
+      },
+      {
+        "label": "Work",
+        "x": 0.00128173828125,
+        "y": 0.00201416015625,
+        "width": 1.4506225585937358
+      },
+      {
+        "label": "About",
+        "x": 0.00128173828125,
+        "y": 0.0023193359375,
+        "width": -1.12750244140625
+      },
+      {
+        "label": "Contact",
+        "x": 0.001220703125,
+        "y": 0.00311279296875,
+        "width": -2.20562744140625
+      }
+    ],
+    "caveat": "Measured settled geometry only. Source and replica typefaces differ; neutral background is intentional. Intermediate frames use exact CSS transition times; source screenshot timestamps include capture latency and are not frame-synchronized."
+  },
+  "sourceViewport": {
+    "width": 1180,
+    "height": 757
+  },
+  "source": "https://dennissnellenberg.com/",
+  "sourceObservedAt": "2026-10-02"
+}

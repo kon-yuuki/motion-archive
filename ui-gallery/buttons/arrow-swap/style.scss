@@ -1,100 +1,78 @@
 .arrow-swap {
-  display: flex;
-  flex-direction: column;
-  min-height: 480px;
-  padding: 26px clamp(22px, 5vw, 60px);
-  color: #f2f1e8;
-  background: #34322f;
-  &__top,
-  &__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 20px;
-    font-size: 10px;
-    line-height: 1.7;
-    color: #c0b9ad;
-  }
-  &__top {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #665f55;
-  }
-  &__body {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 28px;
-    padding: 40px 0;
-  }
-  &__copy h2 {
-    font-size: clamp(35px, 4.7vw, 57px);
-    line-height: 1.05;
-    font-weight: 400;
-    margin: 0 0 25px;
-  }
-  &__copy p {
-    font-size: 11px;
-    line-height: 1.9;
-    margin: 0;
-    color: #c9c2b5;
-  }
-  &__field {
-    display: grid;
-    place-items: center;
-    align-content: center;
-    gap: 22px;
-    min-height: 240px;
-  }
-  &__field > span {
-    font-size: 10px;
-    color: #c0b9ad;
-  }
-  &__button {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 64px;
-    max-width: 100%;
-    padding: 12px 34px 12px 0;
-    border: 0;
-    border-bottom: 1px solid #b3a58e;
-    background: transparent;
-    color: inherit;
-    font-size: clamp(17px, 2vw, 22px);
-    line-height: 1.4;
-    touch-action: manipulation;
-  }
-  &__button:focus-visible {
-    outline: 2px solid #e6ce9e;
-    outline-offset: 9px;
-  }
-  &__left,
-  &__right {
+  // Isolate the original header component, without rebuilding its page artwork.
+  position: relative;
+  min-height: 440px;
+  background: #000;
+  color: #fff;
+
+  &__link {
     position: absolute;
-    display: grid;
-    place-items: center;
-    top: calc(50% - 12px);
-    width: 24px;
-    height: 24px;
-    transition:
-      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 400ms ease;
-    pointer-events: none;
-  }
-  &__left {
-    left: 0;
-    opacity: 0;
-    transform: translate(-12px, 12px);
-  }
-  &__right {
-    right: 0;
-    opacity: 1;
-    transform: translate(0, 0);
+    top: 36.015625px;
+    right: 55px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    width: 74.765625px;
+    height: 15.953125px;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    color: #fff;
+    background: transparent;
+    font-family: Arial, "DejaVu Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 15.96px;
+    text-decoration: none;
+    white-space: nowrap;
+    touch-action: manipulation;
   }
   &__label {
     display: block;
-    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    flex: 0 0 54.765625px;
+    min-width: 0;
+    // Arial's natural width is 54.81px here; match the source's measured box.
+    letter-spacing: -0.0044921875px;
+  }
+  &__left,
+  &__right {
+    display: block;
+    width: 15px;
+    flex: 0 0 15px;
+    pointer-events: none;
+  }
+  &__left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translate(-125%, 50%);
+  }
+  &__right {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  &__label,
+  &__left,
+  &__right {
+    transition: transform 700ms cubic-bezier(.52, 0, 0, 1),
+      opacity 700ms cubic-bezier(.52, 0, 0, 1);
+  }
+  &__link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    // The header's .cta override stays LEFT on both enter and leave.
+    transform-origin: left center;
+    transition: transform 600ms cubic-bezier(.85, 0, .15, 1);
+  }
+  &.is-active &__label {
+    transform: translateX(20px);
   }
   &.is-active &__left {
     opacity: 1;
@@ -102,59 +80,60 @@
   }
   &.is-active &__right {
     opacity: 0;
-    transform: translate(12px, -12px);
+    transform: translate(125%, -50%);
   }
-  &.is-active &__label {
-    transform: translateX(34px);
+  &.is-active &__link::after {
+    transform: scaleX(1);
   }
-  &__bottom {
-    padding-top: 20px;
-    border-top: 1px solid #665f55;
+
+  // Gallery-only fallback: keyboard focus does not imitate a mouse hover.
+  &__link:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 6px;
   }
-  &__bottom [role="status"] {
-    max-width: 65%;
-    text-align: right;
+  &__link:focus-visible::after {
+    transform: scaleX(1);
+    transition: none;
   }
 }
-[data-reduced-motion="true"] .arrow-swap {
-  &__left,
-  &__right,
-  &__label {
+
+// Reset and reduced motion switch the same endpoints without moving between them.
+.arrow-swap:is([data-snap="true"], [data-reduced-motion="true"]) {
+  .arrow-swap__label,
+  .arrow-swap__left,
+  .arrow-swap__right,
+  .arrow-swap__link::after {
     transition: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .arrow-swap {
-    &__left,
-    &__right,
-    &__label {
-      transition: none;
-    }
+  .arrow-swap__label,
+  .arrow-swap__left,
+  .arrow-swap__right,
+  .arrow-swap__link::after {
+    transition: none;
   }
 }
-@media (max-width: 600px) {
-  .arrow-swap {
-    padding: 22px;
-    min-height: 460px;
-    &__top span:last-child {
-      display: none;
-    }
-    &__body {
-      grid-template-columns: 1fr;
-      gap: 15px;
-      padding: 28px 0;
-    }
-    &__copy h2 {
-      font-size: 39px;
-    }
-    &__field {
-      min-height: 170px;
-    }
-    &__button {
-      font-size: 19px;
-    }
-    &__bottom {
-      font-size: 9px;
-    }
+@media (max-width: 540px) {
+  .arrow-swap__link {
+    right: 28px;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  // A larger tap target is a gallery fallback; the 16px desktop trace is unchanged.
+  .arrow-swap__link {
+    top: 22px;
+    height: 44px;
+    padding-block: 14px;
+  }
+  .arrow-swap__left {
+    top: 14px;
+  }
+  .arrow-swap__link::after {
+    bottom: 14px;
+  }
+  .arrow-swap__link:active::after {
+    transform: scaleX(1);
+    transition: none;
   }
 }

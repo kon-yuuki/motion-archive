@@ -69,6 +69,15 @@ const check = (name, passed, details) => {
   results.push({ name, passed, details });
   if (!passed) console.error("FAIL:", name, details ?? "");
 };
+// Motion captures must sample the moving scene, not wait for an animated element
+// to satisfy locator.screenshot's stability precondition (which can time out).
+async function captureLab(path) {
+  const lab = page.locator(".motion-lab");
+  await lab.evaluate(element => element.scrollIntoView({ block: "center" }));
+  const clip = await lab.boundingBox();
+  if (!clip || clip.width <= 0 || clip.height <= 0) throw new Error("Missing motion-lab capture bounds");
+  await page.screenshot({ path, clip });
+}
 try {
   for (const metadata of references) {
     const id = `${metadata.category}/${metadata.slug}`;
@@ -96,11 +105,7 @@ try {
       );
     await page.locator("[data-demo-replay]").click();
     await page.waitForTimeout(250);
-    await page
-      .locator(".motion-lab")
-      .screenshot({
-        path: resolve(output, id.replace("/", "-") + "-desktop.png"),
-      });
+    await captureLab(resolve(output, id.replace("/", "-") + "-desktop.png"));
     await page.locator("[data-demo-replay]").click();
     await page.locator("[data-demo-reset]").click();
     await page.waitForTimeout(120);
@@ -149,11 +154,7 @@ try {
         ),
       );
       if (width === 390)
-        await page
-          .locator(".motion-lab")
-          .screenshot({
-            path: resolve(output, id.replace("/", "-") + "-mobile.png"),
-          });
+        await captureLab(resolve(output, id.replace("/", "-") + "-mobile.png"));
     }
     const analysis = await new AxeBuilder({ page })
       .include("[data-motion-page]")
