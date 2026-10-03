@@ -1,58 +1,18 @@
 export const metadata = {
-  slug: "depth-tunnel",
-  category: "section-transitions",
-  title: "Depth tunnel",
-  subtitle: "奥行きを通り抜けて、次の場面へ",
-  description:
-    "入れ子の枠が大きくなり、中心の図形へ近づいてから次の場面が現れます。奥へ進む感覚をCSSで軽く整理した、スクロール連動のスタディです。",
-  trigger: "Local scroll / range / next scene",
-  duration: "スクロール距離に連動 / Replay 1800ms",
-  easing: "Scroll: linear progress / Replay: ease-in-out",
-  status: "WIP",
-  source: {
-    name: "Lusion v3",
-    url: "https://lusion.co/",
-    awardUrl: "https://www.awwwards.com/sites/lusion-v3",
-    awardDate: "2023-10-02",
-    observedAt: "2026-10-02",
-    location: "Homepage ending sequence toward contact CTA",
-    observation:
-      "The tunnel frames enlarge and rotate around the center, creating forward travel in depth. A small central figure grows toward the viewer, then the scene resolves to a large contact CTA with surrounding floating objects. This connects an immersive in-between scene to the contact section rather than moving ordinary page blocks.",
-    observationMode: "official recording observed",
-    recordingUrl: "https://www.awwwards.com/inspiration/scroll-animation-3",
-    evidence: [
-      "Recording tab 30 screenshots 15:22:07 (dark tunnel), 15:22:31 (blue portal), 15:23:44 and 15:31:36 (rotating grids), 15:35:26 UTC (contact scene)",
-      "Read-only video DOM confirms 16s recording, not the actual transition duration",
-      "Official award https://www.awwwards.com/sites/lusion-v3 read by web tool at 14:56:44 UTC: Site of the Day Oct 2, 2023",
-    ],
-  },
-  takeaways: [
-    "枠の拡大と回転を同じ進み具合へ結びつけると、別々の飾りではなく「進んでいる」動きとして伝わります。",
-    "途中の演出では短い言葉だけにし、目的の見出しは動きが落ち着いた後に読める位置へ出します。",
-    "スクロールが難しい場合も、次の場面ボタンと進み具合スライダーで同じ状態に到達できます。",
-  ],
-  limitations: [
-    "公式のAwwwards録画を観察したものです。ライブサイトはローダーから進まず、ライブのスクロール操作を再現確認したとはしていません。",
-    "この実装はCSSの入れ子枠と独自SVGを使う奥行きの近似です。光の歪み、人物、物理的な立体、元のWebGL表現は再現していません。",
-    "2023年10月2日の受賞記録と録画を別々に確認しています。現行サイトと受賞時の完全な一致は未確認です。",
-    "距離、角度、1800msのReplayはデモ用の独自値です。録画の16秒は映像の長さで、元の遷移時間ではありません。",
-  ],
-  usability: {
-    benefit:
-      "二つのセクションをつなぐ間の時間に、奥へ進む方向と到着先を伝えられます。",
-    caution:
-      "強い奥行きや回転は長文を読む場面に向きません。短い場面転換へ絞り、通常の情報閲覧では大きく動かさない選択も大切です。",
-    smallScreen:
-      "デモ内だけでスクロールします。画面全体のホイールを横取りせず、タッチ、上下キー、進み具合の入力に対応します。",
-    reducedMotion:
-      "枠と中心図形の拡大・回転を省き、入口と到着先の二つの静止画面を切り替えます。",
-  },
-  implementation: [
-    "ローカルのスクロール領域内にstickyの表示面を置き、可動距離に対する進み具合を0〜1へ正規化します。",
-    "7枚の枠へ指数的なスケール差をつけ、共通の回転量を足します。中心の図形も近づき、最後の24%で到着先を表示します。",
-    "枠はCSS、中心図形は独自の幾何学SVGです。元サイトのWebGLコード・モデル・テクスチャは使用していません。",
-    "Replay中にポインター、ホイール、キー操作を行うと自動進行を停止します。ResizeObserver、描画ループ、イベントを終了時に解除します。",
-  ],
-  xPost:
-    "枠の拡大と回転、中心の図形、最後の見出し。ひとつの進み具合でつなぐと、場面の間に奥へ進む感覚をつくれる。CSSで整理した奥行きトンネルのスタディ。",
+  slug:'depth-tunnel',category:'section-transitions',title:'Depth tunnel',
+  subtitle:'人物から反射の部屋、青いトンネル、画面の外へ',
+  description:'人物が遠ざかる入口、反射する立体の部屋、青いイラストのトンネル、画面から飛び出す終点を、ひとつのスクロール位置でつなぎます。公式映像を場面ごとに比較している3D再構成です。',
+  trigger:'Local scroll / keyboard / range / next scene',
+  duration:'スクロール位置に連動 / 任意のReplay 12秒',
+  easing:'位置に応じたカメラの補間 / 出典のスクロール曲線は未計測',status:'WIP',
+  source:{name:'Lusion v3',url:'https://lusion.co/',awardUrl:'https://www.awwwards.com/sites/lusion-v3',awardDate:'2023-10-02',observedAt:'2026-10-03',location:'Homepage ending sequence toward contact CTA',
+    observation:'The astronaut starts large, recedes while the introduction type grows beyond the viewport, and remains a depth anchor through dark reflective rooms. Green structures become a magenta crystalline tube, then a blue illustrated corridor. A monitor is revealed, its glass breaks, and the astronaut returns in front of the black contact scene with colorful floating stickers.',
+    observationMode:'official recording observed',recordingUrl:'https://www.awwwards.com/inspiration/scroll-animation-3',
+    evidence:['Official 1600×1200 / 30fps / 16-second MP4 inspected at full resolution, including 0, 1.6, 2.5, 4.8, 7.6, 9.0, 10.8, 11.8, 12.6, 13.4 and 15.0 seconds','The recorded 16 seconds are media duration, not the duration of the source scroll interaction','Matched-stage rendered comparison and recovery record are supplied with this correction; original source screenshots are diagnostic only']},
+  takeaways:['人物を小さくする入口と、空間を通り抜けるカメラを分けると、同じ拡大だけでは出せない距離の変化が伝わります。','結晶の太さ、面の反射、青い部屋の壁、画面の縁も実際の3D形状として配置しています。','見出しの拡大と最後の読みやすい文字は、映像の場面に合わせて分けています。'],
+  limitations:['連続再生の確認は不合格です。クラウドでの12.3秒のReplayは31フレーム、最大3.2秒の間隔となり、緑・マゼンタの場面を飛ばしました。各段階の手動スクラブ確認と、滑らかな連続動作は区別しています。','人物はNASA / Michael D. CarbajalのEMUモデルに材質と簡単な変形を加えた代替です。元の宇宙服、手指、関節の演技を再現したものではありません。','反射の部屋、結晶、イラスト、ステッカーは独自作成です。元の正確なジオメトリ、レイトレーシング、多重反射、シェーダーの再現は未達です。','場面順序・画面内の大きさ・色・カメラ方向を公式映像から追っていますが、元のスクロール距離、速度、イージングは不明です。0〜1の場面割当はこのデモの推定値です。','ライブサイトと受賞時映像の一致、元のスマホ・キーボード・動きを控える設定は確認できていません。これらの操作はこのデモ独自の補助です。'],
+  usability:{benefit:'途中の空間と到着先をつなぎ、スクロールを止めても同じ場面を保ちます。逆方向にも同じ経路を戻れます。',caution:'強い奥行きや回転を含みます。文字を読む操作とは分け、動きを控えた表示を選べるようにしています。',smallScreen:'デモ内だけでスクロールします。進み具合のスライダー、次の場面ボタン、上下キー、Page Up、Page Down、Home、Endでも操作できます。',reducedMotion:'カメラ移動、回転、連続の拡大を止め、入口と到着先の静止状態を即時に切り替えます。'},
+  implementation:['Three.jsの透視投影カメラ、反射材質、厚みのある柱・結晶、青い部屋、別シーンを描くモニターを使用します。7枚のCSS枠と平面の人物代用は廃止しています。','描画はスクロール・操作・リサイズ時だけです。自動の常時ループはありません。モデルを非同期読込し、準備中と失敗を表示します。','NASAのモデルは出典と使用条件をassets/ATTRIBUTION.mdに記録し、元の配色・ロゴ入りマップを表示せず、独自の白い布と黒いバイザー材質へ変更しています。','Replay中のホイール・ポインター・キー・スライダー入力は自動進行を止めます。終了時にイベント、リサイズ監視、フレーム予約、WebGLリソースとデコーダーを解放します。'],
+  timingDisclosure:'録画の16秒は原作の遷移時間ではありません。ローカルスクロールの割当と12秒のReplayは観察用の独自設定です。',
+  xPost:'人物が遠ざかり、結晶の部屋を抜け、青いトンネルから画面の外へ。奥行きの演出を場面順序とカメラ位置に分けて追う3Dスタディ。人物の演技や多重反射はまだ差分があります。',
 };

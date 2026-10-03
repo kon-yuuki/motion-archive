@@ -1,191 +1,27 @@
-import { makeArt, listen } from "../../_motion/demo-helpers.js";
-
-/** A changing radius and card width turn one broad image into a vertical wheel. */
-export function createDemo(root, { signal, reducedMotion }) {
-  const names = [
-    "Quiet geometry",
-    "Open passage",
-    "Collected forms",
-    "Soft horizon",
-    "Golden hour",
-  ];
-  root.innerHTML = `<section class="ferris-wheel"><header><p>THE SHAPE OF A MOMENT</p><span>Selected studies / 2026</span></header><div class="ferris-wheel__gallery" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="縦に回る5枚の絵"><div class="ferris-wheel__wheel" aria-hidden="true">${names.map((name, i) => `<div class="ferris-wheel__picture">${makeArt(i, name)}</div>`).join("")}</div><div class="ferris-wheel__caption"><h2 data-title>${names[0]}</h2><span>ABSTRACT ARCHIVE ↗</span></div></div><footer><button type="button" data-previous aria-label="前の作品">↑</button><label><span>作品を選ぶ</span><input type="range" min="0" max="4" step="1" value="0" aria-label="作品の位置" /></label><button type="button" data-next aria-label="次の作品">↓</button><span data-status role="status" aria-live="polite">01 / 05</span></footer><p class="ferris-wheel__hint">矢印、位置バー、左右スワイプで作品を送れます</p></section>`;
-  const gallery = root.querySelector(".ferris-wheel__gallery");
-  const wheel = root.querySelector(".ferris-wheel__wheel");
-  const pictures = [...root.querySelectorAll(".ferris-wheel__picture")];
-  const title = root.querySelector("[data-title]");
-  const status = root.querySelector("[data-status]");
-  const range = root.querySelector("input");
-  const previous = root.querySelector("[data-previous]");
-  const next = root.querySelector("[data-next]");
-  let position = 0,
-    selected = 0,
-    compression = 0,
-    frame = 0;
-  let pointer = null,
-    startX = 0,
-    startY = 0;
-  const clamp = (value) => Math.max(0, Math.min(names.length - 1, value));
-
-  function render() {
-    // Neighboring pictures become visible only while the central picture narrows.
-    const radius = 120 + compression * 55;
-    pictures.forEach((picture, i) => {
-      const distance = i - position;
-      const angle = Math.max(-170, Math.min(170, distance * 40));
-      const radians = (angle * Math.PI) / 180;
-      const focused = Math.max(0, 1 - Math.abs(distance));
-      const side = Math.max(0, 1 - Math.abs(angle) / 130) * compression;
-      picture.style.width = `${76 - compression * 45}%`;
-      picture.style.height = `${250 - compression * 130}px`;
-      picture.style.transform = `translateY(${Math.sin(radians) * radius}px) translateZ(${(Math.cos(radians) - 1) * radius}px) rotateX(${-angle}deg)`;
-      picture.style.opacity = String(Math.max(focused, side));
-      picture.style.zIndex = String(10 - Math.round(Math.abs(distance)));
-    });
-    title.style.opacity = String(1 - compression * 0.65);
-    root.dataset.position = String(selected);
-    root.dataset.compression = compression.toFixed(3);
-  }
-  function updateState() {
-    title.textContent = names[selected];
-    range.value = String(selected);
-    range.setAttribute(
-      "aria-valuetext",
-      `${selected + 1} / 5: ${names[selected]}`,
-    );
-    status.textContent = `${String(selected + 1).padStart(2, "0")} / 05`;
-    previous.disabled = selected === 0;
-    next.disabled = selected === names.length - 1;
-  }
-  function stop() {
-    cancelAnimationFrame(frame);
-    frame = 0;
-  }
-  function go(index) {
-    const target = Math.round(clamp(index));
-    if (target === selected) return;
-    stop();
-    selected = target;
-    if (reducedMotion) {
-      position = selected;
-      compression = 0;
-      updateState();
-      render();
-      return;
-    }
-    const from = position,
-      oldCompression = compression,
-      start = performance.now();
-    function tick(time) {
-      const p = Math.min(1, (time - start) / 900);
-      // Narrow first, rotate through the middle, then broaden the selected picture.
-      const travel = Math.max(0, Math.min(1, (p - 0.15) / 0.7));
-      const ease = travel * travel * (3 - 2 * travel);
-      position = from + (selected - from) * ease;
-      compression = Math.max(
-        oldCompression * (1 - p),
-        Math.pow(Math.sin(p * Math.PI), 0.65),
-      );
-      if (p >= 0.5) updateState();
-      render();
-      if (p < 1) frame = requestAnimationFrame(tick);
-      else {
-        frame = 0;
-        compression = 0;
-        updateState();
-        render();
-      }
-    }
-    frame = requestAnimationFrame(tick);
-  }
-  listen(previous, "click", () => go(selected - 1), signal);
-  listen(next, "click", () => go(selected + 1), signal);
-  listen(range, "input", () => go(Number(range.value)), signal);
-  listen(
-    gallery,
-    "keydown",
-    (event) => {
-      if (
-        ![
-          "ArrowLeft",
-          "ArrowRight",
-          "ArrowUp",
-          "ArrowDown",
-          "Home",
-          "End",
-        ].includes(event.key)
-      )
-        return;
-      event.preventDefault();
-      go(
-        event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? names.length - 1
-            : selected +
-              (["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1),
-      );
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerdown",
-    (event) => {
-      if (event.button !== 0) return;
-      pointer = event.pointerId;
-      startX = event.clientX;
-      startY = event.clientY;
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerup",
-    (event) => {
-      if (pointer !== event.pointerId) return;
-      const dx = event.clientX - startX,
-        dy = event.clientY - startY;
-      pointer = null;
-      if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy))
-        go(selected + (dx < 0 ? 1 : -1));
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointercancel",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerleave",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  function reset() {
-    stop();
-    pointer = null;
-    position = selected = compression = 0;
-    updateState();
-    render();
-  }
-  function replay() {
-    reset();
-    go(1);
-  }
-  function destroy() {
-    stop();
-    pointer = null;
-    wheel.style.willChange = "";
-  }
-  signal.addEventListener("abort", destroy, { once: true });
-  updateState();
-  render();
-  return { replay, reset, destroy };
+import {listen} from '../../_motion/demo-helpers.js';
+const items=[['Conversazioni','gestures','2020'],['Gaia','figures','2010'],['Simboli','symbols','2008'],['Silenzi','sea','2012'],['Geografie Biologiche','eyes','2010']];
+const wrap=x=>((x%items.length)+items.length)%items.length;
+/** Row-mapped cylindrical surfaces, not flat cards on a CSS orbit. */
+export function createDemo(root,{signal,reducedMotion}){
+ root.dataset.assetsReady='false';delete root.dataset.destroyed;delete root.dataset.assetError;
+ root.innerHTML=`<section class="ferris-wheel"><div class="ferris-wheel__gallery" role="region" tabindex="0" aria-roledescription="カルーセル" aria-label="縦に回る5点の絵画"><canvas aria-hidden="true"></canvas><header><span>Canvas Study</span><p>A Retrospective　08–23 — Painting studies</p><span>Bio</span></header><div class="ferris-wheel__caption"><div><h2 data-title></h2><small data-year></small></div><span>View Project</span></div><div class="ferris-wheel__index"><button type="button" data-previous aria-label="前の作品">‹</button><span data-number>1</span><label><span class="ferris-wheel__sr">作品の位置</span><input type="range" min="0" max="4" step=".01" value="0" aria-label="作品の位置"></label><span>5</span><button type="button" data-next aria-label="次の作品">›</button></div><span class="ferris-wheel__all">Selected paintings</span></div><footer><span data-status role="status" aria-live="polite"></span><span>上下ドラッグ・矢印で確認 / 絵画は生成した代替素材</span></footer></section>`;
+ const stage=root.querySelector('.ferris-wheel__gallery'),canvas=root.querySelector('canvas'),ctx=canvas.getContext('2d'),range=root.querySelector('input'),title=root.querySelector('[data-title]'),year=root.querySelector('[data-year]');
+ let w=1,h=1,position=0,target=0,selected=0,compression=0,frame=0,dead=false,pointer=null,startY=0,startX=0,startPosition=0,dragging=false,assets=0;const images=items.map((a)=>{const image=new Image();image.onload=()=>{assets++;if(assets===items.length)root.dataset.assetsReady='true';render();};image.src=new URL(`./assets/${a[1]}.webp`,import.meta.url).href;return image;});
+ function update(){selected=wrap(Math.round(target));title.textContent=items[selected][0];year.textContent=items[selected][2];range.value=String(selected);range.setAttribute('aria-valuetext',`${selected+1} / 5: ${items[selected][0]}`);root.querySelector('[data-number]').textContent=selected+1;root.querySelector('[data-status]').textContent=`${selected+1} / 5 · ${items[selected][0]}`;root.dataset.position=String(selected);}
+ function render(){if(dead||!ctx)return;ctx.clearRect(0,0,w,h);const c=reducedMotion?0:compression,cy=h*.5;const span=.63*w*(1-c)+.268*w*c;const broadH=Math.min(h*.595,w*.63/1.88),broadStep=(h+broadH)/2-h*.05,R=Math.min(h*.342,w*.38),angleStep=.98,angleH=.935;let visible=0;
+  for(let slot=-3;slot<=3;slot++){const ordinal=Math.floor(position)+slot,distance=ordinal-position,image=images[wrap(ordinal)];if(!image.complete||!image.naturalWidth)continue;let drawn=false;for(let row=0;row<240;row++){const t=row/240,theta=distance*angleStep+(t-.5)*angleH,thetaNext=distance*angleStep+(t+1/240-.5)*angleH;if(c>.97&&(theta< -Math.PI/2||theta>Math.PI/2))continue;const flatY=cy+distance*broadStep+(t-.5)*broadH,flatNext=flatY+broadH/240;const wheelY=cy+Math.sin(theta)*R,wheelNext=cy+Math.sin(thetaNext)*R;const y=flatY*(1-c)+wheelY*c,next=flatNext*(1-c)+wheelNext*c;if(y>h||next<0||next<=y)continue;const depthFactor=1-c*.16*(1-Math.cos(theta));const width=span*depthFactor,x=(w-width)/2;ctx.drawImage(image,0,t*image.naturalHeight,image.naturalWidth,image.naturalHeight/240,x,y,width,Math.max(.8,next-y+.35));drawn=true;}if(drawn)visible++;}
+  root.dataset.motionPosition=position.toFixed(4);root.dataset.compression=c.toFixed(4);root.dataset.visiblePaintings=String(visible);root.dataset.paintingWidth=(span/w).toFixed(4);
+ }
+ function measure(){w=stage.clientWidth;h=stage.clientHeight;const dpr=Math.min(devicePixelRatio,1.5);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);render();}
+ function stop(){cancelAnimationFrame(frame);frame=0;}
+ function go(index){if(dead)return;stop();target=index;update();if(reducedMotion){position=target;compression=0;render();return;}const from=position,old=compression,start=performance.now();function tick(now){const p=Math.min(1,(now-start)/1500),travel=Math.max(0,Math.min(1,(p-.18)/.56)),ease=travel*travel*(3-2*travel);position=from+(target-from)*ease;const peak=p<.25?p/.25:p>.72?(1-p)/.28:1;compression=Math.max(old*(1-p),Math.sin(Math.min(1,peak)*Math.PI/2));render();if(p<1)frame=requestAnimationFrame(tick);else{compression=0;frame=0;render();}}frame=requestAnimationFrame(tick);}
+ listen(root.querySelector('[data-next]'),'click',()=>go(Math.round(target)+1),signal);listen(root.querySelector('[data-previous]'),'click',()=>go(Math.round(target)-1),signal);listen(range,'input',()=>{stop();target=position=Number(range.value);compression=reducedMotion?0:1;update();render();},signal);listen(range,'change',()=>go(Math.round(position)),signal);
+ listen(stage,'keydown',e=>{if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();go(e.key==='Home'?0:e.key==='End'?4:Math.round(target)+(['ArrowRight','ArrowDown'].includes(e.key)?1:-1));},signal);
+ listen(stage,'pointerdown',e=>{if(e.button!==0||e.target.closest('button,input'))return;pointer=e.pointerId;startY=e.clientY;startX=e.clientX;startPosition=position;dragging=false;},signal);
+ listen(stage,'pointermove',e=>{if(pointer!==e.pointerId)return;const dx=e.clientX-startX,dy=e.clientY-startY;if(!dragging){if(e.pointerType==='touch'&&Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){pointer=null;return;}if(Math.hypot(dx,dy)<8)return;dragging=true;stop();stage.setPointerCapture(pointer);}const delta=e.pointerType==='touch'&&Math.abs(dx)>Math.abs(dy)?dx:dy;position=target=startPosition-delta/(h*.32);compression=reducedMotion?0:Math.min(1,Math.abs(delta)/75);update();render();},signal);
+ const release=e=>{if(e.type==='lostpointercapture'&&e.target!==stage)return;if(e.pointerId!==pointer)return;const id=pointer;pointer=null;if(stage.hasPointerCapture(id))stage.releasePointerCapture(id);if(dragging){dragging=false;go(Math.round(position));}};for(const type of ['pointerup','pointercancel','lostpointercapture'])listen(stage,type,release,signal);
+ const resize=new ResizeObserver(measure);resize.observe(stage);
+ function reset(){stop();if(pointer!==null&&stage.hasPointerCapture(pointer))stage.releasePointerCapture(pointer);pointer=null;dragging=false;position=target=compression=0;update();render();}
+ function destroy(){if(dead)return;dead=true;stop();if(pointer!==null&&stage.hasPointerCapture(pointer))stage.releasePointerCapture(pointer);pointer=null;resize.disconnect();images.forEach(im=>im.onload=null);root.dataset.destroyed='true';}
+ signal.addEventListener('abort',destroy,{once:true});measure();update();return{reset,replay(){reset();go(1);},seek(p,c){stop();position=target=p;compression=c;update();render();},destroy};
 }

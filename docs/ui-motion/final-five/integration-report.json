@@ -1,0 +1,169 @@
+{
+  "at": "2026-10-03T01:58:45.728Z",
+  "scope": "Final five built-page integration; not pixel or continuous-motion approval",
+  "checks": [
+    {
+      "name": "sliders/bending-cards: built page mounts",
+      "pass": true
+    },
+    {
+      "name": "sliders/bending-cards: reset handler remains ready",
+      "pass": true
+    },
+    {
+      "name": "sliders/bending-cards: no serious/critical axe findings",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "sliders/bending-cards: 390px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/bending-cards: 320px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/ferris-wheel: built page mounts",
+      "pass": true
+    },
+    {
+      "name": "Ferris: focused range advances by keyboard",
+      "pass": true
+    },
+    {
+      "name": "Ferris: focused range Home",
+      "pass": true
+    },
+    {
+      "name": "sliders/ferris-wheel: reset handler remains ready",
+      "pass": true
+    },
+    {
+      "name": "sliders/ferris-wheel: no serious/critical axe findings",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "sliders/ferris-wheel: 390px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/ferris-wheel: 320px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/lateral-panels: built page mounts",
+      "pass": true
+    },
+    {
+      "name": "sliders/lateral-panels: reset handler remains ready",
+      "pass": true
+    },
+    {
+      "name": "sliders/lateral-panels: no serious/critical axe findings",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "sliders/lateral-panels: 390px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/lateral-panels: 320px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/vertical-aperture: built page mounts",
+      "pass": true
+    },
+    {
+      "name": "Ciel: drag captures pointer",
+      "pass": true
+    },
+    {
+      "name": "Ciel: reset releases active capture",
+      "pass": true
+    },
+    {
+      "name": "sliders/vertical-aperture: reset handler remains ready",
+      "pass": true
+    },
+    {
+      "name": "sliders/vertical-aperture: no serious/critical axe findings",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "sliders/vertical-aperture: 390px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "sliders/vertical-aperture: 320px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "section-transitions/depth-tunnel: built page mounts",
+      "pass": true
+    },
+    {
+      "name": "section-transitions/depth-tunnel: reset handler remains ready",
+      "pass": true
+    },
+    {
+      "name": "Lusion: visible continuous-replay warning",
+      "pass": true
+    },
+    {
+      "name": "Lusion: manual endpoint",
+      "pass": true
+    },
+    {
+      "name": "section-transitions/depth-tunnel: no serious/critical axe findings",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "section-transitions/depth-tunnel: 390px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "section-transitions/depth-tunnel: 320px no page overflow",
+      "pass": true
+    },
+    {
+      "name": "No JavaScript errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "No failed local assets",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "failedAssets": [],
+  "axe": [
+    {
+      "id": "sliders/bending-cards",
+      "violations": []
+    },
+    {
+      "id": "sliders/ferris-wheel",
+      "violations": []
+    },
+    {
+      "id": "sliders/lateral-panels",
+      "violations": []
+    },
+    {
+      "id": "sliders/vertical-aperture",
+      "violations": []
+    },
+    {
+      "id": "section-transitions/depth-tunnel",
+      "violations": []
+    }
+  ]
+}

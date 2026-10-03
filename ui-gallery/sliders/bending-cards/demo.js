@@ -1,215 +1,40 @@
-import { listen } from "../../_motion/demo-helpers.js";
-
-// Original vector objects stay separate from the flexible panel behind them.
-function sculpture(index, color) {
-  const forms = [
-    `<ellipse cx="150" cy="188" rx="92" ry="34" fill="${color}"/><ellipse cx="150" cy="162" rx="92" ry="34" fill="#fff1cb"/><ellipse cx="150" cy="135" rx="92" ry="34" fill="${color}"/><ellipse cx="150" cy="109" rx="92" ry="34" fill="#fff1cb"/><ellipse cx="150" cy="82" rx="92" ry="34" fill="${color}"/><ellipse cx="150" cy="79" rx="38" ry="13" fill="#361e38"/>`,
-    `<path d="M74 161 97 64 157 29 220 80 232 167 151 211Z" fill="${color}"/><path d="m97 64 60 46 63-30-63-51Z" fill="#fff1cb"/><path d="m157 110-6 101 81-44-12-87Z" fill="#2b263f" opacity=".5"/>`,
-    `<rect x="68" y="77" width="164" height="134" rx="66" fill="${color}"/><ellipse cx="150" cy="77" rx="82" ry="34" fill="#fff1cb"/><ellipse cx="150" cy="78" rx="49" ry="19" fill="${color}"/><path d="M99 116v42M124 131v56M149 130v59M174 129v50M199 115v44" stroke="#fff1cb" stroke-width="9" opacity=".65"/>`,
-    `<circle cx="115" cy="89" r="52" fill="#fff1cb"/><circle cx="185" cy="91" r="52" fill="${color}"/><circle cx="110" cy="163" r="52" fill="${color}"/><circle cx="183" cy="161" r="52" fill="#fff1cb"/><circle cx="148" cy="126" r="31" fill="#2b263f"/>`,
-    `<path d="M66 195 149 30 234 195Z" fill="${color}"/><path d="m149 30 10 165h75Z" fill="#2b263f" opacity=".45"/><ellipse cx="149" cy="194" rx="84" ry="22" fill="#fff1cb"/><circle cx="149" cy="125" r="26" fill="#fff1cb"/>`,
-  ];
-  return `<svg viewBox="0 0 300 260" aria-hidden="true"><ellipse cx="150" cy="231" rx="90" ry="12" fill="#242134" opacity=".13"/>${forms[index]}</svg>`;
-}
-
-export function createDemo(root, { signal, reducedMotion }) {
-  const items = [
-    { title: "Soft layers", panel: "#ddb8eb", object: "#7b439d" },
-    { title: "Fresh angles", panel: "#f7ad80", object: "#ee713f" },
-    { title: "A little volume", panel: "#c2dceb", object: "#4e90b4" },
-    { title: "Better together", panel: "#dbdf8c", object: "#8c9e3b" },
-    { title: "New dimensions", panel: "#ecaeb9", object: "#c15578" },
-  ];
-  root.innerHTML = `<section class="bending-cards"><header><p>OBJECT STUDIES / 01–05</p><h2>A softer way<br>to move.</h2><p>横にドラッグすると、<br>カードと立体が少ししなります。</p></header><div class="bending-cards__viewport" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="しなる5枚のカード"><div class="bending-cards__track">${items.map((item, i) => `<article class="bending-cards__card" aria-label="${i + 1} / 5: ${item.title}"><svg class="bending-cards__surface" viewBox="0 0 280 230" aria-hidden="true"><path fill="${item.panel}" d="M0 0H280V230H0Z"/></svg><div class="bending-cards__object">${sculpture(i, item.object)}</div><h3>${item.title}</h3></article>`).join("")}</div></div><footer><button type="button" data-previous aria-label="前のカード">←</button><div class="bending-cards__positions" aria-label="カードを選ぶ">${items.map((item, i) => `<button type="button" data-index="${i}" aria-label="${i + 1}: ${item.title}" aria-pressed="${i === 0}"><span></span></button>`).join("")}</div><button type="button" data-next aria-label="次のカード">→</button><span class="bending-cards__status" data-status role="status" aria-live="polite">1 / 5 · Soft layers</span></footer></section>`;
-  const viewport = root.querySelector(".bending-cards__viewport");
-  const track = root.querySelector(".bending-cards__track");
-  const cards = [...root.querySelectorAll(".bending-cards__card")];
-  const dots = [...root.querySelectorAll("[data-index]")];
-  const previous = root.querySelector("[data-previous]");
-  const next = root.querySelector("[data-next]");
-  const status = root.querySelector("[data-status]");
-  let position = 0,
-    selected = 0,
-    bend = 0,
-    frame = 0;
-  let pointer = null,
-    startX = 0,
-    startY = 0,
-    startPosition = 0,
-    dragging = false;
-  const clamp = (value) => Math.max(0, Math.min(items.length - 1, value));
-  const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
-
-  function render() {
-    const offset = (viewport.clientWidth - cards[0].offsetWidth) / 2;
-    track.style.transform = `translate3d(${offset - position * step()}px,0,0)`;
-    cards.forEach((card, index) => {
-      const depth = Math.min(1, Math.abs(index - position) / 3);
-      const amount = reducedMotion ? 0 : bend * (1 - depth * 0.3);
-      const inset = Math.abs(amount) * 25;
-      card.querySelector(".bending-cards__surface").style.transform =
-        `perspective(650px) rotateY(${-amount * 24}deg) skewY(${amount * 3}deg)`;
-      card
-        .querySelector("path")
-        .setAttribute(
-          "d",
-          `M${inset} 0 Q${140} ${Math.abs(amount) * 16} ${280 - inset} 0 Q${280 + inset} 115 ${280 - inset} 230 Q140 ${230 - Math.abs(amount) * 16} ${inset} 230 Q${-inset} 115 ${inset} 0Z`,
-        );
-      card.querySelector(".bending-cards__object").style.transform =
-        `translate3d(${amount * 15}px,${-Math.abs(amount) * 9}px,0) rotate(${amount * 9}deg)`;
-      card.classList.toggle("is-current", index === selected);
-    });
-    root.dataset.position = String(selected);
-  }
-  function updateState() {
-    dots.forEach((dot, i) =>
-      dot.setAttribute("aria-pressed", String(i === selected)),
-    );
-    previous.disabled = selected === 0;
-    next.disabled = selected === items.length - 1;
-    status.textContent = `${selected + 1} / ${items.length} · ${items[selected].title}`;
-  }
-  function stop() {
-    cancelAnimationFrame(frame);
-    frame = 0;
-  }
-  function go(index) {
-    stop();
-    selected = Math.round(clamp(index));
-    updateState();
-    if (reducedMotion) {
-      position = selected;
-      bend = 0;
-      render();
-      return;
-    }
-    const from = position,
-      oldBend = bend,
-      direction = Math.sign(selected - from),
-      start = performance.now();
-    function tick(time) {
-      const p = Math.min(1, (time - start) / 780);
-      const ease = 1 - Math.pow(1 - p, 3);
-      position = from + (selected - from) * ease;
-      bend =
-        oldBend * (1 - p) +
-        Math.sin(p * Math.PI) *
-          direction *
-          Math.min(1, Math.abs(selected - from));
-      render();
-      if (p < 1) frame = requestAnimationFrame(tick);
-      else {
-        frame = 0;
-        bend = 0;
-        render();
-      }
-    }
-    frame = requestAnimationFrame(tick);
-  }
-  listen(previous, "click", () => go(selected - 1), signal);
-  listen(next, "click", () => go(selected + 1), signal);
-  dots.forEach((dot) =>
-    listen(dot, "click", () => go(Number(dot.dataset.index)), signal),
-  );
-  listen(
-    viewport,
-    "keydown",
-    (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key))
-        return;
-      event.preventDefault();
-      go(
-        event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? items.length - 1
-            : selected + (event.key === "ArrowRight" ? 1 : -1),
-      );
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointerdown",
-    (event) => {
-      if (event.button !== 0) return;
-      stop();
-      pointer = event.pointerId;
-      startX = event.clientX;
-      startY = event.clientY;
-      startPosition = position;
-      dragging = false;
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointermove",
-    (event) => {
-      if (pointer !== event.pointerId) return;
-      const dx = event.clientX - startX,
-        dy = event.clientY - startY;
-      if (!dragging && Math.abs(dy) > Math.abs(dx) + 8) {
-        pointer = null;
-        go(selected);
-        return;
-      }
-      if (!dragging && Math.abs(dx) > 6) {
-        dragging = true;
-        viewport.setPointerCapture(pointer);
-        viewport.classList.add("is-dragging");
-      }
-      if (!dragging) return;
-      event.preventDefault();
-      const nextPosition = clamp(startPosition - dx / step());
-      bend = reducedMotion
-        ? 0
-        : Math.max(-1, Math.min(1, (nextPosition - position) * 12));
-      position = nextPosition;
-      render();
-    },
-    signal,
-  );
-  function release(event) {
-    if (event.pointerId !== pointer) return;
-    const id = pointer;
-    pointer = null;
-    dragging = false;
-    if (viewport.hasPointerCapture(id)) viewport.releasePointerCapture(id);
-    viewport.classList.remove("is-dragging");
-    go(Math.round(position));
-  }
-  listen(viewport, "pointerup", release, signal);
-  listen(viewport, "pointercancel", release, signal);
-  listen(viewport, "lostpointercapture", release, signal);
-  const resize = new ResizeObserver(render);
-  resize.observe(viewport);
-  function reset() {
-    stop();
-    const id = pointer;
-    pointer = null;
-    dragging = false;
-    if (id !== null && viewport.hasPointerCapture(id))
-      viewport.releasePointerCapture(id);
-    viewport.classList.remove("is-dragging");
-    position = selected = bend = 0;
-    updateState();
-    render();
-  }
-  function replay() {
-    reset();
-    go(1);
-  }
-  function destroy() {
-    stop();
-    resize.disconnect();
-    const id = pointer;
-    pointer = null;
-    if (id !== null && viewport.hasPointerCapture(id))
-      viewport.releasePointerCapture(id);
-  }
-  signal.addEventListener("abort", destroy, { once: true });
-  updateState();
-  render();
-  return { replay, reset, destroy };
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {listen} from '../../_motion/demo-helpers.js';
+import {originalCake,originalSandwich,originalRamen} from './original-food.js';
+const names=['Toast','Fish but no Head','Hotdog','Ramen Bowl','Just a Fungus','Cake Slice'];
+const colors=[['#f4c522','#b51d81'],['#9dc5ca','#00458f'],['#eff319','#c94d82'],['#d91620','#b99d13'],['#cb09c8','#442596'],['#e88700','#e5ad15']];
+const models={1:new URL('./assets/fish-a.glb',import.meta.url).href,2:new URL('./assets/hotdog-a.glb',import.meta.url).href,4:new URL('./assets/fungus-a.glb',import.meta.url).href};
+const wrap=x=>((x%6)+6)%6;
+export function createDemo(root,{signal,reducedMotion}){
+ root.dataset.assetsReady='false';delete root.dataset.destroyed;delete root.dataset.assetError;
+ root.innerHTML=`<section class="bending-cards"><div class="bending-cards__viewport" role="region" aria-roledescription="カルーセル" aria-label="しなる6枚の立体カード" tabindex="0"><header><span class="bending-cards__wordmark">SOFT<br>STUDY</span><p>Configurable customisable<br>extendable smooth bring<br>your own whatever slider<br>API.</p><span>EXAMPLES　DOCS　↗</span></header><canvas aria-hidden="true"></canvas><div class="bending-cards__labels" aria-hidden="true">${names.map((n,i)=>`<div><span>${String(i).padStart(4,'0')}</span><span>—</span><strong>“${n}”</strong><span>33.23¥</span></div>`).join('')}</div><div class="bending-cards__controls"><div class="bending-cards__positions">${names.map((n,i)=>`<button type="button" data-index="${i}" aria-label="${i+1}: ${n}" aria-pressed="${i===5}"><span></span></button>`).join('')}</div><div class="bending-cards__arrows"><button type="button" data-previous aria-label="前のカード">←</button><button type="button" data-next aria-label="次のカード">→</button></div></div><p class="bending-cards__fallback" hidden>3Dの表示を開始できませんでした。WebGLが使える環境で確認してください。</p></div><footer><span data-status role="status" aria-live="polite"></span><button type="button" data-pause aria-pressed="false">立体の動きを止める</button><small><a href="/ui-motion-licenses/assets/bending-cards/ATTRIBUTION.md" target="_blank" rel="noopener noreferrer">3D: QumoDone / Miroshkins / Mostafa (CC BY 4.0)</a> · ケーキ・トースト・ラーメンは独自モデル</small></footer></section>`;
+ const viewport=root.querySelector('.bending-cards__viewport'),canvas=root.querySelector('canvas'),labels=[...root.querySelectorAll('.bending-cards__labels>div')],dots=[...root.querySelectorAll('[data-index]')];
+ let renderer;try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});}catch{root.querySelector('.bending-cards__fallback').hidden=false;root.dataset.assetsReady='true';return{reset(){},replay(){},destroy(){}};}renderer.setClearColor('#000');renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;
+ const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(35,1,.01,100);camera.position.z=10;scene.add(new THREE.AmbientLight(0xffffff,2));const light=new THREE.DirectionalLight('#ffffff',3);light.position.set(-3,5,8);scene.add(light);
+ const groups=[],panels=[],objects=[],loader=new GLTFLoader();let width=1,height=1,worldW=1,worldH=1,step=1,position=5,target=5,selected=5,velocity=0,bend=0,frame=0,last=0,time=0,dead=false,inView=true,paused=reducedMotion,pointer=null,startX=0,startY=0,startPosition=0,dragging=false,loaded=0;
+ function normalize(object,i){object.updateMatrixWorld(true);const b=new THREE.Box3().setFromObject(object),size=b.getSize(new THREE.Vector3()),center=b.getCenter(new THREE.Vector3());const container=new THREE.Group();object.position.sub(center);container.add(object);const s=1/Math.max(size.x/1.25,size.y/1.45);object.scale.multiplyScalar(s);object.position.multiplyScalar(s);container.userData.baseRotation=object.rotation.clone();objects[i]=container;groups[i].add(container);loaded++;if(loaded===6)root.dataset.assetsReady='true';if(groups.length===6)render();}
+ for(let i=0;i<6;i++){const group=new THREE.Group();groups.push(group);scene.add(group);const geo=new THREE.PlaneGeometry(1,1,24,30);const mat=new THREE.ShaderMaterial({uniforms:{base:{value:new THREE.Color(colors[i][0])},accent:{value:new THREE.Color(colors[i][1])},time:{value:0},shift:{value:i}},vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 vUv;uniform vec3 base;uniform vec3 accent;uniform float time;uniform float shift;void main(){vec2 p=vUv-vec2(.35+.35*sin(time*.4+shift),.6+.4*cos(time*.3+shift));float f=exp(-dot(p,p)*14.);gl_FragColor=vec4(mix(base,accent,f),1.);}',side:THREE.DoubleSide});const panel=new THREE.Mesh(geo,mat);panel.userData.original=geo.attributes.position.array.slice();panels.push(panel);group.add(panel);
+  if(models[i])loader.load(models[i],gltf=>{if(dead){dispose(gltf.scene);return;}gltf.scene.traverse(n=>{if(n.isMesh){const old=n.material;n.material=new THREE.MeshBasicMaterial({map:old.map,side:THREE.DoubleSide});old.dispose();}});normalize(gltf.scene,i);},undefined,()=>{loaded++;root.dataset.assetError='true';if(loaded===6)root.dataset.assetsReady='true';});
+  else normalize(i===0?originalSandwich():i===3?originalRamen():originalCake(),i);
+ }
+ function dimensions(){width=viewport.clientWidth;height=viewport.clientHeight;camera.aspect=width/height;camera.updateProjectionMatrix();worldH=2*Math.tan(35*Math.PI/360)*10;worldW=worldH*camera.aspect;renderer.setSize(width,height,false);step=width<600?.62*worldW:.296*worldW;render();}
+ function state(){selected=wrap(Math.round(target));root.dataset.position=String(selected);dots.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));root.querySelector('[data-status]').textContent=`${selected+1} / 6 · ${names[selected]}`;}
+ function render(){if(dead)return;const panelW=(width<600?.47:.202)*worldW,panelH=panelW*1.375;const y=-worldH*.105;for(let i=0;i<6;i++){const distance=((i-position+3)%6+6)%6-3;groups[i].position.set(distance*step,y,0);const a=panels[i].geometry.attributes.position,base=panels[i].userData.original;for(let j=0;j<a.count;j++){const x=base[j*3],yy=base[j*3+1];a.setXYZ(j,(x+Math.cos(yy*Math.PI)*bend*.14)*panelW,yy*panelH,Math.sin(x*4+yy*.2+time*.8+i)*bend*.035*worldW);}a.needsUpdate=true;panels[i].material.uniforms.time.value=time;const object=objects[i];if(object){const scale=panelW*(1.05-Math.min(2,Math.abs(distance))*.04);object.scale.setScalar(scale);object.position.set(bend*.02*worldW,Math.sin(time*.6+i)*panelH*.025,.18);object.rotation.set(Math.sin(time*.32+i)*.12,-distance*.14+Math.sin(time*.36+i)*.32+bend*.24,Math.sin(time*.6+i)*.10+bend*.22);}
+  const labelW=panelW/worldW*width,x=width/2+distance*step/worldW*width-labelW/2;labels[i].style.cssText=`left:${x}px;width:${labelW}px;top:${height/2-y/worldH*height-panelH/worldH*height/2-24}px;height:${panelH/worldH*height+48}px;`;}
+ renderer.render(scene,camera);root.dataset.motionPosition=position.toFixed(4);root.dataset.bend=bend.toFixed(4);root.dataset.objectTime=time.toFixed(4);root.dataset.frame=String(Number(root.dataset.frame??0)+1);}
+ function tick(now){frame=0;if(dead||!inView||document.hidden)return;const dt=Math.min(.04,(now-(last||now))/1000);last=now;const previous=position;if(!dragging){position+=(target-position)*(1-Math.exp(-8*dt));if(Math.abs(target-position)<.0001)position=target;}velocity=(position-previous)/Math.max(.016,dt);bend+=(Math.max(-1.8,Math.min(1.8,velocity*.19))-bend)*(1-Math.exp(-10*dt));if(!paused)time+=dt;render();if(!paused||Math.abs(position-target)>.0001||Math.abs(bend)>.0001||dragging)frame=requestAnimationFrame(tick);}
+ function wake(){if(!frame&&!dead&&inView&&!document.hidden){last=0;frame=requestAnimationFrame(tick);}}
+ function go(index){if(dead)return;target=index;state();if(reducedMotion){position=target;bend=0;render();}else wake();}
+ dots.forEach((b,i)=>listen(b,'click',()=>{const base=Math.round(target);const d=((i-wrap(base)+3)%6+6)%6-3;go(base+d);},signal));listen(root.querySelector('[data-previous]'),'click',()=>go(Math.round(target)-1),signal);listen(root.querySelector('[data-next]'),'click',()=>go(Math.round(target)+1),signal);
+ listen(root.querySelector('[data-pause]'),'click',e=>{paused=!paused||reducedMotion;e.currentTarget.setAttribute('aria-pressed',String(paused));e.currentTarget.textContent=paused?'立体の動きを再開':'立体の動きを止める';wake();},signal);
+ listen(viewport,'keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();go(e.key==='Home'?0:e.key==='End'?5:Math.round(target)+(e.key==='ArrowRight'?1:-1));},signal);
+ listen(viewport,'pointerdown',e=>{if(e.button!==0||e.target.closest('button'))return;pointer=e.pointerId;startX=e.clientX;startY=e.clientY;startPosition=position;dragging=false;},signal);
+ listen(viewport,'pointermove',e=>{if(pointer!==e.pointerId)return;const dx=e.clientX-startX,dy=e.clientY-startY;if(!dragging){if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){pointer=null;return;}if(Math.abs(dx)<8)return;dragging=true;viewport.setPointerCapture(pointer);viewport.classList.add('is-dragging');}const old=position;position=startPosition-dx/(step/worldW*width);target=position;bend=reducedMotion?0:Math.max(-1.8,Math.min(1.8,(position-old)*9));state();render();wake();},signal);
+ const release=e=>{if(e.type==='lostpointercapture'&&e.target!==viewport)return;if(pointer!==e.pointerId)return;const id=pointer;pointer=null;if(viewport.hasPointerCapture(id))viewport.releasePointerCapture(id);viewport.classList.remove('is-dragging');dragging=false;go(Math.round(position));};for(const name of ['pointerup','pointercancel','lostpointercapture'])listen(viewport,name,release,signal);
+ const resize=new ResizeObserver(dimensions);resize.observe(viewport);const observer=new IntersectionObserver(([entry])=>{inView=entry.isIntersecting;if(inView)wake();else{cancelAnimationFrame(frame);frame=0;}},{threshold:0});observer.observe(viewport);listen(document,'visibilitychange',()=>{cancelAnimationFrame(frame);frame=0;if(!document.hidden)wake();},signal);
+ function reset(){cancelAnimationFrame(frame);frame=0;if(pointer!==null&&viewport.hasPointerCapture(pointer))viewport.releasePointerCapture(pointer);pointer=null;dragging=false;viewport.classList.remove('is-dragging');position=target=5;velocity=bend=time=0;state();render();wake();}
+ function dispose(object){object.traverse(n=>{n.geometry?.dispose();if(n.material){for(const m of Array.isArray(n.material)?n.material:[n.material]){for(const v of Object.values(m))if(v?.isTexture)v.dispose();m.dispose();}}});}
+ function destroy(){if(dead)return;dead=true;cancelAnimationFrame(frame);frame=0;if(pointer!==null&&viewport.hasPointerCapture(pointer))viewport.releasePointerCapture(pointer);pointer=null;resize.disconnect();observer.disconnect();dispose(scene);renderer.dispose();renderer.forceContextLoss();root.dataset.destroyed='true';}
+ signal.addEventListener('abort',destroy,{once:true});dimensions();state();wake();return{reset,replay(){reset();go(6);},seek(p,b=0,t=0){cancelAnimationFrame(frame);frame=0;paused=true;position=target=p;bend=b;time=t;state();render();},destroy};
 }

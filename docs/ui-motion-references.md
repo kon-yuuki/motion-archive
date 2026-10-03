@@ -17,7 +17,7 @@
 - 参考サイトの現在の画面と、受賞時の版が同一とは限りません
 - **実サイト操作**と**公式記録映像の観察**を各ページに明記しています。映像だけから、未確認のドラッグ・スクロール仕様や内部コードを断定していません
 - 原作の公開 CSS / 表示 DOM から計測した値、記録映像から読み取った値、独立実装の推定値を各ページで区別します。原作の内部実装が不明な箇所は、その限界を記載します
-- 動作するデモには元サイトの写真・動画・ロゴ・専用書体を同梱していません。比較資料の出典スクリーンショットと、デモで使う代替素材は区別しています。素材を置き換えても、寸法・配置・動きの一致は別に確認します
+- 動作するデモには元サイトの写真・動画・ロゴ・専用書体を同梱していません。Smooothyの立体3点は作者ごとのCC BY 4.0を確認して使用し、出典と変更内容を掲載しています。Lusionの人物は使用条件を確認したNASAの代替モデルです。比較資料の出典スクリーンショットと、デモで使う代替素材は区別しています。素材を置き換えても、寸法・配置・動きの一致は別に確認します
 - WebGL や立体表現を CSS / SVG / Canvas で近似した場合は、各ページの「再現範囲と違い」に記載しています
 
 ## Buttons / 6 studies
@@ -38,7 +38,7 @@
 | [Bending cards](../ui-gallery/sliders/bending-cards/) | 送る瞬間だけ、カードがしなる | [Smooothy](https://www.awwwards.com/sites/smooothy) / 2025-08-21 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/slider-smooothy) |
 | [Ferris-wheel gallery](../ui-gallery/sliders/ferris-wheel/) | 一枚の絵から、縦に回る作品の列へ | [De Maldè - Canvas Chronicles](https://www.awwwards.com/sites/de-malde-canvas-chronicles) / 2025-04-13 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/ferris-wheel-slider-de-malde-canvas-chronicles) |
 | [Free-drag rail](../ui-gallery/sliders/free-drag-rail/) | 大きさの違うカードを、ひと続きに | [REJOUICE®](https://www.awwwards.com/sites/rejouice-r-3) / 2025-02-06 | 実サイト操作 |
-| [Lateral panel accordion](../ui-gallery/sliders/lateral-panels/) | 次の面が広がり、前の面は帯として残る | [Akaru](https://www.awwwards.com/sites/akaru-2) / 2024-04-01 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/slider-akaru-2) |
+| [Lateral panels](../ui-gallery/sliders/lateral-panels/) | 固定した見出しの前を、全高の面が横へ通り抜ける | [Akaru](https://www.awwwards.com/sites/akaru-2) / 2024-04-01 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/slider-akaru-2) |
 | [Layered bundle swap](../ui-gallery/sliders/layered-bundle/) | 変わらないベースと、重なって入れ替わる組み合わせ | [More Nutrition](https://www.awwwards.com/sites/more-nutrition) / 2025-11-03 | 実サイト操作 |
 | [Vertical film aperture](../ui-gallery/sliders/vertical-aperture/) | 画面と目盛りを固定して、シーンだけを縦に送る | [Ciel Rose](https://www.awwwards.com/sites/ciel-rose) / 2025-02-20 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/home-projects-slider-ciel-rose) |
 

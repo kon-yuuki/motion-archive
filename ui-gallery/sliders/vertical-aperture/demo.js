@@ -1,178 +1,172 @@
-import { makeArt, listen } from "../../_motion/demo-helpers.js";
+import { listen } from "../../_motion/demo-helpers.js";
+import { sampleTrace, TRACE_DURATION } from "./trace.js";
 
-/** Keep the viewport and ruler still; only the pictures travel through the aperture. */
+const films = [
+  ["garden", "庭の午後"], ["breakfast", "朝の食卓"], ["bike", "夏のサイクリング"],
+  ["monitor", "古いテレビ"], ["night", "夜の廊下"], ["steps", "階段での会話"], ["cafe", "カフェのひととき"],
+].map(([file, name]) => ({ name, url: new URL(`./assets/${file}.webp`, import.meta.url).href }));
+const wrap = (n) => ((n % films.length) + films.length) % films.length;
+const rest = [0, 395, 769, 468, 468, 0];
+const CONTROL_DURATION = 360; // Added control response; not a measured source duration.
+
 export function createDemo(root, { signal, reducedMotion }) {
-  const names = [
-    "A place to begin",
-    "The open door",
-    "A different shape",
-    "In good company",
-    "A moment in gold",
-    "Another way through",
-    "Back to the landscape",
-  ];
-  root.innerHTML = `<section class="vertical-aperture"><header><p>FRAME BY FRAME</p><h2>Stories in motion.</h2><span>Selected visual studies</span></header><div class="vertical-aperture__viewport" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="縦に送る7枚の映像スタディ"><div class="vertical-aperture__track">${names.map((name, i) => `<article class="vertical-aperture__frame" aria-label="${i + 1} / 7: ${name}"><div class="vertical-aperture__image">${makeArt(i, name)}</div><div class="vertical-aperture__caption"><span>STUDY ${String(i + 1).padStart(2, "0")}</span><h3>${name}</h3></div></article>`).join("")}</div></div><footer><button type="button" data-previous aria-label="前のシーン">↑</button><div class="vertical-aperture__ruler" aria-label="シーンを選ぶ">${names.map((name, i) => `<button type="button" data-index="${i}" aria-label="${i + 1}: ${name}" aria-pressed="${i === 0}"><span>${String(i + 1).padStart(2, "0")}</span></button>`).join("")}</div><button type="button" data-next aria-label="次のシーン">↓</button></footer><p data-status role="status" aria-live="polite">01 / 07 · A place to begin</p></section>`;
+  root.innerHTML = `<section class="vertical-aperture">
+    <div class="vertical-aperture__scene">
+      <header class="vertical-aperture__masthead" aria-hidden="true"><span>FILM STUDIES</span><span>WE CREATE STORIES<br>SINCE 2020</span><span>ABOUT US</span><span>CONTACT</span><span>IG&nbsp; VIMEO&nbsp; IN</span></header>
+      <canvas class="vertical-aperture__film" aria-hidden="true"></canvas>
+      <div class="vertical-aperture__viewport" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="7つのフィルムスタディ。左右にドラッグ、または矢印キーでシーンを選択"></div>
+      <div class="vertical-aperture__ruler" role="group" aria-label="シーンを選ぶ">${films.map(({ name }, i) => `<button type="button" data-index="${i}" style="--index:${i}" aria-label="${i + 1}: ${name}" aria-pressed="false">${String(i + 1).padStart(2, "0")}</button>`).join("")}</div>
+      <p class="vertical-aperture__sr-only" data-status role="status" aria-live="polite"></p>
+    </div>
+    <div class="vertical-aperture__controls"><button type="button" data-previous aria-label="前のシーン">↑</button><button type="button" data-next aria-label="次のシーン">↓</button><label>録画の時点 <input data-trace type="range" min="0" max="4000" step="1" value="0" aria-label="参考録画の動きを時点で確認" /></label><output data-time>0.00s</output></div>
+    <p class="vertical-aperture__disclosure">4秒の録画を形・境界線でトレース。画像は新しく生成した静止画に置き換えています。</p>
+  </section>`;
+  const listeners = new AbortController();
+  const listenerSignal = listeners.signal;
+  const scene = root.querySelector(".vertical-aperture__scene");
   const viewport = root.querySelector(".vertical-aperture__viewport");
-  const track = root.querySelector(".vertical-aperture__track");
-  const frames = [...root.querySelectorAll(".vertical-aperture__frame")];
+  const canvas = root.querySelector("canvas");
+  const context = canvas.getContext("2d");
   const buttons = [...root.querySelectorAll("[data-index]")];
-  const previous = root.querySelector("[data-previous]");
-  const next = root.querySelector("[data-next]");
   const status = root.querySelector("[data-status]");
-  let position = 0,
-    selected = 0,
-    bow = 0,
-    animation = 0;
-  let pointer = null,
-    startX = 0,
-    startY = 0;
-  function render() {
-    track.style.transform = `translate3d(0,${-position * viewport.clientHeight}px,0)`;
-    // An inset curved clip is a light CSS interpretation of the recorded edge bow.
-    const inset = reducedMotion ? 0 : bow * 2.2;
-    track.style.clipPath = "none";
-    viewport.style.borderRadius = `${inset * 2}% / ${inset * 8}%`;
-    frames.forEach((frame, i) => {
-      frame.setAttribute("aria-hidden", String(i !== selected));
-      frame.style.transform = `scaleX(${1 - inset / 100})`;
-    });
+  const scrubber = root.querySelector("[data-trace]");
+  const timeLabel = root.querySelector("[data-time]");
+  let alive = true, raf = 0, pointer = null, mode = "idle", selected = -1;
+  let values = reducedMotion ? [1, ...rest.slice(1)] : sampleTrace(0);
+  let traceTime = 0, pointerX = 0, pointerY = 0, pointerPosition = 0, moved = false;
+  let width = 0, height = 0, ratio = 1;
+  const images = films.map(({ url }) => { const image = new Image(); image.onload = () => alive && render(); image.onerror = () => { if (alive) root.dataset.assetError = "true"; }; image.src = url; return image; });
+  function updateState(announce = true) {
+    const next = wrap(Math.round(values[0]));
+    if (next !== selected) {
+      selected = next;
+      buttons.forEach((button, i) => button.setAttribute("aria-pressed", String(i === selected)));
+      if (announce) status.textContent = `${String(selected + 1).padStart(2, "0")} / 07 · ${films[selected].name}`;
+    }
     root.dataset.position = String(selected);
+    root.dataset.filmPosition = values[0].toFixed(5);
+    root.dataset.traceTime = traceTime.toFixed(1);
+    root.dataset.bow = values[5].toFixed(3);
+    root.dataset.playing = String(Boolean(raf));
+    root.dataset.mode = mode;
+    scrubber.value = String(traceTime);
+    timeLabel.value = `${(traceTime / 1000).toFixed(2)}s`;
   }
-  function updateState() {
-    buttons.forEach((button, i) =>
-      button.setAttribute("aria-pressed", String(i === selected)),
-    );
-    previous.disabled = selected === 0;
-    next.disabled = selected === names.length - 1;
-    status.textContent = `${String(selected + 1).padStart(2, "0")} / 07 · ${names[selected]}`;
-  }
-  function stop() {
-    cancelAnimationFrame(animation);
-    animation = 0;
-  }
-  function go(index) {
-    const target = Math.max(0, Math.min(names.length - 1, index));
-    if (target === selected) return;
-    stop();
-    selected = target;
-    updateState();
-    if (reducedMotion) {
-      position = selected;
-      bow = 0;
-      render();
-      return;
+  function render() {
+    if (!alive || !context || !width || !height) return;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.clearRect(0, 0, width, height);
+    const mobile = width < 600, scale = width / 1210 * (mobile ? 1.55 : 1);
+    const offsetX = (width - 1210 * scale) / 2, offsetY = mobile ? height * .45 - 350 * scale : 0;
+    const [position, top, bottom, leftTop, leftBottom, bow] = values;
+    const rows = Math.ceil((bottom - top) * scale * ratio), rowHeight = (bottom - top) / rows;
+    // Each row is a real image slice, stretched along the observed edge curve.
+    // Both top and bottom remain straight and meet the sides at sharp corners.
+    for (let row = 0; row < rows; row++) {
+      const u = row / rows, filmY = position + u, image = images[wrap(Math.floor(filmY))];
+      if (!image.complete || !image.naturalWidth) continue;
+      const x = leftTop + (leftBottom - leftTop) * u + bow * 4 * u * (1 - u);
+      const sy = (filmY - Math.floor(filmY)) * image.naturalHeight;
+      const sh = Math.min(image.naturalHeight - sy, image.naturalHeight / rows);
+      context.drawImage(image, 0, sy, image.naturalWidth, sh,
+        offsetX + (x - 195) * scale, offsetY + (top - 234 + row * rowHeight) * scale,
+        (1600 - 2 * x) * scale, rowHeight * scale + .25 / ratio);
     }
-    const from = position,
-      oldBow = bow,
-      start = performance.now();
-    function tick(time) {
-      const p = Math.min(1, (time - start) / 680),
-        eased = p * p * (3 - 2 * p);
-      position = from + (selected - from) * eased;
-      bow = Math.max(oldBow * (1 - p), Math.sin(p * Math.PI));
-      render();
-      if (p < 1) animation = requestAnimationFrame(tick);
-      else {
-        animation = 0;
-        bow = 0;
-        render();
-      }
-    }
-    animation = requestAnimationFrame(tick);
+    updateState(mode !== "trace");
   }
-  listen(previous, "click", () => go(selected - 1), signal);
-  listen(next, "click", () => go(selected + 1), signal);
-  buttons.forEach((button) =>
-    listen(button, "click", () => go(Number(button.dataset.index)), signal),
-  );
-  listen(
-    viewport,
-    "keydown",
-    (event) => {
-      if (
-        ![
-          "ArrowUp",
-          "ArrowDown",
-          "ArrowLeft",
-          "ArrowRight",
-          "Home",
-          "End",
-        ].includes(event.key)
-      )
-        return;
-      event.preventDefault();
-      go(
-        event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? names.length - 1
-            : selected +
-              (["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1),
-      );
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointerdown",
-    (event) => {
-      if (event.button !== 0) return;
-      pointer = event.pointerId;
-      startX = event.clientX;
-      startY = event.clientY;
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointerup",
-    (event) => {
-      if (pointer !== event.pointerId) return;
-      const dx = event.clientX - startX,
-        dy = event.clientY - startY;
-      pointer = null;
-      // Horizontal swipes change the vertical film; vertical gestures keep page scrolling.
-      if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy))
-        go(selected + (dx < 0 ? 1 : -1));
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointercancel",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointerleave",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  const resize = new ResizeObserver(render);
-  resize.observe(viewport);
-  function reset() {
+  function stop() { cancelAnimationFrame(raf); raf = 0; mode = "idle"; }
+  function finish() { raf = 0; mode = "idle"; updateState(); }
+  function resize() {
+    width = scene.clientWidth; height = scene.clientHeight; ratio = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio); render();
+  }
+  function go(target) {
+    if (!alive) return;
     stop();
-    pointer = null;
-    position = selected = bow = 0;
-    updateState();
+    const from = [...values], start = performance.now();
+    const destination = [target, ...rest.slice(1)];
+    if (reducedMotion) { values = destination; render(); return; }
+    mode = "control";
+    const direction = Math.sign(target - from[0]);
+    function tick(now) {
+      if (!alive) return;
+      const p = Math.min(1, (now - start) / CONTROL_DURATION), eased = 1 - (1 - p) ** 3;
+      values = destination.map((v, i) => from[i] + (v - from[i]) * eased);
+      const pulse = Math.sin(Math.PI * p) * direction;
+      values[2] += pulse * 2; values[1] -= pulse * 10;
+      values[3] -= pulse * 9; values[4] -= pulse * 9; values[5] -= pulse * 5;
+      render();
+      if (p < 1) raf = requestAnimationFrame(tick); else finish();
+    }
+    raf = requestAnimationFrame(tick); updateState();
+  }
+  function nearest(index) { const base = Math.round(values[0]); return base + ((((index - wrap(base)) + 10) % 7) - 3); }
+  function seek(milliseconds) {
+    if (!alive) return;
+    stop(); traceTime = Math.max(0, Math.min(TRACE_DURATION, milliseconds));
+    values = sampleTrace(traceTime);
+    if (reducedMotion) values = [Math.round(values[0]), ...rest.slice(1)];
     render();
   }
+  function clearPointer() { const id = pointer; pointer = null; moved = false; if (id !== null && viewport.hasPointerCapture(id)) viewport.releasePointerCapture(id); viewport.removeAttribute("data-dragging"); }
+  function reset() { clearPointer(); seek(0); }
   function replay() {
+    if (!alive) return;
     reset();
-    go(1);
+    if (reducedMotion) { go(2); return; }
+    mode = "trace";
+    const start = performance.now();
+    function tick(now) {
+      if (!alive) return;
+      traceTime = Math.min(TRACE_DURATION, now - start); values = sampleTrace(traceTime); render();
+      if (traceTime < TRACE_DURATION) raf = requestAnimationFrame(tick); else { finish(); status.textContent = "録画のトレースを再生しました"; }
+    }
+    raf = requestAnimationFrame(tick); updateState();
   }
+  listen(root.querySelector("[data-previous]"), "click", () => go(Math.round(values[0]) - 1), listenerSignal);
+  listen(root.querySelector("[data-next]"), "click", () => go(Math.round(values[0]) + 1), listenerSignal);
+  buttons.forEach((button) => listen(button, "click", () => go(nearest(Number(button.dataset.index))), listenerSignal));
+  listen(scrubber, "input", () => seek(Number(scrubber.value)), listenerSignal);
+  listen(viewport, "keydown", (event) => {
+    if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    go(event.key === "Home" ? nearest(0) : event.key === "End" ? nearest(6) : Math.round(values[0]) + (["ArrowDown", "ArrowRight"].includes(event.key) ? 1 : -1));
+  }, listenerSignal);
+  listen(viewport, "pointerdown", (event) => {
+    if (event.button !== 0) return;
+    pointer = event.pointerId; pointerX = event.clientX; pointerY = event.clientY; pointerPosition = values[0]; moved = false;
+  }, listenerSignal);
+  listen(viewport, "pointermove", (event) => {
+    if (pointer !== event.pointerId) return;
+    const dx = event.clientX - pointerX, dy = event.clientY - pointerY;
+    if (!moved && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) { pointer = null; return; }
+    if (!moved && Math.abs(dx) <= 8) return;
+    if (!moved) { stop(); viewport.setPointerCapture(pointer); viewport.dataset.dragging = "true"; moved = true; }
+    values = [pointerPosition - dx / viewport.clientWidth * 2, ...rest.slice(1)];
+    if (reducedMotion) values[0] = Math.round(values[0]);
+    else values[5] = Math.max(-9, Math.min(9, dx * .03));
+    mode = "drag"; render();
+  }, listenerSignal);
+  function endPointer(event) {
+    if (pointer !== event.pointerId) return;
+    const wasMoving = moved; pointer = null; moved = false; viewport.removeAttribute("data-dragging");
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+    if (wasMoving) go(Math.round(values[0]));
+  }
+  listen(viewport, "pointerup", endPointer, listenerSignal);
+  listen(viewport, "pointercancel", endPointer, listenerSignal);
+  listen(viewport, "lostpointercapture", (event) => { if (event.target === viewport && pointer === event.pointerId) endPointer(event); }, listenerSignal);
+  listen(viewport, "pointerleave", (event) => { if (!moved && pointer === event.pointerId) pointer = null; }, listenerSignal);
+  listen(document, "visibilitychange", () => { if (document.hidden) { stop(); render(); } }, listenerSignal);
+  const observer = new ResizeObserver(resize); observer.observe(scene);
   function destroy() {
-    stop();
-    pointer = null;
-    resize.disconnect();
+    if (!alive) return;
+    stop(); alive = false; clearPointer(); observer.disconnect(); listeners.abort();
+    signal.removeEventListener("abort", destroy);
+    images.forEach((image) => { image.onload = image.onerror = null; });
+    root.dataset.playing = "false"; root.dataset.mode = "destroyed";
   }
   signal.addEventListener("abort", destroy, { once: true });
-  updateState();
-  render();
-  return { replay, reset, destroy };
+  resize();
+  return { replay, reset, destroy, seek };
 }

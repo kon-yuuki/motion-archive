@@ -12,6 +12,7 @@ try{
  let page=await context.newPage();page.on('pageerror',e=>result.errors.push(e.message));
  for(const slug of ['cube-tiles','texture-mask']){
   for(const width of [320,390,1180]){
+   if(process.argv[2] && process.argv[2]!==`${slug}-${width}`)continue;
    await browser.close();browser=await chromium.launch({headless:true,executablePath:'/tmp/chromium',args:['--disable-dev-shm-usage']});
    context=await browser.newContext();await context.route('**/*',route=>{const u=new URL(route.request().url());if(u.pathname.startsWith('/_vercel/'))return route.fulfill({body:'',contentType:'application/javascript'});return u.origin==='http://127.0.0.1:4197'?route.continue():route.abort();});
    page=await context.newPage();page.on('pageerror',e=>result.errors.push(e.message));
@@ -30,5 +31,5 @@ try{
    if(severe.length||measurements.overflow)process.exitCode=1;
   }
  }
-}catch(e){result.error=String(e);process.exitCode=1;}finally{writeFileSync(resolve(output,'axe-report.json'),JSON.stringify(result,null,2));await browser.close();await server.close();}
+}catch(e){result.error=String(e);process.exitCode=1;}finally{writeFileSync(resolve(output,process.argv[2]?`axe-${process.argv[2]}.json`:'axe-report.json'),JSON.stringify(result,null,2));await browser.close();await server.close();}
 console.log(JSON.stringify(result.cases.map(c=>({slug:c.slug,width:c.width,severe:c.severe.length,measurements:c.measurements})),null,2));

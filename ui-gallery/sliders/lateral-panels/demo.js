@@ -1,204 +1,34 @@
-import { makeArt, listen } from "../../_motion/demo-helpers.js";
-
-/** One panel grows while its neighbors remain visible as selectable strips. */
-export function createDemo(root, { signal, reducedMotion }) {
-  const items = [
-    {
-      title: "A clear direction",
-      label: "Strategy",
-      color: "#95b6ef",
-      lines: [
-        "Find the useful question",
-        "Choose what matters",
-        "Make a shared starting point",
-      ],
-    },
-    {
-      title: "Room for ideas",
-      label: "Identity",
-      color: "#b5a1dc",
-      lines: [
-        "Explore a distinct voice",
-        "Shape a visual language",
-        "Keep the system flexible",
-      ],
-    },
-    {
-      title: "Made to be used",
-      label: "Experience",
-      color: "#e4dfc9",
-      lines: [
-        "Understand the next step",
-        "Design for real situations",
-        "Make every state clear",
-      ],
-    },
-    {
-      title: "Bring it to life",
-      label: "Motion",
-      color: "#ecaa76",
-      lines: [
-        "Show what changed",
-        "Connect each moment",
-        "Give movement a purpose",
-      ],
-    },
-    {
-      title: "Keep it moving",
-      label: "Build",
-      color: "#b9cd9b",
-      lines: [
-        "Start with the essentials",
-        "Test it in context",
-        "Learn from everyday use",
-      ],
-    },
-  ];
-  root.innerHTML = `<section class="lateral-panels"><header><p>SMALL STUDIO / FIVE WAYS TO HELP</p><h2>From a thought<br>to a thing.</h2></header><div class="lateral-panels__gallery" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="幅が切り替わる5つのパネル">${items.map((item, i) => `<article class="lateral-panels__panel${i === 0 ? " is-active" : ""}" style="--panel-color:${item.color}"><button class="lateral-panels__handle" type="button" data-index="${i}" aria-label="${i + 1}: ${item.label}" aria-pressed="${i === 0}"><span>${String(i + 1).padStart(2, "0")}</span><span>${item.label}</span></button><div class="lateral-panels__content" aria-hidden="${i !== 0}"><h3>${item.title}</h3><div class="lateral-panels__details"><ul>${item.lines.map((line) => `<li>${line}</li>`).join("")}</ul><div class="lateral-panels__art">${makeArt(i, item.label)}</div></div></div></article>`).join("")}</div><footer><span data-status role="status" aria-live="polite">01 / 05 · Strategy</span><div><button type="button" data-previous aria-label="前のパネル">←</button><button type="button" data-next aria-label="次のパネル">→</button></div><p>色の帯を選ぶ / 横にスワイプ</p></footer></section>`;
-  const gallery = root.querySelector(".lateral-panels__gallery");
-  const panels = [...root.querySelectorAll(".lateral-panels__panel")];
-  const handles = [...root.querySelectorAll("[data-index]")];
-  const previous = root.querySelector("[data-previous]");
-  const next = root.querySelector("[data-next]");
-  const status = root.querySelector("[data-status]");
-  let selected = 0,
-    pointer = null,
-    startX = 0,
-    startY = 0,
-    suppressClick = false;
-  root
-    .querySelector(".lateral-panels")
-    .classList.toggle("is-reduced", reducedMotion);
-  function measure() {
-    // Keep copy laid out at its final width while the outer panel squeezes it.
-    const strip =
-      parseFloat(getComputedStyle(gallery).getPropertyValue("--strip")) || 38;
-    gallery.style.setProperty(
-      "--content-width",
-      `${Math.max(0, gallery.clientWidth - strip * (items.length - 1))}px`,
-    );
-  }
-  function go(index) {
-    selected = Math.max(0, Math.min(items.length - 1, index));
-    panels.forEach((panel, i) => {
-      panel.classList.toggle("is-active", i === selected);
-      panel
-        .querySelector(".lateral-panels__content")
-        .setAttribute("aria-hidden", String(i !== selected));
-      handles[i].setAttribute("aria-pressed", String(i === selected));
-    });
-    previous.disabled = selected === 0;
-    next.disabled = selected === items.length - 1;
-    status.textContent = `${String(selected + 1).padStart(2, "0")} / 05 · ${items[selected].label}`;
-    root.dataset.position = String(selected);
-  }
-  handles.forEach((button) =>
-    listen(button, "click", () => go(Number(button.dataset.index)), signal),
-  );
-  // A swipe that begins on a narrow handle must not also select that handle.
-  listen(
-    gallery,
-    "click",
-    (event) => {
-      if (!suppressClick) return;
-      suppressClick = false;
-      event.preventDefault();
-      event.stopPropagation();
-    },
-    signal,
-    { capture: true },
-  );
-  listen(previous, "click", () => go(selected - 1), signal);
-  listen(next, "click", () => go(selected + 1), signal);
-  listen(
-    gallery,
-    "keydown",
-    (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key))
-        return;
-      event.preventDefault();
-      go(
-        event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? items.length - 1
-            : selected + (event.key === "ArrowRight" ? 1 : -1),
-      );
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerdown",
-    (event) => {
-      if (event.button !== 0) return;
-      suppressClick = false;
-      pointer = event.pointerId;
-      startX = event.clientX;
-      startY = event.clientY;
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerup",
-    (event) => {
-      if (pointer !== event.pointerId) return;
-      const dx = event.clientX - startX,
-        dy = event.clientY - startY;
-      pointer = null;
-      if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) {
-        suppressClick = true;
-        go(selected + (dx < 0 ? 1 : -1));
-      }
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointercancel",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  listen(
-    gallery,
-    "pointerleave",
-    () => {
-      pointer = null;
-    },
-    signal,
-  );
-  const resize = new ResizeObserver(measure);
-  resize.observe(gallery);
-  let replayFrame = 0;
-  function reset() {
-    cancelAnimationFrame(replayFrame);
-    replayFrame = 0;
-    pointer = null;
-    gallery.classList.add("is-resetting");
-    go(0);
-    gallery.getBoundingClientRect();
-    gallery.classList.remove("is-resetting");
-  }
-  function replay() {
-    reset();
-    replayFrame = requestAnimationFrame(() => {
-      replayFrame = 0;
-      go(1);
-    });
-  }
-  function destroy() {
-    cancelAnimationFrame(replayFrame);
-    pointer = null;
-    resize.disconnect();
-    gallery
-      .getAnimations({ subtree: true })
-      .forEach((animation) => animation.cancel());
-  }
-  signal.addEventListener("abort", destroy, { once: true });
-  measure();
-  go(0);
-  return { replay, reset, destroy };
+import { listen } from '../../_motion/demo-helpers.js';
+const photos = ['strategy', 'portrait', 'mountain', 'surfboard', 'shoes'].map(name => new URL(`./assets/${name}.webp`, import.meta.url).href);
+const items = [
+  ['Stratégie & Conseil', '#b7c7cf', ['Audit & benchmark','Positionnement','Image de marque','Stratégie digitale','Stratégie éditoriale','Accompagnement']],
+  ['Direction Artistique', '#ac8799', ['Identité visuelle','Logo','Charte graphique','Design graphique','Maquettes et prototypes','UI & UX design']],
+  ['Site Vitrine', '#efeee9', ['Front-end','Back-end (CMS)','Animations CSS','Interactions','Expérience digitale','WebGL (3D)']],
+  ['Expérience Digitale', '#da865e', ['Landing page','Jeux concours','Gaming','Storyboard','Direction artistique','Développement 3D']],
+  ['Site e-commerce', '#718b75', ['Parcours utilisateurs','Arborescence','Direction artistique','Shopify sur mesure','Headless','Front-end sur mesure']],
+];
+const clamp = x => Math.max(0, Math.min(4,x));
+// Boundary keyframes estimated from the recorded version. Passed slabs leave entirely.
+export function slabBoundaries(position) {
+  const points=[0,.8,.95,1,1,1];
+  return items.map((_,i)=>{const distance=i-position;if(distance<=0)return 0;const j=Math.floor(distance),p=distance-j;return (points[j]??1)*(1-p)+(points[j+1]??1)*p;});
+}
+export function createDemo(root,{signal,reducedMotion}) {
+  root.innerHTML=`<section class="lateral-panels"><div class="lateral-panels__gallery" role="region" aria-roledescription="カルーセル" aria-label="横に進む5つの専門分野" tabindex="0"><div class="lateral-panels__slabs">${items.map((item,i)=>`<article class="lateral-panels__panel" style="--panel-color:${item[1]}"><div class="lateral-panels__art"><img src="${photos[i]}" alt="${item[0]}のためのオリジナル写真風素材" draggable="false"></div></article>`).join('')}</div><header><span class="lateral-panels__wordmark" aria-label="Independent study">STUDIO</span><span class="lateral-panels__menu">MENU <i></i></span></header><h2>Expertises</h2><div class="lateral-panels__copy">${items.map((item,i)=>`<div data-copy="${i}" aria-hidden="${i!==0}"><h3>${item[0]}</h3><ul>${item[2].map(t=>`<li>/ ${t}</li>`).join('')}</ul><span class="lateral-panels__detail">VOIR L'EXPERTISE <i></i></span></div>`).join('')}</div><nav class="lateral-panels__nav" aria-label="専門分野を選ぶ">${items.map((item,i)=>`<button type="button" data-index="${i}" aria-label="${i+1}: ${item[0]}" aria-pressed="${i===0}"><span>${String(i+1).padStart(2,'0')}</span><span>${item[0]}</span></button>`).join('')}<span class="lateral-panels__line"></span></nav></div><footer><button type="button" data-previous aria-label="前のパネル">←</button><span data-status role="status" aria-live="polite"></span><button type="button" data-next aria-label="次のパネル">→</button><small>矢印・横スワイプで確認 / 写真は生成した代替素材</small></footer></section>`;
+  const stage=root.querySelector('.lateral-panels__gallery'),panels=[...root.querySelectorAll('.lateral-panels__panel')],art=[...root.querySelectorAll('.lateral-panels__art')],copies=[...root.querySelectorAll('[data-copy]')],buttons=[...root.querySelectorAll('[data-index]')];
+  let position=0,selected=0,frame=0,pointer=null,dragging=false,startX=0,startY=0,startPosition=0,dead=false;
+  const previous=root.querySelector('[data-previous]'),next=root.querySelector('[data-next]');
+  function state(){buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));previous.disabled=selected===0;next.disabled=selected===4;root.querySelector('[data-status]').textContent=`${selected+1} / 5 · ${items[selected][0]}`;root.dataset.position=String(selected);}
+  function render(){const b=slabBoundaries(position);panels.forEach((panel,i)=>{const left=b[i],right=b[i+1]??1,width=Math.max(0,right-left);panel.style.left=`${left*100}%`;panel.style.width=`${width*100}%`;const departing=i<=position;const imageRight=departing?.8:Math.min(right,.8+.2*(i-position));const d=Math.max(0,i-position),base=Math.floor(d),mix=d-base,photoWidths=[.335,.15,.05,0,0,0];const imageWidth=departing?.335:Math.min(Math.max(0,imageRight-left),(photoWidths[base]??0)*(1-mix)+(photoWidths[base+1]??0)*mix);art[i].style.right='auto';art[i].style.left=`${(imageRight-imageWidth-left)*stage.clientWidth}px`;art[i].style.width=`${imageWidth*stage.clientWidth}px`;art[i].style.height=`${imageWidth*stage.clientWidth*.728}px`;panel.dataset.boundary=left.toFixed(4);});const current=Math.min(4,Math.max(0,Math.floor(position+.12)));copies.forEach((copy,i)=>{copy.style.opacity=String(i===current?1:0);copy.setAttribute('aria-hidden',String(i!==current));});stage.style.setProperty('--progress',String((position+1)/5));root.dataset.motionPosition=position.toFixed(4);}
+  function stop(){cancelAnimationFrame(frame);frame=0;}
+  function go(index){if(dead)return;stop();selected=Math.round(clamp(index));state();if(reducedMotion){position=selected;render();return;}const from=position,start=performance.now();function tick(now){const p=Math.min(1,(now-start)/1200);const eased=p*p*(3-2*p);position=from+(selected-from)*eased;render();if(p<1)frame=requestAnimationFrame(tick);else frame=0;}frame=requestAnimationFrame(tick);}
+  buttons.forEach((b,i)=>listen(b,'click',()=>go(i),signal));listen(previous,'click',()=>go(selected-1),signal);listen(next,'click',()=>go(selected+1),signal);
+  listen(stage,'keydown',e=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;e.preventDefault();go(e.key==='Home'?0:e.key==='End'?4:selected+(e.key==='ArrowRight'?1:-1));},signal);
+  listen(stage,'pointerdown',e=>{if(e.button!==0||e.target.closest('button'))return;pointer=e.pointerId;startX=e.clientX;startY=e.clientY;startPosition=position;dragging=false;},signal);
+  listen(stage,'pointermove',e=>{if(pointer!==e.pointerId)return;const dx=e.clientX-startX,dy=e.clientY-startY;if(!dragging){if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8){pointer=null;return;}if(Math.abs(dx)<8)return;dragging=true;stop();stage.setPointerCapture(pointer);}position=clamp(startPosition-dx/stage.clientWidth*1.4);selected=Math.round(position);state();render();},signal);
+  const release=e=>{if(e.type==='lostpointercapture'&&e.target!==stage)return;if(pointer!==e.pointerId)return;const id=pointer;pointer=null;if(stage.hasPointerCapture(id))stage.releasePointerCapture(id);if(dragging){dragging=false;go(Math.round(position));}};listen(stage,'pointerup',release,signal);listen(stage,'pointercancel',release,signal);listen(stage,'lostpointercapture',release,signal);
+  const resize=new ResizeObserver(render);resize.observe(stage);
+  function reset(){stop();if(pointer!==null&&stage.hasPointerCapture(pointer))stage.releasePointerCapture(pointer);pointer=null;dragging=false;position=selected=0;state();render();}
+  function destroy(){if(dead)return;dead=true;stop();if(pointer!==null&&stage.hasPointerCapture(pointer))stage.releasePointerCapture(pointer);pointer=null;resize.disconnect();}
+  signal.addEventListener('abort',destroy,{once:true});state();render();return{reset,replay(){reset();go(1);},seek(p){stop();position=clamp(p);selected=Math.round(position);state();render();},destroy};
 }
