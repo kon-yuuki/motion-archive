@@ -1,216 +1,222 @@
 import { listen } from "../../_motion/demo-helpers.js";
+import { glyphs } from "./assets/glyphs.js";
 
-/** An original SVG glyph, with a second representation revealed by a circular clip. */
+/** Orange local inspection lens; outlines/handles are generated from licensed substitute fonts. */
 export function createDemo(root, { signal, reducedMotion }) {
-  const glyph =
-    "M164 282V78H246C302 78 335 98 335 141C335 175 313 195 284 202L353 282H298L237 207H207V282ZM207 117V170H243C275 170 292 163 292 142C292 124 277 117 244 117Z";
-  const points = [
-    [164, 282],
-    [164, 78],
-    [246, 78],
-    [335, 141],
-    [284, 202],
-    [353, 282],
-    [298, 282],
-    [237, 207],
-    [207, 207],
-    [207, 282],
-    [207, 117],
-    [207, 170],
-    [243, 170],
-    [292, 142],
-    [244, 117],
-  ];
-  root.innerHTML = `<section class="character-xray"><header><span>BEHIND THE LETTER</span><span>MOVE TO LOOK INSIDE</span></header><div class="character-xray__layout"><div><h2>One letter.<br>Two ways to see.</h2><p>文字の上へポインターを。<br>丸い窓の中だけ、輪郭が見えます。</p><button type="button" data-pin aria-pressed="false">レンズを固定する</button></div><div class="character-xray__surface" tabindex="0" role="img" aria-label="Rの形。矢印キーでレンズを動かせます"><svg viewBox="0 0 520 360" aria-hidden="true"><defs><clipPath id="character-xray-lens"><circle data-clip cx="260" cy="180" r="80"/></clipPath></defs><path d="M113 324V155a147 147 0 0 1 294 0v169" fill="none" stroke="#8c6549" stroke-width="1"/><path d="${glyph}" fill="#563423" fill-rule="evenodd"/><g class="character-xray__lens" clip-path="url(#character-xray-lens)"><rect width="520" height="360" fill="#e5a565"/><path d="${glyph}" fill="none" stroke="#573424" stroke-width="1.5"/><path d="M246 78H302L335 98V141M335 141V175L313 195 284 202M243 170H275L292 163V142M292 142V124L277 117 244 117" fill="none" stroke="#79553a" stroke-width=".8"/>${points.map(([x, y]) => `<rect x="${x - 2.5}" y="${y - 2.5}" width="5" height="5" fill="#f1c99e" stroke="#573424"/>`).join("")}</g><circle class="character-xray__lens" data-ring cx="260" cy="180" r="80" fill="none" stroke="#6e4226" stroke-width="1"/></svg></div></div><footer><span role="status" aria-live="polite">ポインター・矢印キーで観察できます</span><label>Lens position <input type="range" min="90" max="430" value="260" aria-label="レンズの横位置" /></label></footer></section>`;
-  const section = root.querySelector(".character-xray"),
-    surface = root.querySelector(".character-xray__surface"),
-    svg = root.querySelector("svg"),
-    clip = root.querySelector("[data-clip]"),
-    ring = root.querySelector("[data-ring]"),
-    pin = root.querySelector("[data-pin]"),
-    range = root.querySelector("input"),
-    status = root.querySelector("[role=status]");
-  let x = 260,
-    y = 180,
-    tx = 260,
-    ty = 180,
+  const id = `xray-${Math.random().toString(36).slice(2)}`;
+  root.innerHTML = `<section class="character-xray" data-recorded-scene><div class="character-xray__masthead" aria-hidden="true"><span>Intro　 Weights　 Test　 <b>● Story</b></span><span class="character-xray__brand">CASA <i>di</i> SOLARE</span><span>Purchase Solare　<span class="character-xray__sun">→</span></span></div><div class="character-xray__surface" tabindex="0" role="group" aria-label="文字の構造を丸いレンズで見る。矢印キーでレンズ、PageUpとPageDownで文字、Escapeでリセット"><svg viewBox="0 0 1600 1200" aria-hidden="true"><defs><clipPath id="${id}"><circle data-lens cx="800" cy="730" r="0"/></clipPath></defs><g class="character-xray__headline" fill="#fbb343"><text x="308" y="270" font-size="230" font-style="italic">The</text><text x="610" y="270" font-size="174" textLength="570" lengthAdjust="spacingAndGlyphs">STORY</text><text x="612" y="400" font-size="183" font-style="italic">of</text><text x="830" y="400" font-size="174" textLength="666" lengthAdjust="spacingAndGlyphs">SOLARE</text></g><path d="M550 1086V608a250 250 0 0 1 500 0v478Z" fill="none" stroke="#78675c" stroke-width="1"/><g data-solid></g><g clip-path="url(#${id})"><rect width="1600" height="1200" fill="#ffb840"/><g data-outline></g></g><text x="800" y="1040" text-anchor="middle" fill="#66574a" font-family="Arial,sans-serif" font-size="12">(HOVER TO REVEAL ILLUSTRATION)</text></svg></div><div class="character-xray__arrows"><button type="button" data-prev aria-label="前の文字">←</button><button type="button" data-next aria-label="次の文字">→</button></div></section>`;
+  const surface = root.querySelector(".character-xray__surface"),
+    lens = root.querySelector("[data-lens]"),
+    solid = root.querySelector("[data-solid]"),
+    outline = root.querySelector("[data-outline]");
+  let x = 800,
+    y = 730,
+    tx = 800,
+    ty = 730,
+    r = 0,
+    tr = 0,
+    index = -1,
     frame = 0,
-    pinned = false,
-    previewStart = 0,
-    previousTime = 0;
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    last = 0,
+    preview = 0,
+    destroyed = false;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  function glyph(i) {
+    if (destroyed) return;
+    i = (i + glyphs.length) % glyphs.length;
+    if (index === i) return;
+    index = i;
+    const g = glyphs[index];
+    solid.innerHTML = `<path d="${g.d}" fill="#625049"/>`;
+    outline.innerHTML = `<path d="${g.d}" fill="#846127" fill-opacity=".13" stroke="#af822e" stroke-width=".8"/><path d="${g.handles}" fill="none" stroke="#ad812f" stroke-width=".65"/>${g.nodes.map(([px, py]) => `<rect x="${px - 2}" y="${py - 2}" width="4" height="4" fill="none" stroke="#aa7b2d" stroke-width=".7"/>`).join("")}`;
+    root.dataset.glyph = g.char;
+  }
   function draw() {
-    for (const circle of [clip, ring]) {
-      circle.setAttribute("cx", String(x));
-      circle.setAttribute("cy", String(y));
-    }
+    if (destroyed) return;
+    lens.setAttribute("cx", x);
+    lens.setAttribute("cy", y);
+    lens.setAttribute("r", r);
     root.dataset.lensX = x.toFixed(1);
-    range.value = String(Math.round(tx));
+    root.dataset.lensY = y.toFixed(1);
+    root.dataset.lensRadius = r.toFixed(1);
+    root.dataset.phase = r > 0.1 ? "active" : "rest";
   }
-  function tick(time) {
-    const delta = Math.min(50, time - (previousTime || time - 16));
-    previousTime = time;
-    if (previewStart) {
-      const p = Math.min(1, (time - previewStart) / 1600);
-      tx = 130 + 260 * p;
-      ty = 180 + 45 * Math.sin(p * Math.PI * 2);
-      if (p >= 1) {
-        previewStart = 0;
-        section.classList.toggle("is-active", pinned);
-      }
+  function tick(now) {
+    if (destroyed) return;
+    const dt = Math.min(50, now - (last || now - 16));
+    last = now;
+    if (preview) {
+      const t = now - preview;
+      const p = clamp(t / 11700, 0, 1);
+      tx = 800 + 165 * Math.sin(p * Math.PI * 5);
+      ty = 730 + 110 * Math.sin(p * Math.PI * 3 + 0.4);
+      tr = t < 11700 ? 208 : 0;
+      glyph(t < 2700 ? 0 : t < 5500 ? 1 : t < 8300 ? 2 : t < 10100 ? 3 : 4);
+      if (t >= 12500) preview = 0;
     }
-    const blend = reducedMotion ? 1 : 1 - Math.exp(-delta / 80);
-    x += (tx - x) * blend;
-    y += (ty - y) * blend;
-    draw();
-    if (previewStart || Math.abs(tx - x) + Math.abs(ty - y) > 0.1)
-      frame = requestAnimationFrame(tick);
-    else {
-      frame = 0;
-      previousTime = 0;
-    }
-  }
-  function move(nx, ny) {
-    tx = clamp(nx, 70, 450);
-    ty = clamp(ny, 75, 285);
-    if (reducedMotion) {
+    const a = reducedMotion ? 1 : 1 - Math.exp(-dt / 90);
+    x += (tx - x) * a;
+    y += (ty - y) * a;
+    r += (tr - r) * a;
+    const unsettled =
+      Math.abs(x - tx) + Math.abs(y - ty) + Math.abs(r - tr) > 0.08;
+    if (!unsettled) {
       x = tx;
       y = ty;
-      draw();
-    } else if (!frame) frame = requestAnimationFrame(tick);
+      r = tr;
+    }
+    draw();
+    frame = unsettled || preview ? requestAnimationFrame(tick) : 0;
+    if (!frame) last = 0;
   }
-  function activate() {
-    previewStart = 0;
-    section.classList.add("is-active");
+  function wake() {
+    if (!destroyed && !frame) frame = requestAnimationFrame(tick);
   }
-  listen(surface, "pointerenter", activate, signal);
-  listen(
-    surface,
-    "pointermove",
-    (event) => {
-      activate();
-      const box = svg.getBoundingClientRect();
-      move(
-        ((event.clientX - box.left) / box.width) * 520,
-        ((event.clientY - box.top) / box.height) * 360,
-      );
-    },
-    signal,
-  );
+  function aim(nx, ny) {
+    if (destroyed) return;
+    preview = 0;
+    tx = clamp(nx, 0, 1600);
+    ty = clamp(ny, 0, 1200);
+    tr = 208;
+    wake();
+  }
+  function pointer(e) {
+    const b = surface.getBoundingClientRect(),
+      nx = ((e.clientX - b.left) / b.width) * 1600,
+      ny = ((e.clientY - b.top) / b.height) * 1200;
+    if (nx > 475 && nx < 1125 && ny > 330 && ny < 1100) aim(nx, ny);
+    else {
+      preview = 0;
+      tr = 0;
+      wake();
+    }
+  }
+  listen(surface, "pointermove", pointer, signal);
+  listen(surface, "pointerdown", pointer, signal);
   listen(
     surface,
     "pointerleave",
-    () => {
-      if (!pinned) section.classList.remove("is-active");
+    (event) => {
+      if (event.pointerType === "touch") return;
+      preview = 0;
+      tr = 0;
+      wake();
     },
     signal,
   );
   listen(
     surface,
-    "pointerdown",
-    (event) => {
-      if (event.pointerType === "touch") {
-        pinned = true;
-        pin.setAttribute("aria-pressed", "true");
-        pin.textContent = "レンズの固定を解除";
-        activate();
-      }
+    "pointercancel",
+    () => {
+      preview = 0;
+      tr = 0;
+      wake();
     },
     signal,
   );
-  listen(surface, "focus", activate, signal);
+  listen(surface, "focus", () => aim(800, 730), signal);
   listen(
     surface,
     "blur",
     () => {
-      if (!pinned) section.classList.remove("is-active");
+      preview = 0;
+      tr = 0;
+      wake();
     },
     signal,
   );
   listen(
     surface,
     "keydown",
-    (event) => {
+    (e) => {
       if (
-        !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Escape"].includes(
-          event.key,
-        )
+        ![
+          "ArrowLeft",
+          "ArrowRight",
+          "ArrowUp",
+          "ArrowDown",
+          "PageDown",
+          "PageUp",
+          "Escape",
+        ].includes(e.key)
       )
         return;
-      event.preventDefault();
-      if (event.key === "Escape") {
-        reset();
+      e.preventDefault();
+      if (e.key === "Escape") return reset();
+      if (e.key === "PageDown" || e.key === "PageUp") {
+        preview = 0;
+        glyph(index + (e.key === "PageDown" ? 1 : -1));
         return;
       }
-      activate();
-      move(
-        tx +
-          (event.key === "ArrowRight"
-            ? 16
-            : event.key === "ArrowLeft"
-              ? -16
-              : 0),
-        ty +
-          (event.key === "ArrowDown" ? 16 : event.key === "ArrowUp" ? -16 : 0),
+      aim(
+        tx + (e.key === "ArrowRight" ? 40 : e.key === "ArrowLeft" ? -40 : 0),
+        ty + (e.key === "ArrowDown" ? 40 : e.key === "ArrowUp" ? -40 : 0),
       );
     },
     signal,
   );
   listen(
-    pin,
+    root.querySelector("[data-next]"),
     "click",
     () => {
-      pinned = !pinned;
-      previewStart = 0;
-      pin.setAttribute("aria-pressed", String(pinned));
-      pin.textContent = pinned ? "レンズの固定を解除" : "レンズを固定する";
-      section.classList.toggle("is-active", pinned);
-      status.textContent = pinned
-        ? "レンズを固定しました。下のスライダーでも動かせます"
-        : "ポインター・矢印キーで観察できます";
+      preview = 0;
+      glyph(index + 1);
     },
     signal,
   );
   listen(
-    range,
-    "input",
+    root.querySelector("[data-prev]"),
+    "click",
     () => {
-      activate();
-      move(Number(range.value), 180);
+      preview = 0;
+      glyph(index - 1);
     },
     signal,
   );
   function stop() {
     cancelAnimationFrame(frame);
     frame = 0;
-    previewStart = 0;
-    previousTime = 0;
+    preview = last = 0;
   }
   function reset() {
+    if (destroyed) return;
     stop();
-    pinned = false;
-    x = tx = 260;
-    y = ty = 180;
+    x = tx = 800;
+    y = ty = 730;
+    r = tr = 0;
+    glyph(0);
     draw();
-    section.classList.remove("is-active");
-    pin.setAttribute("aria-pressed", "false");
-    pin.textContent = "レンズを固定する";
-    status.textContent = "ポインター・矢印キーで観察できます";
   }
   function replay() {
+    if (destroyed) return;
     reset();
-    section.classList.add("is-active");
     if (reducedMotion) {
-      pinned = true;
-      pin.setAttribute("aria-pressed", "true");
-      pin.textContent = "レンズの固定を解除";
+      r = tr = 208;
+      draw();
       return;
     }
-    x = tx = 130;
-    previewStart = performance.now();
-    frame = requestAnimationFrame(tick);
+    preview = performance.now();
+    wake();
   }
-  signal.addEventListener("abort", stop, { once: true });
-  draw();
-  return { replay, reset, destroy: stop };
+  function inspectAt(nx, ny, i = 0) {
+    if (destroyed) return;
+    stop();
+    x = tx = nx;
+    y = ty = ny;
+    r = tr = 208;
+    glyph(i);
+    draw();
+  }
+  function destroy() {
+    if (destroyed) return;
+    destroyed = true;
+    stop();
+  }
+  signal.addEventListener("abort", destroy, { once: true });
+  const ready = Promise.all([
+    document.fonts.load('300 174px "Xray Cormorant"'),
+    document.fonts.load('italic 300 196px "Xray Cormorant"'),
+  ]);
+  reset();
+  return { replay, reset, inspectAt, destroy, ready };
 }

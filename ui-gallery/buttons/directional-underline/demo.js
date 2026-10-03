@@ -1,111 +1,38 @@
-/** A label-sized rule inside a generously sized, stationary button. */
-export function createDemo(root, { signal, reducedMotion = false }) {
-  const items = ["Gather", "Shape", "Share"];
-  root.innerHTML = `<section class="directional-underline" aria-label="下線で選択先を伝えるデモ">
-    <div class="directional-underline__top"><span>LINK STUDY / 02</span><span>A quieter response</span></div>
-    <div class="directional-underline__body"><div class="directional-underline__copy"><p>Small signals.<br>Clear choices.</p><span>文字はそのまま。<br>今いる場所を、線で知らせる。</span></div>
-    <div class="directional-underline__list" aria-label="制作の段階を選ぶ">${items.map((label, index) => `<button type="button" class="directional-underline__item" aria-pressed="false" data-index="${index}"><span class="directional-underline__number">0${index + 1}</span><span class="directional-underline__label">${label}</span><span class="directional-underline__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.5"/></svg></span></button>`).join("")}</div></div>
-    <div class="directional-underline__bottom"><span>Hover · Tab · Tap</span><span role="status" aria-live="polite">項目を選んでください</span></div>
-  </section>`;
+import portrait from '../../../src/assets/images/warm-neutral-tailoring/camel-tailored-seated-close.webp';
+
+/** Exo Ape main-menu rule: measured 2px, 500ms cubic-bezier(1,0,0,1). */
+export function createDemo(root, { signal, reducedMotion = false } = {}) {
+  const items = ['Work', 'Studio', 'News', 'Contact'];
+  root.innerHTML = `<section class="directional-underline" data-reduced="${reducedMotion}" aria-label="Exo Ape メニューの下線スタディ">
+    <span class="directional-underline__reference">Exo Ape / main-menu rule</span>
+    <figure class="directional-underline__frame" aria-hidden="true"><div class="directional-underline__image"><img src="${portrait}" alt="" /></div></figure>
+    <div class="directional-underline__content"><div class="directional-underline__menu">${items.map(label => `<button type="button" class="directional-underline__choice"><span class="directional-underline__label">${label}</span></button>`).join('')}</div><div class="directional-underline__social" aria-hidden="true"><span>Behance</span><span>Dribbble</span><span>Linkedin</span><span>Instagram</span></div></div>
+    <div class="directional-underline__lower" aria-hidden="true"><span>Play Reel</span><span>Our Story</span><span>Now Hiring!</span></div><span class="directional-underline__status" role="status" aria-live="polite">Hover・Tab・タップで下線を確認</span></section>`;
   const lifecycle = new AbortController();
-  const buttons = [...root.querySelectorAll("button")];
+  const stage = root.firstElementChild;
+  const buttons = [...root.querySelectorAll('button')];
   const status = root.querySelector('[role="status"]');
-  let selected = -1;
-  let hovered = -1;
-  let focused = -1;
-  let preview = -1;
-  let timers = [];
-  let destroyed = false;
-  const on = (target, type, handler) =>
-    target.addEventListener(type, handler, { signal: lifecycle.signal });
+  let hovered = -1, focused = -1, preview = -1, tapped = -1, timers = [], destroyed = false;
   function render() {
-    buttons.forEach((button, index) => {
-      button.classList.toggle(
-        "is-active",
-        index === hovered ||
-          index === focused ||
-          index === selected ||
-          index === preview,
-      );
-      button.setAttribute("aria-pressed", String(index === selected));
-    });
-  }
-  function stopPreview() {
-    timers.forEach(clearTimeout);
-    timers = [];
-    preview = -1;
-  }
-  buttons.forEach((button, index) => {
-    on(button, "pointerenter", (event) => {
-      if (event.pointerType === "touch") return;
-      stopPreview();
-      hovered = index;
-      render();
-    });
-    on(button, "pointerleave", () => {
-      hovered = -1;
-      render();
-    });
-    on(button, "pointercancel", () => {
-      hovered = -1;
-      render();
-    });
-    on(button, "focus", () => {
-      stopPreview();
-      focused = index;
-      render();
-    });
-    on(button, "blur", () => {
-      focused = -1;
-      render();
-    });
-    on(button, "click", () => {
-      stopPreview();
-      selected = index;
-      render();
-      status.textContent = `${items[index]} を選びました`;
-    });
-  });
-  function reset() {
-    stopPreview();
-    selected = -1;
-    hovered = -1;
-    focused = buttons.indexOf(document.activeElement);
-    render();
-    status.textContent = "項目を選んでください";
-  }
-  function replay() {
-    reset();
-    preview = 0;
-    render();
-    status.textContent = "線が項目間を移る様子をプレビューしています";
-    [1, 2, -1].forEach((index, step) =>
-      timers.push(
-        setTimeout(
-          () => {
-            preview = index;
-            render();
-            if (index < 0)
-              status.textContent = "ホバー・Tab・タップで確かめてください";
-          },
-          (step + 1) * (reducedMotion ? 500 : 800),
-        ),
-      ),
-    );
-  }
-  function destroy() {
     if (destroyed) return;
-    destroyed = true;
-    stopPreview();
-    lifecycle.abort();
-    buttons.forEach((button) =>
-      button
-        .getAnimations({ subtree: true })
-        .forEach((animation) => animation.cancel()),
-    );
-    signal?.removeEventListener("abort", destroy);
+    buttons.forEach((button, i) => button.classList.toggle('is-active', i === hovered || i === focused || i === preview || i === tapped));
   }
-  signal?.addEventListener("abort", destroy, { once: true });
-  if (signal?.aborted) destroy();
-  return { replay, reset, destroy };
+  function stopPreview() { timers.forEach(clearTimeout); timers = []; preview = -1; }
+  const on = (target, type, callback) => target.addEventListener(type, callback, { signal: lifecycle.signal });
+  buttons.forEach((button, i) => {
+    on(button, 'pointerenter', e => { if(e.pointerType === 'touch') return; stopPreview(); tapped = -1; hovered = i; render(); });
+    on(button, 'pointerleave', () => { hovered = -1; render(); });
+    on(button, 'pointercancel', () => { hovered = -1; render(); });
+    on(button, 'focus', () => { stopPreview(); focused = i; render(); });
+    on(button, 'blur', () => { focused = -1; tapped = -1; render(); });
+    on(button, 'click', () => { stopPreview(); tapped = i; render(); status.textContent = `${items[i]} の下線を表示。デモ内では移動しません`; });
+  });
+  function reset() { if(destroyed) return; stopPreview(); hovered = focused = tapped = -1; render(); status.textContent='Hover・Tab・タップで下線を確認'; }
+  function replay() {
+    if(destroyed) return; reset(); preview = 1; render();
+    timers.push(setTimeout(() => { preview=2; render(); }, 900), setTimeout(() => { preview=-1; render(); }, 1800));
+  }
+  function destroy() { if(destroyed) return; stopPreview(); destroyed=true; lifecycle.abort(); stage.getAnimations({subtree:true}).forEach(a=>a.cancel()); signal?.removeEventListener('abort',destroy); }
+  signal?.addEventListener('abort', destroy, {once:true}); if(signal?.aborted) destroy();
+  return {replay,reset,destroy};
 }

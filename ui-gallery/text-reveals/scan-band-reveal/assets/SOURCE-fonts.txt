@@ -1,0 +1,48 @@
+Nimbus Sans Bold (URW Base35)
+============================
+
+Bundled file: nimbus-sans-bold.otf
+Font version: 1.00; unique ID URW:NimbusSans-Bold:2016
+Embedded copyright: (URW)++,Copyright 2014 by (URW)++ Design & Development
+Distribution copyright: 2015 URW Software; 2013, 2014 (URW)++ Design & Development
+License: GNU Affero General Public License version 3 with the exact special
+exception in LICENSE. The full AGPL-3 text is in COPYING.
+
+This is an unmodified copy of the upstream OTF, renamed on disk only.
+SHA-256: 7f33328e6b4d4cd21b45fa625791928c9407dc702db6780e56b09ca9a3ecaa67
+The hash was checked against upstream release 20200910 on 2026-10-03.
+
+Upstream release and font/source forms:
+https://github.com/ArtifexSoftware/urw-base35-fonts/tree/20200910
+https://github.com/ArtifexSoftware/urw-base35-fonts/blob/20200910/fonts/NimbusSans-Bold.otf
+https://github.com/ArtifexSoftware/urw-base35-fonts/blob/20200910/fonts/NimbusSans-Bold.t1
+https://github.com/ArtifexSoftware/urw-base35-fonts/blob/20200910/fonts/NimbusSans-Bold.afm
+
+The upstream Type1 font program and AFM metrics are also included alongside
+this notice as NimbusSans-Bold.t1 and NimbusSans-Bold.afm, unmodified.
+Upstream supplies editable Type1, OpenType, TrueType and AFM forms; the demo
+performs no compilation, subsetting, conversion or outline modification.
+
+Exact upstream license files:
+https://github.com/ArtifexSoftware/urw-base35-fonts/blob/20200910/LICENSE
+https://github.com/ArtifexSoftware/urw-base35-fonts/blob/20200910/COPYING
+
+Redistribution notes for maintainers:
+Retain the font copyright, license, exception and warranty notices, and
+provide the full license to recipients (AGPL-3 section 4). For non-source
+forms, make the corresponding source forms available with equivalent access
+and clear directions by the download (section 6(d)); the upstream URLs and
+bundled Type1/AFM copies above identify the forms supplied by the publisher.
+Publish this notice, LICENSE, COPYING and those font/source forms alongside
+the built webfont. A repository-only notice omitted from a site build is
+not a substitute for notices/source access in the delivered distribution.
+
+The special exception is limited to including the fonts in PostScript or
+PDF documents. It does not waive the webfont redistribution requirements.
+This font is a separate third-party asset. AGPL-3 section 5 describes the
+conditions for aggregates of separate independent works; the PostScript/PDF
+exception alone must not be used to infer a license for unrelated site code.
+
+LICENSE-fonts.txt is the original installed distribution's copyright file.
+Its sections for Debian packaging and AppStream metadata do not describe
+additional files shipped by this demo.

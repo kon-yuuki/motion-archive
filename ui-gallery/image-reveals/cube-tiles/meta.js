@@ -1,55 +1,50 @@
 export const metadata = {
-  slug: "cube-tiles",
-  category: "image-reveals",
-  title: "Perspective tiles",
-  subtitle: "離れた断片が、一枚に揃う",
-  description:
-    "画像を小さな長方形に分け、少し違う角度から戻して一枚に組み立てます。奥行きのある入口を、固定された画像枠の中で確かめるデモです。",
-  trigger: "Viewport entry / Replay / button",
-  duration: "最大1500ms",
-  easing: "cubic-bezier(.16, 1, .3, 1)",
-  status: "WIP",
-  source: {
-    name: "B&O PLAY Spring/Summer 2017",
-    url: "http://beoplay.com/landingpages/ss17",
-    awardUrl: "https://www.awwwards.com/sites/b-o-play-spring-summer-2017",
-    awardDate: "2017-03-30",
-    observedAt: "2026-10-02",
-    observationMode: "recording-observed",
-    recordingUrl:
-      "https://www.awwwards.com/inspiration/cube-effect-image-reveal",
-    location: "公式の記録映像、Charcoal の製品画像が登場する場面",
-    observation:
-      "2.133秒の公式映像では、白い面に離れた長方形の画像片が浮かび、異なる角度や奥行きから回転・移動して揃いました。それぞれの片が時間差で止まり、最後は一枚の写真になっています。",
-    evidence: [
-      "Awwwards の Cube effect image reveal の再生画面と同じ映像のフレームを比較。",
-    ],
+  "slug": "cube-tiles",
+  "category": "image-reveals",
+  "title": "Perspective tiles",
+  "subtitle": "高さをずらした二枚の写真が揃う",
+  "description": "高さをずらした二枚の写真が、上から下へ立体的に組み上がります。製品写真と人物写真の組み合わせ、余白、明るい側面を公式記録から再構成しました。",
+  "trigger": "Viewport entry / Replay / button",
+  "duration": "記録の推定: 約0.11–1.43sで組み上がる",
+  "easing": "面ごとの推定時差 + smoothstep / 元の曲線は不明",
+  "status": "WIP",
+  "source": {
+    "name": "B&O PLAY Spring/Summer 2017",
+    "url": "http://beoplay.com/landingpages/ss17",
+    "awardUrl": "https://www.awwwards.com/sites/b-o-play-spring-summer-2017",
+    "awardDate": "2017-03-30",
+    "observedAt": "2026-10-02",
+    "observationMode": "recording-observed",
+    "recordingUrl": "https://www.awwwards.com/inspiration/cube-effect-image-reveal",
+    "location": "公式の記録映像、Charcoal の製品画像が登場する場面",
+    "observation": "918×656の記録で、左に製品・右に人物の二つのほぼ正方形の写真面を確認。右面は約75px下がっています。面は中央寄り上段から外側・下段へ進み、縦軸と横軸の回転、明るい側面が見えます。",
+    "evidence": [
+      "0.110 / 0.331 / 0.551 / 0.881 / 1.102 / 1.432秒のフル解像度原作フレームと再構成を並べて確認。"
+    ]
   },
-  takeaways: [
+  "takeaways": [
     "画像を見せる順番を分けると、平面の画像にも奥行きのある登場を作れます。",
     "断片の着地点を先に揃えておくと、動きが終わった後の画像に継ぎ目が残りにくくなります。",
-    "操作や説明は分割せず、動く画像とは別の読みやすい場所に残します。",
+    "操作や説明は分割せず、動く画像とは別の読みやすい場所に残します。"
   ],
-  limitations: [
-    "公式の記録映像を観察した再構成です。映像には開始の操作が映っていないため、画面への登場検知と再生ボタンはこのデモの代替操作です。",
-    "元のタイル数、3D の値、描画方法は不明です。ここではオリジナル SVG を12枚の CSS タイルに分けて近い見え方を作っています。",
-    "参考 URL は受賞時の製品ページです。現行ページの動作は検証していません。原サイトの写真・コード・ロゴは含みません。",
+  "limitations": [
+    "開始入力と元の3D実装は不明。記録には直前の完成状態と途中への切り替わりが含まれるため、正確な開始遅延を測ったものではありません。",
+    "原作の写真・製品・人物は同梱せず、image_genで新規作成したセージ色の壁、黒いスピーカー、ピンクの服の成人モデルの写真を使っています。姿勢・顔・商品形状は異なります。",
+    "二面それぞれ4列×3行、縦横交互の回転、面ごとの開始・完了値は記録からの近似。途中の露出面積、遠近感、影には原作との差が残ります。",
+    "原作ロゴは SOUND / STUDIO に置換。ナビゲーションはArialで近似。操作ボタン、キーボード、モバイル、動きを控える設定は学習用に追加しています。",
+    "ギャラリーでは小さな補足ナビ文字を #696969 に濃くし、白背景とのコントラストを確保しています。これは操作できるナビではなく、原作の構図を示す装飾です。"
   ],
-  usability: {
-    benefit:
-      "視線を画像の中に集め、全体が揃ったところを自然な読み始めにできます。画像枠の高さを先に確保するので、周りの文章は動きません。",
-    caution:
-      "よくある『強い回転を何度も繰り返す』演出は内容を読む邪魔になります。初回登場は一度だけにし、もう一度見るかは操作で選べます。",
-    smallScreen:
-      "画像枠を幅に合わせて縮めます。タップ・Enter・Space で再生でき、横方向のスクロールは必要ありません。",
-    reducedMotion:
-      "分割した画像を最初から正しい位置で表示します。回転・奥行き移動・時差は省きます。",
+  "usability": {
+    "benefit": "視線を画像の中に集め、全体が揃ったところを自然な読み始めにできます。画像枠の高さを先に確保するので、周りの文章は動きません。",
+    "caution": "よくある『強い回転を何度も繰り返す』演出は内容を読む邪魔になります。初回登場は一度だけにし、もう一度見るかは操作で選べます。",
+    "smallScreen": "画像枠を幅に合わせて縮めます。タップ・Enter・Space で再生でき、横方向のスクロールは必要ありません。",
+    "reducedMotion": "回転と時差を省き、初めから二枚の写真を表示します。"
   },
-  implementation: [
-    "一枚の SVG を各タイルで同じ倍率に拡大し、列と行の位置だけずらして同じ画像の一部分を表示します。",
-    "親に perspective、タイルに rotateX・rotateY・translateZ を設定し、最後に transform: none へ揃えます。",
-    "最後の時差を含めた完了後は一枚の静止画像を重ね、丸め誤差による継ぎ目を防ぎます。Replay・Reset・破棄ではタイマーと観察を解除します。",
+  "implementation": [
+    "二枚の写真面を同じ幅に置き、右側だけを下げます。写真面の4列×3行のUV座標を保ち、完了時にはつながった写真になります。",
+    "面ごとの回転軸を縦・横で切り替え、上段中央側から外側・下段へ進む時差を設定。白い側面と下面を別要素にして回転中の厚みを見せます。",
+    "一本の描画ループをReplayで置き換え、Reset・Abort・destroyで解除。ResizeObserverは画面幅に応じた深さを再計算し、破棄時に切断します。"
   ],
-  xPost:
-    "ばらばらの画像片が、違う角度から戻って一枚に揃う。奥行きの演出は画像の中だけに閉じ込めて、周りの文章は固定する。公式映像から学ぶ、タイル状の画像登場。",
+  "xPost": "ばらばらの画像片が、違う角度から戻って一枚に揃う。奥行きの演出は画像の中だけに閉じ込めて、周りの文章は固定する。公式映像から学ぶ、タイル状の画像登場。",
+  "timingDisclosure": "映像のフレーム時刻に合わせて各面の出現順を目視調整しました。回転角・厚み・列ごとの開始値は再構成の近似値で、元のCSSやシェーダーを取得したものではありません。"
 };

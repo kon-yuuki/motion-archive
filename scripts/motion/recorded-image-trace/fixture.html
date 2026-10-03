@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;background:#fff}*{box-sizing:border-box}#root{width:100%}</style></head><body><div id="root"></div><script type="module">
+const slug=new URLSearchParams(location.search).get('slug') || 'accordion-unfold';
+const link=document.createElement('link');link.rel='stylesheet';link.href=`/ui-gallery/image-reveals/${slug}/style.scss`;document.head.append(link);
+const {createDemo}=await import(/* @vite-ignore */ `/ui-gallery/image-reveals/${slug}/demo.js`);
+window.mount=(reduced=false)=>{window.controller?.abort();window.demo?.destroy();window.controller=new AbortController();window.demo=createDemo(document.querySelector('#root'),{signal:controller.signal,reducedMotion:reduced});return true;};
+window.mount();window.ready=true;
+</script></body></html>

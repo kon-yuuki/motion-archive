@@ -1,55 +1,50 @@
 export const metadata = {
-  slug: "underlapping-footer",
-  category: "section-transitions",
-  title: "Underlapping footer",
-  subtitle: "ページの下に、次の場面を隠す",
-  description:
-    "手前の明るいセクションが上へ抜けると、その下に待っていた暗いフッターが現れる。前後のレイヤー差で、ページの終わりを印象づけるデモです。",
-  trigger: "Scroll / reveal slider",
-  duration: "約1画面のスクロールに連動",
-  easing: "Continuous progress / Replay: cubic-out",
-  status: "WIP",
-  source: {
-    name: "Exo Ape",
-    url: "https://www.exoape.com/",
-    awardUrl: "https://www.awwwards.com/sites/exo-ape",
-    awardDate: "2022-05-23",
-    observedAt: "2026-10-02",
-    location:
-      "Homepage boundary from Spread the News to the dark Our Story footer",
-    observation:
-      "ページの下部では暗いフッターが大きく見えます。上へ戻すと、白い前のセクションがその上を覆い、Our Story の文字が境界で切り取られる様子を確認しました。",
-    observationMode: "live interaction",
-    evidence: [
-      "Scroll upward one page at approximately (851,437), then observe the boundary.",
-    ],
+  "status": "WIP",
+  "source": {
+    "name": "Exo Ape",
+    "url": "https://www.exoape.com/",
+    "awardUrl": "https://www.awwwards.com/sites/exo-ape",
+    "awardDate": "2022-05-23",
+    "observedAt": "2026-10-02",
+    "observationMode": "live interaction / rendered DOM measurements",
+    "location": "Spread the News と黒い Our Story フッターの境界",
+    "observation": "1180×757画面でフッター高738.406px、背景#070707、文字#e0ccbb。境界y439.060のとき内容transform−210.233px、背景−191.121px。境界y22.709では内容−2.058px、背景−1.871px。残るスクロール量に対し文字−.5倍、背景−1/2.2倍の別移動と一致しました。",
+    "evidence": [
+      "境界の途中と終端でfooter・container・backgroundの矩形と行列を取得。",
+      "白面の境界で文字と背景が切り取られること、境界に影がないことを画像比較。"
+    ]
   },
-  takeaways: [
-    "次の場面を下に置いておくと、ページをめくるような奥行きを作れます。",
-    "手前と奥の移動量を変え、境界の向こうに別の空間があるように見せます。",
-    "色の違いと見出しの位置でも境界を伝えるので、動きが少なくても構造が残ります。",
+  "limitations": [
+    "現行公開版を2026年10月2日に観察しています。2022年の受賞版と同一とは確認していません。",
+    "原作のLausanneは同梱せず、既存のLibre Franklin 400（見た目の太さを近似）で近似しています。文字の形と幅には差が残ります。",
+    "独立したデモ領域へ正規化しています。スマホの配置は追加した対応で、原作のモバイル実装を実測したものではありません。",
+    "原作の軌道動画は再配布せず、暗い球・石の円盤・発光する軌道をCanvasで独自制作。材質感を保つ代替で、原作動画の完全複製ではありません。",
+    "住所・文章は学習用の記述へ置換。表示中の文字はリンクとして外部へ送信しません。"
   ],
-  limitations: [
-    "2026年10月の公開画面を観察しています。受賞時のバージョンと同一とは確認していません。",
-    "画像・文章は独自のプレースホルダーです。サイトのコード、写真、ロゴは複製していません。",
-    "表示面を独立したデモ領域へ置き換えています。動きの距離や時間は、このデモ用の調整値です。",
+  "title": "Underlapping footer",
+  "subtitle": "文字と背景を別の速さで引き出す",
+  "description": "白い面が上へ抜けると、黒いフッターの文字と立体素材が現れます。一つのsticky面ではなく、文字と背景を別々の距離で動かす、Exo Apeの境界のスタディです。",
+  "trigger": "Scroll / reveal slider",
+  "duration": "フッター高のスクロールに連動",
+  "easing": "Linear / text −.5 / backdrop −1÷2.2",
+  "timingDisclosure": "文字のcounter-translationは残り距離×−.5、背景は×−1/2.2。2相の実測値から再構成。Replayの1.8秒と代替の軌道素材の動きは原作の時間値ではありません。",
+  "takeaways": [
+    "白い面の境界は動きますが、奥の文字はその半分の速さで進みます。",
+    "背景は文字と異なる変換を持ち、奥行きの差が残ります。",
+    "フッターの黒い矩形で上側を切り取り、白面の下に内容が隠れているように見せます。"
   ],
-  usability: {
-    benefit:
-      "コンテンツの区切りと次の行動を、面の重なりで自然につなげられます。フッターが現れる過程で、ページの終わりだと伝わります。",
-    caution:
-      "隠れているリンクへフォーカスが入ると迷いやすくなります。このデモの奥面は読むための内容だけにし、実サイトで操作部品を置くときは見えるタイミングと操作可能状態を同期してください。",
-    smallScreen:
-      "縦スクロールと進み具合スライダーに対応します。デモ領域をTabで選んだ後、上下キーでも進めます。狭い幅では奥の画像と文字を小さく調整します。",
-    reducedMotion:
-      "奥の場面の追加パララックスを止め、通常のスクロールで面が現れる構成を残します。",
+  "usability": {
+    "benefit": "ページの終わりを、急な切替ではなく連続した境界として見せられます。",
+    "caution": "隠れている操作部品にフォーカスが入らないよう、このデモの奥面は読める内容だけにしています。",
+    "smallScreen": "内側の縦スクロールとスライダーに対応。Tabで領域を選び、上下キーでも確認できます。",
+    "reducedMotion": "追加のパララックスと軌道アニメーションを止め、通常の縦スクロールで読む構成を残します。"
   },
-  implementation: [
-    "奥の表示面をstickyにし、同じ高さの負のmarginで手前の面と重ねます。手前にはz-indexを付け、読み順は自然なDOM順に保ちます。",
-    "手前の面が移動する間、奥の内容のtranslateYを-22%から0%へ連動させます。原作の速度比を計測した値ではありません。",
-    "スクロール領域はページから独立し、overscroll-behaviorで不要な連鎖を控えます。スクロールバーとキーボード操作を残します。",
-    "Replayやrange入力も同じ描画関数を通ります。連続再生・Reset・ページ離脱時に描画ループを止めます。",
+  "implementation": [
+    "白いセクションとフッターを通常フローで並べ、footerにoverflow:hiddenを設定。",
+    "内容・背景へ別のtranslateYを与え、元の画面の位置・比率を正規化。sticky一枚の移動は使いません。",
+    "軌道素材は画面外・非表示時に停止。Reset・destroyでスクロールRAFとCanvas RAF、Observerを解除します。"
   ],
-  xPost:
-    "フッターをページの下へ置く。手前の面が抜けると、待っていた次の場面が現れる。奥の移動を少し遅らせるだけで生まれる、セクション切り替えの奥行き。",
+  "xPost": "ページの下に隠れたフッター。文字と背景を別の速さで動かすと、境界の向こうに奥行きが生まれる。実測比率で組み直すスクロールのスタディ。",
+  "slug": "underlapping-footer",
+  "category": "section-transitions"
 };

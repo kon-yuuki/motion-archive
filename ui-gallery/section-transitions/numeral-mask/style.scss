@@ -1,210 +1,29 @@
 .numeral-mask {
-  background: #efeee5;
-  color: #2d382b;
-  min-width: 0;
-  > header,
-  > footer {
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    font-size: 10px;
-  }
-  &__scroller {
-    height: 480px;
-    min-height: 440px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #687249 #e7e594;
-  }
-  &__scroller:focus-visible {
-    outline: 3px solid #87a55a;
-    outline-offset: -3px;
-  }
-  &__runway {
-    height: 1130px;
-    position: relative;
-  }
-  &__sticky {
-    height: 480px;
-    position: sticky;
-    top: 0;
-    background: #202923;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  &__start {
-    position: absolute;
-    inset: 0;
-    background: #e7e594;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-  }
-  &__start > p {
-    font-size: 9px;
-    position: relative;
-    z-index: 1;
-    margin: 25px 0 0;
-  }
-  &__start > span {
-    font-size: 10px;
-    position: absolute;
-    bottom: 25px;
-    left: 24px;
-    right: 24px;
-    text-align: center;
-  }
-  &__glyph {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 330px;
-    height: 412.5px;
-    margin-left: -165px;
-    margin-top: -206.25px;
-    transform-origin: 50% 48.2%;
-    will-change: transform;
-  }
-  &__glyph svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  &__destination {
-    position: absolute;
-    inset: 0;
-    background: #202923;
-    color: #ececda;
-    opacity: 0;
-    visibility: hidden;
-    overflow: hidden;
-  }
-  &__destination-copy {
-    position: relative;
-    z-index: 1;
-    padding: 63px 34px;
-  }
-  &__destination-copy > p {
-    font-size: 10px;
-    line-height: 1.7;
-  }
-  h2 {
-    font-size: clamp(43px, 5.5vw, 73px);
-    line-height: 1.03;
-    font-weight: 500;
-    margin: 23px 0;
-  }
-  &__sculpture {
-    position: absolute;
-    right: -7%;
-    bottom: 45px;
-    width: 57%;
-    height: 78%;
-    filter: drop-shadow(0 22px 30px #0d1b1460);
-  }
-  &__destination-rule {
-    position: absolute;
-    inset: auto 25px 24px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #8b997c60;
-    padding-top: 16px;
-    font-size: 9px;
-    color: #acb5a1;
-  }
-  &__state {
-    position: absolute;
-    right: 24px;
-    top: 24px;
-    font-size: 9px;
-    color: #202923;
-    background: #f1f0df;
-    border: 1px solid #aeb69d;
-    border-radius: 4px;
-    padding: 5px 8px;
-    z-index: 3;
-  }
-  footer button {
-    font: inherit;
-    min-height: 34px;
-    border: 1px solid #56624366;
-    border-radius: 24px;
-    padding: 8px 13px;
-    color: inherit;
-    background: transparent;
-    cursor: pointer;
-  }
-  footer label {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  input {
-    width: 120px;
-    accent-color: #687b3e;
-  }
-  @media (max-width: 600px) {
-    > header,
-    > footer {
-      padding: 14px 16px;
-      font-size: 9px;
-      gap: 10px;
-    }
-    &__scroller,
-    &__sticky {
-      height: 410px;
-      min-height: 360px;
-    }
-    &__runway {
-      height: 930px;
-    }
-    &__glyph {
-      width: 280px;
-      height: 350px;
-      margin-left: -140px;
-      margin-top: -175px;
-    }
-    &__destination-copy {
-      padding: 42px 24px;
-    }
-    h2 {
-      font-size: 44px;
-    }
-    &__sculpture {
-      width: 65%;
-      height: 65%;
-      right: -9%;
-      bottom: 28px;
-      opacity: 0.7;
-    }
-    &__destination-copy > p:last-child {
-      max-width: 150px;
-    }
-    footer label {
-      gap: 7px;
-    }
-    input {
-      width: 70px;
-    }
-    footer button {
-      padding: 8px 10px;
-    }
-    &__state {
-      top: 24px;
-      right: 14px;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    &__glyph {
-      will-change: auto;
-    }
-  }
+  min-width: 0; color: #151515; background: #fff; font-family: Arial, Helvetica, sans-serif;
+  &__scroller { height: auto; aspect-ratio: 4 / 3; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; position: relative; }
+  &__scroller::-webkit-scrollbar { display: none; }
+  &__scroller:focus-visible { outline: 3px solid #fff; outline-offset: -5px; }
+  &__runway { height: 550%; position: relative; }
+  &__scene { position: sticky; top: 0; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; container-type: inline-size; background: #000; }
+  &__start { position: absolute; inset: 0; background: #fcd149; }
+  &__glyph { display: block; position: absolute; inset: 0; width: 100%; height: 100%;  }
+  &__glyph svg { width: 100%; height: 100%; display: block; overflow: hidden; }
+  &__destination { position: absolute; inset: 0; overflow: hidden; color: #eee; }
+  &__product { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; filter: brightness(.3); }
+  &__copy { position: absolute; left: 59.1%; top: 60.5%; width: 38%; z-index: 1; }
+  &__copy h2 { color: #ededed; font: 700 4cqw/1.06 Arial,Helvetica,sans-serif; letter-spacing: -.14cqw; margin: 0 0 2cqw; }
+  &__copy p { color: #e3e3e3; font: 700 1.32cqw/1.15 Arial,Helvetica,sans-serif; letter-spacing: -.025cqw; margin: 0 0 1.8cqw; }
+  &__copy > span { font: 700 1.24cqw/1 Arial,Helvetica,sans-serif; }
+  &__copy b { color: #369988; font-size: 2.1cqw; vertical-align: -.18cqw; margin-left: .4cqw; }
+  &__source-progress { position: absolute; top: 0; left: 0; height: .27cqw; background: #2f9b52; }
+  footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px; font-size: 11px; border-top: 1px solid #ddd; }
+  footer label { display: flex; align-items: center; gap: 10px; }
+  button { color: #161616; background: #fff; font: inherit; border: 1px solid #666; border-radius: 25px; padding: 8px 13px; min-height: 40px; cursor: pointer; }
+  button:focus-visible,input:focus-visible { outline: 3px solid #278957; outline-offset: 3px; }
+  input { width: 140px; accent-color: #282828; }
+  [data-state] { color: #555; }
+  @media(max-width:600px){ footer { gap: 10px; padding: 12px; } input {width: 95px;} }
+  @media(prefers-reduced-motion:reduce){ &__glyph{will-change:auto;} }
 }
-[data-reduced-motion="true"] .numeral-mask__glyph {
-  will-change: auto;
-}
+[data-reduced-motion='true'] .numeral-mask__glyph{will-change:auto;}
+.motion-stage:has(> .numeral-mask) { min-height: 0; display: block; background: #fff; }

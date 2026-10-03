@@ -9,7 +9,8 @@
 
 - Dennis About me CTA: 原作と比較して作り直した最初の基準例。書体と一部の時間曲線は近似で、ユーザーレビューは未完了
 - [Dennis の全高メニュー](ui-motion/dennis-menu/)、[REJOUICE のヘッダーリンク](ui-motion/rejouice-arrow/)、[Stuuudio の画像マスク](ui-motion/stuuudio-mask/)、[Joseph Berry の炎ボタン](ui-motion/joseph-berry-button/): 原作の途中状態と比較して修正。個別に残る違いを記載し、ユーザーレビューは未完了
-- その他25件: 再監査で具体的な差を確認し、修正を継続中。30件全体の忠実度は未確認
+- [続く20件の修正ガイドと比較](ui-motion/correction-pass/): 原作を再観察し、部品の構成・寸法・方向・素材・途中状態を修正。書体や映像の置換、未復元のシェーダーなどの差は残る
+- スライダー4件とLusionの立体シーン: 修正を継続中。30件全体の忠実度は未確認
 
 ## 対象
 

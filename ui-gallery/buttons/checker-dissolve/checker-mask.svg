@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 76">
+  <!-- Geometric reconstruction of the publicly observed diagonal checker edge.
+       White is opaque. No artwork or original bitmap is bundled. -->
+  <g fill="white">
+    <path d="M0 0H298V12.5H310V25H322V37.5H336V50H348V62.5H360V76H0Z"/>
+    <path d="M309 0h12.5v12.5H309zM334 0h12.5v12.5H334zM322 12.5h12v12.5H322zM347 12.5h12v12.5H347zM334 25h12.5v12.5H334zM359 25h12.5v12.5H359zM347 37.5h12v12.5H347zM359 50h12.5v12.5H359zM371.5 62.5H384V76h-12.5z"/>
+  </g>
+</svg>

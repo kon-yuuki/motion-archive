@@ -1,0 +1,5 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../../ui-gallery/text-reveals/masked-lines/style.scss"><link rel="stylesheet" href="../../../ui-gallery/image-reveals/cursor-preview/style.scss"><style>*{box-sizing:border-box}body{margin:0}body>a{display:none}button{font:inherit;cursor:pointer}#root{width:100%}.cursor-preview__status,.masked-lines__status{display:none}</style></head><body><main id="root"></main><script type="module">
+import {createDemo as masked} from '../../../ui-gallery/text-reveals/masked-lines/demo.js';
+import {createDemo as cursor} from '../../../ui-gallery/image-reveals/cursor-preview/demo.js';
+const parameters=new URLSearchParams(location.search);const controller=new AbortController();window.demo=(parameters.get('demo')==='cursor'?cursor:masked)(document.querySelector('#root'),{signal:controller.signal,reducedMotion:parameters.has('reduced')});window.cleanup=()=>controller.abort();
+</script></body></html>

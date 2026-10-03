@@ -1,54 +1,25 @@
 export const metadata = {
-  slug: "cursor-preview",
-  category: "image-reveals",
-  title: "Cursor preview",
-  subtitle: "一覧の上に、気配を見せる",
-  description:
-    "文字の一覧に触れると、画像が小さく立ち上がり、少し遅れてポインターを追いかけます。項目を移ると画像は枠の中で縦に切り替わり、一覧の位置は変わりません。",
+  slug: "cursor-preview", category: "image-reveals", title: "Cursor preview", subtitle: "画像・円・文字が、別々に追う",
+  description: "Dennis Snellenberg の Recent work 一覧をトレース。大きな文字と細い罫線の上で、画像、青い円、Viewの文字が異なる遅れでポインターを追います。四つの行を移ると画像が縦に切り替わります。",
   trigger: "Hover / focus / tap / arrow keys",
-  duration: "表示 400ms・画像切替 550ms",
-  easing: "cubic-bezier(.22, 1, .36, 1) / 追従は指数補間",
+  duration: "出入り400ms（実測CSS）・画像切替600ms（近似）",
+  easing: "表示(.34,1,.64,1)・退出(.36,0,.66,0)",
+  timingDisclosure: "出入りの400msと二つのcubic-bezierは公開画面のcomputed CSSで確認。画像切替600ms(.7,0,.3,1)と独立追従の8/6/5Hzは途中状態に合わせた近似で、元サイトの内部定数ではありません。",
   status: "WIP",
   source: {
-    name: "Dennis Snellenberg",
-    url: "https://dennissnellenberg.com/",
-    awardUrl: "https://www.awwwards.com/sites/dennis-snellenberg",
-    awardDate: "2022-04-04",
-    observedAt: "2026-10-02",
-    location: "ホームの Recent work 一覧（TWICE / The Damai の行）",
-    observation:
-      "行に触れると画像カードが小さい状態から約325pxの正方形へ広がり、青い View の円と一緒に少し遅れて追従しました。別の行へ移ると、枠の中の画像が縦に入れ替わり、行の文字が薄くなりました。",
-    evidence: [
-      "ホームの Recent work で TWICE にポインターを移動後、The Damai へ移動。出現・追従・画像の縦切替を公開画面で確認。",
-    ],
-    observationMode: "live interaction",
+    name: "Dennis Snellenberg", url: "https://dennissnellenberg.com/", awardUrl: "https://www.awwwards.com/sites/dennis-snellenberg", awardDate: "2022-04-04", observedAt: "2026-10-02",
+    location: "ホーム Recent work の TWICE / The Damai / FABRIC™ / Aanstekelijk",
+    observation: "1180px幅で画像324.5px角、青い円64.8906px、行172.71875px、見出し61.95px。画像はscaleではなくwidthで出入りし、画像・円・Viewは別要素で追従。同じ瞬間に異なるtopを取り、移動中にずれ、停止後に重なりました。",
+    evidence: ["実サイトの行間を往復し、三つの追従座標と画像トラック変位を時系列で確認。", "画像幅、円径、行間、文字サイズ、出入りのcomputed transitionを採取。途中・静止画像を目視比較。"], observationMode: "live interaction",
   },
-  takeaways: [
-    "出現は拡大、移動は追従、内容変更は縦スライド。役割を分けると、動きが重なっても状態が読み取りやすくなります。",
-    "画像は一覧のレイアウトを動かさずに重ねます。選びかけの項目が逃げません。",
-    "行の名前は常に表示し、画像が見えなくても項目の意味が分かるようにします。",
-  ],
-  limitations: [
-    "画像はこのリポジトリのオリジナル図形です。参考サイトの写真・プロジェクト名・ソースコードは使っていません。",
-    "カード幅280px、表示400ms、切替550ms、追従係数14は、このデモ用の調整値です。参考サイトの内部値ではありません。",
-    "スマホの固定プレビュー、キーボード操作、端への収まりはこの学習デモで追加した配慮です。",
-  ],
+  takeaways: ["一枚の追従カードに円を貼る構造では再現できません。画像・円・ラベルの位置を独立に持ちます。", "出現は幅の拡大、移動は三段階の追従、画像の切替は縦トラック。異なる役割を同じtransformへ混ぜません。", "元の四行、余白、罫線、文字サイズと薄くなるhover状態を維持しています。"],
+  limitations: ["作品画像はリポジトリ内の写真へ置き換えています。元サイトのスクリーンショットや写真は同梱せず、各画像の余白と縦横比を近似しています。", "Dennis Sansは同梱せずArialで近似。作品名は観察位置が照合できるよう元の四名称を残しています。", "widthと出入りのease以外の内部時間値は未確定です。600msの縦切替と8/6/5Hzの追従は見た目を合わせた近似です。", "狭い画面の固定プレビュー、タップ選択、キーボード、Escape、学習用のReplayは追加仕様。原作の作品ページへは遷移しません。"],
   usability: {
-    benefit:
-      "一覧を読みながら、その場で雰囲気を確かめられます。クリックした項目は選択状態を残し、探していたものを見失いにくくします。",
-    caution:
-      "画像が文字や操作を覆うと邪魔になります。プレビューは操作を受け取らず、名前と分類は本文にも残します。説明や重要情報を画像だけに閉じ込めないでください。",
-    smallScreen:
-      "狭い画面とタッチ端末では一覧の下へ固定表示します。タップ、Tab、上下矢印で項目を選べます。Escapeで選択を解除できます。",
-    reducedMotion:
-      "拡大・追従・縦移動を止め、画像を固定した位置で即座に切り替えます。",
+    benefit: "画像を一覧の上へ重ねても行の位置は変わらず、作品名を追いながら雰囲気を比較できます。",
+    caution: "浮遊する三要素はすべてpointer-events:noneにし、行への操作を遮りません。端では原作同様に画像が行の外へ広がり、学習用ステージの端でのみ切り取ります。",
+    smallScreen: "狭い画面・タッチ端末では一覧の下に固定表示。Tab・上下矢印・Home・Endで項目を選び、Enterで選択を保持、Escapeで解除できます。",
+    reducedMotion: "追従・幅の伸縮・縦スライドを省き、選んだ行の中央へ即時表示。Replayも自動切替を始めません。",
   },
-  implementation: [
-    "位置を動かす外枠、拡大する内枠、画像を縦移動するトラックを分けます。同じtransformを書き換えない構成です。",
-    "ポインター位置をデモ領域の座標へ変換し、カードが端から出ない位置に制限します。追従は時間差を補正した指数補間です。",
-    "リサイズ時に固定表示と追従表示を切り替えます。表示幅が足りない時にhoverの仕組みをそのまま縮めません。",
-    "一度の操作でひとつの目標状態へ更新します。再生用タイマー、描画ループ、ResizeObserver、イベントは破棄時に解除します。",
-  ],
-  xPost:
-    "行に触れると画像がふわっと現れ、項目を変えると枠の中でスライド。追従・拡大・切替を別レイヤーにすると整理しやすい。スマホでは固定表示にすると、同じ情報へ迷わずたどり着けます。",
+  implementation: ["元の1180px画面に対する比率を維持し、画像27.5cqw、円5.5cqw、見出し5.25cqw、行14.6372cqwを使用。", "三つの位置ラッパーを個別の時間補正済み指数補間で動かします。画像の幅・円の径・ラベルの枠は400msで出入りします。", "四枚を縦に積み、25%ずつトラックを移動。hover行の文字は左へ0.6cqw、分類は右へ0.6cqw動かして薄くします。", "再生タイマーと追従フレームをResetで取り消し、進行中のCSS遷移も初期化。AbortSignalでResizeObserver、イベント、アニメーションを解除します。"],
+  xPost: "追従画像を一つのカードにまとめると、原作の動きが失われる。画像・青い円・Viewの文字を別々に追わせ、幅で出入りする構造まで合わせました。写真と専用書体の代替は明記。",
 };

@@ -25,11 +25,11 @@
 | デモ | 見どころ | SOTD 出典 / 受賞日 | 観察方法 |
 |---|---|---|---|
 | [Arrow swap](../ui-gallery/buttons/arrow-swap/) | REJOUICE の Let's talk を部品単位で再現 | [REJOUICE®](https://www.awwwards.com/sites/rejouice-r-3) / 2025-02-06 | 実サイト操作 |
-| [Checker dissolve](../ui-gallery/buttons/checker-dissolve/) | 小さな四角で、面を切り替える | [Noomo Agency](https://www.awwwards.com/sites/noomo-agency) / 2023-09-21 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/button-hover-interaction-noomo-agency) |
 | [Dennis / About me](../ui-gallery/buttons/magnetic-fill/) | 円と文字が別々に追従する CTA | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
-| [Directional underline](../ui-gallery/buttons/directional-underline/) | 文字を動かさず、行き先を示す | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
+| [Directional underline](../ui-gallery/buttons/directional-underline/) | 原作メニューの細い線を追う | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
 | [Joseph Berry / Hall of Fame](../ui-gallery/buttons/icon-sequence/) | 文字、四つの炎、青いカプセルの順序 | [Joseph Berry Masterclass](https://www.awwwards.com/sites/joseph-berry-masterclass) / 2021-08-27 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/joseph-berry-masterclass-hover-button-animation) |
 | [Menu icon morph](../ui-gallery/buttons/menu-icon-morph/) | 曲がった先端が伸び、リンクが少し遅れて入る | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
+| [Noomo / View project](../ui-gallery/buttons/checker-dissolve/) | 斜めのチェッカー境界が往復する | [Noomo Agency](https://www.awwwards.com/sites/noomo-agency) / 2023-09-21 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/button-hover-interaction-noomo-agency) |
 
 ## Sliders / 6 studies
 
@@ -47,10 +47,10 @@
 | デモ | 見どころ | SOTD 出典 / 受賞日 | 観察方法 |
 |---|---|---|---|
 | [Depth tunnel](../ui-gallery/section-transitions/depth-tunnel/) | 奥行きを通り抜けて、次の場面へ | [Lusion v3](https://www.awwwards.com/sites/lusion-v3) / 2023-10-02 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/scroll-animation-3) |
-| [Gradient frame wipe](../ui-gallery/section-transitions/gradient-frame-wipe/) | 色の枠を、明るい面が覆っていく | [Ciel Rose](https://www.awwwards.com/sites/ciel-rose) / 2025-02-20 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/global-transition-ciel-rose) |
+| [Gradient frame wipe](../ui-gallery/section-transitions/gradient-frame-wipe/) | 写真を縮め、白い幕を経由して次の写真へ | [Ciel Rose](https://www.awwwards.com/sites/ciel-rose) / 2025-02-20 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/global-transition-ciel-rose) |
 | [Numeral mask](../ui-gallery/section-transitions/numeral-mask/) | 数字の面が、そのまま次の背景になる | [GRASS Vionaro V8](https://www.awwwards.com/sites/grass-vionaro-v8) / 2023-01-16 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/section-transition-8-grass-vionaro-v8) |
-| [Reel expansion](../ui-gallery/section-transitions/reel-expansion/) | 小さな窓から、画面いっぱいへ | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
-| [Underlapping footer](../ui-gallery/section-transitions/underlapping-footer/) | ページの下に、次の場面を隠す | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
+| [Reel expansion](../ui-gallery/section-transitions/reel-expansion/) | 映像が広がり、文字が中央へ集まる | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
+| [Underlapping footer](../ui-gallery/section-transitions/underlapping-footer/) | 文字と背景を別の速さで引き出す | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
 | [Upward curtain](../ui-gallery/section-transitions/upward-curtain/) | 文字を動かさず、境界を引き上げる | [Akaru](https://www.awwwards.com/sites/akaru-2) / 2024-04-01 | 実サイト操作 · [映像](https://www.awwwards.com/inspiration/menu-akaru-2) |
 
 ## Text motion / 6 studies
@@ -60,7 +60,7 @@
 | [Blur dissolve](../ui-gallery/text-reveals/blur-dissolve/) | 輪郭をほどいて、余韻を残す | [Black Dog](https://www.awwwards.com/sites/black-dog) / 2021-09-11 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/black-dog-blurred-text-effect-click-animation) |
 | [Character X-ray](../ui-gallery/text-reveals/character-xray/) | 文字の輪郭を、丸い窓でのぞく | [Casa di Solare](https://www.awwwards.com/sites/casa-di-solare) / 2024-02-19 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/character-xray-effect-casa-di-solare) |
 | [Contour ripple](../ui-gallery/text-reveals/contour-ripple/) | 線でできた文字を、局所的にゆがめる | [DICH™ Fashion](https://www.awwwards.com/sites/dichtm-fashion) / 2025-06-09 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/webgl-text-dichtm-fashion) |
-| [Masked lines](../ui-gallery/text-reveals/masked-lines/) | 行の境界から、順番に現れる | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
+| [Masked words](../ui-gallery/text-reveals/masked-lines/) | 一語ずつ、下端から持ち上がる | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
 | [Proximity weight](../ui-gallery/text-reveals/proximity-weight/) | 近い文字だけ、太さが変わる | [Casa di Solare](https://www.awwwards.com/sites/casa-di-solare) / 2024-02-19 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/variable-type-hover-effect-casa-di-solare) |
 | [Scan-band reveal](../ui-gallery/text-reveals/scan-band-reveal/) | 細かな横帯が、ひとつの文字へつながる | [Fine Thought](https://www.awwwards.com/sites/fine-thought-site) / 2025-07-20 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/page-load-effect-fine-thought-4) |
 
@@ -69,10 +69,10 @@
 | デモ | 見どころ | SOTD 出典 / 受賞日 | 観察方法 |
 |---|---|---|---|
 | [Accordion unfold](../ui-gallery/image-reveals/accordion-unfold/) | 折り目がほどけて、景色が広がる | [B&O PLAY Spring/Summer 2017](https://www.awwwards.com/sites/b-o-play-spring-summer-2017) / 2017-03-30 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/unfolding-effect) |
-| [Cursor preview](../ui-gallery/image-reveals/cursor-preview/) | 一覧の上に、気配を見せる | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
-| [Menu crossfade](../ui-gallery/image-reveals/menu-crossfade/) | 同じ枠の中で、選択の気配を変える | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
+| [Cursor preview](../ui-gallery/image-reveals/cursor-preview/) | 画像・円・文字が、別々に追う | [Dennis Snellenberg](https://www.awwwards.com/sites/dennis-snellenberg) / 2022-04-04 | 実サイト操作 |
+| [Menu crossfade](../ui-gallery/image-reveals/menu-crossfade/) | 縦長の枠の中で回転が落ち着く | [Exo Ape](https://www.awwwards.com/sites/exo-ape) / 2022-05-23 | 実サイト操作 |
 | [Organic mask](../ui-gallery/image-reveals/organic-mask/) | 不規則な窓がつながり、最後の穴が消える | [Stuuudio](https://www.awwwards.com/sites/stuuudio) / 2019-08-01 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/image-reveal-animation-mask-stuuudio) |
-| [Perspective tiles](../ui-gallery/image-reveals/cube-tiles/) | 離れた断片が、一枚に揃う | [B&O PLAY Spring/Summer 2017](https://www.awwwards.com/sites/b-o-play-spring-summer-2017) / 2017-03-30 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/cube-effect-image-reveal) |
+| [Perspective tiles](../ui-gallery/image-reveals/cube-tiles/) | 高さをずらした二枚の写真が揃う | [B&O PLAY Spring/Summer 2017](https://www.awwwards.com/sites/b-o-play-spring-summer-2017) / 2017-03-30 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/cube-effect-image-reveal) |
 | [Texture mask](../ui-gallery/image-reveals/texture-mask/) | 文字の内側に、素材をのぞかせる | [Duten](https://www.awwwards.com/sites/duten) / 2024-11-03 | 公式記録映像 · [映像](https://www.awwwards.com/inspiration/texture-hover-reveal-duten) |
 
 ## 再利用する

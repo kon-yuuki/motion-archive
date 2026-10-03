@@ -1,59 +1,51 @@
 export const metadata = {
-  slug: "layered-bundle",
-  category: "sliders",
-  title: "Layered bundle swap",
-  subtitle: "変わらないベースと、重なって入れ替わる組み合わせ",
-  description:
-    "左のベースと中央の記号は固定したまま、右のセットと名前だけを切り替える。新旧の形が短く重なる、商品紹介の学習デモです。",
-  trigger: "Previous / next / swipe / keyboard",
-  duration: "760ms / このデモの調整値",
-  easing: "Cubic ease-out",
-  takeaways: [
-    "変わらないものを固定すると、何が切り替わったかがすぐに伝わります。",
-    "複数の形を一枚の画像にまとめず、少し違う角度で動かすとセット全体に奥行きが生まれます。",
-    "形と名前を同じ進み具合で更新すると、違う商品の名前が残る混乱を抑えられます。",
+  "slug": "layered-bundle",
+  "category": "sliders",
+  "title": "Layered bundle swap",
+  "subtitle": "変わらないベースと、重なって入れ替わる組み合わせ",
+  "description": "左のベースを固定し、右のセット全体を縮小・回転・移動して切り替えます。5種類を循環し、セット内の容器と袋が別の弾む動きで整います。",
+  "trigger": "Previous / next / swipe / keyboard",
+  "duration": "Outer 300ms / pieces 950ms in, 600ms out",
+  "easing": "Outer: ease / pieces: measured spring linear()",
+  "takeaways": [
+    "固定する左側と変化する右側を分け、組み合わせを見比べやすくします。",
+    "セット全体の短い回転・縮小と、中の袋が整う弾む動きを重ねます。",
+    "タイトルはセットと別のレイヤーで動かし、中央の読みやすい位置を保ちます。"
   ],
-  limitations: [
-    "公開中のMore Nutritionのケーススタディサイトで、右の矢印を2回クリックし、紫と黄色の組み合わせが重なる途中の表示を確認しました。",
-    "Awwwardsの紹介文では自主制作のケーススタディとされています。実際の商品販売サイトを再現するものではありません。",
-    "元の商品画像・商標・商品名は使わず、独自のベクター容器と文章へ置き換えています。",
-    "760ms、各パーツの距離と角度は学習デモの調整値です。元サイトの内部実装や正確な曲線は未計測です。",
-    "2026年10月に観察した版と、2025年の受賞時の版が同じかは確認していません。",
+  "limitations": [
+    "2026年10月のライブサイトのDOMと途中フレームを計測しています。受賞時と同じ版かは未確認です。",
+    "More Nutritionの自主制作ケーススタディが出典です。販売機能は再現していません。",
+    "ロゴ・商品写真・商品名は、同じ容器と袋の比率で描いた独自のパッケージへ置換。実在商品の宣伝や成分表示ではありません。",
+    "外側の300msと内部の950/600msは別の動きです。元の素材の質感、書体、モバイル配置は完全一致しません。",
+    "連打時の最新選択への連続切替、キー操作、Resetと破棄処理は独自の補助実装です。"
   ],
-  usability: {
-    benefit:
-      "比較に必要なベースを残したまま、変わる側に注意を向けられます。セットと名前を同時に更新して選択結果を伝えます。",
-    caution:
-      "旧セットが長く残ると二つを同時に選んだように見えます。重なる時間を短くし、確定した名前と番号を操作部に表示します。",
-    smallScreen:
-      "右側の小さな形をタップする必要はありません。前後ボタン、左右キー、Home・End、横スワイプで切り替えます。",
-    reducedMotion:
-      "傾き、移動、クロスフェードを省き、右のセットと名前をすぐに置き換えます。ベースはそのまま残します。",
+  "usability": {
+    "benefit": "共通するベースを残し、変わるセットへ注意を向けます。5件目の後も先頭へ戻って比較を続けられます。",
+    "caution": "外側は短く切り替え、内部の余韻は後から整います。押せない端を作らず、現在の番号を読み上げます。",
+    "smallScreen": "44px以上の前後ボタン、横スワイプ、左右キー、Home・Endで選べます。",
+    "reducedMotion": "移動・回転・拡縮を省き、最新の組み合わせへ即座に切り替えます。"
   },
-  implementation: [
-    "左のベースを独立したgridの列に置き、右の候補だけを同じセルへ重ねます。",
-    "右のセットを3つのSVGに分け、位置と回転量を変えて奥行きを表現します。SVGはデモ用のオリジナルです。",
-    "新しい選択が入ったら、表示中の全レイヤーの透明度と移動量を保存し、そこから最新の選択へ補間します。",
-    "名前も同じrequestAnimationFrameで更新します。Reset、再操作、破棄時には描画ループを止めます。",
+  "implementation": [
+    "外側のセットと中央のタイトルを別々に重ね、300ms easeでtransformとopacityを変えます。",
+    "内部の容器と袋は独立したrotate/scaleプロパティを使い、計測した950msのlinear()カーブを重ねます。",
+    "選択番号は5件で循環。見えている候補への再操作はCSSの現在値から続き、見えていない候補だけ入口へ戻します。",
+    "Resetは全transitionを即時化し、destroy/Abortでイベント・タイマー・実行中アニメーションを破棄します。"
   ],
-  xPost:
-    "ベースはそのまま、右の組み合わせだけが入れ替わる。新旧の形とタイトルを少し重ね、何が変わったかを伝える商品スライダーの学習メモ。",
-  status: "WIP",
-  source: {
-    name: "More Nutrition",
-    url: "https://more-nutrition.webflow.io/",
-    awardUrl: "https://www.awwwards.com/sites/more-nutrition",
-    awardDate: "2025-11-03",
-    observedAt: "2026-10-02",
-    location: "Chunky Flavour section below reviews",
-    observation:
-      "First click changed right-hand product pack and title to purple FUDGE BROWNIE. Second click produced a visible overlapping in-flight state: yellow VANILLA CHOC CHIP COOKIE product and title entered while the old purple product and FUDGE BROWNIE title faded/translated away. The green base product and plus sign remained fixed.",
-    observationMode: "live interaction",
-    evidence: [
-      "Clicked the right circular arrow, then clicked it again after the first settled; captured immediate screenshot sequence.",
-      "Browser tab 27 screenshots 15:20:03 UTC before, 15:20:17 UTC after first click, 15:20:30 UTC two immediate frames including translucent old/new overlapping products",
-      "Award tab 10 heading Site of the Day - Nov 3, 2025 verified 15:25:28 UTC",
-      "Award description explicitly calls this a self-initiated case study",
-    ],
-  },
+  "xPost": "左のベースを固定し、右のセット全体を縮小・回転・移動して切り替えます。5種類を循環し、セット内の容器と袋が別の弾む動きで整います。",
+  "status": "WIP",
+  "source": {
+    "name": "More Nutrition",
+    "url": "https://more-nutrition.webflow.io/",
+    "awardUrl": "https://www.awwwards.com/sites/more-nutrition",
+    "awardDate": "2025-11-03",
+    "observedAt": "2026-10-02",
+    "location": "Chunky Flavour section below reviews",
+    "observation": "5種類のループするスライダー。外側は300ms easeで、前進時の新セットはtranslate(50%,15%) rotate(35deg) scale(.6)から、旧セットはtranslate(-60%,15%) rotate(-15deg) scale(.35)へ。内部の容器と2袋はscale .75→1、回転0→-5.5/8/28deg。タイトルは別レイヤーの±40%移動・scale .5で同時に切り替わります。",
+    "observationMode": "live rendered-DOM measurements and screenshots",
+    "evidence": [
+      "more-bundle-dom.json and more-next-trace.json: five IDs, whole-set transforms, title transforms, 300ms CSS transition.",
+      "more-active-pieces-dom.json: measured 295×250.922px tub and two 266.312×194.938px sachets at 1180px viewport.",
+      "more-outer-inner-timing.json: outer ease; inner entry 950ms linear() spring, exit 600ms cubic-bezier(.32,.72,0,1), opacity 250ms ease-out."
+    ]
+  }
 };

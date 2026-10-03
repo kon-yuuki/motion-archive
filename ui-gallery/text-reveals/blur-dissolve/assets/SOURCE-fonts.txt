@@ -1,0 +1,21 @@
+The fonts are character subsets created with FontTools. Subsetting removes
+unused characters; it does not change the retained outline design. On
+2026-10-03, original author, trademark (where present), project and license
+metadata were restored after the subsetter had omitted those name records.
+All non-name/non-head font tables were byte-verified unchanged by this repair.
+Copyright notices remain embedded. The full applicable OFL notices are
+included here and must accompany redistributed font assets.
+
+The inspected upstream license headers do not declare Reserved Font Names.
+These are independently bundled substitute fonts, not the proprietary
+Solare typeface or assets obtained from the reference site. Their authors
+do not endorse this demo. All font software remains under SIL OFL 1.1.
+
+Noto Serif CJK: Version 2.003; subset of the Korean or Japanese face.
+Copyright © 2017-2024 Adobe (http://www.adobe.com/).
+Noto is a trademark of Google Inc.
+License: OFL-Noto.txt
+https://github.com/notofonts/noto-cjk/tree/Serif2.003/Serif
+https://github.com/notofonts/noto-cjk/blob/Serif2.003/Serif/LICENSE
+The exact copyright, author, trademark and license metadata were verified
+against the installed NotoSerifCJK-Regular.ttc from which these subsets came.

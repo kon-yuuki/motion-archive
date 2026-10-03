@@ -1,218 +1,71 @@
-let nextTextureId = 0;
+let nextId = 0;
+const asset = name => new URL(`./assets/${name}.webp`, import.meta.url).href;
+const families = [
+  {word:'edstal',finish:'Silver',key:'silver',width:980,copy:'Brushed stainless steel brings a quiet, durable surface to everyday spaces. Fine lines catch the light while simple forms keep the details clear. Explore the silver finish across taps, dispensers and wall fittings. A restrained collection for busy shared interiors.',codes:['S-01','S-02','S-03']},
+  {word:'koveta',finish:'Black',key:'black',width:1050,copy:'A matte black finish gives each object a clear silhouette. Soft reflections reveal subtle surface details without a high shine. Discover curved taps, angular forms and simple wall fittings in this collection.',codes:['N-01','N-02','N-03']},
+  {word:'iflusse',finish:'Brass',key:'brass',width:1050,copy:'Warm brushed brass brings a golden tone to familiar forms. The surface shifts gently between light and shade. Explore refined wall fittings, a compact tap and a curved silhouette in this collection. Each detail keeps the material at the heart of the design.',codes:['L-01','L-02','L-03']},
+];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
-/** A glyph clip and moving aperture intersect over an original material image. */
-export function createDemo(root, { signal, reducedMotion = false }) {
-  const id = `texture-mask-${++nextTextureId}`;
-  const materials = [
-    {
-      name: "Silver",
-      colors: ["#343b3c", "#e8eded", "#77868b", "#f6f7f1", "#3c494b"],
-    },
-    {
-      name: "Brass",
-      colors: ["#62401b", "#ead3a0", "#93713c", "#f5e4ba", "#5e421f"],
-    },
-    {
-      name: "Graphite",
-      colors: ["#111d22", "#737f82", "#26393e", "#a3afab", "#101c20"],
-    },
+/** An irregular material ribbon spans most of the word; it is not a pointer ellipse.
+ * Broad boundary samples are visually reconstructed from the source recording.
+ * The original shader, input mapping and damping are unknown.
+ */
+export function createDemo(root,{signal,reducedMotion=false}={}) {
+ const id=`material-ribbon-${++nextId}`;
+ root.innerHTML=`<section class="texture-mask" aria-label="広い不規則な帯を通して文字の金属素材を見るデモ"><div class="texture-mask__scene"><header class="texture-mask__nav" aria-hidden="true"><b>sur<br>face/</b><span>☰</span></header><svg class="texture-mask__word" viewBox="0 0 1600 460" tabindex="0" role="img" aria-label="edstal の文字。左右キーで素材を動かせます"><defs><mask id="${id}-glyph" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="460"><text x="800" y="403" text-anchor="middle" font-family="Arial,sans-serif" font-size="365" font-weight="400" fill="white" stroke="white" stroke-width="7" textLength="980" lengthAdjust="spacingAndGlyphs" data-word>edstal</text></mask><mask id="${id}-band" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="460"><path data-band fill="#fff"/></mask></defs><g mask="url(#${id}-glyph)"><rect width="1600" height="460" fill="#fff"/><image data-material-image x="275" y="130" width="1050" height="330" preserveAspectRatio="xMidYMid slice" href="${asset('original-silver-texture-v2')}" mask="url(#${id}-band)"/></g></svg><hr class="texture-mask__rule"><div class="texture-mask__finishes" aria-label="素材の仕上げ">${families.map((m,i)=>`<button type="button" data-material="${i}" aria-label="${m.finish} の素材" aria-pressed="${i===0}"><span style="background:${['#999','#303235','#c99f20'][i]}"></span></button>`).join('')}</div><p class="texture-mask__copy"></p><div class="texture-mask__products"></div></div><div class="texture-mask__controls"><label>素材 <select aria-label="素材の仕上げを選ぶ">${families.map((m,i)=>`<option value="${i}">${m.finish}</option>`).join('')}</select></label><button type="button" data-hold aria-pressed="false">素材の帯を固定</button><label>帯の位置 <input type="range" min="0" max="100" value="50" aria-label="素材の帯の位置"></label><span role="status" aria-live="polite"></span></div></section>`;
+ const stage=root.firstElementChild,svg=root.querySelector('svg'),band=root.querySelector('[data-band]'),texture=root.querySelector('[data-material-image]'),word=root.querySelector('[data-word]'),copy=root.querySelector('.texture-mask__copy'),products=root.querySelector('.texture-mask__products'),status=root.querySelector('[role=status]'),hold=root.querySelector('[data-hold]'),range=root.querySelector('input'),select=root.querySelector('select'),buttons=[...root.querySelectorAll('[data-material]')];
+ const lifecycle=new AbortController();let selected=0,x=570,y=216,targetX=x,targetY=y,visibility=0,targetVisibility=0,pinned=false,hovered=false,focused=false,frame=0,last=0,previewStart=null,destroyed=false;
+ const on=(el,type,fn)=>el.addEventListener(type,fn,{signal:lifecycle.signal});
+ function path(){
+  // Base ribbon traces the silver recording near source 1.76 s: broad lower
+  // left lobe, narrower central turn, then upper right lobe. Input deforms the
+  // whole band smoothly instead of placing a circle under the pointer.
+  const centers=[570,1066,300];
+  const origin=centers[selected];
+  const shift=(x-origin)*(selected===2?.8:.12),phase=selected===2?0:(x-origin)/640,bias=(y-(selected===1?388:selected===2?290:216))*.27+(selected===2?clamp((x-300)/610,0,1)*120:0);
+  const shapes=[
+    {upper:[[470,255],[530,275],[600,300],[760,318],[880,292],[960,204],[1100,191],[1235,137],[1340,218]],lower:[[470,308],[530,375],[600,405],[760,421],[880,398],[960,370],[1100,289],[1235,309],[1340,351]]},
+    {upper:[[280,320],[400,250],[530,180],[680,210],[830,235],[980,205],[1130,190],[1270,270],[1370,210]],lower:[[280,365],[400,400],[530,310],[680,285],[830,325],[980,285],[1130,330],[1270,390],[1370,300]]},
+    {upper:[[350,125],[430,105],[525,130],[625,170],[700,225],[745,260],[790,300],[850,350],[900,400]],lower:[[350,220],[430,205],[525,235],[625,320],[700,385],[745,420],[790,440],[850,435],[900,445]]},
   ];
-  root.innerHTML = `<section class="texture-mask" aria-label="文字の中で素材を見せるデモ"><div class="texture-mask__top"><span>MATERIAL STUDY / 06</span><span>Two masks, one texture</span></div><div class="texture-mask__intro"><h2>Feel the surface.</h2><p>文字の形はそのまま。<br>動く窓から、素材をのぞく。</p></div><button type="button" class="texture-mask__surface" aria-label="素材の窓を固定する" aria-pressed="false"><svg class="texture-mask__canvas" viewBox="0 0 640 280" aria-hidden="true"><defs><clipPath id="${id}-glyph"><text x="320" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="175" font-weight="700">FORM</text></clipPath><linearGradient id="${id}-metal" x1="0" y1="0" x2="1" y2=".6">${materials[0].colors.map((color, index) => `<stop offset="${index * 25}%" stop-color="${color}"/>`).join("")}</linearGradient><pattern id="${id}-brush" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 1H8M0 5H8" stroke="#fff" stroke-width=".6" opacity=".25"/><path d="M0 3H8M0 7H8" stroke="#132023" stroke-width=".5" opacity=".2"/></pattern><mask id="${id}-aperture" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="280"><path data-aperture fill="white" d=""/></mask></defs><g clip-path="url(#${id}-glyph)"><rect width="640" height="280" fill="#f8f5eb"/><g data-texture mask="url(#${id}-aperture)"><rect width="640" height="280" fill="url(#${id}-metal)"/><rect width="640" height="280" fill="url(#${id}-brush)"/><path d="M-30 230 670 55M-30 190 670 15" stroke="#fff" stroke-width="15" opacity=".09"/></g></g></svg><span class="texture-mask__surface-hint">Move across the letters · Tap to hold</span></button><div class="texture-mask__controls"><div class="texture-mask__materials" aria-label="素材を選択">${materials.map((material, index) => `<button type="button" aria-pressed="${index === 0}" data-material="${index}">${material.name}</button>`).join("")}</div><label class="texture-mask__position">表示する位置<input type="range" min="0" max="100" value="50" aria-label="素材の窓の横位置"></label></div><div class="texture-mask__bottom"><span>Original procedural material</span><span role="status" aria-live="polite">Silver · 文字に触れると素材が見えます</span></div></section>`;
-  const lifecycle = new AbortController();
-  const stage = root.querySelector(".texture-mask");
-  const surface = root.querySelector(".texture-mask__surface");
-  const canvas = root.querySelector(".texture-mask__canvas");
-  const aperture = root.querySelector("[data-aperture]");
-  const texture = root.querySelector("[data-texture]");
-  const stops = [...root.querySelectorAll("stop")];
-  const materialButtons = [...root.querySelectorAll("[data-material]")];
-  const range = root.querySelector("input");
-  const status = root.querySelector('[role="status"]');
-  let selected = 0;
-  let pinned = false;
-  let hovered = false;
-  let focused = false;
-  let preview = false;
-  let x = 320;
-  let y = 140;
-  let targetX = 320;
-  let targetY = 140;
-  let frame = 0;
-  let timer = 0;
-  let last = 0;
-  let destroyed = false;
-  const on = (target, type, handler) =>
-    target.addEventListener(type, handler, { signal: lifecycle.signal });
-  function draw() {
-    if (reducedMotion) {
-      texture.removeAttribute("mask");
-      return;
-    }
-    texture.setAttribute("mask", `url(#${id}-aperture)`);
-    if (!pinned && !hovered && !focused && !preview) {
-      aperture.setAttribute("d", "");
-      return;
-    }
-    const points = Array.from({ length: 48 }, (_, index) => {
-      const angle = (index / 48) * Math.PI * 2;
-      const wave = Math.sin(angle * 3 + x / 120) * 13;
-      return `${x + Math.cos(angle) * (137 + wave)},${y + Math.sin(angle) * (113 + wave)}`;
-    });
-    aperture.setAttribute("d", `M${points.join(" L")}Z`);
-  }
-  function tick(time) {
-    const elapsed = Math.min(50, time - (last || time - 16));
-    last = time;
-    const blend = 1 - Math.exp(-elapsed / 115);
-    x += (targetX - x) * blend;
-    y += (targetY - y) * blend;
-    draw();
-    if (Math.abs(targetX - x) + Math.abs(targetY - y) > 0.1 && !destroyed)
-      frame = requestAnimationFrame(tick);
-    else {
-      frame = 0;
-      last = 0;
-    }
-  }
-  function move(nextX, nextY = 140) {
-    targetX = Math.max(0, Math.min(640, nextX));
-    targetY = Math.max(0, Math.min(280, nextY));
-    if (reducedMotion) {
-      x = targetX;
-      y = targetY;
-      draw();
-      return;
-    }
-    if (!frame && !destroyed) frame = requestAnimationFrame(tick);
-  }
-  function stopPreview() {
-    clearTimeout(timer);
-    timer = 0;
-    preview = false;
-  }
-  function point(event) {
-    const matrix = canvas.getScreenCTM();
-    if (!matrix) return [320, 140];
-    const position = new DOMPoint(event.clientX, event.clientY).matrixTransform(
-      matrix.inverse(),
-    );
-    return [position.x, position.y];
-  }
-  on(surface, "pointerenter", (event) => {
-    if (event.pointerType === "touch") return;
-    stopPreview();
-    hovered = true;
-    move(...point(event));
-  });
-  on(surface, "pointermove", (event) => {
-    if (event.pointerType === "touch" || reducedMotion || pinned) return;
-    move(...point(event));
-  });
-  on(surface, "pointerleave", () => {
-    hovered = false;
-    draw();
-  });
-  on(surface, "pointercancel", () => {
-    hovered = false;
-    draw();
-  });
-  on(surface, "focus", () => {
-    stopPreview();
-    focused = true;
-    draw();
-  });
-  on(surface, "blur", () => {
-    focused = false;
-    draw();
-  });
-  on(surface, "click", (event) => {
-    stopPreview();
-    pinned = !pinned;
-    surface.setAttribute("aria-pressed", String(pinned));
-    if (pinned) {
-      const [nextX, nextY] = event.detail ? point(event) : [320, 140];
-      move(nextX, nextY);
-    }
-    draw();
-    status.textContent = `${materials[selected].name} · ${pinned ? "窓を固定しました" : "固定を解除しました"}`;
-  });
-  on(range, "input", () => {
-    stopPreview();
-    pinned = true;
-    surface.setAttribute("aria-pressed", "true");
-    move(Number(range.value) * 6.4);
-  });
-  on(range, "focus", () => {
-    pinned = true;
-    surface.setAttribute("aria-pressed", "true");
-    move(Number(range.value) * 6.4);
-  });
-  on(range, "change", () => {
-    status.textContent = `${materials[selected].name} · 表示位置 ${range.value}%`;
-  });
-  function setMaterial(index) {
-    selected = index;
-    materialButtons.forEach((button, i) =>
-      button.setAttribute("aria-pressed", String(i === index)),
-    );
-    stops.forEach((stop, i) =>
-      stop.setAttribute("stop-color", materials[index].colors[i]),
-    );
-  }
-  materialButtons.forEach((button, index) =>
-    on(button, "click", () => {
-      setMaterial(index);
-      pinned = true;
-      surface.setAttribute("aria-pressed", "true");
-      draw();
-      status.textContent = `${materials[index].name} の素材を表示しています`;
-    }),
-  );
-  function reset() {
-    stopPreview();
-    cancelAnimationFrame(frame);
-    frame = 0;
-    last = 0;
-    x = targetX = 320;
-    y = targetY = 140;
-    pinned = hovered = focused = false;
-    setMaterial(0);
-    range.value = "50";
-    surface.setAttribute("aria-pressed", "false");
-    draw();
-    status.textContent = reducedMotion
-      ? `${materials[selected].name} · 素材全体を表示しています`
-      : `${materials[selected].name} · 文字に触れると素材が見えます`;
-  }
-  function replay() {
-    reset();
-    preview = true;
-    x = 80;
-    targetX = 560;
-    draw();
-    move(560);
-    timer = setTimeout(
-      () => {
-        preview = false;
-        pinned = true;
-        surface.setAttribute("aria-pressed", "true");
-        range.value = "88";
-        draw();
-        status.textContent = `${materials[selected].name} · 窓の位置を固定しました`;
-      },
-      reducedMotion ? 0 : 1000,
-    );
-  }
-  function destroy() {
-    if (destroyed) return;
-    destroyed = true;
-    stopPreview();
-    cancelAnimationFrame(frame);
-    lifecycle.abort();
-    signal?.removeEventListener("abort", destroy);
-  }
-  signal?.addEventListener("abort", destroy, { once: true });
-  draw();
-  if (signal?.aborted) destroy();
-  return { replay, reset, destroy };
+  const {upper,lower}=shapes[selected];
+  const change=(p,i,lowerEdge)=>[p[0]+shift,p[1]+bias+Math.sin(phase*3+i*.9)*44+(lowerEdge?1:-1)*Math.sin(phase+i*.8)*12+(selected===1?(lowerEdge?20:-10):0)];
+  const a=upper.map((p,i)=>change(p,i,false)),b=lower.map((p,i)=>change(p,i,true)).reverse();
+  const points=[...a,...b];
+  // Quadratic through-midpoint smoothing gives multiple asymmetric lobes.
+  let d=`M${(points[0][0]+points.at(-1)[0])/2},${(points[0][1]+points.at(-1)[1])/2}`;
+  points.forEach((p,i)=>{const n=points[(i+1)%points.length];d+=` Q${p[0]},${p[1]} ${(p[0]+n[0])/2},${(p[1]+n[1])/2}`;});return d+'Z';
+ }
+ function draw(){
+  band.setAttribute('d',path());texture.setAttribute('opacity',String(reducedMotion?1:visibility));
+  if(reducedMotion)texture.removeAttribute('mask');else texture.setAttribute('mask',`url(#${id}-band)`);
+  stage.dataset.bandVisible=String(reducedMotion||visibility>.01);stage.dataset.material=families[selected].key;stage.dataset.position=`${x.toFixed(2)},${y.toFixed(2)}`;
+ }
+ function wake(){if(!frame&&!destroyed&&!reducedMotion)frame=requestAnimationFrame(tick);else if(reducedMotion)draw();}
+ function tick(now){
+  if(destroyed)return;const dt=Math.min(48,now-(last||now-16));last=now;
+  if(previewStart!==null){const p=clamp((now-previewStart)/1700,0,1);targetX=350+p*850;targetY=210+Math.sin(p*Math.PI*2)*70;targetVisibility=1;if(p===1){previewStart=null;targetVisibility=pinned||hovered||focused?1:0;}}
+  const blend=1-Math.exp(-dt/105);x+=(targetX-x)*blend;y+=(targetY-y)*blend;visibility+=(targetVisibility-visibility)*(1-Math.exp(-dt/160));draw();
+  if(previewStart!==null||Math.abs(x-targetX)+Math.abs(y-targetY)+Math.abs(visibility-targetVisibility)*100>.05)frame=requestAnimationFrame(tick);else{frame=0;last=0;}
+ }
+ function move(nx,ny=216){previewStart=null;targetX=clamp(nx,200,1400);targetY=clamp(ny,100,410);targetVisibility=1;wake();}
+ function point(event){const r=svg.getBoundingClientRect();return[(event.clientX-r.left)/r.width*1600,(event.clientY-r.top)/r.height*460];}
+ function setMaterial(index){selected=index;select.value=String(index);const m=families[index];word.textContent=m.word;word.setAttribute('textLength',String(m.width));texture.setAttribute('href',asset(`original-${m.key}-texture${index===0?'-v2':''}`));svg.setAttribute('aria-label',`${m.word} の文字。左右キーで素材を動かせます`);copy.textContent=m.copy;products.innerHTML=m.codes.map((code,i)=>`<figure><figcaption>${code}</figcaption><img src="${asset(`original-${m.key}-product-${i+1}`)}" alt="${m.finish} のオリジナル製品写真 ${i+1}"></figure>`).join('');buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));status.textContent=`${m.word} / ${m.finish}`;draw();}
+ on(svg,'pointerenter',e=>{if(e.pointerType==='touch')return;hovered=true;move(...point(e));});
+ on(svg,'pointermove',e=>{if(pinned)return;hovered=true;move(...point(e));});
+ const leave=()=>{hovered=false;if(!pinned&&!focused){targetVisibility=0;wake();}};on(svg,'pointerleave',leave);on(svg,'pointercancel',leave);
+ on(svg,'click',e=>{if(e.pointerType==='touch'||e.detail){pinned=true;hold.setAttribute('aria-pressed','true');move(...point(e));}});
+ on(svg,'focus',()=>{focused=true;targetVisibility=1;wake();});on(svg,'blur',()=>{focused=false;leave();});
+ on(svg,'keydown',e=>{if(['ArrowLeft','ArrowRight','Escape',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft'||e.key==='ArrowRight')move(targetX+(e.key==='ArrowLeft'?-90:90));if(e.key==='Escape'){pinned=false;targetVisibility=0;hold.setAttribute('aria-pressed','false');wake();}if(e.key===' '){pinned=!pinned;hold.setAttribute('aria-pressed',String(pinned));targetVisibility=pinned?1:0;wake();}});
+ on(select,'change',()=>{previewStart=null;setMaterial(Number(select.value));targetVisibility=1;wake();});
+ buttons.forEach((button,index)=>on(button,'click',()=>{previewStart=null;setMaterial(index);targetVisibility=1;wake();}));
+ on(hold,'click',()=>{pinned=!pinned;hold.setAttribute('aria-pressed',String(pinned));targetVisibility=pinned||hovered||focused?1:0;wake();});
+ on(range,'input',()=>{pinned=true;hold.setAttribute('aria-pressed','true');move(200+Number(range.value)*12);});
+ function stop(){cancelAnimationFrame(frame);frame=0;last=0;previewStart=null;}
+ function reset(){if(destroyed)return;stop();pinned=hovered=focused=false;visibility=targetVisibility=0;x=targetX=570;y=targetY=216;hold.setAttribute('aria-pressed','false');range.value='50';setMaterial(0);draw();}
+ function replay(){if(destroyed)return;reset();if(reducedMotion)return;previewStart=performance.now();wake();}
+ function sample(index=0,nx=570,ny=216,visible=1){if(destroyed)return;stop();setMaterial(index);x=targetX=nx;y=targetY=ny;visibility=targetVisibility=visible;draw();}
+ function destroy(){if(destroyed)return;destroyed=true;stop();lifecycle.abort();signal?.removeEventListener('abort',destroy);}
+ signal?.addEventListener('abort',destroy,{once:true});reset();if(signal?.aborted)destroy();return {replay,reset,destroy,sample};
 }

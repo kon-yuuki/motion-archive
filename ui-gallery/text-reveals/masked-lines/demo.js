@@ -1,128 +1,80 @@
-/** Scroll is local to the study. Visible line masks never split accessible text. */
-export function createDemo(root, { signal, reducedMotion = false }) {
-  root.innerHTML = `
-    <section class="masked-lines" aria-label="行ごとに現れる見出しのデモ">
-      <div class="masked-lines__bar"><span>03 / READING RHYTHM</span><span>SCROLL INSIDE ↓</span></div>
-      <div class="masked-lines__scroll" tabindex="0" role="region" aria-label="見出しの出現を試すスクロール領域。下へスクロールしてください">
-        <div class="masked-lines__intro">
-          <p class="masked-lines__kicker">A little space to begin</p>
-          <div class="masked-lines__intro-row"><h2>Let the words<br>find their place.</h2><span class="masked-lines__asterisk" aria-hidden="true">✳</span></div>
-          <div class="masked-lines__intro-bottom"><p>この枠の中をスクロールすると、<br>次の見出しが行ごとに現れます。</p><button type="button" class="masked-lines__next">次の見出しへ <span aria-hidden="true">↓</span></button></div>
-          <div class="masked-lines__progress" aria-hidden="true"><span></span></div>
-        </div>
-        <section class="masked-lines__chapter">
-          <span class="masked-lines__chapter-number">01 — A CLEARER DIRECTION</span>
-          <h2 class="masked-lines__heading"><span class="masked-lines__accessible">Small ideas. Clear direction. Room to grow.</span><span class="masked-lines__visual" aria-hidden="true"><span class="masked-lines__line"><span>Small ideas.</span></span><span class="masked-lines__line"><span>Clear direction.</span></span><span class="masked-lines__line"><span>Room to grow.</span></span></span></h2>
-          <div class="masked-lines__after"><span class="masked-lines__marker" aria-hidden="true">↗︎</span><p>読む順序に、やさしいリズムを。<br>現れた言葉は、そのまま残ります。</p></div>
-        </section>
-        <div class="masked-lines__end"><span>END OF STUDY</span><p>上へ戻しても見出しは隠れません。<br>もう一度見るときは Replay を押してください。</p></div>
+/** Each source .span-line wraps ONE WORD. Never substitute three full-line masks. */
+export function createDemo(root, { signal, reducedMotion = false } = {}) {
+  const copy = "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.";
+  root.innerHTML = `<section class="masked-lines" aria-label="Dennis Snellenberg の単語マスクによる紹介文">
+    <div class="masked-lines__scroll" tabindex="0" role="region" aria-label="紹介文。スクロールまたは Replay で出現を確認できます">
+      <div class="masked-lines__composition">
+        <h2 class="masked-lines__heading"><span class="masked-lines__accessible">${copy}</span><span class="masked-lines__visual" aria-hidden="true">${copy.split(" ").map(word => `<span class="masked-lines__word"><span>${word}</span></span>`).join("")}</span></h2>
+        <div class="masked-lines__aside"><p>Working across design and development, I bring ideas into focus through thoughtful detail and expressive interaction.</p><span class="masked-lines__about" aria-hidden="true">About me</span></div>
       </div>
-      <div class="masked-lines__footer"><span>Each line has its own moment.</span><span role="status" aria-live="polite">内側をスクロールして開始</span></div>
-    </section>`;
-
+      <div class="masked-lines__work"><span>RECENT WORK</span><div><span>TWICE</span><span>Interaction &amp; Development</span></div></div>
+    </div>
+    <p class="masked-lines__status" role="status" aria-live="polite">スクロールで紹介文へ進むと、単語が順番に現れます</p>
+  </section>`;
   const lifecycle = new AbortController();
   const stage = root.querySelector(".masked-lines");
   const scrollport = root.querySelector(".masked-lines__scroll");
-  const chapter = root.querySelector(".masked-lines__chapter");
   const heading = root.querySelector(".masked-lines__heading");
+  const words = [...root.querySelectorAll(".masked-lines__word > span")];
   const status = root.querySelector('[role="status"]');
-  const progress = root.querySelector(".masked-lines__progress span");
-  let revealed = reducedMotion;
-  let replaying = false;
-  let frame = 0;
-  let destroyed = false;
-  stage.classList.add("is-ready");
-  stage.classList.toggle("is-revealed", reducedMotion);
-  const on = (element, type, handler, options = {}) =>
-    element.addEventListener(type, handler, {
-      ...options,
-      signal: lifecycle.signal,
+  // Estimated from 864 live DOM observations, not claimed source constants.
+  const duration = 1000, stagger = 11, power = 3.6;
+  let frame = 0, started = false, destroyed = false, resetLocked = false;
+  function paint(elapsed) {
+    words.forEach((word, index) => {
+      const progress = Math.max(0, Math.min(1, (elapsed - index * stagger) / duration));
+      word.style.transform = `translateY(${Math.pow(1 - progress, power) * 100}%)`;
     });
-
+  }
+  function stop() { cancelAnimationFrame(frame); frame = 0; }
   function reveal() {
-    if (destroyed || revealed) return;
-    revealed = true;
+    if (destroyed || started) return;
+    started = true;
     stage.classList.add("is-revealed");
-    status.textContent = reducedMotion
-      ? "動きを省いて見出しを表示しています"
-      : "見出しを表示しました";
+    if (reducedMotion) { paint(Infinity); return; }
+    const start = performance.now();
+    function tick(now) {
+      if (destroyed) return;
+      const elapsed = now - start;
+      paint(elapsed);
+      if (elapsed < duration + stagger * (words.length - 1)) frame = requestAnimationFrame(tick);
+      else { frame = 0; status.textContent = "24個の単語を表示しました。上へ戻っても隠れません"; }
+    }
+    frame = requestAnimationFrame(tick);
   }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (replaying || scrollport.scrollTop < 20) return;
-      if (
-        entries.some(
-          (entry) => entry.isIntersecting && entry.intersectionRatio >= 0.45,
-        )
-      )
-        reveal();
-    },
-    { root: scrollport, threshold: [0, 0.45] },
-  );
+  const observer = new IntersectionObserver(entries => {
+    if (!resetLocked && entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .5)) reveal();
+  }, { threshold: [0, .5] });
   observer.observe(heading);
-
-  function destination() {
-    // getBoundingClientRect keeps this independent of the shell's positioning.
-    return (
-      chapter.getBoundingClientRect().top -
-      scrollport.getBoundingClientRect().top +
-      scrollport.scrollTop
-    );
+  function onScroll() {
+    if (resetLocked && scrollport.scrollTop > 1) { resetLocked = false; reveal(); }
   }
-
-  on(root.querySelector(".masked-lines__next"), "click", () => {
-    scrollport.scrollTo({
-      top: destination(),
-      behavior: reducedMotion ? "instant" : "smooth",
-    });
-    scrollport.focus({ preventScroll: true });
-  });
-  on(
-    scrollport,
-    "scroll",
-    () => {
-      const max = scrollport.scrollHeight - scrollport.clientHeight;
-      progress.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollport.scrollTop / max) : 0})`;
-    },
-    { passive: true },
-  );
-
+  scrollport.addEventListener("scroll", onScroll, { passive: true, signal: lifecycle.signal });
+  // The real site is page-scrolled. The isolated version also accepts outer scroll.
+  window.addEventListener("scroll", () => {
+    if (!resetLocked) return;
+    const bounds = heading.getBoundingClientRect();
+    if (bounds.top < innerHeight * .85 && bounds.bottom > 0) { resetLocked = false; reveal(); }
+  }, { passive: true, signal: lifecycle.signal });
   function reset() {
-    cancelAnimationFrame(frame);
-    frame = 0;
-    replaying = false;
-    revealed = reducedMotion;
+    if (destroyed) return;
+    stop(); started = reducedMotion; resetLocked = true;
     stage.classList.toggle("is-revealed", reducedMotion);
-    scrollport.scrollTo({ top: 0, behavior: "instant" });
-    progress.style.transform = "scaleX(0)";
-    status.textContent = reducedMotion
-      ? "動きを省いて見出しを表示しています"
-      : "内側をスクロールして開始";
+    paint(reducedMotion ? Infinity : 0);
+    scrollport.scrollTop = 0;
+    status.textContent = reducedMotion ? "動きを省いて全文を表示しています" : "最初の状態に戻しました。Replay またはスクロールで開始";
   }
-
   function replay() {
-    reset();
-    replaying = true;
-    scrollport.scrollTo({ top: destination(), behavior: "instant" });
-    frame = requestAnimationFrame(() => {
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        replaying = false;
-        if (!reducedMotion) reveal();
-      });
-    });
+    if (destroyed) return;
+    reset(); resetLocked = false; reveal();
   }
-
   function destroy() {
     if (destroyed) return;
-    destroyed = true;
-    cancelAnimationFrame(frame);
-    observer.disconnect();
-    lifecycle.abort();
+    destroyed = true; stop(); observer.disconnect(); lifecycle.abort();
     signal?.removeEventListener("abort", destroy);
   }
-  if (reducedMotion) status.textContent = "動きを省いて見出しを表示しています";
+  paint(reducedMotion ? Infinity : 0);
+  if (reducedMotion) { started = true; status.textContent = "動きを省いて全文を表示しています"; }
   signal?.addEventListener("abort", destroy, { once: true });
   if (signal?.aborted) destroy();
   return { replay, reset, destroy };

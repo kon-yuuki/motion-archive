@@ -1,126 +1,71 @@
-/** An original double-loop glyph grows around its solid waist, clearing every yellow counter. */
-export function createDemo(root, { signal, reducedMotion }) {
-  root.innerHTML = `<section class="numeral-mask"><header><span>FORM / 08</span><span>Scroll inside ↓</span></header><div class="numeral-mask__scroller" tabindex="0" role="region" aria-label="数字が次のセクションに変わるスクロールデモ"><div class="numeral-mask__runway"><div class="numeral-mask__sticky"><div class="numeral-mask__start"><p>ONE FORM. MANY POSSIBILITIES.</p><div class="numeral-mask__glyph" aria-hidden="true"><svg viewBox="0 0 400 500"><path fill="#202923" fill-rule="evenodd" d="M200 12C108 12 47 62 47 135c0 46 23 82 61 106-50 23-76 62-76 112 0 86 65 139 168 139s168-53 168-139c0-50-26-89-76-112 38-24 61-60 61-106C353 62 292 12 200 12Zm0 64c-44 0-72 25-72 60s28 62 72 62 72-27 72-62-28-60-72-60Zm0 208c-51 0-85 26-85 67s34 70 85 70 85-29 85-70-34-67-85-67Z"/></svg></div><span>Scroll to discover the other side</span></div><div class="numeral-mask__destination" aria-hidden="true"><div class="numeral-mask__destination-copy"><p>08 / THE OTHER SIDE</p><h2>Strength in<br>the details.</h2><p>ひとつの形から、<br>新しい視点へつながる。</p></div><svg class="numeral-mask__sculpture" viewBox="0 0 480 400" aria-hidden="true"><defs><linearGradient id="numeral-mask-metal" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#cad2c4"/><stop offset=".48" stop-color="#73846f"/><stop offset="1" stop-color="#344437"/></linearGradient></defs><ellipse cx="254" cy="334" rx="168" ry="24" fill="#101b13"/><path d="m91 128 127-53 180 58-126 61Z" fill="#d2d8c7"/><path d="m91 128 181 66v119L91 248Z" fill="url(#numeral-mask-metal)"/><path d="m272 194 126-61v117l-126 63Z" fill="#53684e"/><path d="m120 144 152 54v29l-152-55Z" fill="#43533f"/><path d="m291 196 84-40v28l-84 40Z" fill="#253c2b"/><path d="m120 198 152 55v31l-152-56Z" fill="#b6c2ac"/><path d="m291 250 84-42v28l-84 41Z" fill="#82967a"/></svg><div class="numeral-mask__destination-rule"><span>ORIGINAL FORM STUDY</span><span>08 → 09</span></div></div><span class="numeral-mask__state" data-state role="status" aria-live="polite">Numeral</span></div></div></div><footer><button type="button" data-next>次のセクションへ →</button><label>Progress <input type="range" min="0" max="100" value="0" aria-label="数字の拡大と場面転換の進み具合"></label><span data-progress>00%</span></footer></section>`;
-  const scroller = root.querySelector(".numeral-mask__scroller"),
-    runway = root.querySelector(".numeral-mask__runway");
-  const start = root.querySelector(".numeral-mask__start"),
-    glyph = root.querySelector(".numeral-mask__glyph"),
-    destination = root.querySelector(".numeral-mask__destination"),
-    copy = root.querySelector(".numeral-mask__destination-copy"),
-    sculpture = root.querySelector(".numeral-mask__sculpture");
-  const range = root.querySelector("input"),
-    progress = root.querySelector("[data-progress]"),
-    status = root.querySelector("[data-state]"),
-    next = root.querySelector("[data-next]");
-  const events = new AbortController();
-  let raf = 0,
-    lastState = "";
-  const clamp = (p) => Math.max(0, Math.min(1, p));
-  const distance = () =>
-    Math.max(1, runway.clientHeight - scroller.clientHeight);
-  function render() {
-    const p = clamp(scroller.scrollTop / distance());
-    // Zoom ends at a solid area between the loops, rather than inside a counter.
-    const zoom = clamp(p / 0.76),
-      reveal = clamp((p - 0.78) / 0.2);
-    const scale = Math.pow(20, zoom * zoom);
-    glyph.style.transform = reducedMotion ? "none" : `scale(${scale})`;
-    const finished = reducedMotion ? p >= 0.5 : p >= 0.8;
-    start.style.opacity = reducedMotion ? (finished ? "0" : "1") : "1";
-    start.style.visibility = p >= 0.995 ? "hidden" : "visible";
-    start.setAttribute("aria-hidden", String(finished));
-    destination.style.opacity = String(
-      reducedMotion ? (finished ? 1 : 0) : reveal,
-    );
-    destination.style.visibility =
-      finished || reveal > 0 ? "visible" : "hidden";
-    destination.setAttribute("aria-hidden", String(!finished));
-    copy.style.transform = reducedMotion
-      ? "none"
-      : `translateY(${(1 - reveal) * 38}px)`;
-    sculpture.style.transform = reducedMotion
-      ? "none"
-      : `translateY(${(1 - reveal) * 70}px)`;
-    const label = finished
-      ? "Next section"
-      : p > 0.08
-        ? "Growing numeral"
-        : "Numeral";
-    if (label !== lastState) {
-      status.textContent = label;
-      lastState = label;
-    }
-    range.value = String(Math.round(p * 100));
-    progress.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
-    next.textContent = finished ? "数字へ戻る →" : "次のセクションへ →";
-    root.dataset.progress = p.toFixed(3);
+import { trace } from './assets/trace.js';
+import numeralSVG from './assets/numeral-outline.svg?raw';
+const drawerURL = new URL('./assets/original-drawer.webp', import.meta.url).href;
+const clamp = value => Math.max(0, Math.min(1, value));
+const smooth = value => { const p = clamp(value);return p*p*(3-2*p); };
+function sample(time, points) {
+  if (time <= points[0][0]) return points[0][1];
+  for(let i=1;i<points.length;i++) if(time<=points[i][0]) {const [a,b]=[points[i-1],points[i]], p=smooth((time-a[0])/(b[0]-a[0]));return a[1]+(b[1]-a[1])*p;}
+  return points.at(-1)[1];
+}
+// Source-fit transforms become underdetermined when virtually all pixels are black.
+// Keep the measured trajectory through 3.176s, then continue into full coverage explicitly.
+const trajectory = [...trace.filter(frame => frame.time <= 3.176), {time:3.573,scale:18.47407,rotationDegrees:79.50701,translateX:-216.67844,translateY:-3}, {time:3.78,scale:21,rotationDegrees:90,translateX:-248,translateY:0}];
+function transformAt(time, key) { return sample(time, trajectory.map(frame => [frame.time, frame[key]])); }
+/** Frame-traced 8 zoom/rotation plus a dark photographic drawer reveal; scroll mapping is a demo choice. */
+export function createDemo(root, { signal, reducedMotion = false } = {}) {
+  root.innerHTML = `<section class="numeral-mask"><div class="numeral-mask__scroller" tabindex="0" role="region" aria-label="数字の8から製品へ。中でスクロール、または上下キーで操作"><div class="numeral-mask__runway"><div class="numeral-mask__scene"><div class="numeral-mask__start" aria-label="黄色い背景に黒い8"><div class="numeral-mask__glyph" aria-hidden="true">${numeralSVG}</div></div><div class="numeral-mask__destination" aria-hidden="true"><img class="numeral-mask__product" src="${drawerURL}" alt="細い黒い側面と金属の縁を持つ引き出しのオリジナル製品レンダー"><div class="numeral-mask__copy"><h2>8 millimetres that<br>change the furniture<br>world.</h2><p>A narrower side. A larger space within.<br>A study in precision, material and movement.<br>Dark surfaces bring the fine metal edge<br>into focus as the next story appears.</p><span>FIND OUT MORE <b>＋</b></span></div></div><div class="numeral-mask__source-progress" aria-hidden="true"></div></div></div></div><footer><button type="button" data-next>次のセクションへ →</button><label>進み具合 <input type="range" min="0" max="1000" step="1" value="0" aria-label="数字の拡大から製品表示までの進み具合"></label><span data-state role="status" aria-live="polite">Numeral</span></footer></section>`;
+  const section=root.firstElementChild, scroller=root.querySelector('.numeral-mask__scroller'),runway=root.querySelector('.numeral-mask__runway'),scene=root.querySelector('.numeral-mask__scene');
+  const start=root.querySelector('.numeral-mask__start'),glyph=root.querySelector('.numeral-mask__glyph path'),destination=root.querySelector('.numeral-mask__destination'),product=root.querySelector('.numeral-mask__product'),copy=root.querySelector('.numeral-mask__copy'),line=root.querySelector('.numeral-mask__source-progress');
+  const range=root.querySelector('input'),status=root.querySelector('[data-state]'),next=root.querySelector('[data-next]'),events=new AbortController();
+  let raf=0,progress=0,destroyed=false,lastState='',automatic=false;
+  const distance=()=>Math.max(1,runway.clientHeight-scroller.clientHeight);
+  const ready=Promise.all([...root.querySelectorAll('img')].map(img=>img.decode())).catch(()=>{if(!destroyed)status.textContent='画像を読み込めませんでした';});
+  function render(p) {
+    if(destroyed)return;
+    progress=clamp(p);const t=progress*6.75,scale=transformAt(t,'scale'),rotation=transformAt(t,'rotationDegrees');
+    const tx=transformAt(t,'translateX')/1600*100,ty=transformAt(t,'translateY')/1200*100;
+    glyph.setAttribute('transform',reducedMotion?'':`translate(${800+tx*16} ${600+ty*12}) rotate(${rotation}) scale(${scale}) translate(-800 -600)`);
+    const productY=sample(t,[[3.573,95],[3.970,64],[4.367,47],[4.764,35],[5.161,23],[5.558,10],[5.955,1],[6.352,0]]);
+    const copyY=sample(t,[[4.85,55],[5.161,25.92],[5.558,8.25],[5.955,.083],[6.352,0]]);
+    const isNext=reducedMotion?progress>=.5:t>=3.78;
+    start.style.visibility=isNext?'hidden':'visible';start.setAttribute('aria-hidden',String(isNext));
+    destination.style.visibility=(reducedMotion?isNext:t>=3.45)?'visible':'hidden';
+    destination.style.background=(reducedMotion||t>=3.78)?'#000':'transparent';
+    destination.setAttribute('aria-hidden',String(!isNext));
+    product.style.transform=`translate(-3.9%,${reducedMotion?-2.5:-2.5+productY}%) skewY(-2.5deg)`;
+    product.style.opacity=reducedMotion?'1':String(sample(t,[[3.45,0],[3.7,1]]));
+    copy.style.transform=reducedMotion?'none':`translateY(${copyY/100*scene.clientHeight}px)`;
+    copy.style.visibility=(reducedMotion?isNext:t>=4.85)?'visible':'hidden';
+    line.style.width=`${32.5+progress*4}%`;
+    const phase=reducedMotion?(isNext?'destination':'numeral'):t<.15?'numeral':t<3.5?'zoom':t<3.97?'black-hold':t<4.85?'product':t<6.352?'copy':'destination';
+    section.dataset.phase=phase;section.dataset.elapsed=(t*1000).toFixed(1);root.dataset.progress=progress.toFixed(3);
+    range.value=String(Math.round(progress*1000));
+    if(lastState!==phase){status.textContent=({numeral:'Numeral',zoom:'Growing 8', 'black-hold':'Black hold',product:'Drawer',copy:'Product story',destination:'Next section'})[phase];lastState=phase;}
+    next.textContent=progress>.98?'数字へ戻る →':'次のセクションへ →';
   }
-  function stop() {
-    cancelAnimationFrame(raf);
-    raf = 0;
+  function stop(){cancelAnimationFrame(raf);raf=0;automatic=false;if(!destroyed)render(scroller.scrollTop/distance());}
+  function setProgress(p){progress=clamp(p);scroller.scrollTop=progress*distance();render(progress);}
+  function travel(target){
+    stop();const from=progress;
+    if(reducedMotion){setProgress(target);return;}
+    automatic=true;const began=performance.now(),duration=Math.max(300,Math.abs(target-from)*6750);
+    const tick=now=>{if(destroyed)return;const p=clamp((now-began)/duration);setProgress(from+(target-from)*p);if(p<1)raf=requestAnimationFrame(tick);else{raf=0;automatic=false;}};
+    raf=requestAnimationFrame(tick);
   }
-  function travel(target) {
-    stop();
-    const from = scroller.scrollTop,
-      to = target * distance();
-    if (reducedMotion) {
-      scroller.scrollTop = to;
-      render();
-      return;
-    }
-    const began = performance.now();
-    function tick(time) {
-      const p = clamp((time - began) / 1700),
-        ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      scroller.scrollTop = from + (to - from) * ease;
-      render();
-      if (p < 1) raf = requestAnimationFrame(tick);
-      else raf = 0;
-    }
-    raf = requestAnimationFrame(tick);
-  }
-  scroller.addEventListener("scroll", render, {
-    signal: events.signal,
-    passive: true,
-  });
-  ["wheel", "pointerdown", "touchstart", "keydown"].forEach((type) =>
-    scroller.addEventListener(type, stop, {
-      signal: events.signal,
-      passive: true,
-    }),
-  );
-  range.addEventListener(
-    "input",
-    () => {
-      stop();
-      scroller.scrollTop = (Number(range.value) / 100) * distance();
-      render();
-    },
-    { signal: events.signal },
-  );
-  next.addEventListener(
-    "click",
-    () => travel(lastState === "Next section" ? 0 : 1),
-    { signal: events.signal },
-  );
-  const resize = new ResizeObserver(render);
-  resize.observe(scroller);
-  function reset() {
-    stop();
-    scroller.scrollTop = 0;
-    render();
-  }
-  function replay() {
-    reset();
-    travel(1);
-  }
-  function destroy() {
-    stop();
-    resize.disconnect();
-    events.abort();
-    signal?.removeEventListener("abort", destroy);
-  }
-  signal?.addEventListener("abort", destroy, { once: true });
-  render();
-  return { replay, reset, destroy };
+  scroller.addEventListener('scroll',()=>{if(!automatic)render(scroller.scrollTop/distance());},{signal:events.signal,passive:true});
+  ['wheel','pointerdown','touchstart'].forEach(type=>scroller.addEventListener(type,stop,{signal:events.signal,passive:true}));
+  scroller.addEventListener('keydown',event=>{
+    const moves={ArrowDown:.045,ArrowUp:-.045,PageDown:.16,PageUp:-.16,' ':.16};
+    if(event.key in moves||event.key==='Home'||event.key==='End'){event.preventDefault();stop();setProgress(event.key==='Home'?0:event.key==='End'?1:progress+moves[event.key]);}
+  },{signal:events.signal});
+  range.addEventListener('input',()=>{stop();setProgress(Number(range.value)/1000);},{signal:events.signal});
+  next.addEventListener('click',()=>travel(progress>.98?0:1),{signal:events.signal});
+  const resize=new ResizeObserver(()=>{if(!destroyed)setProgress(progress);});resize.observe(scroller);
+  function reset(){stop();setProgress(0);}
+  function replay(){reset();travel(1);}
+  function seek(ms){stop();setProgress(ms/6750);}
+  function destroy(){if(destroyed)return;destroyed=true;stop();resize.disconnect();events.abort();signal?.removeEventListener('abort',destroy);}
+  signal?.addEventListener('abort',destroy,{once:true});reset();
+  return {replay,reset,destroy,seek,ready};
 }

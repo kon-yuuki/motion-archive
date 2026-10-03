@@ -1,56 +1,36 @@
 export const metadata = {
-  slug: "checker-dissolve",
-  category: "buttons",
-  title: "Checker dissolve",
-  subtitle: "小さな四角で、面を切り替える",
-  description:
-    "カプセル形のボタンの色が、小さな四角の列を通して切り替わります。輪郭とラベルは固定し、背景の変化だけで手応えを作るデモです。",
-  trigger: "Hover / focus / tap",
-  duration: "約500ms",
-  easing: "セルごとの短い切り替え + 時差",
-  status: "WIP",
+  slug: "checker-dissolve", category: "buttons", title: "Noomo / View project",
+  subtitle: "斜めのチェッカー境界が往復する",
+  description: "小さなカプセルの上を斜めのチェッカー境界が通り、黒い面が淡い面へ変わります。公式映像と現在の公開CSSを比較し、元のマスクの移動方式へ作り直しました。",
+  trigger: "Hover / Replay（focus・tapは補助操作）",
+  duration: "マスク600ms / 背景300ms + 100ms待機（公開CSS）",
+  easing: "ease-in-out（公開CSS）", status: "WIP",
+  timingDisclosure: "148×43px、マスクの600msと背景の300ms/100ms待機は2026-10-03の公開CSSで確認した値です。2023年の公式映像の全内部実装が同じとは断定しません。",
   source: {
-    name: "Noomo Agency",
-    url: "https://noomoagency.com/",
-    awardUrl: "https://www.awwwards.com/sites/noomo-agency",
-    awardDate: "2023-09-21",
-    observedAt: "2026-10-02",
-    observationMode: "recording-observed",
-    recordingUrl:
-      "https://www.awwwards.com/inspiration/button-hover-interaction-noomo-agency",
-    location:
-      "公式の記録映像にある Space Needle の事例カード、View Project ボタン",
-    observation:
-      "8.938秒の記録映像をブラウザーで確認。カーソルが重なると黒いカプセルが淡い面へ変わり、戻る途中には、黒と淡色の小さな四角が交互に並ぶ境界が左側に見られました。",
-    evidence: [
-      "Awwwards の Button Hover Interaction - Noomo Agency に掲載された映像の初期・ホバー・退出途中を比較。",
-    ],
+    name: "Noomo Agency", url: "https://noomoagency.com/", awardUrl: "https://www.awwwards.com/sites/noomo-agency", awardDate: "2023-09-21", observedAt: "2026-10-03",
+    observationMode: "recording-observed and published CSS verification",
+    recordingUrl: "https://www.awwwards.com/inspiration/button-hover-interaction-noomo-agency",
+    location: "公式映像の Space Needle / View project と、現在の公開 .view-project-link の表示CSS",
+    observation: "映像では左から右へ淡い面が現れ、退出時は右側から黒い面に戻ります。現在の公開CSSは148×43px、背景#181520、淡い面#dae2f2、mask-size:140% 100%、mask-position:350%→0を600msで動かし、下の背景も100ms待って300msで透明へ変えています。",
+    evidence: ["公式映像の入場・退出途中を全30fpsフレームで確認。現在のサイトを開き、描画DOMの文字・公開CSSと384×76pxのマスクの幾何形状を確認。"],
   },
-  takeaways: [
-    "輪郭を変えずに背景だけを細かく切り替えると、普通の色変更とは違う手応えを作れます。",
-    "変化をボタンの中に閉じ込めることで、近くの情報を邪魔しません。",
-    "四角の数と切り替え順は少なく整理し、細かい装飾が長く続かないようにします。",
-  ],
+  takeaways: ["セルを順に消す方式をやめ、一つの斜めチェッカーマスクを動かしています。", "上の面だけでなく、下の黒い背景も遅れて薄くなるため、途中の色が原作に近づきます。", "ラベルと右向きの矢印は固定位置にあり、マスク側には暗い文字を重ねています。"],
   limitations: [
-    "これは公式の記録映像を観察した再構成です。現行ライブサイトは読み込み画面で止まり、実際のホバー操作を検証できていません。",
-    "格子の作り方、約500ms の長さ、セル数はこのデモの独自実装です。元の描画方式や正確な値は不明です。",
-    "参照元の画像・文章・コードは使用していません。フォーカスとタップの選択状態は、使いやすさを確かめるために追加しています。",
+    "現在の公開CSSと公式映像を照合しています。現行ページで対象カードのホバーを最後まで実操作したとは主張していません。",
+    "NeueMachinaは同梱せずOFLライセンスのSpace Monoで代替しています。文字の形や幅、右矢印の線形には違いが残ります。",
+    "公開マスクの幾何形状をSVGで作り直しています。元のPNGは同梱せず、境界の半透明画素や圧縮映像の見え方は完全一致しません。",
+    "ボタン単体を無地の淡い背景へ取り出したデモです。元のSpace Needleの3Dページ、遷移先、ブランドは含みません。フォーカス・タップの再生と44pxのタッチ領域は補助動作です。",
   ],
   usability: {
-    benefit:
-      "固定したボタンの中で色が変わるため、押す場所がずれず、触れたことだけがはっきり伝わります。",
-    caution:
-      "よくある『細かな点滅をずっと続ける』表現は読み取りを邪魔します。ここでは一度の短い切り替えで止め、重要な情報は格子に入れません。",
-    smallScreen:
-      "タップで選択を切り替えます。キーボードではフォーカスで色が変わり、Enter・Space で選択できます。",
-    reducedMotion:
-      "格子の時差をなくし、背景色をすぐ切り替えます。選択状態の文章は変わらず表示します。",
+    benefit: "押す場所と名前を固定したまま、表面の変化を短い往復として確認できます。",
+    caution: "選択を表すボタンにはしていません。ここでクリックする操作は動きの再生で、実際のプロジェクトへ移動するものではありません。",
+    smallScreen: "タップやEnter・Spaceでも再生でき、フォーカスは輪郭線で示します。タッチ時は高さを44pxへ広げます。",
+    reducedMotion: "マスクの往復と背景の途中変化を省き、状態をすぐ切り替えます。",
   },
   implementation: [
-    "淡色の背景に黒いセルを重ね、セルの opacity を切り替えます。装飾レイヤーは aria-hidden と pointer-events: none で操作から外します。",
-    "列位置と偶奇から遅延を決め、小さなチェック柄の境界を作ります。ランダム値や連続した描画ループは使いません。",
-    "ラベルは分割せず、固定レイヤーとして最前面に置きます。Replay・Reset・破棄時はタイマーとイベントを解除します。",
+    "淡い面に白いSVGのalphaマスクを使い、CSSのmask-positionを350%から0へ動かします。退出時は同じ経路を戻ります。",
+    "原作と同じく淡い面を左-3px・幅+10pxで重ね、文字と矢印も二層にします。背景の透明化は別の時間で進めます。",
+    "Replay・Reset・破棄でタイマーとアニメーションを取り消します。再利用時はchecker-mask.svgも必要です。",
   ],
-  xPost:
-    "ボタンの輪郭はそのまま、色だけを小さな四角で切り替える。派手な反応も短く止めて、ラベルと操作位置は動かさない。公式の記録映像から学ぶカプセルボタンの再構成。",
+  xPost: "小さなView projectの上を、斜めのチェッカー境界が往復する。公式映像と公開CSSを照合し、セルの時差から一つのマスク移動へ作り直しました。文字の形は代替書体のため差が残ります。",
 };

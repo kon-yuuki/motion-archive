@@ -1,80 +1,23 @@
-import { makeArt, listen } from "../../_motion/demo-helpers.js";
+import reel from '../../../src/assets/video/between-air-veiled-portrait-motion.mp4';
+import poster from '../../../src/assets/images/hover-video-cards/between-air-veiled-portrait-first-frame.jpg';
 
-/** Scroll distance, not elapsed time, opens the media and separates the heading. */
-export function createDemo(root, { signal, reducedMotion }) {
-  root.innerHTML = `<section class="reel-expansion"><header><span>WORK IN MOTION</span><span>Scroll inside ↓</span></header><div class="reel-expansion__scroller" tabindex="0" role="region" aria-label="リールが広がるスクロールデモ"><div class="reel-expansion__runway"><div class="reel-expansion__sticky"><div class="reel-expansion__media">${makeArt(2, "広がる彫刻のスタディ")}<span class="reel-expansion__play" aria-hidden="true">▶︎</span></div><h2><span data-left>See</span><span data-right>motion.</span></h2><span class="reel-expansion__caption">From a glimpse to the whole scene.</span></div></div><div class="reel-expansion__after"><p>01 / A CHANGE OF SCALE</p><h3>Give the scene<br>room to breathe.</h3><p>スクロールを戻すと、画像と文字も元の位置へ戻ります。</p></div></div><footer><span data-progress>00%</span><label>Progress <input type="range" min="0" max="100" value="0" aria-label="展開の進み具合" /></label></footer></section>`;
-  const scroller = root.querySelector(".reel-expansion__scroller"),
-    runway = root.querySelector(".reel-expansion__runway"),
-    media = root.querySelector(".reel-expansion__media"),
-    left = root.querySelector("[data-left]"),
-    right = root.querySelector("[data-right]"),
-    caption = root.querySelector(".reel-expansion__caption"),
-    progress = root.querySelector("[data-progress]"),
-    range = root.querySelector("input");
-  let frame = 0;
-  const distance = () =>
-    Math.max(1, runway.clientHeight - scroller.clientHeight);
-  function render() {
-    const p = Math.min(1, Math.max(0, scroller.scrollTop / distance()));
-    const visual = reducedMotion ? 1 : p;
-    media.style.width = `${54 + visual * 46}%`;
-    media.style.height = `${60 + visual * 40}%`;
-    media.style.borderRadius = `${10 * (1 - visual)}px`;
-    left.style.transform = `translateX(${-visual * 33}%)`;
-    right.style.transform = `translateX(${visual * 33}%)`;
-    caption.style.opacity = String(1 - visual * 0.6);
-    progress.textContent = `${String(Math.round(p * 100)).padStart(2, "0")}%`;
-    range.value = String(Math.round(p * 100));
-    root.dataset.progress = p.toFixed(3);
-  }
-  function stop() {
-    cancelAnimationFrame(frame);
-    frame = 0;
-  }
-  listen(scroller, "scroll", render, signal, { passive: true });
-  ["wheel", "pointerdown", "keydown", "touchstart"].forEach((type) =>
-    listen(scroller, type, stop, signal, { passive: true }),
-  );
-  listen(
-    range,
-    "input",
-    () => {
-      stop();
-      scroller.scrollTop = (Number(range.value) / 100) * distance();
-      render();
-    },
-    signal,
-  );
-  const resize = new ResizeObserver(render);
-  resize.observe(scroller);
-  function reset() {
-    stop();
-    scroller.scrollTop = 0;
-    render();
-  }
-  function replay() {
-    reset();
-    if (reducedMotion) {
-      scroller.scrollTop = distance();
-      render();
-      return;
-    }
-    const start = performance.now();
-    function tick(time) {
-      const p = Math.min(1, (time - start) / 1600);
-      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      scroller.scrollTop = eased * distance();
-      render();
-      if (p < 1) frame = requestAnimationFrame(tick);
-      else frame = 0;
-    }
-    frame = requestAnimationFrame(tick);
-  }
-  function destroy() {
-    stop();
-    resize.disconnect();
-  }
-  signal.addEventListener("abort", destroy, { once: true });
-  render();
-  return { replay, reset, destroy };
+/** Measured source mapping: 2 viewport runway; .25→1 uniform scale; ±20vw→0 title. */
+export function createDemo(root, { signal, reducedMotion = false } = {}) {
+  root.innerHTML=`<section class="reel-expansion" data-reduced="${reducedMotion}"><div class="reel-expansion__scroller" tabindex="0" role="region" aria-label="スクロールでリールを広げる"><div class="reel-expansion__runway"><div class="reel-expansion__sticky"><video class="reel-expansion__media" muted loop playsinline disablepictureinpicture poster="${poster}" aria-hidden="true"><source src="${reel}" type="video/mp4"></video><span class="reel-expansion__label">✦&nbsp; Work in motion</span><h2><span data-left>Play</span><span data-right>Reel</span></h2><p class="reel-expansion__caption">Our work is best experienced in motion. Don’t<br>forget to put on your headphones.</p></div></div></div><footer><span data-progress>00%</span><label>Scroll progress <input type="range" min="0" max="100" value="0" aria-label="展開の進み具合"></label></footer></section>`;
+  const stage=root.firstElementChild,scroller=root.querySelector('.reel-expansion__scroller'),runway=root.querySelector('.reel-expansion__runway'),media=root.querySelector('video'),left=root.querySelector('[data-left]'),right=root.querySelector('[data-right]'),progress=root.querySelector('[data-progress]'),range=root.querySelector('input');
+  const lifecycle=new AbortController();let frame=0,destroyed=false;
+  const distance=()=>Math.max(1,runway.clientHeight-scroller.clientHeight);
+  function render(){if(destroyed)return;const p=Math.max(0,Math.min(1,scroller.scrollTop/distance())),v=reducedMotion?1:p,offset=scroller.clientWidth*.2*(1-v);media.style.transform=`scale(${.25+.75*v})`;left.style.transform=`translateX(${-offset}px)`;right.style.transform=`translateX(${offset}px)`;progress.textContent=`${String(Math.round(p*100)).padStart(2,'0')}%`;range.value=String(Math.round(p*100));stage.dataset.progress=p.toFixed(4);root.dataset.progress=p.toFixed(4);}
+  function stop(){cancelAnimationFrame(frame);frame=0;}
+  const on=(el,type,cb,options={})=>el.addEventListener(type,cb,{...options,signal:lifecycle.signal});
+  on(scroller,'scroll',render,{passive:true});['wheel','pointerdown','keydown','touchstart'].forEach(type=>on(scroller,type,stop,{passive:true}));
+  on(range,'input',()=>{stop();scroller.scrollTop=+range.value/100*distance();render();});
+  const resize=new ResizeObserver(render);resize.observe(scroller);
+  function reset(){if(destroyed)return;stop();scroller.scrollTop=0;render();}
+  function replay(){if(destroyed)return;reset();if(reducedMotion){scroller.scrollTop=distance();render();return;}const start=performance.now();function tick(t){if(destroyed)return;const p=Math.min(1,(t-start)/1800);scroller.scrollTop=p*distance();render();if(p<1)frame=requestAnimationFrame(tick);else frame=0;}frame=requestAnimationFrame(tick);}
+  function play(){if(!destroyed&&!reducedMotion&&!document.hidden)media.play().catch(()=>{});}
+  const visibility=new IntersectionObserver(entries=>{entries[0]?.isIntersecting?play():media.pause();});visibility.observe(stage);
+  on(document,'visibilitychange',()=>document.hidden?media.pause():play());
+  function destroy(){if(destroyed)return;destroyed=true;stop();media.pause();resize.disconnect();visibility.disconnect();lifecycle.abort();signal?.removeEventListener('abort',destroy);}
+  render();signal?.addEventListener('abort',destroy,{once:true});if(signal?.aborted)destroy();return{replay,reset,destroy};
 }

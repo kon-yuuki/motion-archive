@@ -1,54 +1,50 @@
 export const metadata = {
-  slug: "free-drag-rail",
-  category: "sliders",
-  title: "Free-drag rail",
-  subtitle: "大きさの違うカードを、ひと続きに",
-  description:
-    "高さの違うカードを一本のレールに並べ、ドラッグで自由に送る。隣のカードを少し見せて、続きがあることを伝えるデモです。",
-  trigger: "Drag / swipe / arrows / keyboard",
-  duration: "追従は直接・慣性は減衰",
-  easing: "Release: velocity decay",
-  status: "WIP",
-  source: {
-    name: "REJOUICE®",
-    url: "https://www.rejouice.com/",
-    awardUrl: "https://www.awwwards.com/sites/rejouice-r-3",
-    awardDate: "2025-02-06",
-    observedAt: "2026-10-02",
-    location: "Homepage, Rejouice at a Glance, below client logos",
-    observation:
-      "Rejouice at a Glance のカード列を左へドラッグすると、カードごとの高さと間隔を保ったまま列全体が横へ移動しました。カードは画面端で切り抜かれ、次のカードが右から見えてきます。",
-    observationMode: "live interaction",
-    evidence: [
-      "Pointer drag from approximately (705,389) to (260,389) across the card row in a 1180x757 viewport.",
-    ],
+  "slug": "free-drag-rail",
+  "category": "sliders",
+  "title": "Free-drag rail",
+  "subtitle": "大きさの違うカードを、ひと続きに",
+  "description": "9種類のカードが、操作する前からゆっくり左へ流れます。高さを変えて上端をそろえ、ドラッグで位置を直接動かす、ループするレールの再現です。",
+  "trigger": "Idle / drag / swipe / arrows / keyboard",
+  "duration": "Idle ≈52.4px/s / direct drag",
+  "easing": "Idle linear / drag direct",
+  "status": "WIP",
+  "source": {
+    "name": "REJOUICE®",
+    "url": "https://www.rejouice.com/",
+    "awardUrl": "https://www.awwwards.com/sites/rejouice-r-3",
+    "awardDate": "2025-02-06",
+    "observedAt": "2026-10-02",
+    "location": "Homepage, Rejouice at a Glance, below client logos",
+    "observation": "1180×757で9種類のwidgetが2組連結。幅440px、高さ325/440/503px、間隔30px、上端そろえ。操作前の262msの計測では左へ約52.4px/sで移動。ドラッグ後の短い観察では停止しており、再開条件は未確認。",
+    "observationMode": "live rendered-DOM measurements and screenshots",
+    "evidence": [
+      "2026-10-02: rejouice-rail-dom.json records all 18 widget boxes and two 4237.59375px groups.",
+      "rejouice-autoplay-trace.json: left -1942.4866→-1956.2164px over 262ms before input.",
+      "rejouice-drag-settle.json and pointer-out-trace.json: no observed momentum/restart during short post-drag samples."
+    ]
   },
-  takeaways: [
-    "カードごとに高さを変えても、中心線をそろえると一つの流れとして読めます。",
-    "端を少し見切らせると、横に続くコンテンツがあることを伝えられます。",
-    "ドラッグ後の余韻は短くし、止めたいときは次の操作で止まります。",
+  "takeaways": [
+    "高さを変えても上端をそろえると、異なる種類の情報を同じ列として読めます。",
+    "繰り返す2組のカードをつなぎ、操作前から横に続く構造を見せます。",
+    "ドラッグの間は自動移動を止め、指の移動量を直接反映します。"
   ],
-  limitations: [
-    "2026年10月の公開画面を観察しています。受賞時のバージョンと同一とは確認していません。",
-    "画像・文章は独自のプレースホルダーです。サイトのコード、写真、ロゴは複製していません。",
-    "表示面を独立したデモ領域へ置き換えています。動きの距離や時間は、このデモ用の調整値です。",
+  "limitations": [
+    "カード寸法・9種類の順序・2組構成・自動移動速度は、2026年10月のライブ画面の計測に基づきます。受賞時と同じ版かは未確認です。",
+    "写真はリポジトリ内の既存素材、文章と名前はデモ用へ置換しています。元の写真・ロゴ・実績数値は使用していません。",
+    "自動移動速度は262msの短い測定値です。ドラッグ後の再開条件は未確認のため、このデモではPause/Playで明示的に再開します。",
+    "600px以下の寸法、矢印・キーボード・停止ボタン・画面外停止はデモの補助機能です。モバイル版の完全一致は主張していません。"
   ],
-  usability: {
-    benefit:
-      "一覧から離れず、興味のある情報へ横移動できます。位置表示と矢印を添えることで、ドラッグに気づかなくても操作を続けられます。",
-    caution:
-      "ドラッグだけにすると操作に気づきにくくなります。移動量を画面端で止め、縦スクロールの意図が見えたら横ドラッグを始めません。",
-    smallScreen:
-      "タップ用の前後ボタン、左右キー、Home・Endに対応しています。カード内にリンクを足す場合は、ドラッグとクリックの判定を分けてください。",
-    reducedMotion:
-      "リリース後の慣性と矢印移動の滑らかなスクロールを省きます。横移動と位置表示は残します。",
+  "usability": {
+    "benefit": "異なる情報を同じ列で見比べられます。自動移動は停止でき、ドラッグ以外でも送れます。",
+    "caution": "流れ続ける内容は読みづらくなるため、操作やフォーカスで停止します。自動で再開せずPlayを用意します。",
+    "smallScreen": "縦に動かした場合はページスクロールを優先。横ドラッグ、左右キー、Home・End、前後ボタンでも選べます。",
+    "reducedMotion": "自動移動を止めます。直接ドラッグ、矢印、キーボード操作と位置表示は残します。"
   },
-  implementation: [
-    "native overflow-xの上にポインタードラッグを重ね、キーボードやスクロールバーの基本動作を残します。",
-    "横方向へ6px以上動いた時点でポインターを捕捉します。上下の移動が優先されるときは横ドラッグを中止します。",
-    "速度は最後の移動から更新し、リリース後は減衰させます。画面端に着くか速度が小さくなるとrequestAnimationFrameを止めます。",
-    "ResizeObserverでカード位置と両端ボタンを再計算します。破棄時に描画ループ、遅延処理、Observerを解除します。",
+  "implementation": [
+    "2組の9枚のカードをtransformで移動。1組分の幅で剰余を取り、端でクランプしません。",
+    "rAFの経過時間に測定速度を掛け、描画頻度に依存しない移動量を計算します。",
+    "pointer captureで直接ドラッグし、横6pxの意図が出るまで縦スクロールを妨げません。観測のない慣性は追加していません。",
+    "複製側はaria-hidden/inert。Abort、Reset、非表示、画面外で描画を停止し、Observerを破棄します。"
   ],
-  xPost:
-    "高さの違うカードを、一本のレールで送る。隣のカードを少し見せると、続きがあると伝わる。ドラッグだけでなく矢印とキーボードも用意した、横スライダーの実装メモ。",
+  "xPost": "9種類のカードが、操作する前からゆっくり左へ流れます。高さを変えて上端をそろえ、ドラッグで位置を直接動かす、ループするレールの再現です。"
 };

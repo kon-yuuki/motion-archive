@@ -1,108 +1,105 @@
+@font-face {
+  font-family: "Xray Cormorant";
+  src: url("./assets/cormorant-garamond.ttf") format("truetype");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Xray Cormorant";
+  src: url("./assets/cormorant-garamond-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+}
 .character-xray {
-  background: #efe1c8;
-  color: #563423;
-  > header,
-  > footer {
-    padding: 20px 28px;
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 4/3;
+  min-width: 0;
+  overflow: hidden;
+  background: #eae2d5;
+  color: #625049;
+  &__masthead {
+    position: absolute;
+    inset: 1.4% 2% auto;
     display: flex;
     justify-content: space-between;
-    gap: 20px;
     align-items: center;
-    font-size: 9px;
-    border-bottom: 1px solid #96795b5e;
+    font:
+      clamp(3px, 0.72cqw, 12px) Arial,
+      sans-serif;
+    z-index: 2;
+    pointer-events: none;
+    > span:first-child {
+      color: #9b9185;
+    }
+    b {
+      color: #665449;
+      font-weight: 300;
+    }
   }
-  > footer {
-    border-top: 1px solid #96795b5e;
-    border-bottom: 0;
-  }
-  &__layout {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    align-items: center;
-    gap: 30px;
-    padding: 32px 5%;
-  }
-  h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 400;
-    line-height: 1.12;
-    margin: 0 0 22px;
-  }
-  p {
-    font-size: 12px;
-    line-height: 1.9;
-    margin: 0 0 25px;
-  }
-  button {
-    min-height: 44px;
-    border: 1px solid #8b6849;
-    border-radius: 30px;
-    background: transparent;
-    color: inherit;
-    padding: 11px 18px;
-    font-size: 11px;
-  }
-  button[aria-pressed="true"] {
-    background: #563423;
-    color: #f8edd9;
-  }
-  &__surface {
-    min-width: 0;
-    cursor: crosshair;
-  }
-  svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  &__lens {
-    opacity: 0;
-    transition: opacity 180ms ease;
-  }
-  &.is-active &__lens {
-    opacity: 1;
-  }
-  footer label {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  &__brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font:
+      1.55cqw "Xray Cormorant",
+      serif;
     white-space: nowrap;
   }
-  input {
-    width: 140px;
-    accent-color: #875131;
+  &__sun {
+    display: inline-grid;
+    place-items: center;
+    color: white;
+    background: #ffb844;
+    border-radius: 50%;
+    width: 2.05cqw;
+    height: 2.05cqw;
   }
-  @media (max-width: 700px) {
-    &__layout {
-      grid-template-columns: 1fr;
-      padding: 28px 25px;
-      gap: 12px;
-    }
-    h2 {
-      font-size: 36px;
-    }
-    p {
-      font-size: 11px;
-      margin-bottom: 15px;
-    }
-    &__surface {
-      max-width: 420px;
-      justify-self: center;
+  &__surface {
+    position: absolute;
+    inset: 0;
+    touch-action: pan-y;
+    outline-offset: -4px;
+    svg {
+      display: block;
       width: 100%;
-    }
-    > footer {
-      flex-wrap: wrap;
-      gap: 14px;
-      padding: 18px;
+      height: 100%;
     }
   }
-}
-[data-reduced-motion="true"] .character-xray__lens {
-  transition: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .character-xray__lens {
-    transition: none;
+  &__surface:focus-visible {
+    outline: 2px solid #8b5619;
+  }
+  &__headline {
+    font-family: "Xray Cormorant", serif;
+    font-weight: 300;
+    font-variation-settings: "wght" 300;
+    letter-spacing: -7px;
+  }
+  &__arrows {
+    position: absolute;
+    top: 35.75%;
+    left: 47.65%;
+    display: flex;
+    gap: 0.65cqw;
+    button {
+      font:
+        1cqw Arial,
+        sans-serif;
+      display: grid;
+      place-items: center;
+      width: 2.1cqw;
+      height: 2.1cqw;
+      padding: 0;
+      background: transparent;
+      border: 0.07cqw solid #78675c;
+      color: #625049;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    button:focus-visible {
+      outline: 2px solid #774e25;
+      outline-offset: 3px;
+    }
   }
 }

@@ -1,204 +1,116 @@
-import { makeArt, listen } from "../../_motion/demo-helpers.js";
+import { listen } from "../../_motion/demo-helpers.js";
+import portrait from "../../../src/assets/images/warm-neutral-tailoring/ivory-cream-standing-long.webp";
+import night from "../../../src/assets/images/rainy-neon-cityscapes/rainy-neon-cityscape-01.webp";
+import sculpture from "../../../src/assets/images/sculptural-still-lifes/neutral-stone-monuments.webp";
+import seated from "../../../src/assets/images/warm-neutral-tailoring/camel-tailored-seated-close.webp";
 
-/** Pointer drag sits on top of a native, keyboard-scrollable rail. */
+// Measured at 1180×757: 9 heterogeneous widgets in two repeated groups.
+// Images, names and figures below are existing repository study material, not client claims.
+const cards = [
+  { shape: "small", theme: "dark", title: "Independent by design.", detail: "A collaborative studio<br>for thoughtful brands.", foot: "Meet the studio ↗" },
+  { shape: "full", theme: "dark", title: "A new perspective.", detail: "Identity, image<br>and everyday life.", image: portrait, foot: "FIELD / STUDY 01" },
+  { shape: "small", theme: "light", title: "Selected work.", detail: "Across disciplines,<br>across the years.", foot: "STUDIO ARCHIVE" },
+  { shape: "full", theme: "dark", title: "Digital experiences.", detail: "Made to move<br>with the world.", image: night, foot: "CITY / STUDY 02" },
+  { shape: "small", theme: "dark", title: "2 ways to collaborate.", detail: "Project / Partnership", foot: "Explore the approach ↗" },
+  { shape: "small", theme: "light", title: "A broader view.", detail: "Strategy, design<br>and shared ambition." },
+  { shape: "medium", theme: "dark", title: "Ideas made tangible.", detail: "From the first sketch<br>to the final form.", image: sculpture, foot: "FORM / STUDY 03" },
+  { shape: "small", theme: "light", title: "Built for what’s next.", detail: "A clear direction<br>for new beginnings.", foot: "Case study ↗" },
+  { shape: "full", theme: "light", title: "People, together.", detail: "A practice shaped<br>by different perspectives.", image: seated, foot: "PEOPLE / STUDY 04" },
+];
 export function createDemo(root, { signal, reducedMotion }) {
-  const cards = [
-    ["01", "A different perspective", "Portraits", 0, "tall"],
-    ["02", "24", "Ways to explore", 1, "square"],
-    ["03", "Keep moving.", "New directions", 2, "tall"],
-    ["04", "Made for people", "Everyday objects", 3, "square"],
-    ["05", "Find your rhythm", "Motion practice", 4, "tall"],
-  ];
-  root.innerHTML = `<section class="free-drag-rail"><header><div><p>AT A GLANCE</p><h2>A little room<br>to explore.</h2></div><p>ドラッグして、横へ。<br>矢印・キーボードでも進めます。</p></header><div class="free-drag-rail__viewport" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="5枚のスタディカード"><div class="free-drag-rail__track">${cards.map(([number, title, caption, art, shape], index) => `<article class="free-drag-rail__card free-drag-rail__card--${shape}" aria-label="${index + 1} / 5"><div class="free-drag-rail__art">${makeArt(art, title)}</div><div class="free-drag-rail__caption"><span>${number} / ${caption}</span><h3>${title}</h3></div></article>`).join("")}</div></div><footer><span>DRAG TO DISCOVER <span aria-hidden="true">⟷</span></span><div class="free-drag-rail__nav"><button type="button" data-previous aria-label="前のカード">←</button><span data-position role="status" aria-live="polite">Center 1 / 5</span><button type="button" data-next aria-label="次のカード">→</button></div></footer></section>`;
+  const markup = (copy) => `<div class="free-drag-rail__group" ${copy ? 'aria-hidden="true" inert' : ""}>${cards.map((card, i) => `<article class="free-drag-rail__card free-drag-rail__card--${card.shape} free-drag-rail__card--${card.theme}${card.image ? " has-image" : ""}" aria-label="${i + 1} / 9">${card.image ? `<img src="${card.image}" alt="" draggable="false"/>` : ""}<div class="free-drag-rail__caption"><p>${card.title}<span>${card.detail}</span></p>${card.foot ? `<span class="free-drag-rail__foot">${card.foot}</span>` : ""}</div></article>`).join("")}</div>`;
+  root.innerHTML = `<section class="free-drag-rail"><header><span>Studio at a Glance.</span><span>Independent motion study</span></header><div class="free-drag-rail__viewport" tabindex="0" role="region" aria-roledescription="カルーセル" aria-label="9枚のカード。左右キーで移動"><div class="free-drag-rail__track">${markup(false)}${markup(true)}</div></div><footer><span>DRAG TO EXPLORE ↔</span><div class="free-drag-rail__nav"><button type="button" data-previous aria-label="前のカード">←</button><span data-position role="status" aria-live="polite">1 / 9</span><button type="button" data-next aria-label="次のカード">→</button><button type="button" data-pause aria-pressed="false">Pause</button></div></footer></section>`;
   const viewport = root.querySelector(".free-drag-rail__viewport");
-  const items = [...root.querySelectorAll(".free-drag-rail__card")];
-  const previous = root.querySelector("[data-previous]");
-  const next = root.querySelector("[data-next]");
+  const track = root.querySelector(".free-drag-rail__track");
+  const group = track.firstElementChild;
   const position = root.querySelector("[data-position]");
-  let pointer = null,
-    initialX = 0,
-    initialY = 0,
-    previousX = 0,
-    previousTime = 0,
-    velocity = 0,
-    startScroll = 0,
-    dragging = false;
-  let frame = 0,
-    scrollTimer = 0;
-  const maxScroll = () =>
-    Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-  const clamp = (value) => Math.min(maxScroll(), Math.max(0, value));
-  function stop() {
-    cancelAnimationFrame(frame);
+  const pause = root.querySelector("[data-pause]");
+  const events = new AbortController();
+  let x = 0, width = 1, step = 470, frame = 0, lastTime = 0, pointer = null;
+  let startX = 0, startY = 0, startOffset = 0, dragging = false;
+  let paused = Boolean(reducedMotion), visible = true, destroyed = false;
+  const mod = (value, size) => ((value % size) + size) % size;
+  function render(announce = false) {
+    x = mod(x, width);
+    track.style.transform = `translate3d(${-x}px,0,0)`;
+    const index = Math.min(8, Math.floor(x / step));
+    root.dataset.position = String(index);
+    root.dataset.offset = x.toFixed(3);
+    if (announce) position.textContent = `${index + 1} / 9`;
+  }
+  function stop() { cancelAnimationFrame(frame); frame = 0; lastTime = 0; }
+  function tick(time) {
     frame = 0;
-    velocity = 0;
+    if (destroyed || paused || reducedMotion || !visible || document.hidden || pointer !== null) return;
+    if (lastTime) x += Math.min(64, time - lastTime) * 0.0524;
+    lastTime = time;
+    render();
+    frame = requestAnimationFrame(tick);
   }
-  function update() {
-    const center = viewport.scrollLeft + viewport.clientWidth / 2;
-    const closest = items.reduce(
-      (best, item, index) =>
-        Math.abs(item.offsetLeft + item.offsetWidth / 2 - center) <
-        Math.abs(items[best].offsetLeft + items[best].offsetWidth / 2 - center)
-          ? index
-          : best,
-      0,
-    );
-    items.forEach((item, index) =>
-      item.classList.toggle("is-current", index === closest),
-    );
-    position.textContent = `Center ${closest + 1} / ${items.length}`;
-    root.dataset.position = String(closest);
-    previous.disabled = viewport.scrollLeft <= 2;
-    next.disabled = viewport.scrollLeft >= maxScroll() - 2;
+  function start() { if (!frame && !destroyed && !paused && !reducedMotion && visible && !document.hidden && pointer === null) frame = requestAnimationFrame(tick); }
+  function setPaused(value) {
+    paused = value || reducedMotion;
+    pause.setAttribute("aria-pressed", String(paused));
+    pause.textContent = reducedMotion ? "Motion off" : paused ? "Play" : "Pause";
+    pause.disabled = reducedMotion;
+    root.dataset.playing = String(!paused);
+    stop(); start();
   }
-  function moveBy(direction) {
-    stop();
-    const step = items[0].offsetWidth + 24;
-    viewport.scrollTo({
-      left: clamp(viewport.scrollLeft + direction * step),
-      behavior: reducedMotion ? "instant" : "smooth",
-    });
+  function move(direction) { setPaused(true); x += direction * step; render(true); }
+  function resize() {
+    const previousWidth = width;
+    width = group.getBoundingClientRect().width;
+    step = group.children[0].offsetWidth + 30;
+    if (previousWidth > 1) x = x / previousWidth * width;
+    render();
   }
-  function coast(time) {
-    if (!frame) return;
-    const elapsed = Math.min(time - previousTime, 32);
-    previousTime = time;
-    velocity *= Math.pow(0.91, elapsed / 16.67);
-    const target = clamp(viewport.scrollLeft - velocity * elapsed);
-    viewport.scrollLeft = target;
-    if (Math.abs(velocity) > 0.025 && target > 0 && target < maxScroll())
-      frame = requestAnimationFrame(coast);
-    else {
-      frame = 0;
-      update();
+  listen(viewport, "pointerdown", (event) => {
+    if (event.button !== 0) return;
+    stop(); pointer = event.pointerId; dragging = false;
+    startX = event.clientX; startY = event.clientY; startOffset = x;
+  }, events.signal);
+  listen(viewport, "pointermove", (event) => {
+    if (pointer !== event.pointerId) return;
+    const dx = event.clientX - startX, dy = event.clientY - startY;
+    if (!dragging && Math.abs(dy) > Math.abs(dx) + 8) { pointer = null; start(); return; }
+    if (!dragging && Math.abs(dx) > 6) {
+      dragging = true; setPaused(true); viewport.setPointerCapture(pointer);
+      viewport.classList.add("is-dragging");
     }
-  }
-  listen(
-    viewport,
-    "pointerdown",
-    (event) => {
-      if (event.button !== 0) return;
-      stop();
-      pointer = event.pointerId;
-      initialX = previousX = event.clientX;
-      initialY = event.clientY;
-      startScroll = viewport.scrollLeft;
-      previousTime = performance.now();
-      dragging = false;
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "pointermove",
-    (event) => {
-      if (pointer !== event.pointerId) return;
-      const dx = event.clientX - initialX,
-        dy = event.clientY - initialY;
-      if (!dragging && Math.abs(dy) > Math.abs(dx) + 8) {
-        pointer = null;
-        return;
-      }
-      if (!dragging && Math.abs(dx) > 6) {
-        dragging = true;
-        viewport.setPointerCapture(pointer);
-        viewport.classList.add("is-dragging");
-      }
-      if (!dragging) return;
-      event.preventDefault();
-      const now = performance.now(),
-        dt = Math.max(now - previousTime, 1);
-      velocity = 0.5 * velocity + (0.5 * (event.clientX - previousX)) / dt;
-      previousX = event.clientX;
-      previousTime = now;
-      viewport.scrollLeft = clamp(startScroll - dx);
-    },
-    signal,
-  );
+    if (!dragging) return;
+    event.preventDefault(); x = startOffset - dx; render();
+  }, events.signal);
   function release(event) {
     if (pointer !== event.pointerId) return;
-    if (viewport.hasPointerCapture(pointer))
-      viewport.releasePointerCapture(pointer);
-    pointer = null;
-    viewport.classList.remove("is-dragging");
-    if (dragging && !reducedMotion && Math.abs(velocity) > 0.025) {
-      previousTime = performance.now();
-      frame = requestAnimationFrame(coast);
-    }
-    dragging = false;
-    update();
+    const id = pointer; pointer = null;
+    if (viewport.hasPointerCapture(id)) viewport.releasePointerCapture(id);
+    dragging = false; viewport.classList.remove("is-dragging"); render(true); start();
   }
-  listen(viewport, "pointerup", release, signal);
-  listen(
-    viewport,
-    "pointercancel",
-    () => {
-      pointer = null;
-      dragging = false;
-      viewport.classList.remove("is-dragging");
-      stop();
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "lostpointercapture",
-    () => {
-      pointer = null;
-      dragging = false;
-      viewport.classList.remove("is-dragging");
-    },
-    signal,
-  );
-  listen(
-    viewport,
-    "scroll",
-    () => {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(update, 90);
-    },
-    signal,
-    { passive: true },
-  );
-  listen(viewport, "wheel", stop, signal, { passive: true });
-  listen(
-    viewport,
-    "keydown",
-    (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key))
-        return;
-      event.preventDefault();
-      if (event.key === "ArrowLeft" || event.key === "ArrowRight")
-        moveBy(event.key === "ArrowRight" ? 1 : -1);
-      else {
-        stop();
-        viewport.scrollTo({
-          left: event.key === "Home" ? 0 : maxScroll(),
-          behavior: reducedMotion ? "instant" : "smooth",
-        });
-      }
-    },
-    signal,
-  );
-  listen(previous, "click", () => moveBy(-1), signal);
-  listen(next, "click", () => moveBy(1), signal);
-  const resize = new ResizeObserver(update);
-  resize.observe(viewport);
-  function reset() {
-    stop();
-    viewport.scrollTo({ left: 0, behavior: "instant" });
-    update();
-  }
-  function replay() {
-    reset();
-    moveBy(1);
-  }
-  function destroy() {
-    stop();
-    clearTimeout(scrollTimer);
-    resize.disconnect();
-  }
-  signal.addEventListener("abort", destroy, { once: true });
-  update();
+  listen(viewport, "pointerup", release, events.signal);
+  listen(viewport, "pointercancel", release, events.signal);
+  listen(viewport, "lostpointercapture", (event) => { if (event.target === viewport) release(event); }, events.signal);
+  listen(window, "pointerup", release, events.signal);
+  listen(viewport, "wheel", (event) => {
+    if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+    event.preventDefault(); setPaused(true); x += event.deltaX; render(true);
+  }, events.signal, { passive: false });
+  listen(viewport, "keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault(); setPaused(true);
+    if (event.key === "Home" || event.key === "End") { x = event.key === "Home" ? 0 : 8 * step; render(true); }
+    else move(event.key === "ArrowRight" ? 1 : -1);
+  }, events.signal);
+  listen(viewport, "focus", () => setPaused(true), events.signal);
+  listen(root.querySelector("[data-previous]"), "click", () => move(-1), events.signal);
+  listen(root.querySelector("[data-next]"), "click", () => move(1), events.signal);
+  listen(pause, "click", () => setPaused(!paused), events.signal);
+  listen(document, "visibilitychange", () => { stop(); start(); }, events.signal);
+  const observer = new ResizeObserver(resize); observer.observe(viewport);
+  const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; stop(); start(); }); intersection.observe(viewport);
+  function reset() { stop(); if (pointer !== null && viewport.hasPointerCapture(pointer)) viewport.releasePointerCapture(pointer); pointer = null; dragging = false; viewport.classList.remove("is-dragging"); x = 0; render(true); setPaused(reducedMotion); }
+  function replay() { reset(); }
+  function destroy() { if (destroyed) return; destroyed = true; stop(); if (pointer !== null && viewport.hasPointerCapture(pointer)) viewport.releasePointerCapture(pointer); pointer = null; events.abort(); observer.disconnect(); intersection.disconnect(); signal?.removeEventListener("abort", destroy); }
+  signal?.addEventListener("abort", destroy, { once: true });
+  resize(); reset();
   return { replay, reset, destroy };
 }

@@ -30,6 +30,12 @@ for (const category of categories)
     );
     references.push(metadata);
   }
+// Optional bounded groups use fresh browser processes while retaining every
+// assertion. Collect all groups before claiming complete catalog coverage.
+const slice = process.env.UI_TEST_SLICE?.split(":").map(Number);
+if (slice && (slice.length !== 2 || slice.some(value => !Number.isInteger(value)) || slice[0] < 0 || slice[1] > references.length || slice[0] >= slice[1]))
+  throw new Error("UI_TEST_SLICE must be start:end within the reference catalog");
+const testedReferences = slice ? references.slice(...slice) : references;
 mkdirSync(output, { recursive: true });
 const launch = { headless: true };
 if (process.env.UI_CHROMIUM_EXECUTABLE_PATH)
@@ -79,7 +85,7 @@ async function captureLab(path) {
   await page.screenshot({ path, clip });
 }
 try {
-  for (const metadata of references) {
+  for (const metadata of testedReferences) {
     const id = `${metadata.category}/${metadata.slug}`;
     console.log(`Checking ${id}`);
     await page.setViewportSize({ width: 1440, height: 1000 });
@@ -225,6 +231,8 @@ try {
   const report = {
     checkedAt: new Date().toISOString(),
     referenceCount: references.length,
+    testedReferences: testedReferences.map(item => `${item.category}/${item.slug}`),
+    resourceGroup: process.env.UI_TEST_SLICE ?? "all",
     passed: results.filter((item) => item.passed).length,
     total: results.length,
     results,
@@ -237,7 +245,7 @@ try {
     JSON.stringify(report, null, 2) + "\n",
   );
   console.log(
-    `${report.passed}/${report.total} checks passed; ${references.length} references; ${accessibility.reduce((sum, item) => sum + item.violations.length, 0)} axe findings to review`,
+    `${report.passed}/${report.total} checks passed; ${testedReferences.length}/${references.length} references; ${accessibility.reduce((sum, item) => sum + item.violations.length, 0)} axe findings to review`,
   );
   await browser.close();
   if (results.some((item) => !item.passed)) process.exitCode = 1;

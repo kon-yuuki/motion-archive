@@ -1,103 +1,53 @@
-import { makeArt } from "../../_motion/demo-helpers.js";
+import work from '../../../src/assets/images/warm-neutral-tailoring/camel-tailored-seated-close.webp';
+import studio from '../../../src/assets/images/misty-veiled-portraits/misty-veiled-portrait-09.webp';
+import news from '../../../src/assets/images/sculptural-still-lifes/neutral-stone-monuments.webp';
+import contact from '../../../src/assets/images/warm-neutral-tailoring/ivory-cream-leaning-column.webp';
 
-/** Three original images crossfade in one fixed frame. */
-export function createDemo(root, { signal, reducedMotion = false }) {
-  const items = [
-    {
-      label: "Objects",
-      caption: "かたちを集める",
-      description: "静かな形から、次のアイデアを見つける。",
-      art: 2,
-    },
-    {
-      label: "Spaces",
-      caption: "余白をつくる",
-      description: "光と余白で、見え方を整える。",
-      art: 1,
-    },
-    {
-      label: "Outdoors",
-      caption: "外へひらく",
-      description: "風景の中に、新しい視点を探す。",
-      art: 0,
-    },
-  ];
-  root.innerHTML = `<section class="menu-crossfade" aria-label="固定枠で画像を切り替えるデモ">
-    <div class="menu-crossfade__top"><span>IMAGE STUDY / 02</span><span>One frame, three perspectives</span></div>
-    <div class="menu-crossfade__body"><figure class="menu-crossfade__figure"><div class="menu-crossfade__frame" aria-hidden="true">${items.map((item, index) => `<div class="menu-crossfade__image${index === 0 ? " is-active" : ""}" data-image="${index}">${makeArt(item.art, item.label)}</div>`).join("")}<span class="menu-crossfade__frame-number">01 / 03</span></div><figcaption class="menu-crossfade__caption">${items[0].caption}</figcaption></figure>
-    <div class="menu-crossfade__content"><p class="menu-crossfade__eyebrow">Choose a perspective</p><div class="menu-crossfade__menu" aria-label="画像のテーマ">${items.map((item, index) => `<button type="button" class="menu-crossfade__choice${index === 0 ? " is-active" : ""}" aria-pressed="${index === 0}"><span class="menu-crossfade__index">0${index + 1}</span><span>${item.label}</span><span class="menu-crossfade__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.5"/></svg></span></button>`).join("")}</div><p class="menu-crossfade__description">${items[0].description}</p></div></div>
-    <div class="menu-crossfade__bottom"><span>Hover · Focus · Tap</span><span role="status" aria-live="polite">Objects を表示中</span></div></section>`;
-  const lifecycle = new AbortController();
-  const stage = root.querySelector(".menu-crossfade");
-  const buttons = [...root.querySelectorAll("button")];
-  const images = [...root.querySelectorAll("[data-image]")];
-  const status = root.querySelector('[role="status"]');
-  const caption = root.querySelector("figcaption");
-  const description = root.querySelector(".menu-crossfade__description");
-  const number = root.querySelector(".menu-crossfade__frame-number");
-  let active = 0;
-  let timers = [];
-  let destroyed = false;
-  const on = (target, type, handler) =>
-    target.addEventListener(type, handler, { signal: lifecycle.signal });
-  function stopPreview() {
-    timers.forEach(clearTimeout);
-    timers = [];
+/** Source geometry + measured transform/opacity relationship, with original local photos. */
+export function createDemo(root, { signal, reducedMotion = false } = {}) {
+  const items = [{label:'Work', image:work}, {label:'Studio', image:studio}, {label:'News', image:news}, {label:'Contact', image:contact}];
+  root.innerHTML = `<section class="menu-crossfade" data-reduced="${reducedMotion}" aria-label="Exo Ape メニュー画像の切り替えスタディ">
+    <span class="menu-crossfade__reference">Exo Ape / image transition</span>
+    <figure class="menu-crossfade__frame" aria-hidden="true">${items.map((item,i)=>`<div class="menu-crossfade__image" data-image="${i}"><img src="${item.image}" alt="" /></div>`).join('')}</figure>
+    <div class="menu-crossfade__content"><div class="menu-crossfade__menu">${items.map(item=>`<button type="button" class="menu-crossfade__choice"><span class="menu-crossfade__label">${item.label}</span></button>`).join('')}</div><div class="menu-crossfade__social" aria-hidden="true"><span>Behance</span><span>Dribbble</span><span>Linkedin</span><span>Instagram</span></div></div>
+    <div class="menu-crossfade__lower" aria-hidden="true"><span>Play Reel</span><span>Our Story</span><span>Now Hiring!</span></div><span class="menu-crossfade__status" role="status" aria-live="polite">Work の画像を表示</span></section>`;
+  const stage=root.firstElementChild, images=[...root.querySelectorAll('[data-image]')], buttons=[...root.querySelectorAll('button')], status=root.querySelector('[role="status"]');
+  const lifecycle=new AbortController();
+  let active=0, frame=0, previewTimer=0, destroyed=false, transition=null;
+  let states=images.map((_,i)=>({opacity:i===0?1:0,scale:1,rotation:0}));
+  const draw=()=>states.forEach((state,i)=>{images[i].style.opacity=String(state.opacity); images[i].style.transform=`scale(${state.scale}) rotate(${state.rotation}deg)`;});
+  const stopPreview=()=>{clearTimeout(previewTimer);previewTimer=0;};
+  // A 1s cubic-out fit to the live samples, NOT an extracted source duration/ease.
+  function tick(now) {
+    if(destroyed || !transition) return;
+    const p=Math.max(0,Math.min(1,(now-transition.start)/1000)), e=1-Math.pow(1-p,3);
+    states=transition.from.map((s,i)=>({opacity:s.opacity+(Number(i===active)-s.opacity)*e,scale:s.scale+(1-s.scale)*e,rotation:s.rotation*(1-e)}));
+    stage.dataset.traceTime=String(Math.round(now-transition.start)); draw();
+    if(p<1) frame=requestAnimationFrame(tick); else {frame=0;transition=null;}
   }
-  function select(index, announce = true) {
-    active = index;
-    buttons.forEach((button, i) => {
-      button.classList.toggle("is-active", i === index);
-      button.setAttribute("aria-pressed", String(i === index));
-    });
-    images.forEach((image, i) =>
-      image.classList.toggle("is-active", i === index),
-    );
-    caption.textContent = items[index].caption;
-    description.textContent = items[index].description;
-    number.textContent = `0${index + 1} / 03`;
-    if (announce) status.textContent = `${items[index].label} を表示中`;
+  function select(index, highlight=true) {
+    if(destroyed) return;
+    buttons.forEach((b,i)=>b.classList.toggle('is-active',highlight && i===index));
+    if(index===active) return;
+    cancelAnimationFrame(frame); frame=0;
+    const old=active; active=index;
+    images.forEach((img,i)=>img.style.zIndex=String(i===active?3:i===old?2:1));
+    status.textContent=`${items[index].label} の画像を表示`; stage.dataset.active=String(active);
+    if(reducedMotion) {states=states.map((_,i)=>({opacity:Number(i===active),scale:1,rotation:0})); transition=null;draw();return;}
+    // The scale/angle match all captured opacity samples: scale=1+.3*(1-opacity), angle=7*(1-opacity).
+    // 1.3 and 7deg at an unseen zero-opacity start are inferred from that relationship.
+    states[active]={...states[active],scale:1+.3*(1-states[active].opacity),rotation:7*(1-states[active].opacity)};
+    transition={start:performance.now(),from:states.map(s=>({...s}))}; draw(); frame=requestAnimationFrame(tick);
   }
-  buttons.forEach((button, index) => {
-    on(button, "pointerenter", (event) => {
-      if (event.pointerType === "touch") return;
-      stopPreview();
-      select(index);
-    });
-    on(button, "focus", () => {
-      stopPreview();
-      select(index);
-    });
-    on(button, "click", () => {
-      stopPreview();
-      select(index);
-    });
+  buttons.forEach((button,i)=>{
+    button.addEventListener('pointerenter',e=>{if(e.pointerType==='touch')return;stopPreview();select(i);},{signal:lifecycle.signal});
+    button.addEventListener('pointerleave',()=>button.classList.remove('is-active'),{signal:lifecycle.signal});
+    button.addEventListener('focus',()=>{stopPreview();select(i);},{signal:lifecycle.signal});
+    button.addEventListener('blur',()=>button.classList.remove('is-active'),{signal:lifecycle.signal});
+    button.addEventListener('click',()=>{stopPreview();select(i);},{signal:lifecycle.signal});
   });
-  function reset() {
-    stopPreview();
-    select(0);
-  }
-  function replay() {
-    stopPreview();
-    select((active + 1) % items.length);
-    timers.push(
-      setTimeout(
-        () => select((active + 1) % items.length),
-        reducedMotion ? 750 : 1400,
-      ),
-    );
-  }
-  function destroy() {
-    if (destroyed) return;
-    destroyed = true;
-    stopPreview();
-    lifecycle.abort();
-    stage
-      .getAnimations({ subtree: true })
-      .forEach((animation) => animation.cancel());
-    signal?.removeEventListener("abort", destroy);
-  }
-  signal?.addEventListener("abort", destroy, { once: true });
-  if (signal?.aborted) destroy();
-  return { replay, reset, destroy };
+  function reset(){if(destroyed)return;stopPreview();cancelAnimationFrame(frame);frame=0;transition=null;active=0;states=images.map((_,i)=>({opacity:Number(i===0),scale:1,rotation:0}));images.forEach((img,i)=>img.style.zIndex=String(i===0?3:1));buttons.forEach(b=>b.classList.remove('is-active'));stage.dataset.active='0';stage.dataset.traceTime='0';status.textContent='Work の画像を表示';draw();}
+  function replay(){if(destroyed)return;reset();select(1);previewTimer=setTimeout(()=>select(2),1400);}
+  function destroy(){if(destroyed)return;destroyed=true;stopPreview();cancelAnimationFrame(frame);frame=0;transition=null;lifecycle.abort();stage.getAnimations({subtree:true}).forEach(a=>a.cancel());signal?.removeEventListener('abort',destroy);}
+  reset();signal?.addEventListener('abort',destroy,{once:true});if(signal?.aborted)destroy();return{replay,reset,destroy};
 }

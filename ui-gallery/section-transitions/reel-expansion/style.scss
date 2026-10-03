@@ -1,124 +1,24 @@
+@font-face { font-family:"Exo Reel Sans"; src:url("../../../src/assets/fonts/libre-franklin-latin.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap; }
 .reel-expansion {
-  background: #f4f0e6;
-  color: #282e26;
-  min-width: 0;
-  > header,
-  > footer {
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    font-size: 10px;
-  }
-  &__scroller {
-    height: 440px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    position: relative;
-  }
-  &__runway {
-    height: 900px;
-    position: relative;
-  }
-  &__sticky {
-    position: sticky;
-    top: 0;
-    height: 440px;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  &__media {
-    width: 54%;
-    height: 60%;
-    position: absolute;
-    overflow: hidden;
-    border-radius: 10px;
-  }
-  &__media svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  &__play {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-    border: 1px solid #fff9;
-    color: #fff;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-size: 13px;
-    background: #0002;
-  }
-  h2 {
-    position: relative;
-    display: flex;
-    gap: clamp(30px, 5vw, 80px);
-    font-size: clamp(48px, 8vw, 112px);
-    line-height: 1;
-    margin: 0;
-    font-weight: 500;
-    color: #fff;
-    mix-blend-mode: difference;
-  }
-  &__caption {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    right: 25px;
-    text-align: center;
-    font-size: 10px;
-    color: #303629;
-  }
-  &__after {
-    padding: 70px 10%;
-    background: #253528;
-    color: #f7f7ed;
-    min-height: 440px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  &__after p {
-    font-size: 11px;
-    line-height: 1.9;
-  }
-  &__after h3 {
-    font-size: clamp(36px, 5vw, 65px);
-    line-height: 1.08;
-    font-weight: 500;
-    margin: 20px 0;
-  }
-  footer label {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  input {
-    accent-color: #3d5830;
-    width: 140px;
-  }
-  @media (max-width: 600px) {
-    &__scroller,
-    &__sticky {
-      height: 360px;
-    }
-    &__runway {
-      height: 760px;
-    }
-    h2 {
-      font-size: 48px;
-      gap: 30px;
-    }
-    &__after {
-      min-height: 360px;
-    }
+  container-type:inline-size; color:#e4e0db; background:#0d0e13; font-family:"Exo Reel Sans",Arial,sans-serif; font-weight:400;
+  &__scroller { height:64.15254cqw; overflow-y:auto; scrollbar-width:none; overscroll-behavior:contain; position:relative; }
+  &__scroller::-webkit-scrollbar { display:none; }
+  &__scroller:focus-visible { outline:1px solid #e4e0db; outline-offset:-4px; }
+  &__runway { height:128.30508cqw; position:relative; }
+  &__sticky { position:sticky; top:0; height:64.15254cqw; display:grid; place-items:center; overflow:hidden; }
+  &__media { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(.25); opacity:.3; transform-origin:center; }
+  &__label { position:absolute; top:4.98%; left:0; width:100%; text-align:center; font-size:.97222cqw; line-height:2.64; }
+  h2 { display:flex; position:relative; margin:0; color:#e4e0db; font-size:10cqw; font-weight:400; line-height:1; letter-spacing:-.015em; gap:0; transform:translateY(-1.1cqw); }
+  h2 [data-left] { width:19.140625cqw; }
+  h2 [data-right] { width:20.268803cqw; }
+  &__caption { position:absolute; left:0; bottom:4.98%; width:100%; text-align:center; margin:0; font-size:.97222cqw; line-height:1.5; }
+  >footer { padding:16px 24px; display:flex; justify-content:space-between; gap:20px; font-size:10px; border-top:1px solid #ffffff20; background:#131419; }
+  footer label { display:flex; gap:12px; align-items:center; } input { width:120px; accent-color:#e4e0db; }
+  @media (max-width:600px) {
+    &__scroller,&__sticky { height:125cqw; }
+    &__runway { height:250cqw; }
+    &__label,&__caption { font-size:10px; }
+    h2 { font-size:10cqw; gap:.5cqw; }
+    >footer { padding:15px; gap:10px; } input { width:105px; }
   }
 }

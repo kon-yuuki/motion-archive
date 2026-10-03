@@ -1,84 +1,47 @@
+@font-face {
+  font-family: "Recorded Korean";
+  src: url("./assets/noto-serif-subset.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
 .blur-dissolve {
-  background: #171b18;
-  color: #f2f0e6;
+  position: relative;
+  aspect-ratio: 918/656;
+  overflow: hidden;
   min-width: 0;
-  > header {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 22px 28px;
-    color: #bac0b4;
-    font-size: 9px;
-    border-bottom: 1px solid #ffffff20;
-  }
-  &__scene {
-    height: 350px;
-    position: relative;
-  }
+  background: #000;
+  color: #c9c9c9;
   canvas {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
   }
-  &__caption {
+  &__target {
     position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 18px;
-    text-align: center;
-    font-size: 10px;
-    color: #a0aa97;
-  }
-  > footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-    padding: 20px 28px;
-    border-top: 1px solid #ffffff20;
-  }
-  footer button {
-    border: 1px solid #8e9d80;
-    background: transparent;
-    color: #f2f0e6;
-    border-radius: 50px;
-    padding: 13px 20px;
-    font-size: 12px;
+    left: 38%;
+    top: 42%;
+    width: 24%;
+    height: 18%;
     min-height: 44px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 0;
+  }
+  &__target:focus-visible {
+    outline: 1px solid #aaa;
+    outline-offset: 8px;
+  }
+  .motion-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
     white-space: nowrap;
-  }
-  footer button:hover {
-    background: #33412d;
-  }
-  footer button:disabled {
-    opacity: 0.5;
-    cursor: wait;
-  }
-  footer p {
-    font-size: 10px;
-    line-height: 1.7;
-    text-align: right;
-    color: #b8c3ad;
-  }
-  @media (max-width: 600px) {
-    > header {
-      font-size: 8px;
-      padding: 20px;
-    }
-    &__scene {
-      height: 290px;
-    }
-    > footer {
-      padding: 18px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    footer p {
-      text-align: left;
-      margin: 4px 0;
-    }
   }
 }
